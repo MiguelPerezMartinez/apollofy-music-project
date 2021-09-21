@@ -1,16 +1,13 @@
 import React from "react";
-import reducer from "./reducers/reducer.js";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
+import Provider from "./redux/provider";
 
-const store = createStore(reducer);
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider>
     <Router>
       <App />
     </Router>
