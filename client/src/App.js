@@ -1,17 +1,19 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
+//Components
+import RightMenu from "./components/RightMenu";
+
+//Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 
-import ReducerTest from "./components/ReducerTest";
-
 function App() {
   return (
     <>
-      {/* <ReducerTest /> */}
+      <RightMenu />
       <Switch>
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
