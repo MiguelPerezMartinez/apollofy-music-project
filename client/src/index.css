@@ -12,8 +12,25 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(-15deg, #45025f, #242424 80%);
+  height: 100vh;
 }
-
+.generalContainer {
+  background-color: rgba(155, 125, 155, 0.6);
+  margin: 2%;
+  padding: 2%;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+h1 {
+  color: white;
+}
+h2 {
+  color: white;
+}
+h3 {
+  color: white;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
