@@ -33,7 +33,7 @@ function Login() {
           name="email"
           id="email"
           label="Email"
-          placeholder="Name Surname"
+          placeholder="Email"
           handleChange={handleChange}
           defaultValue=""
         />
@@ -48,7 +48,10 @@ function Login() {
           defaultValue=""
         />
 
-        <button className="w-100 btn btn-lg btn-outline-warning" type="submit">
+        <button
+          className="w-100 mt-2 btn btn-lg btn-outline-warning"
+          type="submit"
+        >
           singUp
         </button>
       </form>

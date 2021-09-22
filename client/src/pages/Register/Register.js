@@ -69,7 +69,12 @@ function Register() {
             setConfirmPassword(e.target.value);
           }}
         />
-        <button type="submit">Sign Up</button>
+        <button
+          type="submit"
+          className="w-100 mt-2 btn btn-lg btn-outline-warning"
+        >
+          Sign Up
+        </button>
       </form>
     </div>
   );

@@ -10,10 +10,16 @@
   display: flex;
   flex-flow: column-reverse;
   margin-bottom: 1em;
+  color: #ffc107;
 }
 
-label,
+label {
+  color: #ffc107;
+  transition: all 0.2s;
+  touch-action: manipulation;
+}
 input {
+  color: rgb(20, 20, 20);
   transition: all 0.2s;
   touch-action: manipulation;
 }
