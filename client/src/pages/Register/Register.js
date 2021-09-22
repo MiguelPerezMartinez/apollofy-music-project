@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Input from "../../components/Input";
-
+import SignNav from "../../components/SignNav";
+import "./register.css";
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -13,7 +14,9 @@ function Register() {
   }
 
   return (
-    <>
+    <div className="register">
+      <SignNav />
+      <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
       <form onSubmit={handleSubmit}>
         <Input
           type="text"
@@ -61,7 +64,7 @@ function Register() {
         />
         <button type="submit">Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 
