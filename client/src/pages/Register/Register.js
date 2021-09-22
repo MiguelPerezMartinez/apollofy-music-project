@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Input from "../../components/Input";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -6,50 +7,55 @@ function Register() {
   const [password, setPasword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  function handleSubmit() {
-    // Codigo de submiteo
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log({ username, email, password, confirmPassword });
   }
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
-        <input
+        <Input
           type="text"
           name="username"
           id="username"
-          value={username}
-          onChange={(e) => {
+          label="Username"
+          defaultValue={username}
+          placeholder="Type username"
+          handleChange={(e) => {
             setUsername(e.target.value);
           }}
         />
-        <label htmlFor="email">Email:</label>
-        <input
-          type="text"
+        <Input
+          type="email"
           name="email"
           id="email"
-          value={email}
-          onChange={(e) => {
+          label="Email"
+          defaultValue={email}
+          placeholder="Type email"
+          handleChange={(e) => {
             setEmail(e.target.value);
           }}
         />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="text"
+        <Input
+          type="password"
           name="password"
           id="password"
-          value={password}
-          onChange={(e) => {
+          label="Password"
+          defaultValue=""
+          placeholder="Type password"
+          handleChange={(e) => {
             setPasword(e.target.value);
           }}
         />
-        <label htmlFor="confirm-password">Confirm password:</label>
-        <input
-          type="text"
+        <Input
+          type="password"
           name="confirm-password"
           id="confirm-password"
-          value={confirmPassword}
-          onChange={(e) => {
+          label="Confirm password"
+          defaultValue=""
+          placeholder="Type password"
+          handleChange={(e) => {
             setConfirmPassword(e.target.value);
           }}
         />
