@@ -11,7 +11,7 @@ import ReducerTest from "./components/ReducerTest";
 function App() {
   return (
     <>
-      <ReducerTest />
+      {/* <ReducerTest /> */}
       <Switch>
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
