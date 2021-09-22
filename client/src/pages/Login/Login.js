@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./login.css";
 import Input from "../../components/Input";
+import SignNav from "../../components/SignNav";
 function Login() {
   const [state, setState] = useState({
     email: "",
@@ -21,9 +22,9 @@ function Login() {
 
   return (
     <div className="login">
+      <SignNav />
       <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
-      {/* <img className="img" src={loginImg} alt="" width="50%" height="200px" /> */}
-      <form className="registerForm" onSubmit={sendData}>
+      <form onSubmit={sendData}>
         <Input
           type="email"
           name="email"
