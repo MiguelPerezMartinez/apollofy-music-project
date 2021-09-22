@@ -10,7 +10,22 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 
+// import { authenticationObserver } from "./services/firebase";
+
 function App() {
+  // Mover a un HoC -----------------------------------
+  // const history = useHistory();
+  // useEffect(() => {
+  //   authenticationObserver((user) => {
+  //     if (user) {
+  //       // history.push("/");
+  //     } else {
+  //       // history.push("/login");
+  //     }
+  //   });
+  // }, []);
+  // ---------------------------------------------------
+
   return (
     <>
       <RightMenu />
