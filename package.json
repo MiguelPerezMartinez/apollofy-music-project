@@ -1,0 +1,24 @@
+{
+  "name": "apollofy-music-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd server && npm run dev \" \"cd client && npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiguelPerezMartinez/apollofy-music-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MiguelPerezMartinez/apollofy-music-project/issues"
+  },
+  "homepage": "https://github.com/MiguelPerezMartinez/apollofy-music-project#readme",
+  "dependencies": {
+    "concurrently": "^6.2.1"
+  }
+}
