@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import "./login.css";
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
+
+import { logIn } from "../../services/firebase";
+
 function Login() {
   const [state, setState] = useState({
     email: "",
@@ -15,16 +18,16 @@ function Login() {
     });
   };
 
-  const sendData = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(state);
+    logIn(state.email, state.password);
   };
 
   return (
     <div className="login">
       <SignNav />
       <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
-      <form onSubmit={sendData}>
+      <form onSubmit={handleSubmit}>
         <Input
           type="email"
           name="email"
