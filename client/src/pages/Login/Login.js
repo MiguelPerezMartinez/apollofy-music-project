@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./login.css";
+import Input from "../../components/Input";
+import SignNav from "../../components/SignNav";
 function Login() {
   const [state, setState] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -20,34 +22,28 @@ function Login() {
 
   return (
     <div className="login">
+      <SignNav />
       <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
-      {/* <img className="img" src={loginImg} alt="" width="50%" height="200px" /> */}
-      <form className="registerForm" onSubmit={sendData}>
-        <div className="field">
-          <input
-            className="inputField"
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Name Surname"
-            onChange={handleSubmit}
-            defaultValue=""
-          />
-          <label for="email">Email</label>
-        </div>
+      <form onSubmit={sendData}>
+        <Input
+          type="email"
+          name="email"
+          id="email"
+          label="Email"
+          placeholder="Name Surname"
+          handleChange={handleChange}
+          defaultValue=""
+        />
 
-        <div className="field">
-          <input
-            className="inputField"
-            type="password"
-            name="password"
-            id="pass"
-            placeholder="password"
-            onChange={handleSubmit}
-            defaultValue=""
-          />
-          <label for="pass">Password</label>
-        </div>
+        <Input
+          type="password"
+          name="password"
+          id="pass"
+          label="Password"
+          placeholder="password"
+          handleChange={handleChange}
+          defaultValue=""
+        />
 
         <button className="w-100 btn btn-lg btn-outline-warning" type="submit">
           singUp
