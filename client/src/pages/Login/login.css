@@ -1,0 +1,70 @@
+.login {
+  margin: 1% 10%;
+  padding: 10%;
+}
+.registerForm {
+  margin: 10%;
+}
+
+.field {
+  display: flex;
+  flex-flow: column-reverse;
+  margin-bottom: 1em;
+}
+
+label,
+input {
+  transition: all 0.2s;
+  touch-action: manipulation;
+}
+
+.inputField {
+  font-size: 1.5em;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  font-family: inherit;
+  -webkit-appearance: none;
+  border-radius: 0;
+  padding: 0;
+  cursor: text;
+}
+
+.inputField:focus {
+  outline: 0;
+  border-bottom: 1px solid rgb(240, 244, 17);
+}
+label {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.inputField:placeholder-shown + label {
+  cursor: text;
+  max-width: 66.66%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform-origin: left bottom;
+  transform: translate(0, 2.125rem) scale(1.5);
+}
+
+::-webkit-input-placeholder {
+  opacity: 0;
+  transition: inherit;
+}
+
+.inputField:focus::-webkit-input-placeholder {
+  opacity: 1;
+}
+.inputField:not(:placeholder-shown) + label,
+.inputField:focus + label {
+  transform: translate(0, 0) scale(1);
+  cursor: pointer;
+}
+.btn-outline-warning {
+  margin-top: 10%;
+}
+.img {
+  margin: 2% 25%;
+  min-width: 350px;
+}
