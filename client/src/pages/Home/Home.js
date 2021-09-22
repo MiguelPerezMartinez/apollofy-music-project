@@ -6,7 +6,7 @@ function Home() {
       <h1>HOME</h1>
       <h2>Songs</h2>
       <h3>My plylist</h3>
-      <div className="generalContainer">Home Page</div>;
+      <div className="general-container">Home Page</div>;
     </>
   );
 }

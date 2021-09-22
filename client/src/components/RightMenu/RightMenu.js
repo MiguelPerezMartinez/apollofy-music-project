@@ -11,11 +11,19 @@ export default function RightMenu() {
       <ProfileCircleIcon />
       <div>
         <Link to="/">
-          <img src="./assets/img/home.svg" className="right-menu-icon" />
+          <img
+            src="./assets/img/home.svg"
+            className="right-menu-icon"
+            alt="home"
+          />
         </Link>
       </div>
       <div>
-        <img src="./assets/img/search.svg" className="right-menu-icon" />
+        <img
+          src="./assets/img/search.svg"
+          className="right-menu-icon"
+          alt="search"
+        />
       </div>
     </aside>
   );

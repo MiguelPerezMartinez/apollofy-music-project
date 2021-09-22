@@ -33,6 +33,7 @@ input {
   outline: 0;
   border-bottom: 1px solid rgb(240, 244, 17);
 }
+
 label {
   text-transform: uppercase;
   letter-spacing: 0.05em;
