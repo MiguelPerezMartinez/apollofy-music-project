@@ -3,46 +3,69 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+//Components
+import ProfileCircleIcon from "../../components/ProfileCircleIcon";
+
 function Profile() {
   return (
     <main>
       <Container>
         <Row>
           <Col
-            className="d-flex justify-content-center align-items-center"
-            xs={12}
-            md={2}
-            lg={2}
+            className="profile-view-profile-image"
+            xs={3}
+            md={3}
+            lg={3}
           >
-            Image
+            <ProfileCircleIcon />
           </Col>
-          <Col xs={9} md={8} lg={8}>
+          <Col xs={8} md={6} lg={6}>
             <h1>Message</h1>
           </Col>
-          <Col className="d-flex flex-row-reverse" xs={3} md={2} lg={2}>
+          <Col className="d-flex flex-row-reverse" xs={1} md={3} lg={3}>
             <button>Button</button>
           </Col>
         </Row>
         <Row className="mt-4">
           <Col xs={12} md={12} lg={6}>
-            <div className="d-flex mb-2">
-              <div className="w-50"> Username:</div>
-              <div>Handsome_Jonathan</div>
-            </div>
-            <div className="d-flex mb-2">
-              <div className="w-50"> Email:</div>
-              <div>Handsome_Jonathan</div>
-            </div>
+            <Row>
+              <Col xs={12} md={6} lg={6} className="w-50">
+                {" "}
+                Username:
+              </Col>
+              <Col xs={12} md={6} lg={6}>
+                Handsome_Jonathan
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} md={6} lg={6} className="w-50">
+                {" "}
+                Email:
+              </Col>
+              <Col xs={12} md={6} lg={6}>
+                Handsome_Jonathan
+              </Col>
+            </Row>
           </Col>
           <Col xs={12} md={12} lg={6}>
-            <div className="d-flex mb-2">
-              <div className="w-50"> Birthday:</div>
-              <div>Handsome_Jonathan</div>
-            </div>
-            <div className="d-flex mb-2">
-              <div className="w-50"> Country or Region:</div>
-              <div>Handsome_Jonathan</div>
-            </div>
+            <Row>
+              <Col xs={12} md={6} lg={6} className="w-50">
+                {" "}
+                Birthday:
+              </Col>
+              <Col xs={12} md={6} lg={6}>
+                Handsome_Jonathan
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} md={6} lg={6} className="w-50">
+                {" "}
+                Country or Region:
+              </Col>
+              <Col xs={12} md={6} lg={6}>
+                Handsome_Jonathan
+              </Col>
+            </Row>
           </Col>
         </Row>
         <Row className="mt-2">

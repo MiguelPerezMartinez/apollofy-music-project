@@ -3,33 +3,32 @@
   flex-flow: column-reverse;
 }
 
-label,
-input {
+.input-label {
   transition: all 0.2s;
   touch-action: manipulation;
+  color: black;
 }
 
-.inputField {
+.input-field {
   font-size: 1.5em;
   border: 0;
   border-bottom: 1px solid #ccc;
   font-family: inherit;
   -webkit-appearance: none;
-  border-radius: 0;
   padding: 0;
   cursor: text;
 }
 
-.inputField:focus {
+.input-field:focus {
   outline: 0;
-  border-bottom: 1px solid rgb(240, 244, 17);
+  border-bottom: 2px solid var(--yellow);
 }
-label {
-  text-transform: uppercase;
+
+.input-label {
   letter-spacing: 0.05em;
 }
 
-.inputField:placeholder-shown + label {
+.input-field:placeholder-shown + .input-label {
   cursor: text;
   max-width: 66.66%;
   white-space: nowrap;
@@ -44,11 +43,13 @@ label {
   transition: inherit;
 }
 
-.inputField:focus::-webkit-input-placeholder {
+.input-field:focus::-webkit-input-placeholder {
   opacity: 1;
 }
-.inputField:not(:placeholder-shown) + label,
-.inputField:focus + label {
+
+.input-field:not(:placeholder-shown) + .input-label,
+.input-field:focus + .input-label {
   transform: translate(0, 0) scale(1);
   cursor: pointer;
+  color: var(--yellow);
 }
