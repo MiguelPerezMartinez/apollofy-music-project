@@ -4,6 +4,7 @@ import "./login.css";
 
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
+import Button from "../../components/Button";
 
 import { logIn } from "../../services/firebase";
 
@@ -51,12 +52,7 @@ function Login() {
             defaultValue=""
           />
 
-          <button
-            className="w-100 btn btn-lg btn-outline-warning"
-            type="submit"
-          >
-            Login
-          </button>
+          <Button title="Login" />
         </form>
       </div>
     </main>

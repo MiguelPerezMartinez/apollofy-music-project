@@ -2,10 +2,10 @@ import React from "react";
 
 function Input({
   type,
-  name,
   id,
   placeholder,
-  defaultValue,
+  value,
+  defaultValue = "",
   handleChange,
   label,
 }) {
@@ -15,12 +15,12 @@ function Input({
         <input
           className="inputField"
           type={type}
-          name={name}
+          name={id}
           id={id}
+          value={value}
           defaultValue={defaultValue}
           placeholder={placeholder}
           onChange={handleChange}
-          //   defaultValue=""
         />
         <label htmlFor={id}>{label}</label>
       </div>
