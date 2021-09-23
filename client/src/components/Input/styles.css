@@ -6,6 +6,7 @@
 .input-label {
   transition: all 0.2s;
   touch-action: manipulation;
+  color: black;
 }
 
 .input-field {
@@ -14,7 +15,6 @@
   border-bottom: 1px solid #ccc;
   font-family: inherit;
   -webkit-appearance: none;
-  border-radius: 0;
   padding: 0;
   cursor: text;
 }
@@ -51,5 +51,5 @@
 .input-field:focus + .input-label {
   transform: translate(0, 0) scale(1);
   cursor: pointer;
-  color: white;
+  color: var(--yellow);
 }

@@ -84,3 +84,7 @@
 .right-menu-row-title {
   padding-left: 2rem;
 }
+
+.display-none {
+  display: none;
+}
