@@ -3,7 +3,22 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+import firebase from "firebase/app";
+import { getAuth } from "firebase/auth";
+
+import { registerNewUser } from "../../services/firebase";
+import { registerInApi } from "../../services/api/index";
+
 function Profile() {
+  const auth = getAuth();
+
+  async function handleSubmit() {
+    let userToken = await auth.currentUser.getIdToken();
+    console.log("await", userToken);
+    // .then((response) => {
+    //   console.log("then", response);
+    // });
+  }
   return (
     <main>
       <Container>
@@ -47,7 +62,7 @@ function Profile() {
         </Row>
         <Row className="mt-2">
           <Col className="d-flex justify-content-center">
-            <button>EDIT PROFILE</button>
+            <button onClick={handleSubmit}>EDIT PROFILE</button>
           </Col>
         </Row>
       </Container>

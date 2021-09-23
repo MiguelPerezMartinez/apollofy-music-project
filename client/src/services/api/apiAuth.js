@@ -13,3 +13,17 @@ export async function registerInApi(userData, uid) {
     // },
   });
 }
+
+// export async function updateUserData(userData, uid, userToken) {
+//   return axios({
+//     method: "PATCH",
+//     url: `http://localhost:4000/users/register`,
+//     data: {
+//       firebase_id: uid,
+//       ...userData,
+//     },
+//     // headers: {
+//     //   Authorization: `Bearer ${userToken}`,
+//     // },
+//   });
+// }
