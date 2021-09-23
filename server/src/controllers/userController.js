@@ -33,6 +33,25 @@ async function register(req, res) {
   }
 }
 
+async function getById(req, res) {
+  const { id: firebase_id } = req.params;
+  try {
+    const foundUser = await userModel.findOne({
+      firebase_id: firebase_id,
+    });
+    return res.status(200).send({
+      message: "User found",
+      currentUser: foundUser,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   register: register,
+  getById: getById,
 };
