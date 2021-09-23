@@ -51,13 +51,13 @@ function Login() {
             placeholder="Type password"
             handleChange={handleChange}
           />
+          <Link to="/recover-password">
+            <p className="mb-3 fw-normal">I have forgotten my password</p>
+          </Link>
           <div className="login-register-button-centered">
             <Button title="Login" />
           </div>
         </form>
-        <Link to="/recover-password">
-          <h1 className="h3 mb-3 fw-normal">I have forgotten my password</h1>
-        </Link>
       </div>
     </main>
   );
