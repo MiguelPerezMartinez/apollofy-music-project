@@ -10,7 +10,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 
-// import { authenticationObserver } from "./services/firebase";
+//import { authenticationObserver } from "./services/firebase";
 
 function App() {
   // Mover a un HoC -----------------------------------
@@ -18,9 +18,9 @@ function App() {
   // useEffect(() => {
   //   authenticationObserver((user) => {
   //     if (user) {
-  //       // history.push("/");
+  //       history.push("/");
   //     } else {
-  //       // history.push("/login");
+  //       //history.push("/login");
   //     }
   //   });
   // }, []);

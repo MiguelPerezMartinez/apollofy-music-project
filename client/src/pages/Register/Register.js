@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
 import "./register.css";
-import axios from "axios";
 
 import { registerNewUser } from "../../services/firebase";
+import { registerInApi } from "../../services/api";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -12,22 +12,27 @@ function Register() {
   const [password, setPasword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (confirmPassword === password) {
-      registerNewUser(email, password);
-      const api = axios.create({ baseURL: "http://localhost:4000" });
-      api
-        .post("/users/register", {
-          username: username,
-          email: email,
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const user = await registerNewUser(email, password);
+      console.log("the userFirebase: ", user);
+      const userApi = await registerInApi(username, email).then((response) => {
+        console.log(response);
+      });
+      console.log("the userApi: ", userApi);
+      // const api = axios.create({ baseURL: "http://localhost:4000" });
+      // api
+      //   .post("/users/register", {
+      //     username: username,
+      //     email: email,
+      //   })
+      //   .then((res) => {
+      //     console.log(res);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
     } else {
       // Código de error
     }
