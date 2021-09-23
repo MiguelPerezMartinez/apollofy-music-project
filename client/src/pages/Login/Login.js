@@ -30,22 +30,20 @@ function Login() {
       <form onSubmit={handleSubmit}>
         <Input
           type="email"
-          name="email"
           id="email"
           label="Email"
-          placeholder="Name Surname"
+          placeholder="Your email"
           handleChange={handleChange}
-          defaultValue=""
+          value={state.email}
         />
 
         <Input
           type="password"
-          name="password"
-          id="pass"
+          id="password"
           label="Password"
-          placeholder="password"
+          placeholder="Your password"
           handleChange={handleChange}
-          defaultValue=""
+          value={state.password}
         />
 
         <button className="w-100 btn btn-lg btn-outline-warning" type="submit">
