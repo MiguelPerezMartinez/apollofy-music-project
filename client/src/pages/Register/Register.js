@@ -8,12 +8,17 @@ import Button from "../../components/Button";
 import { registerNewUser } from "../../services/firebase";
 
 function Register() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPasword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [state, setState] = useState({
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   function handleSubmit(e) {
+    const { username, email, password, confirmPassword } = state;
     e.preventDefault();
     if (confirmPassword === password) {
       registerNewUser(email, password);
@@ -40,15 +45,39 @@ function Register() {
         <SignNav />
         <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
         <form onSubmit={handleSubmit}>
+          <div className="register-first-last-name">
+            <Input
+              type="text"
+              name="firstname"
+              id="firstname"
+              label="Firstname"
+              defaultValue={state.firstname}
+              placeholder="Type firstname"
+              handleChange={(e) => {
+                state.setUsername(e.target.value);
+              }}
+            />
+            <Input
+              type="text"
+              name="lastname"
+              id="lastname"
+              label="Lastname"
+              defaultValue={state.lastname}
+              placeholder="Type lastname"
+              handleChange={(e) => {
+                state.setUsername(e.target.value);
+              }}
+            />
+          </div>
           <Input
             type="text"
             name="username"
             id="username"
             label="Username"
-            defaultValue={username}
+            defaultValue={state.username}
             placeholder="Type username"
             handleChange={(e) => {
-              setUsername(e.target.value);
+              state.setUsername(e.target.value);
             }}
           />
           <Input
@@ -56,10 +85,10 @@ function Register() {
             name="email"
             id="email"
             label="Email"
-            defaultValue={email}
+            defaultValue={state.email}
             placeholder="Type email"
             handleChange={(e) => {
-              setEmail(e.target.value);
+              state.setEmail(e.target.value);
             }}
           />
           <Input
@@ -70,7 +99,7 @@ function Register() {
             defaultValue=""
             placeholder="Type password"
             handleChange={(e) => {
-              setPasword(e.target.value);
+              state.setPasword(e.target.value);
             }}
           />
           <Input
@@ -81,7 +110,7 @@ function Register() {
             defaultValue=""
             placeholder="Type password"
             handleChange={(e) => {
-              setConfirmPassword(e.target.value);
+              state.setConfirmPassword(e.target.value);
             }}
           />
 
