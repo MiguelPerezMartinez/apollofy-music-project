@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
 import "./register.css";
+import axios from "axios";
 
 import { registerNewUser } from "../../services/firebase";
 
@@ -15,6 +16,18 @@ function Register() {
     e.preventDefault();
     if (confirmPassword === password) {
       registerNewUser(email, password);
+      const api = axios.create({ baseURL: "http://localhost:4000" });
+      api
+        .post("/users/register", {
+          username: username,
+          email: email,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       // Código de error
     }
