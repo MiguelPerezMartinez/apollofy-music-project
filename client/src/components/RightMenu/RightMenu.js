@@ -10,30 +10,44 @@ import ProfileCircleIcon from "../ProfileCircleIcon";
 export default function RightMenu() {
   return (
     <aside className="right-menu">
-      <ProfileCircleIcon />
       <div>
-        <Link to="/">
+        <Link to="/profile" className="right-menu-row">
+          <ProfileCircleIcon />
+          <div className="right-menu-row-title">Welcome $username</div>
+        </Link>
+      </div>
+      <div>
+        <div className="right-menu-row no-hover">
+          <img
+            src="./assets/img/search.svg"
+            alt="search"
+            className="right-menu-icon"
+          />
+          <div className="right-menu-row-title">
+            <input type="text" placeholder="Search" />
+          </div>
+        </div>
+      </div>
+      <div>
+        <Link to="/" className="right-menu-row">
           <img
             src="./assets/img/home.svg"
             alt="home"
             className="right-menu-icon"
           />
+          <div className="right-menu-row-title">Home</div>
         </Link>
       </div>
       <div>
-        <img
-          src="./assets/img/search.svg"
-          alt="search"
-          className="right-menu-icon"
-        />
-      </div>
-      <div>
-        <img
-          src="./assets/img/logout.svg"
-          alt="logout"
-          className="right-menu-icon"
-          onClick={logOut}
-        />
+        <div className="right-menu-row">
+          <img
+            src="./assets/img/logout.svg"
+            alt="logout"
+            className="right-menu-icon"
+            onClick={logOut}
+          />
+          <div className="right-menu-row-title">Logout</div>
+        </div>
       </div>
     </aside>
   );
