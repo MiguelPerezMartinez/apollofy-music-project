@@ -1,7 +1,7 @@
 const { userModel } = require("../models");
 
 async function register(req, res) {
-  const { username, email } = req.body;
+  const { username, email, firebase_id } = req.body;
   //   const { uid, username, email } = req.body;
   try {
     const foundUser = await userModel.findOne({
@@ -9,7 +9,7 @@ async function register(req, res) {
     });
     if (!foundUser) {
       const { _id } = await userModel.create({
-        // firebase_id: uid,
+        firebase_id: firebase_id,
         username: username,
         email: email,
       });
@@ -17,6 +17,7 @@ async function register(req, res) {
         message: "User created very successfully",
         data: {
           userId: _id,
+          firebase_id: firebase_id,
         },
       });
     } else {

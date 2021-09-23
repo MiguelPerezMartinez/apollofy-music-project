@@ -6,17 +6,9 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
-export function registerNewUser(email, password) {
+export async function registerNewUser(email, password) {
   const auth = getAuth();
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log(user);
-    })
-    .catch((error) => {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
-    });
+  return createUserWithEmailAndPassword(auth, email, password);
 }
 
 export function authenticationObserver(callback) {
