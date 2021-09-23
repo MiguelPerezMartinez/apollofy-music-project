@@ -12,16 +12,21 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(-15deg, #45025f, #242424 80%);
+  color: white !important;
+}
+
+main {
+  background-color: black;
+  width: 100vw;
   height: 100vh;
 }
 
 .general-container {
-  background-color: rgba(155, 125, 155, 0.6);
-  margin: 2%;
-  padding: 2%;
-  box-sizing: border-box;
-  border-radius: 5px;
+  background-color: var(--main-container-color);
+}
+
+.gradient-background {
+  background: radial-gradient(farthest-side, var(--purple), #000);
 }
 
 h1 {
@@ -41,6 +46,7 @@ code {
     monospace;
 }
 
-.white-icon {
-  font: white;
+a {
+  text-decoration: none !important;
+  color: white !important;
 }
