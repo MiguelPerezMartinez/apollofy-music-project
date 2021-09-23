@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 //Components
@@ -11,23 +11,8 @@ import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import ResetPassword from "./pages/ResetPassword";
 
-import { authenticationObserver } from "./services/firebase";
-
 function App() {
-  // Mover a un HoC -----------------------------------
-  // const history = useHistory();
-  useEffect(() => {
-    authenticationObserver((user) => {
-      if (user) {
-        // history.push("/");
-        console.log("Estás logueado");
-      } else {
-        // history.push("/login");
-        console.log("No estás logueado");
-      }
-    });
-  }, []);
-  // ---------------------------------------------------
+  
 
   return (
     <>

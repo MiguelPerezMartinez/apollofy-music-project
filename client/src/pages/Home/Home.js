@@ -1,5 +1,7 @@
 import React from "react";
 
+import withAuth from "../../hoc/WithAuth";
+
 function Home() {
   return (
     <>
@@ -13,4 +15,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default withAuth(Home);
