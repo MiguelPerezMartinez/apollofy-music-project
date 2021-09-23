@@ -14,6 +14,16 @@ export async function registerInApi(userData, uid) {
   });
 }
 
+export async function getById(uid, userToken) {
+  return axios({
+    method: "GET",
+    url: `http://localhost:4000/users/getUser/${uid}`,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
+
 // export async function updateUserData(userData, uid, userToken) {
 //   return axios({
 //     method: "PATCH",

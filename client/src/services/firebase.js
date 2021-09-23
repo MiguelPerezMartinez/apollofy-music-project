@@ -39,3 +39,15 @@ export function logOut() {
       // An error happened.
     });
 }
+
+export async function getCurrentUserToken() {
+  const auth = getAuth();
+  // console.log("await", auth);
+  console.log(auth.currentUser);
+  return auth.currentUser.getIdToken();
+}
+
+export async function getCurrentUserId() {
+  const auth = getAuth();
+  return auth.currentUser.uid;
+}

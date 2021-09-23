@@ -3,22 +3,21 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import firebase from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getCurrentUserToken, getCurrentUserId } from "../../services/firebase";
 
-import { registerNewUser } from "../../services/firebase";
-import { registerInApi } from "../../services/api/index";
+import { getById } from "../../services/api/index";
 
 function Profile() {
-  const auth = getAuth();
-
   async function handleSubmit() {
-    let userToken = await auth.currentUser.getIdToken();
-    console.log("await", userToken);
-    // .then((response) => {
-    //   console.log("then", response);
-    // });
+    const userToken = await getCurrentUserToken();
+    const userId = await getCurrentUserId();
+    const { data } = await getById(userId, userToken);
+    const { currentUser } = data;
+    // const { username, email } = currentUser;
+    console.log(currentUser);
+    // console.log("usr id", userId);
   }
+
   return (
     <main>
       <Container>

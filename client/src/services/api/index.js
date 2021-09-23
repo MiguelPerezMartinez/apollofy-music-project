@@ -1,2 +1,2 @@
-import { registerInApi } from "./apiAuth";
-export { registerInApi };
+import { registerInApi, getById } from "./apiAuth";
+export { registerInApi, getById };
