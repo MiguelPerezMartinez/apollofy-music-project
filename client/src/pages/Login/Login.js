@@ -37,7 +37,7 @@ function Login() {
             name="email"
             id="email"
             label="Email"
-            placeholder="Email"
+            placeholder="Type email"
             handleChange={handleChange}
             defaultValue=""
           />
@@ -47,7 +47,7 @@ function Login() {
             name="password"
             id="pass"
             label="Password"
-            placeholder="password"
+            placeholder="Type password"
             handleChange={handleChange}
             defaultValue=""
           />
