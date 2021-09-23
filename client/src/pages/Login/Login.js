@@ -6,6 +6,7 @@ import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
 import Button from "../../components/Button";
 import { logIn } from "../../services/firebase";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [state, setState] = useState({
@@ -36,25 +37,27 @@ function Login() {
             name="email"
             id="email"
             label="Email"
+            value={state.email}
             placeholder="Type email"
             handleChange={handleChange}
-            defaultValue=""
           />
 
           <Input
             type="password"
             name="password"
-            id="pass"
+            id="password"
             label="Password"
+            value={state.password}
             placeholder="Type password"
             handleChange={handleChange}
-            defaultValue=""
           />
+          <Link to="/recover-password">
+            <p className="mb-3 fw-normal">I have forgotten my password</p>
+          </Link>
           <div className="login-register-button-centered">
             <Button title="Login" />
           </div>
         </form>
-        <h1 className="h3 mb-3 fw-normal">I have forgotten my password</h1>
       </div>
     </main>
   );
