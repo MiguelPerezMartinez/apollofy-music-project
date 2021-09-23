@@ -4,7 +4,7 @@ import SignNav from "../../components/SignNav";
 import "./register.css";
 
 import { registerNewUser } from "../../services/firebase";
-import { registerInApi } from "../../services/api";
+import { registerInApi } from "../../services/api/index";
 
 function Register() {
   const [state, setState] = useState({
@@ -21,19 +21,14 @@ function Register() {
     });
   }
 
-<<<<<<< HEAD
   async function handleSubmit(e) {
-=======
-  function handleSubmit(e) {
     const { username, email, password, confirmPassword } = state;
->>>>>>> 6fd21d32add8afba5ad4a096caf1d331c7345143
     e.preventDefault();
     if (confirmPassword === password) {
-      const user = await registerNewUser(email, password);
-      console.log("the userFirebase: ", user);
-      const userApi = await registerInApi(username, email).then((response) => {
-        console.log(response);
-      });
+      const { user } = await registerNewUser(email, password);
+
+      console.log("the userFirebase: ", user.uid);
+      const userApi = await registerInApi(username, email, user.uid);
       console.log("the userApi: ", userApi);
       // const api = axios.create({ baseURL: "http://localhost:4000" });
       // api
