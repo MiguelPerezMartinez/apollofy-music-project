@@ -1,14 +1,6 @@
 import React from "react";
 
-function Input({
-  type,
-  id,
-  placeholder,
-  value,
-  defaultValue = "",
-  handleChange,
-  label,
-}) {
+function Input({ type, id, placeholder, value, handleChange, label }) {
   return (
     <>
       <div className="field">
@@ -18,7 +10,6 @@ function Input({
           name={id}
           id={id}
           value={value}
-          defaultValue={defaultValue}
           placeholder={placeholder}
           onChange={handleChange}
         />

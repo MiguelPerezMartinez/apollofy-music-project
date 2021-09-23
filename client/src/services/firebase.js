@@ -4,6 +4,7 @@ import {
   onAuthStateChanged,
   signOut,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 export function registerNewUser(email, password) {
@@ -16,6 +17,7 @@ export function registerNewUser(email, password) {
     .catch((error) => {
       // const errorCode = error.code;
       // const errorMessage = error.message;
+      console.error("Registration failed: ", error.message);
     });
 }
 
@@ -34,6 +36,7 @@ export function logIn(email, password) {
     .catch((error) => {
       // const errorCode = error.code;
       // const errorMessage = error.message;
+      console.error("Log in failed: ", error.message);
     });
 }
 
@@ -41,9 +44,22 @@ export function logOut() {
   const auth = getAuth();
   signOut(auth)
     .then(() => {
-      console.log("Sign Out successfull");
+      console.log("Sign out successfull");
     })
     .catch((error) => {
-      // An error happened.
+      console.error("Sign out failed");
+    });
+}
+
+export function resetPassword(email) {
+  const auth = getAuth();
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      console.log("Password reset email sent!: ", email);
+    })
+    .catch((error) => {
+      // const errorCode = error.code;
+      // const errorMessage = error.message;
+      console.error("Password reset email not sent!: ", error.message);
     });
 }
