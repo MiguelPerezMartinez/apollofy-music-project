@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import ResetPassword from "./pages/ResetPassword";
+import ChangePassword from "./pages/ChangePassword/ChangePassword";
 
 import { authenticationObserver } from "./services/firebase";
 
@@ -33,6 +34,7 @@ function App() {
     <>
       <RightMenu />
       <Switch>
+        <Route path="/change-password" component={ChangePassword} />
         <Route path="/recover-password" component={ResetPassword} />
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />

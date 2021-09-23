@@ -30,7 +30,7 @@ function Login() {
     <main className="login-main gradient-background">
       <div className="login-register">
         <SignNav />
-        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+        <h1 className="h3 mb-3 mt-2 fw-normal">Please sign in</h1>
         <form onSubmit={handleSubmit}>
           <Input
             type="email"
