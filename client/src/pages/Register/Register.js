@@ -42,12 +42,11 @@ function Register() {
     <main className="gradient-background">
       <div className="general-container login-register">
         <SignNav />
-        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+        <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
         <form onSubmit={handleSubmit}>
           <div className="register-first-last-name">
             <Input
               type="text"
-              name="firstname"
               id="firstname"
               label="Firstname"
               value={registerData.firstname}
@@ -56,7 +55,6 @@ function Register() {
             />
             <Input
               type="text"
-              name="lastname"
               id="lastname"
               label="Lastname"
               value={registerData.lastname}
@@ -66,7 +64,6 @@ function Register() {
           </div>
           <Input
             type="text"
-            name="username"
             id="username"
             label="Username"
             value={registerData.username}
@@ -75,7 +72,6 @@ function Register() {
           />
           <Input
             type="email"
-            name="email"
             id="email"
             label="Email"
             value={registerData.email}
@@ -84,7 +80,6 @@ function Register() {
           />
           <Input
             type="password"
-            name="password"
             id="password"
             label="Password"
             value={registerData.password}
