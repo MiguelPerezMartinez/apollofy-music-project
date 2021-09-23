@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+import Input from "../../components/Input";
+import SignNav from "../../components/SignNav";
+import "./register.css";
+import axios from "axios";
+
+import { registerNewUser } from "../../services/firebase";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -6,56 +12,81 @@ function Register() {
   const [password, setPasword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  function handleSubmit() {
-    // Codigo de submiteo
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (confirmPassword === password) {
+      registerNewUser(email, password);
+      const api = axios.create({ baseURL: "http://localhost:4000" });
+      api
+        .post("/users/register", {
+          username: username,
+          email: email,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      // Código de error
+    }
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          value={username}
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-        />
-        <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          name="email"
-          id="email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="text"
-          name="password"
-          id="password"
-          value={password}
-          onChange={(e) => {
-            setPasword(e.target.value);
-          }}
-        />
-        <label htmlFor="confirm-password">Confirm password:</label>
-        <input
-          type="text"
-          name="confirm-password"
-          id="confirm-password"
-          value={confirmPassword}
-          onChange={(e) => {
-            setConfirmPassword(e.target.value);
-          }}
-        />
-        <button type="submit">Sign Up</button>
-      </form>
-    </>
+    <main className="gradient-background">
+      <div className="general-container login-register">
+        <SignNav />
+        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+        <form onSubmit={handleSubmit}>
+          <Input
+            type="text"
+            name="username"
+            id="username"
+            label="Username"
+            defaultValue={username}
+            placeholder="Type username"
+            handleChange={(e) => {
+              setUsername(e.target.value);
+            }}
+          />
+          <Input
+            type="email"
+            name="email"
+            id="email"
+            label="Email"
+            defaultValue={email}
+            placeholder="Type email"
+            handleChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <Input
+            type="password"
+            name="password"
+            id="password"
+            label="Password"
+            defaultValue=""
+            placeholder="Type password"
+            handleChange={(e) => {
+              setPasword(e.target.value);
+            }}
+          />
+          <Input
+            type="password"
+            name="confirm-password"
+            id="confirm-password"
+            label="Confirm password"
+            defaultValue=""
+            placeholder="Type password"
+            handleChange={(e) => {
+              setConfirmPassword(e.target.value);
+            }}
+          />
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
+    </main>
   );
 }
 

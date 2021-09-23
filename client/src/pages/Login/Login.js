@@ -1,59 +1,65 @@
 import React, { useState } from "react";
+
 import "./login.css";
+
+import Input from "../../components/Input";
+import SignNav from "../../components/SignNav";
+
+import { logIn } from "../../services/firebase";
+
 function Login() {
   const [state, setState] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
   };
 
-  const sendData = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(state);
+    logIn(state.email, state.password);
   };
 
   return (
-    <div className="login">
-      <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
-      {/* <img className="img" src={loginImg} alt="" width="50%" height="200px" /> */}
-      <form className="registerForm" onSubmit={sendData}>
-        <div className="field">
-          <input
-            className="inputField"
+    <main className="login-main gradient-background">
+      <div className="login-register">
+        <SignNav />
+        <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
+        <form onSubmit={handleSubmit}>
+          <Input
             type="email"
             name="email"
             id="email"
-            placeholder="Name Surname"
-            onChange={handleSubmit}
+            label="Email"
+            placeholder="Email"
+            handleChange={handleChange}
             defaultValue=""
           />
-          <label for="email">Email</label>
-        </div>
 
-        <div className="field">
-          <input
-            className="inputField"
+          <Input
             type="password"
             name="password"
             id="pass"
+            label="Password"
             placeholder="password"
-            onChange={handleSubmit}
+            handleChange={handleChange}
             defaultValue=""
           />
-          <label for="pass">Password</label>
-        </div>
 
-        <button className="w-100 btn btn-lg btn-outline-warning" type="submit">
-          singUp
-        </button>
-      </form>
-    </div>
+          <button
+            className="w-100 btn btn-lg btn-outline-warning"
+            type="submit"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </main>
   );
 }
 

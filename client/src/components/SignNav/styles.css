@@ -1,0 +1,20 @@
+.signNav {
+  width: 100%;
+  min-height: 3rem;
+  display: flex;
+  border-bottom: 1px solid white;
+  margin-bottom: 1rem;
+}
+
+.signNav a:first-of-type {
+  border-right: 1px solid white;
+}
+
+.signNav > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  text-decoration: none;
+  color: white;
+}

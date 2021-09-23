@@ -12,6 +12,33 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: white !important;
+}
+
+main {
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+}
+
+.general-container {
+  background-color: var(--main-container-color);
+}
+
+.gradient-background {
+  background: radial-gradient(farthest-side, var(--purple), #000);
+}
+
+h1 {
+  color: white;
+}
+
+h2 {
+  color: white;
+}
+
+h3 {
+  color: white;
 }
 
 code {
@@ -19,6 +46,7 @@ code {
     monospace;
 }
 
-.white-icon {
-  font: white;
+a {
+  text-decoration: none !important;
+  color: white !important;
 }
