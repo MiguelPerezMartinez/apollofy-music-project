@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
 import "./register.css";
-import axios from "axios";
 
 import { registerNewUser } from "../../services/firebase";
+import { registerInApi } from "../../services/api/index";
 
 function Register() {
-  const [state, setState] = useState({
+  const [registerData, setRegisterData] = useState({
     firstname: "",
     lastname: "",
     username: "",
@@ -17,29 +17,22 @@ function Register() {
   });
 
   function handleChange(e) {
-    setState({
-      ...state,
+    setRegisterData({
+      ...registerData,
       [e.target.name]: e.target.value,
     });
   }
 
-  function handleSubmit(e) {
-    const { username, email, password, confirmPassword } = state;
+  async function handleSubmit(e) {
     e.preventDefault();
+    const { email, password, confirmPassword } = registerData;
     if (confirmPassword === password) {
-      registerNewUser(email, password);
-      const api = axios.create({ baseURL: "http://localhost:4000" });
-      api
-        .post("/users/register", {
-          username: username,
-          email: email,
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      console.log("submit ", registerData);
+      const { user } = await registerNewUser(email, password);
+
+      console.log("the userFirebase: ", user.uid);
+      const userApi = await registerInApi(registerData, user.uid);
+      console.log("the userApi: ", userApi);
     } else {
       // Código de error
     }
@@ -56,7 +49,7 @@ function Register() {
               type="text"
               id="firstname"
               label="Firstname"
-              value={state.firstname}
+              value={registerData.firstname}
               placeholder="Type firstname"
               handleChange={handleChange}
             />
@@ -64,7 +57,7 @@ function Register() {
               type="text"
               id="lastname"
               label="Lastname"
-              value={state.lastname}
+              value={registerData.lastname}
               placeholder="Type lastname"
               handleChange={handleChange}
             />
@@ -73,7 +66,7 @@ function Register() {
             type="text"
             id="username"
             label="Username"
-            value={state.username}
+            value={registerData.username}
             placeholder="Type username"
             handleChange={handleChange}
           />
@@ -81,7 +74,7 @@ function Register() {
             type="email"
             id="email"
             label="Email"
-            value={state.email}
+            value={registerData.email}
             placeholder="Type email"
             handleChange={handleChange}
           />
@@ -89,15 +82,16 @@ function Register() {
             type="password"
             id="password"
             label="Password"
-            value={state.password}
+            value={registerData.password}
             placeholder="Type password"
             handleChange={handleChange}
           />
           <Input
             type="password"
+            name="confirmPassword"
             id="confirmPassword"
             label="Confirm password"
-            value={state.confirmPassword}
+            value={registerData.confirmPassword}
             placeholder="Type password"
             handleChange={handleChange}
           />

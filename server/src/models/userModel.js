@@ -6,7 +6,7 @@ const UserSchema = new Schema(
   {
     firebase_id: {
       type: String,
-      // unique:true
+      unique: true,
     },
     active: {
       type: Boolean,
@@ -24,10 +24,10 @@ const UserSchema = new Schema(
       type: String,
       required: [true, "Please, give us your email"],
     },
-    firstName: {
+    firstname: {
       type: String,
     },
-    lastName: {
+    lastname: {
       type: String,
     },
     country: {
