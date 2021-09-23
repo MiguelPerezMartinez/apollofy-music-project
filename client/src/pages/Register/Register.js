@@ -7,12 +7,22 @@ import axios from "axios";
 import { registerNewUser } from "../../services/firebase";
 
 function Register() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPasword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [state, setState] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  function handleChange(e) {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  }
 
   function handleSubmit(e) {
+    const { username, email, password, confirmPassword } = state;
     e.preventDefault();
     if (confirmPassword === password) {
       registerNewUser(email, password);
