@@ -5,7 +5,6 @@ import "./login.css";
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
 import Button from "../../components/Button";
-
 import { logIn } from "../../services/firebase";
 
 function Login() {
@@ -37,7 +36,7 @@ function Login() {
             name="email"
             id="email"
             label="Email"
-            placeholder="Email"
+            placeholder="Type email"
             handleChange={handleChange}
             defaultValue=""
           />
@@ -47,12 +46,13 @@ function Login() {
             name="password"
             id="pass"
             label="Password"
-            placeholder="password"
+            placeholder="Type password"
             handleChange={handleChange}
             defaultValue=""
           />
-
-          <Button title="Login" />
+          <div className="login-register-button-centered">
+            <Button title="Login" />
+          </div>
         </form>
         <h1 className="h3 mb-3 fw-normal">I have forgotten my password</h1>
       </div>

@@ -1,19 +1,13 @@
 import React from "react";
 
-function Input({
-  type,
-  id,
-  placeholder,
-  value,
-  defaultValue = "",
-  handleChange,
-  label,
-}) {
+import "./styles.css";
+
+function Input({ type, id, placeholder, value, handleChange, label }) {
   return (
     <>
       <div className="field">
         <input
-          className="inputField"
+          className="input-field"
           type={type}
           name={id}
           id={id}
@@ -21,7 +15,9 @@ function Input({
           placeholder={placeholder}
           onChange={handleChange}
         />
-        <label htmlFor={id}>{label}</label>
+        <label className="input-label" htmlFor={id}>
+          {label}
+        </label>
       </div>
     </>
   );
