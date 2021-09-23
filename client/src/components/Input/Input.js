@@ -1,26 +1,17 @@
 import React from "react";
 
-function Input({
-  type,
-  name,
-  id,
-  placeholder,
-  defaultValue,
-  handleChange,
-  label,
-}) {
+function Input({ type, id, placeholder, value, handleChange, label }) {
   return (
     <>
       <div className="field">
         <input
           className="inputField"
           type={type}
-          name={name}
+          name={id}
           id={id}
-          defaultValue={defaultValue}
+          value={value}
           placeholder={placeholder}
           onChange={handleChange}
-          //   defaultValue=""
         />
         <label htmlFor={id}>{label}</label>
       </div>

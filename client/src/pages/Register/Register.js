@@ -7,12 +7,26 @@ import { registerNewUser } from "../../services/firebase";
 import { registerInApi } from "../../services/api";
 
 function Register() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPasword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [state, setState] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
+  function handleChange(e) {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+<<<<<<< HEAD
   async function handleSubmit(e) {
+=======
+  function handleSubmit(e) {
+    const { username, email, password, confirmPassword } = state;
+>>>>>>> 6fd21d32add8afba5ad4a096caf1d331c7345143
     e.preventDefault();
     if (confirmPassword === password) {
       const user = await registerNewUser(email, password);
@@ -45,47 +59,35 @@ function Register() {
       <form onSubmit={handleSubmit}>
         <Input
           type="text"
-          name="username"
           id="username"
           label="Username"
-          defaultValue={username}
-          placeholder="Type username"
-          handleChange={(e) => {
-            setUsername(e.target.value);
-          }}
+          value={state.username}
+          placeholder="Your username"
+          handleChange={handleChange}
         />
         <Input
           type="email"
-          name="email"
           id="email"
           label="Email"
-          defaultValue={email}
-          placeholder="Type email"
-          handleChange={(e) => {
-            setEmail(e.target.value);
-          }}
+          value={state.email}
+          placeholder="Your email"
+          handleChange={handleChange}
         />
         <Input
           type="password"
-          name="password"
           id="password"
           label="Password"
-          defaultValue=""
-          placeholder="Type password"
-          handleChange={(e) => {
-            setPasword(e.target.value);
-          }}
+          value={state.password}
+          placeholder="Your password"
+          handleChange={handleChange}
         />
         <Input
           type="password"
-          name="confirm-password"
-          id="confirm-password"
+          id="confirmPassword"
           label="Confirm password"
-          defaultValue=""
-          placeholder="Type password"
-          handleChange={(e) => {
-            setConfirmPassword(e.target.value);
-          }}
+          value={state.confirmPassword}
+          placeholder="Repeat password"
+          handleChange={handleChange}
         />
         <button type="submit">Sign Up</button>
       </form>
