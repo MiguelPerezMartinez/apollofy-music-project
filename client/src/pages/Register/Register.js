@@ -49,7 +49,7 @@ function Register() {
     <main className="gradient-background">
       <div className="general-container login-register">
         <SignNav />
-        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+        <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
         <form onSubmit={handleSubmit}>
           <div className="register-first-last-name">
             <Input
