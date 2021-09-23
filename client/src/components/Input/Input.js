@@ -18,7 +18,6 @@ function Input({
           name={id}
           id={id}
           value={value}
-          defaultValue={defaultValue}
           placeholder={placeholder}
           onChange={handleChange}
         />
