@@ -11,12 +11,7 @@ function Profile() {
     <main>
       <Container>
         <Row>
-          <Col
-            className="profile-view-profile-image"
-            xs={3}
-            md={3}
-            lg={3}
-          >
+          <Col className="profile-view-profile-image" xs={3} md={3} lg={3}>
             <ProfileCircleIcon />
           </Col>
           <Col xs={8} md={6} lg={6}>

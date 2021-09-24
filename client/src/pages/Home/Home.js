@@ -1,6 +1,6 @@
 import React from "react";
 
-import withAuth from "../../hoc/WithAuth";
+// import withAuth from "../../hoc/withAuth.js";
 
 function Home() {
   return (
@@ -15,4 +15,4 @@ function Home() {
   );
 }
 
-export default withAuth(Home);
+export default Home;

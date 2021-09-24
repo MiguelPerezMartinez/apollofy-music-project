@@ -2,45 +2,38 @@ import React from "react";
 
 import { authenticationObserver } from "../services/firebase";
 
-import Login from "../pages/Login";
+import { Redirect } from "react-router-dom";
 
-async function isAuth() {
+// async function checkAuth() {
+//   await authenticationObserver((user) => {
+//     console.log(user);
+//     if (user) {
+//       console.log(user);
+//       return true;
+//     } else {
+//       console.log(user);
+//       return false;
+//     }
+//   });
+// }
+
+async function withAuth(WrappedComponent) {
+  let  isAuthorized = false;
   authenticationObserver((user) => {
+    // console.log("hello",user);
     if (user) {
-      // history.push("/");
-      console.log("Estás logueado");
-      return true;
+      // console.log(user);
+      isAuthorized = true;
     } else {
-      // history.push("/login");
-      console.log("No estás logueado");
-      return false;
+      // console.log(user);
+      isAuthorized = false;
     }
   });
-}
-
-function withAuth(WrappedComponent) {
-  console.log(WrappedComponent);
-  if (isAuth) {
-    console.log("I'm in");
-    return (
-      <>
-        <WrappedComponent />
-      </>
-    );
-  } else {
-    console.log("I'm not in");
-    return <Login />;
+  console.log("isAuthorized => ", isAuthorized);
+  function WrapperComponent() {
+    return isAuthorized ? <WrappedComponent /> : <Redirect to="/login" />;
   }
-  //   function WrapperComponent({ ...props }) {
-  //     return <>{ ? <WrappedComponent /> : <Login />}</>;
-
-  //   }
-
-  //   if (logged) {
-  //     return <WrappedComponent/>;
-  //   } else {
-  //     history.push("/login");
-  //   }
+  return WrapperComponent;
 }
 
 export default withAuth;

@@ -4,6 +4,8 @@ import { Route, Switch } from "react-router-dom";
 //Components
 import RightMenu from "./components/RightMenu";
 
+import withAuth from "./hoc/withAuth.js";
+
 //Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -22,7 +24,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
         <Route path="/login" component={Login} />
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={withAuth(Home)} />
       </Switch>
     </>
   );
