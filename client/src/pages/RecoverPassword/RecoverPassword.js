@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "./reset-password.css";
+import "./styles.css";
 
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";

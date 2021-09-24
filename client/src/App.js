@@ -2,15 +2,12 @@ import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-//Components
-import RightMenu from "./components/RightMenu";
-
 //Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
-import ResetPassword from "./pages/ResetPassword";
+import ResetPassword from "./pages/RecoverPassword";
 
 //Redux actions
 import { getState } from "./redux/isAuthorized/actions";
@@ -42,7 +39,6 @@ function App() {
 
   return (
     <>
-      <RightMenu />
       <Switch>
         <Route path="/recover-password" component={ResetPassword} />
         <Route path="/register" component={Register} />
