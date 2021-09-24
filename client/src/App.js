@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 //Components
 import RightMenu from "./components/RightMenu";
-
-import withAuth from "./hoc/withAuth.js";
 
 //Pages
 import Home from "./pages/Home";
@@ -13,8 +12,33 @@ import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import ResetPassword from "./pages/ResetPassword";
 
+//Redux actions
+import { getState } from "./redux/isAuthorized/actions";
+
 function App() {
-  
+  // Redux State to get the authorization
+  const dispatch = useDispatch();
+  const isAuthorized = useSelector((state) => state.isAuthorized);
+
+  // Get the state of authorization
+  useEffect(() => {
+    dispatch(getState());
+  }, [dispatch]);
+
+  // To check the authorization state in console
+  if (isAuthorized.loaded) {
+    if (isAuthorized.value) console.log("Estás autorizado!");
+    else console.log("No estás autorizado!");
+  }
+
+  // Render a loading page while auth state is loading
+  if (!isAuthorized.loaded) {
+    return (
+      <main>
+        <h1>Loading...</h1>
+      </main>
+    );
+  }
 
   return (
     <>
@@ -24,7 +48,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
         <Route path="/login" component={Login} />
-        <Route exact path="/" component={withAuth(Home)} />
+        <Route exact path="/" component={Home} />
       </Switch>
     </>
   );

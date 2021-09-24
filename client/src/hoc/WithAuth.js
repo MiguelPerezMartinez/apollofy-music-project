@@ -1,38 +1,19 @@
 import React from "react";
-
-import { authenticationObserver } from "../services/firebase";
+import { useSelector } from "react-redux";
 
 import { Redirect } from "react-router-dom";
 
-// async function checkAuth() {
-//   await authenticationObserver((user) => {
-//     console.log(user);
-//     if (user) {
-//       console.log(user);
-//       return true;
-//     } else {
-//       console.log(user);
-//       return false;
-//     }
-//   });
-// }
-
-async function withAuth(WrappedComponent) {
-  let  isAuthorized = false;
-  authenticationObserver((user) => {
-    // console.log("hello",user);
-    if (user) {
-      // console.log(user);
-      isAuthorized = true;
-    } else {
-      // console.log(user);
-      isAuthorized = false;
-    }
-  });
-  console.log("isAuthorized => ", isAuthorized);
+function withAuth(WrappedComponent) {
   function WrapperComponent() {
-    return isAuthorized ? <WrappedComponent /> : <Redirect to="/login" />;
+    const isAuthorized = useSelector((state) => state.isAuthorized);
+
+    return (
+      <>
+        {isAuthorized.value ? <WrappedComponent /> : <Redirect to="/login" />}
+      </>
+    );
   }
+
   return WrapperComponent;
 }
 
