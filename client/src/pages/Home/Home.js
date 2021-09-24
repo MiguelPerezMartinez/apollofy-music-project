@@ -1,5 +1,6 @@
 import React from "react";
 
+//Hoc Authorization
 import withAuth from "../../hoc/withAuth.js";
 
 function Home() {

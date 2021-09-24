@@ -3,6 +3,9 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+//Hoc Authorization
+import withAuth from "../../hoc/withAuth.js";
+
 //Components
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 
@@ -73,4 +76,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default withAuth(Profile);
