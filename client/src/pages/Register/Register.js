@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
+
 import "./register.css";
+
+import Button from "../../components/Button";
 
 import { registerNewUser } from "../../services/firebase";
 import { registerInApi } from "../../services/api/index";
@@ -40,7 +43,7 @@ function Register() {
 
   return (
     <main className="gradient-background">
-      <div className="general-container login-register">
+      <div className="login-register">
         <SignNav />
         <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
         <form onSubmit={handleSubmit}>
@@ -95,7 +98,10 @@ function Register() {
             placeholder="Type password"
             handleChange={handleChange}
           />
-          <button type="submit">Sign Up</button>
+
+          <div className="login-register-button-centered">
+            <Button title="Register" />
+          </div>
         </form>
       </div>
     </main>

@@ -3,7 +3,12 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+import "./styles.css";
 import { getCurrentUser } from "../../services/api/index";
+
+//Components
+import RightMenu from "../../components/RightMenu";
+import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 
 function Profile() {
   const [currentUser, setCurrentUser] = useState("");
@@ -14,58 +19,201 @@ function Profile() {
     });
   }, []);
 
-  const handleSubmit = () => {};
+  const [editing, setEditing] = useState(false);
+  const [state, setState] = useState({
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+    birthday: "",
+    country: "",
+  });
 
-  // console.log(currentUser);
+  function handleEdit() {
+    editing === true ? setEditing(false) : setEditing(true);
+  }
+
+  function handleChange(e) {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log(state);
+  }
 
   return (
-    <main>
-      <Container>
-        <Row>
-          <Col
-            className="d-flex justify-content-center align-items-center"
-            xs={12}
-            md={2}
-            lg={2}
-          >
-            Image
-          </Col>
-          <Col xs={9} md={8} lg={8}>
-            <h1>Message</h1>
-          </Col>
-          <Col className="d-flex flex-row-reverse" xs={3} md={2} lg={2}>
-            <button>Button</button>
-          </Col>
-        </Row>
-        <Row className="mt-4">
-          <Col xs={12} md={12} lg={6}>
-            <div className="d-flex mb-2">
-              <div className="w-50"> Username:</div>
-              <div>{currentUser.username}</div>
-            </div>
-            <div className="d-flex mb-2">
-              <div className="w-50"> Email:</div>
-              <div>{currentUser.email}</div>
-            </div>
-          </Col>
-          <Col xs={12} md={12} lg={6}>
-            <div className="d-flex mb-2">
-              <div className="w-50"> Birthday:</div>
-              <div>Handsome_Jonathan</div>
-            </div>
-            <div className="d-flex mb-2">
-              <div className="w-50"> Country or Region:</div>
-              <div>Handsome_Jonathan</div>
-            </div>
-          </Col>
-        </Row>
-        <Row className="mt-2">
-          <Col className="d-flex justify-content-center">
-            <button onClick={handleSubmit}>EDIT PROFILE</button>
-          </Col>
-        </Row>
-      </Container>
-    </main>
+    <>
+      <RightMenu />
+      <main>
+        <Container>
+          <Row>
+            <Col className="profile-view-profile-image" xs={3} md={3} lg={3}>
+              <ProfileCircleIcon />
+            </Col>
+            <Col xs={8} md={6} lg={6}>
+              <h1>Message</h1>
+            </Col>
+            <Col className="d-flex flex-row-reverse" xs={1} md={3} lg={3}>
+              LOGOUT
+            </Col>
+          </Row>
+          <form onSubmit={handleSubmit}>
+            <Row className="mt-4">
+              <Col xs={12} md={12} lg={6}>
+                <Row>
+                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                    Username:
+                  </Col>
+                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                    {editing ? (
+                      <input
+                        type="text"
+                        name="username"
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      currentUser.username
+                    )}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                    First name:
+                  </Col>
+                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                    {editing ? (
+                      <input
+                        type="text"
+                        name="firstname"
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      currentUser.email
+                    )}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                    Last name:
+                  </Col>
+                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                    {editing ? (
+                      <input
+                        type="text"
+                        name="lastname"
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      "Handsome_Jonathan"
+                    )}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                    Email:
+                  </Col>
+                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                    {editing ? (
+                      <input type="text" name="email" onChange={handleChange} />
+                    ) : (
+                      "Handsome_Jonathan"
+                    )}
+                  </Col>
+                </Row>
+              </Col>
+              <Col xs={12} md={12} lg={6}>
+                <Row>
+                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                    Birthday:
+                  </Col>
+                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                    {editing ? (
+                      <input
+                        type="text"
+                        name="birthday"
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      "Handsome_Jonathan"
+                    )}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col
+                    xs={12}
+                    md={6}
+                    lg={6}
+                    className="w-50  profile-input-row"
+                  >
+                    Country or Region:
+                  </Col>
+                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                    {editing ? (
+                      <input
+                        type="text"
+                        name="country"
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      "Handsome_Jonathan"
+                    )}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col
+                    xs={12}
+                    md={6}
+                    lg={6}
+                    className="w-50  profile-input-row profile-input-row"
+                  >
+                    Password:
+                  </Col>
+                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                    ******
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+            {editing ? (
+              <>
+                <Row className="mt-2">
+                  <Col
+                    xs={12}
+                    md={6}
+                    lg={6}
+                    className="d-flex justify-content-center profile-input-row"
+                  >
+                    <button className="button">Save</button>
+                  </Col>
+                  <Col
+                    xs={12}
+                    md={6}
+                    lg={6}
+                    className="d-flex justify-content-center profile-input-row"
+                  >
+                    <button className="button" onClick={handleEdit}>
+                      Cancel
+                    </button>
+                  </Col>
+                </Row>
+              </>
+            ) : (
+              <Row className="mt-2">
+                <Col className="d-flex justify-content-center">
+                  <button className="button" onClick={handleEdit}>
+                    Edit profile info
+                  </button>
+                </Col>
+              </Row>
+            )}
+          </form>
+        </Container>
+      </main>
+    </>
   );
 }
 
