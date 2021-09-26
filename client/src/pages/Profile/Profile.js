@@ -1,3 +1,4 @@
+//Imports
 import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -6,13 +7,14 @@ import Col from "react-bootstrap/Col";
 import "./styles.css";
 import { getCurrentUser } from "../../services/api/index";
 
-//Components
+//Import components
 import RightMenu from "../../components/RightMenu";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 
 function Profile() {
   const [currentUser, setCurrentUser] = useState("");
 
+  //Load user
   useEffect(() => {
     getCurrentUser().then((response) => {
       setCurrentUser(response);
@@ -29,10 +31,12 @@ function Profile() {
     country: "",
   });
 
+  //Toggle editing fields
   function handleEdit() {
     editing === true ? setEditing(false) : setEditing(true);
   }
 
+  //Manage values of state properties
   function handleChange(e) {
     setState({
       ...state,
@@ -40,6 +44,7 @@ function Profile() {
     });
   }
 
+  //Update profile changes
   function handleSubmit(e) {
     e.preventDefault();
     console.log(state);

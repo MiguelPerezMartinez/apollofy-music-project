@@ -1,12 +1,14 @@
+//Imports
 import React, { useState } from "react";
 
 import "./styles.css";
 
+import { resetPassword } from "../../services/firebase";
+
+//Import components
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
 import Button from "../../components/Button";
-
-import { resetPassword } from "../../services/firebase";
 
 function ResetPassword() {
   const [state, setState] = useState({
@@ -15,6 +17,7 @@ function ResetPassword() {
 
   const [emailSent, setEmailSent] = useState(false);
 
+  //Manage state properties values
   const handleChange = (e) => {
     setState({
       ...state,
@@ -22,6 +25,7 @@ function ResetPassword() {
     });
   };
 
+  //Change password
   const handleSubmit = (e) => {
     e.preventDefault();
     resetPassword(state.email);

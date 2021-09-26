@@ -1,13 +1,15 @@
+//Imports
 import React, { useState } from "react";
-import Input from "../../components/Input";
-import SignNav from "../../components/SignNav";
 
 import "./register.css";
 
-import Button from "../../components/Button";
-
 import { registerNewUser } from "../../services/firebase";
 import { registerInApi } from "../../services/api/index";
+
+//Import components
+import Button from "../../components/Button";
+import Input from "../../components/Input";
+import SignNav from "../../components/SignNav";
 
 function Register() {
   const [registerData, setRegisterData] = useState({
@@ -19,6 +21,7 @@ function Register() {
     confirmPassword: "",
   });
 
+  //Manage values of state properties
   function handleChange(e) {
     setRegisterData({
       ...registerData,
@@ -26,6 +29,7 @@ function Register() {
     });
   }
 
+  //Register user on firebase and apiserver
   async function handleSubmit(e) {
     e.preventDefault();
     const { email, password, confirmPassword } = registerData;

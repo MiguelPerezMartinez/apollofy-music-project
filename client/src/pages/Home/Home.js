@@ -1,6 +1,7 @@
+//Imports
 import React from "react";
 
-//Components
+//Import components
 import RightMenu from "../../components/RightMenu";
 
 function Home() {
