@@ -93,11 +93,11 @@ async function getById(req, res) {
 //   }
 // }
 async function updateById(req, res) {
-  console.log("hello", req.body.id);
   const { id, ...bodyReq } = req.body;
-  console.log("id => ", id);
   try {
-    const dbResponse = await db.Users.findByIdAndUpdate(id, bodyReq, {
+    console.log("id => ", id);
+    console.log("bodyReq => ", bodyReq);
+    const dbResponse = await userModel.findByIdAndUpdate(id, bodyReq, {
       new: true,
     });
 
@@ -116,7 +116,7 @@ async function updateById(req, res) {
   } catch (error) {
     res.status(500).send({
       data: req.params.id,
-      error: error,
+      error: error.message,
     });
   }
 }
