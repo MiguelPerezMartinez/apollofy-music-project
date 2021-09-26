@@ -7,6 +7,8 @@ import Col from "react-bootstrap/Col";
 import "./styles.css";
 import { getCurrentUser } from "../../services/api/index";
 
+import { authenticationObserver } from "../../services/firebase";
+
 //Import components
 import RightMenu from "../../components/RightMenu";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
@@ -16,8 +18,14 @@ function Profile() {
 
   //Load user
   useEffect(() => {
-    getCurrentUser().then((response) => {
-      setCurrentUser(response);
+    authenticationObserver((user) => {
+      if (user) {
+        getCurrentUser().then((response) => {
+          setCurrentUser(response);
+        });
+      } else {
+        console.log("No estás logueado");
+      }
     });
   }, []);
 

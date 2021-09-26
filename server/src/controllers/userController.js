@@ -51,7 +51,78 @@ async function getById(req, res) {
   }
 }
 
+// async function updateUser(req, res, next) {
+//   console.log(req.body)
+//   try {
+//     var { pass, ...bodyReq } = req.body;
+//     if (pass) {
+//       pass = await encryptString(pass);
+//       bodyReq = { ...bodyReq, pass };
+//     }
+//     const dbResponse = await db.Users.findByIdAndUpdate(
+//       req.params.id,
+//       bodyReq,
+//       {
+//         new: true,
+//       },
+//     );
+
+//     if (!dbResponse) {
+//       res.status(400).send(
+//         generateResponse({
+//           data: null,
+//           error: "User ID doesn't exist",
+//         }),
+//       );
+//     }
+
+//     res.status(200).send(
+//       generateResponse({
+//         data: dbResponse,
+//       }),
+//     );
+//   } catch (error) {
+//     res.status(500).send(
+//       generateResponse({
+//         data: req.params.id,
+//         error: error,
+//       }),
+//     );
+
+//     next(error);
+//   }
+// }
+async function updateById(req, res) {
+  console.log("hello", req.body.id);
+  const { id, ...bodyReq } = req.body;
+  console.log("id => ", id);
+  try {
+    const dbResponse = await db.Users.findByIdAndUpdate(id, bodyReq, {
+      new: true,
+    });
+
+    if (!dbResponse) {
+      res.status(400).send(
+        generateResponse({
+          data: null,
+          error: "User ID doesn't exist",
+        }),
+      );
+    }
+
+    res.status(200).send({
+      data: dbResponse,
+    });
+  } catch (error) {
+    res.status(500).send({
+      data: req.params.id,
+      error: error,
+    });
+  }
+}
+
 module.exports = {
   register: register,
   getById: getById,
+  updateProfile: updateById,
 };

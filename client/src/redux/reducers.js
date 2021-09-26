@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import stringTestReducer from "./stringTest/reducer";
+import stringTestReducer from "./userData/reducer";
 
 const reducers = combineReducers({
   stringTest: stringTestReducer,
