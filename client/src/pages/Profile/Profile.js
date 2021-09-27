@@ -3,12 +3,11 @@ import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
 
 import "./styles.css";
-import { getCurrentUser } from "../../services/api/index";
+import { getCurrentUser, updateCurrentUser } from "../../services/api/index";
 
 import { authenticationObserver } from "../../services/firebase";
 
@@ -19,21 +18,9 @@ import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 function Profile() {
   const [currentUser, setCurrentUser] = useState("");
 
-  //Load user
-  useEffect(() => {
-    authenticationObserver((user) => {
-      if (user) {
-        getCurrentUser().then((response) => {
-          setCurrentUser(response);
-        });
-      } else {
-        console.log("No estás logueado");
-      }
-    });
-  }, []);
-
   const [editing, setEditing] = useState(false);
   const [state, setState] = useState({
+    id: "",
     firstname: "",
     lastname: "",
     username: "",
@@ -41,6 +28,20 @@ function Profile() {
     birthday: "",
     country: "",
   });
+
+  //Load user
+  useEffect(() => {
+    authenticationObserver((user) => {
+      if (user) {
+        getCurrentUser().then((response) => {
+          setState({ id: response._id });
+          setCurrentUser(response);
+        });
+      } else {
+        console.log("No estás logueado");
+      }
+    });
+  }, []);
 
   //Toggle editing fields
   function handleEdit() {
@@ -58,7 +59,8 @@ function Profile() {
   //Update profile changes
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(state);
+    updateCurrentUser(state);
+    console.log("objeto", state);
   }
 
   return (
