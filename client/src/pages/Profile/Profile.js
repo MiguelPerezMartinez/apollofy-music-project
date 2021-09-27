@@ -1,8 +1,8 @@
 //Imports
 import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Row, Col } from "react-bootstrap";
+
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
 import "./styles.css";
@@ -60,7 +60,7 @@ function Profile() {
   async function handleSubmit(e) {
     e.preventDefault();
     console.log("fitrbaseUpdateEmpty");
-    const firebase = await updateCurrentUser(state);
+    await updateCurrentUser(state);
     setCurrentUser(state);
     setEditing(false);
   }
@@ -75,20 +75,21 @@ function Profile() {
               <ProfileCircleIcon />
             </Col>
             <Col xs={8} md={6} lg={6}>
-              <h1>Message</h1>
+              <h1>Welcome {currentUser.username}</h1>
             </Col>
             <Col className="d-flex flex-row-reverse" xs={1} md={3} lg={3}>
               LOGOUT
             </Col>
           </Row>
+          <div className="xl-separator" />
           <form onSubmit={handleSubmit}>
-            <Row className="mt-4">
+            <Row className="mt-4 general-container">
               <Col xs={12} md={12} lg={6}>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     Username:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
                       <Input
                         type="text"
@@ -103,10 +104,10 @@ function Profile() {
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     First name:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
                       <Input
                         type="text"
@@ -121,10 +122,10 @@ function Profile() {
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     Last name:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
                       <Input
                         type="text"
@@ -139,10 +140,10 @@ function Profile() {
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     Email:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
                       <Input
                         type="email"
@@ -159,10 +160,10 @@ function Profile() {
               </Col>
               <Col xs={12} md={12} lg={6}>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     Birthday:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
                       <Input
                         type="text"
@@ -177,15 +178,10 @@ function Profile() {
                   </Col>
                 </Row>
                 <Row>
-                  <Col
-                    xs={12}
-                    md={6}
-                    lg={6}
-                    className="w-50  profile-input-row"
-                  >
+                  <Col xs={6} md={6} lg={6} className="w-50  profile-input-row">
                     Country or Region:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
                       <Input
                         type="text"
@@ -201,19 +197,20 @@ function Profile() {
                 </Row>
                 <Row>
                   <Col
-                    xs={12}
+                    xs={6}
                     md={6}
                     lg={6}
                     className="w-50  profile-input-row profile-input-row"
                   >
                     Password:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     ******
                   </Col>
                 </Row>
               </Col>
             </Row>
+            <div className="m-separator" />
             {editing ? (
               <>
                 <Row className="mt-2">
