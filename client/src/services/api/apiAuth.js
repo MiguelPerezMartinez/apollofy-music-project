@@ -54,9 +54,9 @@ export async function updateCurrentUser(state) {
   const { id, ...bodyReq } = state;
   const { email } = bodyReq;
   const userToken = await getCurrentUserToken();
-  const userId = await getCurrentUserId();
-  if (email != "") {
+  // const userId = await getCurrentUserId();
+  if (email !== "") {
     await firebaseEmailUpdate(email);
+    await updateById(id, userToken, bodyReq);
   }
-  await updateById(id, userToken, bodyReq);
 }

@@ -86,10 +86,10 @@ function Profile() {
             <Row className="mt-4 general-container">
               <Col xs={12} md={12} lg={6}>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     Username:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
                       <Input
                         type="text"
@@ -104,10 +104,10 @@ function Profile() {
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     First name:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
                       <Input
                         type="text"
@@ -122,10 +122,10 @@ function Profile() {
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     Last name:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
                       <Input
                         type="text"
@@ -140,10 +140,10 @@ function Profile() {
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     Email:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
                       <Input
                         type="email"
@@ -160,10 +160,10 @@ function Profile() {
               </Col>
               <Col xs={12} md={12} lg={6}>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     Birthday:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
                       <Input
                         type="text"
@@ -178,15 +178,10 @@ function Profile() {
                   </Col>
                 </Row>
                 <Row>
-                  <Col
-                    xs={12}
-                    md={6}
-                    lg={6}
-                    className="w-50  profile-input-row"
-                  >
+                  <Col xs={6} md={6} lg={6} className="w-50  profile-input-row">
                     Country or Region:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
                       <Input
                         type="text"
@@ -202,14 +197,14 @@ function Profile() {
                 </Row>
                 <Row>
                   <Col
-                    xs={12}
+                    xs={6}
                     md={6}
                     lg={6}
                     className="w-50  profile-input-row profile-input-row"
                   >
                     Password:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     ******
                   </Col>
                 </Row>
