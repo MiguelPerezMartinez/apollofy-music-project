@@ -78,7 +78,7 @@ function Profile() {
           </Row>
           <div className="xl-separator" />
           <form onSubmit={handleSubmit}>
-            <Row className="mt-4" className="general-container">
+            <Row className="mt-4 general-container">
               <Col xs={12} md={12} lg={6}>
                 <Row>
                   <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">

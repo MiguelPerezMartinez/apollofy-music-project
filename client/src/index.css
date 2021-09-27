@@ -16,7 +16,7 @@ body {
 }
 
 main {
-  /* background-color: black; */
+  padding-top: 2rem;
   background: linear-gradient(var(--blue), black);
   width: 100vw;
   height: 100vh;
