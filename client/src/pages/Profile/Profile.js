@@ -1,7 +1,7 @@
 //Imports
 import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
-import {Row, Col} from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
@@ -70,7 +70,7 @@ function Profile() {
               <ProfileCircleIcon />
             </Col>
             <Col xs={8} md={6} lg={6}>
-              <h1>Message</h1>
+              <h1>Welcome {currentUser.username}</h1>
             </Col>
             <Col className="d-flex flex-row-reverse" xs={1} md={3} lg={3}>
               LOGOUT

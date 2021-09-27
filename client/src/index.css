@@ -16,13 +16,14 @@ body {
 }
 
 main {
-  background-color: black;
+  /* background-color: black; */
+  background: linear-gradient(var(--blue), black);
   width: 100vw;
   height: 100vh;
 }
 
 .general-container {
-  background-color: var(--main-container-color);
+  background-color: var(--less-main-container-color);
   border-radius: 0.5rem;
   padding: 0.5rem;
 }
