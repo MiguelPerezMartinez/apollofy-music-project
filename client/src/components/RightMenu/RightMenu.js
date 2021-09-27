@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { logOut } from "../../services/firebase";
@@ -13,11 +13,7 @@ export default function RightMenu() {
   const page = array[array.length - 1];
 
   return (
-    <aside
-      className={
-        page === "login" || page === "register" ? "display-none" : "right-menu"
-      }
-    >
+    <aside className="right-menu">
       <div>
         <Link to="/profile" className="right-menu-row">
           <ProfileCircleIcon />

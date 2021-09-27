@@ -23,10 +23,24 @@ main {
 
 .general-container {
   background-color: var(--main-container-color);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
 }
 
 .gradient-background {
   background: radial-gradient(var(--purple) 0%, #342a5c 20%, rgb(0, 0, 0) 90%);
+}
+
+.xl-separator {
+  padding: 2rem;
+}
+
+.l-separator {
+  padding: 1rem;
+}
+
+.m-separator {
+  padding: 0.5rem;
 }
 
 h1 {

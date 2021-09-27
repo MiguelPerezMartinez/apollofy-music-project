@@ -52,8 +52,9 @@ function Profile() {
               LOGOUT
             </Col>
           </Row>
+          <div className="xl-separator" />
           <form onSubmit={handleSubmit}>
-            <Row className="mt-4">
+            <Row className="mt-4" className="general-container">
               <Col xs={12} md={12} lg={6}>
                 <Row>
                   <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
@@ -169,6 +170,7 @@ function Profile() {
                 </Row>
               </Col>
             </Row>
+            <div className="m-separator" />
             {editing ? (
               <>
                 <Row className="mt-2">
