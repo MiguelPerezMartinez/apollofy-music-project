@@ -1,8 +1,16 @@
+//Imports
 import React from "react";
+
+//Hoc Authorization
+import withAuth from "../../hoc/withAuth";
+
+//Components
+import RightMenu from "../../components/RightMenu";
 
 function Home() {
   return (
     <>
+      <RightMenu />
       <main>
         <h1>HOME</h1>
         <h2>Songs</h2>
@@ -13,4 +21,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default withAuth(Home);

@@ -1,26 +1,26 @@
 //Imports
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { logIn } from "../../services/firebase";
 
-import "./login.css";
-
+import "./styles.css";
 import { Row, Col } from "react-bootstrap";
 //Import components
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
 import Button from "../../components/Button";
 
+import { resetPassword } from "../../services/firebase";
+
 //Hoc No Authorization
 import withoutAuth from "../../hoc/withoutAuth.js";
 
-function Login() {
+function ResetPassword() {
   const [state, setState] = useState({
     email: "",
-    password: "",
   });
 
-  //Manage values of state properties
+  const [emailSent, setEmailSent] = useState(false);
+
+  //Manage state properties values
   const handleChange = (e) => {
     setState({
       ...state,
@@ -28,49 +28,40 @@ function Login() {
     });
   };
 
-  //Sign in with user email and password
+  //Change password
   const handleSubmit = (e) => {
     e.preventDefault();
-    logIn(state.email, state.password);
+    resetPassword(state.email);
+    setEmailSent(true);
   };
 
   return (
-    <main className="login-main gradient-background">
+    <main className="reset-password gradient-background">
       <Row>
         <Col xs={12} md={6} className="login-register">
           <SignNav />
-          <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+
+          <h1 className="h3 mb-3 fw-normal">
+            Insert your email to reset the password
+          </h1>
           <form onSubmit={handleSubmit}>
             <Input
               type="email"
               name="email"
               id="email"
               label="Email"
+              placeholder="Your email"
               value={state.email}
-              placeholder="Type email"
               handleChange={handleChange}
             />
 
-            <Input
-              type="password"
-              name="password"
-              id="password"
-              label="Password"
-              value={state.password}
-              placeholder="Type password"
-              handleChange={handleChange}
-            />
-            <Link to="/recover-password">
-              <p className="mb-3 fw-normal">I have forgotten my password</p>
-            </Link>
-            <div className="login-register-button-centered">
-              <Button title="Login" />
-            </div>
+            <Button title="Send email" />
           </form>
+          {emailSent && <div>Email sent, please check your email.</div>}
         </Col>
       </Row>
     </main>
   );
 }
 
-export default withoutAuth(Login);
+export default withoutAuth(ResetPassword);

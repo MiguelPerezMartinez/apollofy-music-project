@@ -1,13 +1,19 @@
+//Imports
 import React, { useState } from "react";
-import Input from "../../components/Input";
-import SignNav from "../../components/SignNav";
 
 import "./register.css";
 
-import Button from "../../components/Button";
-
 import { registerNewUser } from "../../services/firebase";
 import { registerInApi } from "../../services/api/index";
+
+//Import components
+import { Row, Col } from "react-bootstrap";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
+import SignNav from "../../components/SignNav";
+
+//Hoc No Authorization
+import withoutAuth from "../../hoc/withoutAuth.js";
 
 function Register() {
   const [registerData, setRegisterData] = useState({
@@ -19,6 +25,7 @@ function Register() {
     confirmPassword: "",
   });
 
+  //Manage values of state properties
   function handleChange(e) {
     setRegisterData({
       ...registerData,
@@ -26,6 +33,7 @@ function Register() {
     });
   }
 
+  //Register user on firebase and apiserver
   async function handleSubmit(e) {
     e.preventDefault();
     const { email, password, confirmPassword } = registerData;
@@ -43,69 +51,75 @@ function Register() {
 
   return (
     <main className="gradient-background">
-      <div className="login-register">
-        <SignNav />
-        <h1 className="h3 mb-3 mt-2 fw-normal">Please sign up</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="register-first-last-name">
+      <Row>
+        <Col xs={12} md={6} className="login-register">
+          <SignNav />
+          <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
+          <form onSubmit={handleSubmit}>
+            <Row>
+              <Col xs={12} md={6}>
+                <Input
+                  type="text"
+                  id="firstname"
+                  label="Firstname"
+                  value={registerData.firstname}
+                  placeholder="Type firstname"
+                  handleChange={handleChange}
+                />
+              </Col>
+              <Col xs={12} md={6}>
+                <Input
+                  type="text"
+                  id="lastname"
+                  label="Lastname"
+                  value={registerData.lastname}
+                  placeholder="Type lastname"
+                  handleChange={handleChange}
+                />
+              </Col>
+            </Row>
             <Input
               type="text"
-              id="firstname"
-              label="Firstname"
-              value={registerData.firstname}
-              placeholder="Type firstname"
+              id="username"
+              label="Username"
+              value={registerData.username}
+              placeholder="Type username"
               handleChange={handleChange}
             />
             <Input
-              type="text"
-              id="lastname"
-              label="Lastname"
-              value={registerData.lastname}
-              placeholder="Type lastname"
+              type="email"
+              id="email"
+              label="Email"
+              value={registerData.email}
+              placeholder="Type email"
               handleChange={handleChange}
             />
-          </div>
-          <Input
-            type="text"
-            id="username"
-            label="Username"
-            value={registerData.username}
-            placeholder="Type username"
-            handleChange={handleChange}
-          />
-          <Input
-            type="email"
-            id="email"
-            label="Email"
-            value={registerData.email}
-            placeholder="Type email"
-            handleChange={handleChange}
-          />
-          <Input
-            type="password"
-            id="password"
-            label="Password"
-            value={registerData.password}
-            placeholder="Type password"
-            handleChange={handleChange}
-          />
-          <Input
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            label="Confirm password"
-            value={registerData.confirmPassword}
-            placeholder="Type password"
-            handleChange={handleChange}
-          />
+            <Input
+              type="password"
+              id="password"
+              label="Password"
+              value={registerData.password}
+              placeholder="Type password"
+              handleChange={handleChange}
+            />
+            <Input
+              type="password"
+              name="confirmPassword"
+              id="confirmPassword"
+              label="Confirm password"
+              value={registerData.confirmPassword}
+              placeholder="Type password"
+              handleChange={handleChange}
+            />
 
-          <div className="login-register-button-centered">
-            <Button title="Register" />
-          </div>
-        </form>
-      </div>
+            <div className="login-register-button-centered">
+              <Button title="Register" />
+            </div>
+          </form>
+        </Col>
+      </Row>
     </main>
   );
 }
 
-export default Register;
+export default withoutAuth(Register);

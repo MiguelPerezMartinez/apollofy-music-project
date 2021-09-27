@@ -1,5 +1,11 @@
 import axios from "axios";
 
+import {
+  getCurrentUserToken,
+  getCurrentUserId,
+  firebaseEmailUpdate,
+} from "../firebase";
+
 export async function registerInApi(userData, uid) {
   return axios({
     method: "POST",
@@ -12,4 +18,45 @@ export async function registerInApi(userData, uid) {
     //   Authorization: `Bearer ${userToken}`,
     // },
   });
+}
+
+export async function getById(uid, userToken) {
+  return axios({
+    method: "GET",
+    url: `http://localhost:4000/users/get-user/${uid}`,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
+
+export async function getCurrentUser() {
+  const userToken = await getCurrentUserToken();
+  const userId = await getCurrentUserId();
+  const { data } = await getById(userId, userToken);
+  const { currentUser } = data;
+  return currentUser;
+}
+
+export async function updateById(id, userToken, bodyReq) {
+  return axios({
+    method: "PATCH",
+    url: `http://localhost:4000/users/update-user/${id}`,
+    data: bodyReq,
+
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
+
+export async function updateCurrentUser(state) {
+  const { id, ...bodyReq } = state;
+  const { email } = bodyReq;
+  const userToken = await getCurrentUserToken();
+  // const userId = await getCurrentUserId();
+  if (email !== "") {
+    await firebaseEmailUpdate(email);
+    await updateById(id, userToken, bodyReq);
+  }
 }
