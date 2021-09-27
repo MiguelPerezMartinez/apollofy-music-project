@@ -5,6 +5,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  updateEmail,
 } from "firebase/auth";
 
 export async function registerNewUser(email, password) {
@@ -67,4 +68,21 @@ export async function getCurrentUserToken() {
 export async function getCurrentUserId() {
   const auth = getAuth();
   return auth.currentUser.uid;
+}
+
+export async function firebaseUpdate(email) {
+  // A post entry.
+  const auth = getAuth();
+  console.log(email);
+
+  updateEmail(auth.currentUser, email)
+    .then(() => {
+      console.log("Profile updated!");
+      // ...
+    })
+    .catch((error) => {
+      console.log(error.message);
+      // An error occurred
+      // ...
+    });
 }

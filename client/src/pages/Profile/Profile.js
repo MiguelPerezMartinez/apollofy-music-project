@@ -9,7 +9,10 @@ import withAuth from "../../hoc/withAuth";
 import "./styles.css";
 import { getCurrentUser, updateCurrentUser } from "../../services/api/index";
 
-import { authenticationObserver } from "../../services/firebase";
+import {
+  authenticationObserver,
+  firebaseUpdate,
+} from "../../services/firebase";
 
 //Import components
 import RightMenu from "../../components/RightMenu";
@@ -57,10 +60,12 @@ function Profile() {
   }
 
   //Update profile changes
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    updateCurrentUser(state);
-    console.log("objeto", state);
+    console.log("fitrbaseUpdateEmpty");
+    const firebase = await updateCurrentUser(state);
+
+    console.log("fitrbaseUpdate", firebase);
   }
 
   return (
