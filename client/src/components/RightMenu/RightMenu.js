@@ -46,13 +46,12 @@ export default function RightMenu() {
           <div className="right-menu-row-title">Home</div>
         </Link>
       </div>
-      <div>
+      <div onClick={logOut}>
         <div className="right-menu-row">
           <img
             src="./assets/img/logout.svg"
             alt="logout"
             className="right-menu-icon"
-            onClick={logOut}
           />
           <div className="right-menu-row-title">Logout</div>
         </div>
