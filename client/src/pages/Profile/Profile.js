@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+//Imports
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Row, Col } from "react-bootstrap";
 
+//Hoc Authorization
+import withAuth from "../../hoc/withAuth";
 import "./styles.css";
+import { getCurrentUser, updateCurrentUser } from "../../services/api/index";
 
-//Components
+//Import components
 import RightMenu from "../../components/RightMenu";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
+import Input from "../../components/Input";
 
 function Profile() {
+  const [currentUser, setCurrentUser] = useState("");
+
   const [editing, setEditing] = useState(false);
   const [state, setState] = useState({
+    id: "",
     firstname: "",
     lastname: "",
     username: "",
@@ -20,10 +27,28 @@ function Profile() {
     country: "",
   });
 
+  //Load user
+  useEffect(() => {
+    getCurrentUser().then((response) => {
+      setState({
+        id: response._id,
+        firstname: response.firstname,
+        lastname: response.lastname,
+        username: response.username,
+        email: response.email,
+        birthday: response.birthday,
+        country: response.country,
+      });
+      setCurrentUser(response);
+    });
+  }, []);
+
+  //Toggle editing fields
   function handleEdit() {
     editing === true ? setEditing(false) : setEditing(true);
   }
 
+  //Manage values of state properties
   function handleChange(e) {
     setState({
       ...state,
@@ -31,9 +56,13 @@ function Profile() {
     });
   }
 
-  function handleSubmit(e) {
+  //Update profile changes
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log(state);
+    console.log("fitrbaseUpdateEmpty");
+    await updateCurrentUser(state);
+    setCurrentUser(state);
+    setEditing(false);
   }
 
   return (
@@ -46,129 +75,142 @@ function Profile() {
               <ProfileCircleIcon />
             </Col>
             <Col xs={8} md={6} lg={6}>
-              <h1>Message</h1>
+              <h1>Welcome {currentUser.username}</h1>
             </Col>
             <Col className="d-flex flex-row-reverse" xs={1} md={3} lg={3}>
               LOGOUT
             </Col>
           </Row>
+          <div className="xl-separator" />
           <form onSubmit={handleSubmit}>
-            <Row className="mt-4">
+            <Row className="mt-4 general-container">
               <Col xs={12} md={12} lg={6}>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     Username:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
-                      <input
+                      <Input
                         type="text"
-                        name="username"
-                        onChange={handleChange}
+                        id="username"
+                        placeholder="username"
+                        value={state.username}
+                        handleChange={handleChange}
                       />
                     ) : (
-                      "Handsome_Jonathan"
+                      currentUser.username
                     )}
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     First name:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
-                      <input
+                      <Input
                         type="text"
-                        name="firstname"
-                        onChange={handleChange}
+                        id="firstname"
+                        placeholder="firstname"
+                        value={state.firstname}
+                        handleChange={handleChange}
                       />
                     ) : (
-                      "Handsome_Jonathan"
+                      currentUser.firstname
                     )}
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     Last name:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
-                      <input
+                      <Input
                         type="text"
-                        name="lastname"
-                        onChange={handleChange}
+                        id="lastname"
+                        placeholder="lastname"
+                        value={state.lastname}
+                        handleChange={handleChange}
                       />
                     ) : (
-                      "Handsome_Jonathan"
+                      currentUser.lastname
                     )}
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     Email:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
-                      <input type="text" name="email" onChange={handleChange} />
+                      <Input
+                        type="email"
+                        id="email"
+                        placeholder="email"
+                        value={state.email}
+                        handleChange={handleChange}
+                      />
                     ) : (
-                      "Handsome_Jonathan"
+                      currentUser.email
                     )}
                   </Col>
                 </Row>
               </Col>
               <Col xs={12} md={12} lg={6}>
                 <Row>
-                  <Col xs={12} md={6} lg={6} className="w-50 profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="w-50 profile-input-row">
                     Birthday:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
-                      <input
+                      <Input
                         type="text"
-                        name="birthday"
-                        onChange={handleChange}
+                        id="birthday"
+                        placeholder="birthday"
+                        value={state.birthday}
+                        handleChange={handleChange}
                       />
                     ) : (
-                      "Handsome_Jonathan"
+                      currentUser.birthday
                     )}
                   </Col>
                 </Row>
                 <Row>
-                  <Col
-                    xs={12}
-                    md={6}
-                    lg={6}
-                    className="w-50  profile-input-row"
-                  >
+                  <Col xs={6} md={6} lg={6} className="w-50  profile-input-row">
                     Country or Region:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     {editing ? (
-                      <input
+                      <Input
                         type="text"
-                        name="country"
-                        onChange={handleChange}
+                        id="country"
+                        placeholder="country"
+                        value={state.country}
+                        handleChange={handleChange}
                       />
                     ) : (
-                      "Handsome_Jonathan"
+                      currentUser.country
                     )}
                   </Col>
                 </Row>
                 <Row>
                   <Col
-                    xs={12}
+                    xs={6}
                     md={6}
                     lg={6}
                     className="w-50  profile-input-row profile-input-row"
                   >
                     Password:
                   </Col>
-                  <Col xs={12} md={6} lg={6} className="profile-input-row">
+                  <Col xs={6} md={6} lg={6} className="profile-input-row">
                     ******
                   </Col>
                 </Row>
               </Col>
             </Row>
+            <div className="m-separator" />
             {editing ? (
               <>
                 <Row className="mt-2">
@@ -208,4 +250,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default withAuth(Profile);

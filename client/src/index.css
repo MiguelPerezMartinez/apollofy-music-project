@@ -16,17 +16,36 @@ body {
 }
 
 main {
-  background-color: black;
+  padding-top: 2rem;
+  background: linear-gradient(var(--blue), black);
   width: 100vw;
   height: 100vh;
 }
 
 .general-container {
-  background-color: var(--main-container-color);
+  background-color: var(--less-main-container-color);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
 }
 
 .gradient-background {
-  background: radial-gradient(var(--purple) 0%, #342a5c 20%, rgb(0, 0, 0) 90%);
+  background: radial-gradient(
+    var(--blue) 0%,
+    var(--dark-blue) 40%,
+    rgb(0, 0, 0) 90%
+  );
+}
+
+.xl-separator {
+  padding: 2rem;
+}
+
+.l-separator {
+  padding: 1rem;
+}
+
+.m-separator {
+  padding: 0.5rem;
 }
 
 h1 {
