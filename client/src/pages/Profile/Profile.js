@@ -5,18 +5,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
-
 import "./styles.css";
 import { getCurrentUser, updateCurrentUser } from "../../services/api/index";
-
-import {
-  authenticationObserver,
-  firebaseUpdate,
-} from "../../services/firebase";
 
 //Import components
 import RightMenu from "../../components/RightMenu";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
+import Input from "../../components/Input";
 
 function Profile() {
   const [currentUser, setCurrentUser] = useState("");
@@ -34,15 +29,17 @@ function Profile() {
 
   //Load user
   useEffect(() => {
-    authenticationObserver((user) => {
-      if (user) {
-        getCurrentUser().then((response) => {
-          setState({ id: response._id });
-          setCurrentUser(response);
-        });
-      } else {
-        console.log("No estás logueado");
-      }
+    getCurrentUser().then((response) => {
+      setState({
+        id: response._id,
+        firstname: response.firstname,
+        lastname: response.lastname,
+        username: response.username,
+        email: response.email,
+        birthday: response.birthday,
+        country: response.country,
+      });
+      setCurrentUser(response);
     });
   }, []);
 
@@ -64,8 +61,8 @@ function Profile() {
     e.preventDefault();
     console.log("fitrbaseUpdateEmpty");
     const firebase = await updateCurrentUser(state);
-
-    console.log("fitrbaseUpdate", firebase);
+    setCurrentUser(state);
+    setEditing(false);
   }
 
   return (
@@ -93,10 +90,12 @@ function Profile() {
                   </Col>
                   <Col xs={12} md={6} lg={6} className="profile-input-row">
                     {editing ? (
-                      <input
+                      <Input
                         type="text"
-                        name="username"
-                        onChange={handleChange}
+                        id="username"
+                        placeholder="username"
+                        value={state.username}
+                        handleChange={handleChange}
                       />
                     ) : (
                       currentUser.username
@@ -109,13 +108,15 @@ function Profile() {
                   </Col>
                   <Col xs={12} md={6} lg={6} className="profile-input-row">
                     {editing ? (
-                      <input
+                      <Input
                         type="text"
-                        name="firstname"
-                        onChange={handleChange}
+                        id="firstname"
+                        placeholder="firstname"
+                        value={state.firstname}
+                        handleChange={handleChange}
                       />
                     ) : (
-                      currentUser.email
+                      currentUser.firstname
                     )}
                   </Col>
                 </Row>
@@ -125,13 +126,15 @@ function Profile() {
                   </Col>
                   <Col xs={12} md={6} lg={6} className="profile-input-row">
                     {editing ? (
-                      <input
+                      <Input
                         type="text"
-                        name="lastname"
-                        onChange={handleChange}
+                        id="lastname"
+                        placeholder="lastname"
+                        value={state.lastname}
+                        handleChange={handleChange}
                       />
                     ) : (
-                      "Handsome_Jonathan"
+                      currentUser.lastname
                     )}
                   </Col>
                 </Row>
@@ -141,9 +144,15 @@ function Profile() {
                   </Col>
                   <Col xs={12} md={6} lg={6} className="profile-input-row">
                     {editing ? (
-                      <input type="text" name="email" onChange={handleChange} />
+                      <Input
+                        type="email"
+                        id="email"
+                        placeholder="email"
+                        value={state.email}
+                        handleChange={handleChange}
+                      />
                     ) : (
-                      "Handsome_Jonathan"
+                      currentUser.email
                     )}
                   </Col>
                 </Row>
@@ -155,13 +164,15 @@ function Profile() {
                   </Col>
                   <Col xs={12} md={6} lg={6} className="profile-input-row">
                     {editing ? (
-                      <input
+                      <Input
                         type="text"
-                        name="birthday"
-                        onChange={handleChange}
+                        id="birthday"
+                        placeholder="birthday"
+                        value={state.birthday}
+                        handleChange={handleChange}
                       />
                     ) : (
-                      "Handsome_Jonathan"
+                      currentUser.birthday
                     )}
                   </Col>
                 </Row>
@@ -176,13 +187,15 @@ function Profile() {
                   </Col>
                   <Col xs={12} md={6} lg={6} className="profile-input-row">
                     {editing ? (
-                      <input
+                      <Input
                         type="text"
-                        name="country"
-                        onChange={handleChange}
+                        id="country"
+                        placeholder="country"
+                        value={state.country}
+                        handleChange={handleChange}
                       />
                     ) : (
-                      "Handsome_Jonathan"
+                      currentUser.country
                     )}
                   </Col>
                 </Row>

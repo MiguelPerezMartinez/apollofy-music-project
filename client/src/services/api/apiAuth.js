@@ -3,7 +3,7 @@ import axios from "axios";
 import {
   getCurrentUserToken,
   getCurrentUserId,
-  firebaseUpdate,
+  firebaseEmailUpdate,
 } from "../firebase";
 
 export async function registerInApi(userData, uid) {
@@ -35,7 +35,6 @@ export async function getCurrentUser() {
   const userId = await getCurrentUserId();
   const { data } = await getById(userId, userToken);
   const { currentUser } = data;
-  console.log("apiAuth ", currentUser);
   return currentUser;
 }
 
@@ -57,12 +56,7 @@ export async function updateCurrentUser(state) {
   const userToken = await getCurrentUserToken();
   const userId = await getCurrentUserId();
   if (email != "") {
-    await firebaseUpdate(email);
+    await firebaseEmailUpdate(email);
   }
-  console.log("firbaseUpdate");
-  const { data } = await updateById(id, userToken, bodyReq);
-  console.log("ApiUpdate");
-  // const { currentUser } = data;
-  // const { username, email } = currentUser;
-  // console.log("usr id", userId);
+  await updateById(id, userToken, bodyReq);
 }

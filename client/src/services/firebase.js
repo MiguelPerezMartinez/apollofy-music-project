@@ -26,8 +26,6 @@ export function logIn(email, password) {
       console.log(user);
     })
     .catch((error) => {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
       console.error("Log in failed: ", error.message);
     });
 }
@@ -50,8 +48,6 @@ export function resetPassword(email) {
       console.log("Password reset email sent!: ", email);
     })
     .catch((error) => {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
       console.error("Password reset email not sent!: ", error.message);
     });
 }
@@ -61,7 +57,6 @@ export async function getCurrentUserToken() {
   console.log("await", auth);
   console.log(auth.currentUser);
   const token = auth.currentUser.getIdToken();
-  // return auth.currentUser.getIdToken();
   return token;
 }
 
@@ -70,19 +65,14 @@ export async function getCurrentUserId() {
   return auth.currentUser.uid;
 }
 
-export async function firebaseUpdate(email) {
-  // A post entry.
+export async function firebaseEmailUpdate(email) {
   const auth = getAuth();
-  console.log(email);
 
   updateEmail(auth.currentUser, email)
     .then(() => {
       console.log("Profile updated!");
-      // ...
     })
     .catch((error) => {
       console.log(error.message);
-      // An error occurred
-      // ...
     });
 }
