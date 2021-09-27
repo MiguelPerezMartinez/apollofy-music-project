@@ -11,6 +11,9 @@ import Button from "../../components/Button";
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
 
+//Hoc No Authorization
+import withoutAuth from "../../hoc/withoutAuth.js";
+
 function Register() {
   const [registerData, setRegisterData] = useState({
     firstname: "",
@@ -112,4 +115,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default withoutAuth(Register);

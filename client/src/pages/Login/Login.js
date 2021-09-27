@@ -11,6 +11,9 @@ import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
 import Button from "../../components/Button";
 
+//Hoc No Authorization
+import withoutAuth from "../../hoc/withoutAuth.js";
+
 function Login() {
   const [state, setState] = useState({
     email: "",
@@ -68,4 +71,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default withoutAuth(Login);

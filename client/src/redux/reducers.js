@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import stringTestReducer from "./userData/reducer";
+import isAuthorizedReducer from "./isAuthorized/reducer";
 
 const reducers = combineReducers({
-  stringTest: stringTestReducer,
+  isAuthorized: isAuthorizedReducer,
 });
 
 export default reducers;

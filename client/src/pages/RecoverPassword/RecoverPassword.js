@@ -3,12 +3,15 @@ import React, { useState } from "react";
 
 import "./styles.css";
 
-import { resetPassword } from "../../services/firebase";
-
 //Import components
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
 import Button from "../../components/Button";
+
+import { resetPassword } from "../../services/firebase";
+
+//Hoc No Authorization
+import withoutAuth from "../../hoc/withoutAuth.js";
 
 function ResetPassword() {
   const [state, setState] = useState({
@@ -58,4 +61,4 @@ function ResetPassword() {
   );
 }
 
-export default ResetPassword;
+export default withoutAuth(ResetPassword);
