@@ -1,12 +1,18 @@
+//Imports
 import React, { useState } from "react";
 
 import "./login.css";
 
+import { logIn } from "../../services/firebase";
+import { Link } from "react-router-dom";
+
+//Import components
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
 import Button from "../../components/Button";
-import { logIn } from "../../services/firebase";
-import { Link } from "react-router-dom";
+
+//Hoc No Authorization
+import withoutAuth from "../../hoc/withoutAuth.js";
 
 function Login() {
   const [state, setState] = useState({
@@ -14,6 +20,7 @@ function Login() {
     password: "",
   });
 
+  //Manage values of state properties 
   const handleChange = (e) => {
     setState({
       ...state,
@@ -21,6 +28,7 @@ function Login() {
     });
   };
 
+  //Sign in with user email and password
   const handleSubmit = (e) => {
     e.preventDefault();
     logIn(state.email, state.password);
@@ -63,4 +71,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default withoutAuth(Login);

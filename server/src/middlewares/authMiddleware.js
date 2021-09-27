@@ -1,4 +1,4 @@
-const { auth } = require("../services/firebase");
+const { auth } = require("../services/firebase/firebase");
 
 async function authMiddleware(req, res, next) {
   if (
@@ -8,11 +8,12 @@ async function authMiddleware(req, res, next) {
     const token = req.headers.authorization.substr(7);
     try {
       const userClaims = await auth.verifyIdToken(token);
-      const { email, uid } = userClaims;
-      req.user = {
-        email: email,
-        firebase_id: uid,
-      };
+      console.log(userClaims);
+      // const { email, uid } = userClaims;
+      // req.user = {
+      //   email: email,
+      //   firebase_id: uid,
+      // };
       next();
     } catch (error) {
       next(error);

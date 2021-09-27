@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 //Pages
 import Home from "./pages/Home";
@@ -8,23 +9,33 @@ import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import ResetPassword from "./pages/RecoverPassword";
 
-import { authenticationObserver } from "./services/firebase";
+//Redux actions
+import { getState } from "./redux/isAuthorized/actions";
 
 function App() {
-  // Mover a un HoC -----------------------------------
-  // const history = useHistory();
+  // Redux State to get the authorization
+  const dispatch = useDispatch();
+  const isAuthorized = useSelector((state) => state.isAuthorized);
+
+  // Get the state of authorization
   useEffect(() => {
-    authenticationObserver((user) => {
-      if (user) {
-        // history.push("/");
-        console.log("Estás logueado");
-      } else {
-        // history.push("/login");
-        console.log("No estás logueado");
-      }
-    });
-  }, []);
-  // ---------------------------------------------------
+    dispatch(getState());
+  }, [dispatch]);
+
+  // To check the authorization state in console
+  if (isAuthorized.loaded) {
+    if (isAuthorized.value) console.log("Estás autorizado!");
+    else console.log("No estás autorizado!");
+  }
+
+  // Render a loading page while auth state is loading
+  if (!isAuthorized.loaded) {
+    return (
+      <main>
+        <h1>Loading...</h1>
+      </main>
+    );
+  }
 
   return (
     <>
