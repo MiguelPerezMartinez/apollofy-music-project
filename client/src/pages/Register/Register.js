@@ -9,6 +9,9 @@ import Button from "../../components/Button";
 import { registerNewUser } from "../../services/firebase";
 import { registerInApi } from "../../services/api/index";
 
+//Hoc No Authorization
+import withoutAuth from "../../hoc/withoutAuth.js";
+
 function Register() {
   const [registerData, setRegisterData] = useState({
     firstname: "",
@@ -108,4 +111,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default withoutAuth(Register);

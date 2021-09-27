@@ -8,6 +8,9 @@ import Button from "../../components/Button";
 import { logIn } from "../../services/firebase";
 import { Link } from "react-router-dom";
 
+//Hoc No Authorization
+import withoutAuth from "../../hoc/withoutAuth.js";
+
 function Login() {
   const [state, setState] = useState({
     email: "",
@@ -63,4 +66,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default withoutAuth(Login);
