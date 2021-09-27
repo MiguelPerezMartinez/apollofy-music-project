@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   updateEmail,
+  updatePassword,
 } from "firebase/auth";
 
 export async function registerNewUser(email, password) {
@@ -74,5 +75,16 @@ export async function firebaseEmailUpdate(email) {
     })
     .catch((error) => {
       console.log(error.message);
+    });
+}
+
+export async function updateUserPass(newPassword) {
+  const auth = getAuth();
+  await updatePassword(auth.currentUser, newPassword)
+    .then(() => {
+      console.log("Password updated!");
+    })
+    .catch((error) => {
+      console.log(error);
     });
 }
