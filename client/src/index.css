@@ -28,7 +28,11 @@ main {
 }
 
 .gradient-background {
-  background: radial-gradient(var(--purple) 0%, #342a5c 20%, rgb(0, 0, 0) 90%);
+  background: radial-gradient(
+    var(--blue) 0%,
+    var(--dark-blue) 40%,
+    rgb(0, 0, 0) 90%
+  );
 }
 
 .xl-separator {

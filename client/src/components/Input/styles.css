@@ -6,12 +6,13 @@
 .input-label {
   transition: all 0.2s;
   touch-action: manipulation;
-  color: black;
 }
 
 .input-field {
+  background-color: var(--main-container-color);
   font-size: 1.5em;
   border: 0;
+  border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   font-family: inherit;
   -webkit-appearance: none;
@@ -22,6 +23,7 @@
 .input-field:focus {
   outline: 0;
   border-bottom: 2px solid var(--yellow);
+  border-right: hidden;
 }
 
 .input-label {
