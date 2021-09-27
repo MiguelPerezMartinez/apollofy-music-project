@@ -54,3 +54,17 @@ export function resetPassword(email) {
       console.error("Password reset email not sent!: ", error.message);
     });
 }
+
+export async function getCurrentUserToken() {
+  const auth = getAuth();
+  console.log("await", auth);
+  console.log(auth.currentUser);
+  const token = auth.currentUser.getIdToken();
+  // return auth.currentUser.getIdToken();
+  return token;
+}
+
+export async function getCurrentUserId() {
+  const auth = getAuth();
+  return auth.currentUser.uid;
+}

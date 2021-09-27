@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+//Imports
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -7,12 +8,30 @@ import Col from "react-bootstrap/Col";
 import withAuth from "../../hoc/withAuth";
 
 import "./styles.css";
+import { getCurrentUser } from "../../services/api/index";
 
-//Components
+import { authenticationObserver } from "../../services/firebase";
+
+//Import components
 import RightMenu from "../../components/RightMenu";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 
 function Profile() {
+  const [currentUser, setCurrentUser] = useState("");
+
+  //Load user
+  useEffect(() => {
+    authenticationObserver((user) => {
+      if (user) {
+        getCurrentUser().then((response) => {
+          setCurrentUser(response);
+        });
+      } else {
+        console.log("No estás logueado");
+      }
+    });
+  }, []);
+
   const [editing, setEditing] = useState(false);
   const [state, setState] = useState({
     firstname: "",
@@ -23,10 +42,12 @@ function Profile() {
     country: "",
   });
 
+  //Toggle editing fields
   function handleEdit() {
     editing === true ? setEditing(false) : setEditing(true);
   }
 
+  //Manage values of state properties
   function handleChange(e) {
     setState({
       ...state,
@@ -34,6 +55,7 @@ function Profile() {
     });
   }
 
+  //Update profile changes
   function handleSubmit(e) {
     e.preventDefault();
     console.log(state);
@@ -70,7 +92,7 @@ function Profile() {
                         onChange={handleChange}
                       />
                     ) : (
-                      "Handsome_Jonathan"
+                      currentUser.username
                     )}
                   </Col>
                 </Row>
@@ -86,7 +108,7 @@ function Profile() {
                         onChange={handleChange}
                       />
                     ) : (
-                      "Handsome_Jonathan"
+                      currentUser.email
                     )}
                   </Col>
                 </Row>
