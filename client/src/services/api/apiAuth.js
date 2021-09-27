@@ -43,7 +43,6 @@ export async function updateById(id, userToken, bodyReq) {
     method: "PATCH",
     url: `http://localhost:4000/users/update-user/${id}`,
     data: bodyReq,
-
     headers: {
       Authorization: `Bearer ${userToken}`,
     },

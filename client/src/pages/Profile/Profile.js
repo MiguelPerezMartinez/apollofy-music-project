@@ -1,7 +1,6 @@
 //Imports
 import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
-import { Row, Col } from "react-bootstrap";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
@@ -9,10 +8,13 @@ import "./styles.css";
 import { getCurrentUser, updateCurrentUser } from "../../services/api/index";
 import { updateUserPass } from "../../services/firebase";
 
+import { logOut } from "../../services/firebase";
+
 //Import components
 import RightMenu from "../../components/RightMenu";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 import Input from "../../components/Input";
+import { Row, Col } from "react-bootstrap";
 
 function Profile() {
   const [currentUser, setCurrentUser] = useState("");
@@ -105,11 +107,21 @@ function Profile() {
             <Col className="profile-view-profile-image" xs={3} md={3} lg={3}>
               <ProfileCircleIcon />
             </Col>
-            <Col xs={8} md={6} lg={6}>
+            <Col xs={8} md={6} lg={6} className="profile-user-title">
               <h1>Welcome {currentUser.username}</h1>
             </Col>
-            <Col className="d-flex flex-row-reverse" xs={1} md={3} lg={3}>
-              LOGOUT
+            <Col
+              className="profile-user-title profile-user-logout"
+              xs={1}
+              md={3}
+              lg={3}
+            >
+              <img
+                src="./assets/img/logout.svg"
+                alt="logout"
+                className="profile-logout-icon"
+                onClick={logOut}
+              />
             </Col>
           </Row>
           <div className="xl-separator" />
@@ -236,14 +248,28 @@ function Profile() {
                         <Input
                           type="password"
                           id="password"
-                          placeholder="password"
+                          placeholder="Password"
                           value={passState.password}
                           handleChange={handleChangePass}
                         />
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs={6} md={3} lg={3} className="profile-input-row">
+                      <Col xs={6} md={6} lg={6} className="profile-input-row">
+                        Confirm password
+                      </Col>
+                      <Col xs={6} md={6} lg={6} className="profile-input-row">
+                        <Input
+                          type="password"
+                          id="confirmPassword"
+                          placeholder="Confirm password"
+                          value={passState.confirmPassword}
+                          handleChange={handleChangePass}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={6} md={6} lg={6} className="profile-input-row">
                         <button
                           className="small-button"
                           onClick={handleSubmitPass}
@@ -251,22 +277,13 @@ function Profile() {
                           Save
                         </button>
                       </Col>
-                      <Col xs={6} md={3} lg={3} className="profile-input-row">
+                      <Col xs={6} md={6} lg={6} className="profile-input-row">
                         <button
                           className="small-button"
                           onClick={handleEditPass}
                         >
                           Cancell
                         </button>
-                      </Col>
-                      <Col xs={6} md={6} lg={6} className="profile-input-row">
-                        <Input
-                          type="password"
-                          id="confirmPassword"
-                          placeholder="confirm password"
-                          value={passState.confirmPassword}
-                          handleChange={handleChangePass}
-                        />
                       </Col>
                     </Row>
                   </>
