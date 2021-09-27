@@ -93,7 +93,8 @@ async function getById(req, res) {
 //   }
 // }
 async function updateById(req, res) {
-  const { id, ...bodyReq } = req.body;
+  const id = req.params;
+  const bodyReq = req.body;
   try {
     console.log("id => ", id);
     console.log("bodyReq => ", bodyReq);
