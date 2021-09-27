@@ -5,6 +5,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  updateEmail,
 } from "firebase/auth";
 
 export async function registerNewUser(email, password) {
@@ -25,8 +26,6 @@ export function logIn(email, password) {
       console.log(user);
     })
     .catch((error) => {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
       console.error("Log in failed: ", error.message);
     });
 }
@@ -49,8 +48,6 @@ export function resetPassword(email) {
       console.log("Password reset email sent!: ", email);
     })
     .catch((error) => {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
       console.error("Password reset email not sent!: ", error.message);
     });
 }
@@ -60,11 +57,22 @@ export async function getCurrentUserToken() {
   console.log("await", auth);
   console.log(auth.currentUser);
   const token = auth.currentUser.getIdToken();
-  // return auth.currentUser.getIdToken();
   return token;
 }
 
 export async function getCurrentUserId() {
   const auth = getAuth();
   return auth.currentUser.uid;
+}
+
+export async function firebaseEmailUpdate(email) {
+  const auth = getAuth();
+
+  updateEmail(auth.currentUser, email)
+    .then(() => {
+      console.log("Profile updated!");
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 }
