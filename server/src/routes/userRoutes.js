@@ -6,6 +6,10 @@ const { authMiddleware } = require("../middlewares");
 //end points routes:
 userRouter.post("/register", userController.register);
 userRouter.get("/get-user/:id", authMiddleware, userController.getById);
-userRouter.patch("/update-user/:id", userController.updateProfile);
+userRouter.patch(
+  "/update-user/:id",
+  authMiddleware,
+  userController.updateProfile,
+);
 
 module.exports = userRouter;

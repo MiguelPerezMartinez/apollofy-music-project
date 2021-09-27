@@ -26,15 +26,21 @@ const UserSchema = new Schema(
     },
     firstname: {
       type: String,
+      default: "",
+      required: [true, "Please, give us your first name"],
     },
     lastname: {
       type: String,
+      default: "",
+      required: [true, "Please, give us your last name"],
     },
     country: {
       type: String,
+      default: "",
     },
     birthday: {
       type: Date,
+      default: "",
     },
     mySongs: [
       {
