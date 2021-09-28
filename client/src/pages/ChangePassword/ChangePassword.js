@@ -25,9 +25,9 @@ export default function ChangePassword() {
     }
   };
   return (
-    <div className="change-password">
-      <main className="login-main gradient-background">
-        <div className="login-register">
+    <main className="login-main gradient-background">
+      <Row>
+        <Col xs={12} md={6} className="login-register">
           <h1 className="h3 mb-3 mt-2 fw-normal">
             Please change your password{" "}
           </h1>
@@ -55,8 +55,8 @@ export default function ChangePassword() {
               <Button title="Change Password" />
             </div>
           </form>
-        </div>
-      </main>
-    </div>
+        </Col>
+      </Row>
+    </main>
   );
 }
