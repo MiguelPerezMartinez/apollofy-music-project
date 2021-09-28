@@ -17,7 +17,7 @@ export default function RightMenu() {
       <aside className="mobile-bottom-menu">
         <Row>
           <Col xs={3} className="mobile-bottom-menu-button">
-            Home
+            <Link to="/">Home</Link>
           </Col>
           <Col xs={3} className="mobile-bottom-menu-button">
             Search
