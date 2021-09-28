@@ -6,7 +6,10 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   updateEmail,
+  updatePassword,
 } from "firebase/auth";
+
+import { setIsActive } from "./api";
 
 export async function registerNewUser(email, password) {
   const auth = getAuth();
@@ -23,6 +26,7 @@ export function logIn(email, password) {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
+      setIsActive(true);
       console.log(user);
     })
     .catch((error) => {
@@ -32,6 +36,7 @@ export function logIn(email, password) {
 
 export function logOut() {
   const auth = getAuth();
+  setIsActive(false);
   signOut(auth)
     .then(() => {
       console.log("Sign out successfull");
@@ -74,5 +79,16 @@ export async function firebaseEmailUpdate(email) {
     })
     .catch((error) => {
       console.log(error.message);
+    });
+}
+
+export async function updateUserPass(newPassword) {
+  const auth = getAuth();
+  await updatePassword(auth.currentUser, newPassword)
+    .then(() => {
+      console.log("Password updated!");
+    })
+    .catch((error) => {
+      console.log(error);
     });
 }
