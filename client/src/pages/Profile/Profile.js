@@ -1,6 +1,9 @@
 //Imports
 import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
+//import TrackReducer
+import { useDispatch, useSelector } from "react-redux";
+import { trackObject } from "../../redux/trackData/actions";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
@@ -34,7 +37,18 @@ function Profile() {
     password: "",
     confirmPassword: "",
   });
-
+  //trying redux
+  const track = useSelector((state) => state.trackReducer);
+  const dispatch = useDispatch();
+  async function fillTrackObject() {
+    const trackAtributes = {
+      duration: "2",
+      author: "on",
+      genre: "Rok",
+    };
+    dispatch(await trackObject(trackAtributes));
+    console.log(track);
+  }
   //Load user
   useEffect(() => {
     getCurrentUser().then((response) => {
@@ -102,6 +116,7 @@ function Profile() {
     <>
       <RightMenu />
       <main>
+        <button onClick={fillTrackObject}>fill trackObject</button>
         <Container>
           <Row>
             <Col className="profile-view-profile-image" xs={3} md={3} lg={3}>
