@@ -39,15 +39,17 @@ function Profile() {
   });
   //trying redux
   const track = useSelector((state) => state.trackReducer);
-  const dispatch = useDispatch();
-  async function fillTrackObject() {
-    const trackAtributes = {
-      duration: "2",
-      author: "on",
-      genre: "Rok",
-    };
-    dispatch(await trackObject(trackAtributes));
+  useEffect(() => {
     console.log(track);
+  }, [track]);
+  const dispatch = useDispatch();
+  function fillTrackObject() {
+    const trackAtributes = {
+      duration: "2min",
+      author: "Ethan",
+      genre: "Jazz",
+    };
+    dispatch(trackObject(trackAtributes));
   }
   //Load user
   useEffect(() => {
