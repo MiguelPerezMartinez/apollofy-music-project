@@ -9,6 +9,8 @@ import {
   updatePassword,
 } from "firebase/auth";
 
+import { setIsActive } from "./api";
+
 export async function registerNewUser(email, password) {
   const auth = getAuth();
   return createUserWithEmailAndPassword(auth, email, password);
@@ -24,6 +26,7 @@ export function logIn(email, password) {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
+      setIsActive(true);
       console.log(user);
     })
     .catch((error) => {
@@ -33,6 +36,7 @@ export function logIn(email, password) {
 
 export function logOut() {
   const auth = getAuth();
+  setIsActive(false);
   signOut(auth)
     .then(() => {
       console.log("Sign out successfull");

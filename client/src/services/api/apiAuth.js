@@ -43,7 +43,6 @@ export async function updateById(id, userToken, bodyReq) {
     method: "PATCH",
     url: `http://localhost:4000/users/update-user/${id}`,
     data: bodyReq,
-
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
@@ -59,4 +58,20 @@ export async function updateCurrentUser(state) {
     await firebaseEmailUpdate(email);
     await updateById(id, userToken, bodyReq);
   }
+}
+
+export async function setIsActive(isActive) {
+  const userToken = await getCurrentUserToken();
+  const { user_id } = decodeToken(userToken);
+  const { data } = await getById(user_id, userToken);
+  const { _id } = data.currentUser;
+  if (isActive) {
+    updateById(_id, userToken, { active: true });
+  } else {
+    updateById(_id, userToken, { active: false });
+  }
+}
+
+function decodeToken(token) {
+  return JSON.parse(atob(token.split(".")[1]));
 }
