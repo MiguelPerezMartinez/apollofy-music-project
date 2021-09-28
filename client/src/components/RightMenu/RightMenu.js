@@ -23,7 +23,7 @@ export default function RightMenu() {
             Search
           </Col>
           <Col xs={3} className="mobile-bottom-menu-button">
-            test
+            Library
           </Col>
           <Col xs={3} className="mobile-bottom-menu-button">
             <Link to="/profile" className="right-menu-row">
