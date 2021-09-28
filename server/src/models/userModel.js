@@ -45,14 +45,14 @@ const UserSchema = new Schema(
     mySongs: [
       {
         type: Schema.Types.ObjectId,
-        ref: "songs",
+        ref: "tracks",
       },
     ],
 
     favSongs: [
       {
         type: Schema.Types.ObjectId,
-        ref: "songs",
+        ref: "tracks",
       },
     ],
 
@@ -72,7 +72,7 @@ const UserSchema = new Schema(
     lastSongs: [
       {
         type: Schema.Types.ObjectId,
-        ref: "songs",
+        ref: "tracks",
       },
     ],
 

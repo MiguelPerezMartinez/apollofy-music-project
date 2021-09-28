@@ -1,5 +1,7 @@
 const Users = require("./userModel");
+const Tracks = require("./trackModel");
 
 module.exports={
-    userModel:Users
+    userModel:Users,
+    Tracks:Tracks,
 }
