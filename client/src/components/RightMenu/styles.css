@@ -88,3 +88,23 @@
 .display-none {
   display: none;
 }
+
+.mobile-bottom-menu {
+  position: fixed;
+  top: 90%;
+  width: 100%;
+  height: 10%;
+  background-color: var(--main-container-color);
+  display: flex;
+}
+
+.mobile-bottom-menu > div {
+  width: 100%;
+}
+
+.mobile-bottom-menu-button {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
