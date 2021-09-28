@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+
+//Components
+import { Row, Col } from "react-bootstrap";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
 export default function ChangePassword() {
   const [state, setState] = useState({
-    email: "",
     password: "",
+    confirmPassword: "",
   });
   const handleChange = (e) => {
     setState({
