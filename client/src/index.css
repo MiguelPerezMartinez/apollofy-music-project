@@ -20,10 +20,11 @@ main {
   background: linear-gradient(var(--blue), black);
   width: 100vw;
   height: 100vh;
+  margin-bottom: 10%;
 }
 
 .general-container {
-  background-color: var(--less-main-container-color);
+  background-color: var(--main-container-color);
   border-radius: 0.5rem;
   padding: 0.5rem;
 }

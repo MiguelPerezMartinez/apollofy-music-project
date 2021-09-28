@@ -1,16 +1,39 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import "./styles.css";
+
 import { logOut } from "../../services/firebase";
 
-import "./styles.css";
+//Components
+import { Row, Col } from "react-bootstrap";
 
 import ProfileCircleIcon from "../ProfileCircleIcon";
 
 export default function RightMenu() {
   const w = window.innerWidth;
   if (w <= 400) {
-    return <div>Hola mundo</div>;
+    return (
+      <aside className="mobile-bottom-menu">
+        <Row>
+          <Col xs={3} className="mobile-bottom-menu-button">
+            asdfasdf
+          </Col>
+          <Col xs={3} className="mobile-bottom-menu-button">
+            test
+          </Col>
+          <Col xs={3} className="mobile-bottom-menu-button">
+            test
+          </Col>
+          <Col xs={3} className="mobile-bottom-menu-button">
+            <Link to="/profile" className="right-menu-row">
+              <ProfileCircleIcon />
+              <div className="right-menu-row-title">Welcome $username</div>
+            </Link>
+          </Col>
+        </Row>
+      </aside>
+    );
   } else {
     return (
       <aside className="right-menu">

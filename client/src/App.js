@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import ResetPassword from "./pages/RecoverPassword";
+import ChangePassword from "./pages/";
 
 //Redux actions
 import { getState } from "./redux/isAuthorized/actions";
@@ -40,6 +41,7 @@ function App() {
   return (
     <>
       <Switch>
+      <Route path="/change-password" component={ChangePassword} />
         <Route path="/recover-password" component={ResetPassword} />
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
