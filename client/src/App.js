@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import ResetPassword from "./pages/RecoverPassword";
-
+// import ChangePassword from "./pages/ChangePassword/ChangePassword";
 //Redux actions
 import { getState } from "./redux/isAuthorized/actions";
 
