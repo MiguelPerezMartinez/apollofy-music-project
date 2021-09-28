@@ -7,6 +7,7 @@ export const getState = () => {
     authenticationObserver((user) => {
       if (user) {
         dispatch({ type: GET_STATE, payload: true });
+        
       } else {
         dispatch({ type: GET_STATE, payload: false });
       }
