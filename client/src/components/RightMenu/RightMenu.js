@@ -17,10 +17,10 @@ export default function RightMenu() {
       <aside className="mobile-bottom-menu">
         <Row>
           <Col xs={3} className="mobile-bottom-menu-button">
-            asdfasdf
+            Home
           </Col>
           <Col xs={3} className="mobile-bottom-menu-button">
-            test
+            Search
           </Col>
           <Col xs={3} className="mobile-bottom-menu-button">
             test
@@ -28,7 +28,6 @@ export default function RightMenu() {
           <Col xs={3} className="mobile-bottom-menu-button">
             <Link to="/profile" className="right-menu-row">
               <ProfileCircleIcon />
-              <div className="right-menu-row-title">Welcome $username</div>
             </Link>
           </Col>
         </Row>
