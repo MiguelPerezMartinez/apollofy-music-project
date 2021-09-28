@@ -4,6 +4,7 @@ import {
   getCurrentUser,
   updateCurrentUser,
   updateById,
+  setIsActive,
 } from "./apiAuth";
 export {
   registerInApi,
@@ -11,4 +12,5 @@ export {
   getCurrentUser,
   updateCurrentUser,
   updateById,
+  setIsActive,
 };
