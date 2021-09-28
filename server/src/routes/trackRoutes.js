@@ -4,8 +4,10 @@ const { trackController } = require("../controllers");
 const { authMiddleware } = require("../middlewares");
 
 //end points routes:
-trackRouter.get("/get-track/:id", trackController.getById);
+trackRouter.get("/", trackController.getAllTracks);
+trackRouter.get("/get-track/:id", trackController.getTrackById);
 trackRouter.post("/upload-track", trackController.uploadTrack);
 trackRouter.delete("/delete-track/:id", trackController.deleteTrack);
+trackRouter.patch("/update-track/:id", trackController.updateTrack);
 
 module.exports = trackRouter;
