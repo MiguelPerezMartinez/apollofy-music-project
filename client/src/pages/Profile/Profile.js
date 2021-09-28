@@ -15,6 +15,7 @@ import RightMenu from "../../components/RightMenu";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 import Input from "../../components/Input";
 import { Row, Col } from "react-bootstrap";
+import Modal from "../../components/Modal";
 
 function Profile() {
   const [currentUser, setCurrentUser] = useState("");
@@ -102,6 +103,7 @@ function Profile() {
     <>
       <RightMenu />
       <main>
+        <Modal />
         <Container>
           <Row>
             <Col className="profile-view-profile-image" xs={3} md={3} lg={3}>
