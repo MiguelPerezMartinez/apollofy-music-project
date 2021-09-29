@@ -1,7 +1,6 @@
 //Imports
 import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
-import axios from "axios";
 
 import "./styles.css";
 import "./spinner.css";
@@ -22,10 +21,6 @@ import ModalTrackUp from "../../components/ModalTrackUp";
 
 function Profile() {
   const [currentUser, setCurrentUser] = useState("");
-  const [songToUpload, setSongToUpload] = useState({
-    file: "",
-    isUploading: false,
-  });
 
   const [editing, setEditing] = useState(false);
   const [editingPass, setEditingPass] = useState(false);
@@ -109,28 +104,6 @@ function Profile() {
       updateUserPass(passState.password);
     }
     setEditingPass(false);
-  }
-
-  function handleUploadChange(e) {
-    console.log(e.target.files);
-    setSongToUpload({
-      file: e.target.files[0],
-      isUploading: true,
-    });
-    console.log(songToUpload);
-  }
-
-  function uploadFiles(e) {
-    const formData = new FormData();
-    formData.append("file", songToUpload.file);
-    formData.append("upload_preset", "upload_apollofy");
-
-    axios
-      .post("https://api.cloudinary.com/v1_1/apollofy/video/upload", formData)
-      .then((response) => {
-        setSongToUpload({ ...songToUpload, isUploading: false });
-        console.log(response);
-      });
   }
 
   return (
@@ -385,33 +358,6 @@ function Profile() {
             )}
           </form>
           <div className="xl-separator" />
-          <div className="xl-separator" />
-          <Row className="general-container uploading-file">
-            {songToUpload.isUploading ? (
-              <>
-                <div className="lds-ripple">
-                  <div></div>
-                  <div></div>
-                </div>
-                <h3>Uploading file</h3>
-                <button onClick={uploadFiles}>Upload song</button>
-              </>
-            ) : (
-              <>
-                <input
-                  type="file"
-                  onChange={handleUploadChange}
-                  className="upload-file-input"
-                />
-                <div className="upload-file-container">
-                  <h1>
-                    <img src="./assets/img/upload.svg" alt="upload new track" />
-                  </h1>
-                  <button onClick={uploadFiles}>Upload song</button>
-                </div>
-              </>
-            )}
-          </Row>
         </Container>
         <div className="xl-separator" />
         <div className="xl-separator" />
