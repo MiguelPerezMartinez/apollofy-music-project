@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import "./styles.css";
@@ -9,6 +9,8 @@ import Button from "../Button";
 import Input from "../Input";
 
 function Modal({ handleClose }) {
+  const [isUploaded, setIsUploaded] = useState(false);
+  const [isFileSelected, setIsFileSelected] = useState(false);
   const [trackData, setTrackData] = useState({
     title: "",
     author: "",
@@ -27,14 +29,14 @@ function Modal({ handleClose }) {
     isUploading: false,
   });
 
+  useEffect(() => {
+    console.log(songToUpload);
+    console.log(trackData);
+  }, [trackData, songToUpload]);
+
   const handlesubmit = (e) => {
     e.preventDefault();
-    setSongToUpload({
-      isUploading: true,
-      ...songToUpload,
-    });
-
-    uploadFiles();
+    //Connexion con base de datos
   };
 
   const handleBlur = (e) => {
@@ -52,29 +54,30 @@ function Modal({ handleClose }) {
   }
 
   function handleUploadChange(e) {
-    console.log(e.target.files);
     setSongToUpload({
-      file: e.target.files[0],
       ...songToUpload,
+      file: e.target.files[0],
     });
-    console.log(songToUpload);
+    setIsFileSelected(true);
   }
 
-  function uploadFiles() {
+  async function uploadFiles() {
+    setSongToUpload({ ...songToUpload, isUploading: true });
+    setIsFileSelected(false);
     const formData = new FormData();
     formData.append("file", songToUpload.file);
     formData.append("upload_preset", "upload_apollofy");
 
-    axios
+    await axios
       .post("https://api.cloudinary.com/v1_1/apollofy/video/upload", formData)
       .then((response) => {
         setSongToUpload({ ...songToUpload, isUploading: false });
-        setTrackData({ ...trackData, urlTrack: response.data.url });
-        console.log(response);
-        console.log(trackData);
-        handleClose();
+        const { data } = response;
+        setTrackData({ ...trackData, urlTrack: data.url });
+        setIsUploaded(true);
       });
   }
+
   return (
     <>
       <div className="modal-background" onClick={handleBlur}>
@@ -138,7 +141,7 @@ function Modal({ handleClose }) {
                 label="Track"
                 value={trackData.urlTrack}
                 placeholder="Paste URL "
-                handleChange={handleChange}
+                handleChange={() => {}}
               />
 
               <div className="xl-separator" />
@@ -169,17 +172,32 @@ function Modal({ handleClose }) {
                   </>
                 )}
               </Row>
-
-              <div className="login-register-button-centered">
-                <Col className="d-flex justify-content-center">
-                  <Button title="Upload" />
-                </Col>
-                <Col className="d-flex justify-content-center">
-                  <div className="button cancel-button" onClick={handleClose}>
-                    Cancel
+              {isFileSelected && (
+                <>
+                  <div className="login-register-button-centered">
+                    <Col className="d-flex justify-content-center">
+                      <button
+                        onClick={uploadFiles}
+                        className="button"
+                        title="Upload"
+                      >
+                        Upload song
+                      </button>
+                    </Col>
                   </div>
-                </Col>
-              </div>
+                </>
+              )}
+              {isUploaded ? (
+                <>
+                  <div className="login-register-button-centered">
+                    <Col className="d-flex justify-content-center">
+                      <Button title="Save song" />
+                    </Col>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
             </form>
           </Col>
         </Row>
