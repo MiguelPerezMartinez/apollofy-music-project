@@ -7,14 +7,17 @@ import withAuth from "../../hoc/withAuth";
 //Components
 import RightMenu from "../../components/RightMenu";
 import Track from "../../components/Track";
+import PlayButton from "../../components/PlayButton";
 
 //imports to set userRedux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "../../services/api/index";
 import { setUser } from "../../redux/userData/actions";
 
 function Home() {
   const dispatch = useDispatch();
+  const trackReducer = useSelector((stete) => stete.trackReducer);
+  const { isPlayBarDisplayed } = trackReducer;
   // set data in userReducer
   useEffect(() => {
     getCurrentUser().then((response) => {
@@ -49,6 +52,7 @@ function Home() {
         <h2>Songs</h2>
         <h3>My plylist</h3>
         <div className="general-container">Home Page</div>
+        {isPlayBarDisplayed && <PlayButton />}
       </main>
     </>
   );

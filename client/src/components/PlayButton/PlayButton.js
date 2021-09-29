@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isPlaying } from "../../redux/trackData/actions";
+import { isPlaying, isPlayBarDisplayed } from "../../redux/trackData/actions";
 function PlayButton() {
   const isPlayed = useSelector((state) => state.trackReducer.isPlaying);
   const dispatch = useDispatch();
@@ -12,7 +12,14 @@ function PlayButton() {
       dispatch(isPlaying(true));
     }
   }
-  return <button onClick={play}>Play</button>;
+  function close() {
+    dispatch(isPlayBarDisplayed(false));
+  }
+  return (
+    <div>
+      <button onClick={play}>Play</button>;<button onClick={close}>X</button>;
+    </div>
+  );
 }
 
 export default PlayButton;

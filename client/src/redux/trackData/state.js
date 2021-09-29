@@ -1,5 +1,5 @@
 const initialTrackState = {
-  isPlayVarDisplayed: false,
+  isPlayBarDisplayed: false,
   isPlaying: false,
   trackObject: {
     title: "",
