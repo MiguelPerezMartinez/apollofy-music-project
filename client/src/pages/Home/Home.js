@@ -13,6 +13,8 @@ function Home() {
   // const isDisplayed = useSelector(
   //   (state) => state.trackReducer.isPlayBarDisplayed,
   // );
+
+  //Hacer peticion y cambiar por dataTrack
   const dataTrack = {
     title: "La conga",
     author: "Congito",
