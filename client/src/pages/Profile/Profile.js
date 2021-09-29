@@ -18,6 +18,7 @@ import RightMenu from "../../components/RightMenu";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 import Input from "../../components/Input";
 import { Row, Col } from "react-bootstrap";
+import ModalTrackUp from "../../components/ModalTrackUp";
 
 function Profile() {
   const [currentUser, setCurrentUser] = useState("");
@@ -41,6 +42,11 @@ function Profile() {
     password: "",
     confirmPassword: "",
   });
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleOpenModal = () => setShowModal(true);
 
   //Load user
   useEffect(() => {
@@ -130,6 +136,7 @@ function Profile() {
   return (
     <>
       <RightMenu />
+      {showModal && <ModalTrackUp handleClose={handleCloseModal} />}
       <main>
         <Container>
           <Row>
@@ -368,6 +375,11 @@ function Profile() {
                   <button className="button" onClick={handleEdit}>
                     Edit profile info
                   </button>
+                </Col>
+                <Col className="d-flex justify-content-center">
+                  <div className="button" onClick={handleOpenModal}>
+                    Upload track
+                  </div>
                 </Col>
               </Row>
             )}
