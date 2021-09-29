@@ -105,28 +105,26 @@ function Profile() {
     setEditingPass(false);
   }
 
-  function uploadFiles(e) {
+  function handleUploadChange(e) {
     console.log(e.target.files);
     setSongToUpload({
       file: e.target.files[0],
       isUploading: true,
     });
     console.log(songToUpload);
-    // console.log(e.target.files);
-    // console.log(e.target.files[0]);
-    // setSongToUpload({ ...songToUpload, isUploading: true });
-    // const formData = new FormData();
-    // formData.append("file", songToUpload.file);
-    // formData.append("upload_preset", "upload_apollofy");
+  }
 
-    // console.log(formData);
+  function uploadFiles(e) {
+    const formData = new FormData();
+    formData.append("file", songToUpload.file);
+    formData.append("upload_preset", "upload_apollofy");
 
-    // axios
-    //   .post("https://api.cloudinary.com/v1_1/apollofy/video/upload", formData)
-    //   .then((response) => {
-    //     setSongToUpload({ ...songToUpload, isUploading: false });
-    //     console.log(response);
-    //   });
+    axios
+      .post("https://api.cloudinary.com/v1_1/apollofy/video/upload", formData)
+      .then((response) => {
+        setSongToUpload({ ...songToUpload, isUploading: false });
+        console.log(response);
+      });
   }
 
   return (
@@ -384,19 +382,20 @@ function Profile() {
                   <div></div>
                 </div>
                 <h3>Uploading file</h3>
+                <button onClick={uploadFiles}>Upload song</button>
               </>
             ) : (
               <>
                 <input
                   type="file"
-                  onChange={uploadFiles}
+                  onChange={handleUploadChange}
                   className="upload-file-input"
                 />
                 <div className="upload-file-container">
                   <h1>
                     <img src="./assets/img/upload.svg" alt="upload new track" />
                   </h1>
-                  <h3>Upload song</h3>
+                  <button onClick={uploadFiles}>Upload song</button>
                 </div>
               </>
             )}
