@@ -2,32 +2,26 @@ import React, { useEffect } from "react";
 //import TrackReducer
 import { useDispatch, useSelector } from "react-redux";
 import { trackObjectAction } from "../../redux/trackData/actions";
+import { isPlayBarDisplayed, isPlaying } from "../../redux/trackData/actions";
+import PlayButton from "../../components/PlayButton";
 
-function Track() {
+function Track({ dataTrack }) {
   const track = useSelector((state) => state.trackReducer);
+  const { trackObject } = track;
+
   const dispatch = useDispatch();
 
-  const { trackObject } = track;
-  const trackProperties = {
-    title: "La conga",
-    author: "Congito",
-    album: "Los congitos",
-    releaseYear: "2002",
-    genre: "Samba",
-    urlImage: "eeeeeee",
-    urlTrack: "res",
-    owner: "object id",
-    totalPlays: 0,
-    totalLikes: 0,
-    duration: "time",
-  };
-
+  function setReduxTrackData() {
+    console.log(dataTrack);
+    dispatch(trackObjectAction(dataTrack));
+  }
   useEffect(() => {
-    dispatch(trackObjectAction(trackProperties));
-  }, []);
-
+    dispatch(isPlayBarDisplayed(true));
+    dispatch(isPlaying(true));
+  }, [trackObject]);
   return (
-    <div className="general-container">
+    <div className="general-container" onClick={setReduxTrackData}>
+      <PlayButton />
       <p>Track</p>
       <p>duration</p>
       <p>Genre</p>
