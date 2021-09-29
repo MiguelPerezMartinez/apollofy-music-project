@@ -1,5 +1,5 @@
 //Imports
-import React from "react";
+import React, { useEffect } from "react";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
@@ -7,14 +7,33 @@ import withAuth from "../../hoc/withAuth";
 //Components
 import RightMenu from "../../components/RightMenu";
 import Track from "../../components/Track";
-import { useDispatch, useSelector } from "react-redux";
+
+//imports to set userRedux
+import { useDispatch } from "react-redux";
+import { getCurrentUser } from "../../services/api/index";
+import { setUser } from "../../redux/userData/actions";
+
 function Home() {
   const dispatch = useDispatch();
+<<<<<<< HEAD
   // const isDisplayed = useSelector(
   //   (state) => state.trackReducer.isPlayBarDisplayed,
   // );
 
   //Hacer peticion y cambiar por dataTrack
+=======
+  // set data in userReducer
+  useEffect(() => {
+    getCurrentUser().then((response) => {
+      dispatch(
+        setUser({
+          user_id: response._id,
+          username: response.username,
+        }),
+      );
+    });
+  }, []);
+>>>>>>> 29e81d220a3a17ccdf45643c2762c336e0a4a045
   const dataTrack = {
     title: "La conga",
     author: "Congito",

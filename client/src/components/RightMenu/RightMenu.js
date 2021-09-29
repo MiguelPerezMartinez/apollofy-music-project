@@ -10,7 +10,11 @@ import { Row, Col } from "react-bootstrap";
 
 import ProfileCircleIcon from "../ProfileCircleIcon";
 
+//user from userReducer
+import { useSelector } from "react-redux";
+
 export default function RightMenu() {
+  const username = useSelector((state) => state.userReducer.username);
   const w = window.innerWidth;
   if (w <= 400) {
     return (
@@ -39,7 +43,7 @@ export default function RightMenu() {
         <div>
           <Link to="/profile" className="right-menu-row">
             <ProfileCircleIcon />
-            <div className="right-menu-row-title">Welcome $username</div>
+            <div className="right-menu-row-title">Welcome {username}</div>
           </Link>
         </div>
         <div>
