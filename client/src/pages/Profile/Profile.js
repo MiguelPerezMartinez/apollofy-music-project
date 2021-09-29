@@ -22,7 +22,7 @@ import { Row, Col } from "react-bootstrap";
 function Profile() {
   const [currentUser, setCurrentUser] = useState("");
   const [songToUpload, setSongToUpload] = useState({
-    file: {},
+    file: "",
     isUploading: false,
   });
 
@@ -105,21 +105,28 @@ function Profile() {
     setEditingPass(false);
   }
 
-  async function uploadFiles(e) {
+  function uploadFiles(e) {
     console.log(e.target.files);
-    if (e.target.files !== 0) {
-      setSongToUpload({ file: e.target.files, isUploading: true });
-      const formData = new FormData();
-      formData.append("file", songToUpload.file);
-      formData.append("upload_preset", "upload_apollofy");
+    setSongToUpload({
+      file: e.target.files[0],
+      isUploading: true,
+    });
+    console.log(songToUpload);
+    // console.log(e.target.files);
+    // console.log(e.target.files[0]);
+    // setSongToUpload({ ...songToUpload, isUploading: true });
+    // const formData = new FormData();
+    // formData.append("file", songToUpload.file);
+    // formData.append("upload_preset", "upload_apollofy");
 
-      axios
-        .post("https://api.cloudinary.com/v1_1/apollofy/video/upload", formData)
-        .then((response) => {
-          setSongToUpload({ ...songToUpload, isUploading: false });
-          console.log(response);
-        });
-    }
+    // console.log(formData);
+
+    // axios
+    //   .post("https://api.cloudinary.com/v1_1/apollofy/video/upload", formData)
+    //   .then((response) => {
+    //     setSongToUpload({ ...songToUpload, isUploading: false });
+    //     console.log(response);
+    //   });
   }
 
   return (
@@ -372,7 +379,7 @@ function Profile() {
           <Row className="general-container uploading-file">
             {songToUpload.isUploading ? (
               <>
-                <div class="lds-ripple">
+                <div className="lds-ripple">
                   <div></div>
                   <div></div>
                 </div>
