@@ -24,6 +24,7 @@ export default function RightMenu() {
           <Col className="mobile-bottom-menu-button">
             <Link to="/profile" className="right-menu-row">
               <ProfileCircleIcon />
+              asdfasdf
             </Link>
           </Col>
         </Row>

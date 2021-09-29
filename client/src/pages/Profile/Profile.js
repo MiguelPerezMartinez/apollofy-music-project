@@ -349,15 +349,17 @@ function Profile() {
                     Edit profile info
                   </button>
                 </Col>
-                <Col className="d-flex justify-content-center">
-                  <div className="button" onClick={handleOpenModal}>
-                    Upload track
-                  </div>
-                </Col>
               </Row>
             )}
           </form>
           <div className="xl-separator" />
+        </Container>
+        <Container className="general-container">
+          <Col className="d-flex justify-content-center">
+            <div className="button" onClick={handleOpenModal}>
+              Upload track
+            </div>
+          </Col>
         </Container>
         <div className="xl-separator" />
         <div className="xl-separator" />

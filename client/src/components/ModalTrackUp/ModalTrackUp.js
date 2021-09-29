@@ -11,6 +11,10 @@ import Input from "../Input";
 import { trackUpload } from "../../services/api/index";
 
 function Modal({ handleClose }) {
+  const [isTrackUploaded, setIsTrackUploaded] = useState(false);
+  const [isTrackSelected, setIsTrackSelected] = useState(false);
+  const [isCoverUploaded, setIsCoverUploaded] = useState(false);
+  const [isCoverSelected, setIsCoverSelected] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
   const [isFileSelected, setIsFileSelected] = useState(false);
   const [trackData, setTrackData] = useState({
@@ -21,7 +25,7 @@ function Modal({ handleClose }) {
     genre: "",
     urlImage: "",
     urlTrack: "",
-    owner: "614ca9e29d57e31debbf06a1",
+    owner: "6151de84f24ba470b66e13c7",
   });
 
   const [songToUpload, setSongToUpload] = useState({
@@ -55,6 +59,16 @@ function Modal({ handleClose }) {
       ...trackData,
       [e.target.name]: e.target.value,
     });
+  }
+
+  function handleCoverUploadChange(e) {
+    //setCoverToUpload
+    setIsCoverSelected(true);
+  }
+
+  function handleTrackUploadChange(e) {
+    //setTrackToUpload
+    setIsTrackSelected(true);
   }
 
   function handleUploadChange(e) {
@@ -149,7 +163,96 @@ function Modal({ handleClose }) {
               />
 
               <div className="xl-separator" />
-              <Row className="general-container uploading-file">
+
+              <Row className="">
+                <Col xs={12} md={6} lg={6} className="position-relative">
+                  {isCoverUploaded ? (
+                    <>
+                      <Row className="lds-ripple">
+                        <div></div>
+                        <div></div>
+                      </Row>
+                      <h3>Uploading cover</h3>
+                    </>
+                  ) : (
+                    <>
+                      <h5>Upload cover:</h5>
+                      <input
+                        type="file"
+                        onChange={handleCoverUploadChange}
+                        className="upload-file-input"
+                      />
+                      <div className="upload-file-container">
+                        <h1>+</h1>
+                      </div>
+                    </>
+                  )}
+                </Col>
+                <Col xs={12} md={6} lg={6} className="position-relative">
+                  {isTrackUploaded ? (
+                    <>
+                      <div className="lds-ripple">
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <h3>Uploading track</h3>
+                    </>
+                  ) : (
+                    <>
+                      <h5>Upload track:</h5>
+                      <input
+                        type="file"
+                        onChange={handleTrackUploadChange}
+                        className="upload-file-input"
+                      />
+                      <div className="upload-file-container">
+                        <h1>+</h1>
+                      </div>
+                    </>
+                  )}
+                </Col>
+              </Row>
+              <div className="xl-separator" />
+              <Row>
+                <Col
+                  xs={6}
+                  md={6}
+                  lg={6}
+                  className="d-flex justify-content-center"
+                >
+                  {isCoverSelected && (
+                    <>
+                      <button
+                        onClick={uploadFiles}
+                        className="button"
+                        title="Upload"
+                      >
+                        Upload cover
+                      </button>
+                    </>
+                  )}
+                </Col>
+                <Col
+                  xs={6}
+                  md={6}
+                  lg={6}
+                  className="d-flex justify-content-center"
+                >
+                  {isTrackSelected && (
+                    <>
+                      <button
+                        onClick={uploadFiles}
+                        className="button"
+                        title="Upload"
+                      >
+                        Upload track
+                      </button>
+                    </>
+                  )}
+                </Col>
+              </Row>
+
+              {/* <Row className="general-container uploading-file">
                 {songToUpload.isUploading ? (
                   <>
                     <div className="lds-ripple">
@@ -175,7 +278,7 @@ function Modal({ handleClose }) {
                     </div>
                   </>
                 )}
-              </Row>
+              </Row> */}
               {isFileSelected && (
                 <>
                   <div className="login-register-button-centered">
