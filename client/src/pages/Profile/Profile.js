@@ -36,6 +36,11 @@ function Profile() {
     confirmPassword: "",
   });
 
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleOpenModal = () => setShowModal(true);
+
   //Load user
   useEffect(() => {
     getCurrentUser().then((response) => {
@@ -102,8 +107,8 @@ function Profile() {
   return (
     <>
       <RightMenu />
+      {showModal && <Modal handleClose={handleCloseModal} />}
       <main>
-        <Modal />
         <Container>
           <Row>
             <Col className="profile-view-profile-image" xs={3} md={3} lg={3}>
@@ -340,6 +345,11 @@ function Profile() {
                   <button className="button" onClick={handleEdit}>
                     Edit profile info
                   </button>
+                </Col>
+                <Col className="d-flex justify-content-center">
+                  <div className="button" onClick={handleOpenModal}>
+                    Upload track
+                  </div>
                 </Col>
               </Row>
             )}
