@@ -1,4 +1,5 @@
 const { Tracks } = require("../models");
+const { Users } = require("../models");
 
 async function getAllTracks(req, res) {
   try {
@@ -33,8 +34,15 @@ async function getTrackById(req, res) {
 }
 
 async function uploadTrack(req, res) {
+  const { owner } = req.body;
   try {
+    //Creating new track
     const { _id } = await Tracks.create(req.body);
+    //Finding the user to update mySongs property and saving the document
+    const userFound = await Users.findById(owner);
+    userFound.mySongs.push(_id);
+    await userFound.save();
+    //Returning statuts after track upload and user document update
     return res.status(200).send({
       message: "Track created very successfully",
       data: {
@@ -52,7 +60,14 @@ async function uploadTrack(req, res) {
 async function deleteTrack(req, res) {
   const { id } = req.params;
   try {
-    await Tracks.findByIdAndRemove(id);
+    //Deleting existing track
+    const {owner} = await Tracks.findByIdAndRemove(id);
+    //Finding the user to update mySongs property and saving the document
+    const userFound = await Users.findById(owner);
+    const trackToRemove = userFound.mySongs.indexOf(id);
+    userFound.mySongs.splice(trackToRemove, 1);
+    await userFound.save();
+    //Returning statuts after track delete and user document update
     return res.status(200).send({
       message: "Track deleted very successfully",
       data: {
