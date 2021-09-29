@@ -9,5 +9,7 @@ trackRouter.get("/get-track/:id", trackController.getTrackById);
 trackRouter.post("/upload-track", trackController.uploadTrack);
 trackRouter.delete("/delete-track/:id", trackController.deleteTrack);
 trackRouter.patch("/update-track/:id", trackController.updateTrack);
+trackRouter.patch("/push-like-track/", trackController.pushLikeTrack);
+trackRouter.patch("/remove-like-track/", trackController.removeLikeTrack);
 
 module.exports = trackRouter;

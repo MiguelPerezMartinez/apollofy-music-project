@@ -11,10 +11,12 @@ const TrackSchema = new Schema(
       type: Number,
       default: 0,
     },
-    totalLikes: {
-      type: Number,
-      default: 0,
-    },
+    totalLikes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+    ],
     author: {
       type: String,
       default: "unknown",

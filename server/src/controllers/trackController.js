@@ -38,9 +38,9 @@ async function uploadTrack(req, res) {
   try {
     //Creating new track
     const { _id } = await Tracks.create(req.body);
-    //Finding the user to update mySongs property and saving the document
+    //Finding the user to update myTracks property and saving the document
     const userFound = await Users.findById(owner);
-    userFound.mySongs.push(_id);
+    userFound.myTracks.push(_id);
     await userFound.save();
     //Returning statuts after track upload and user document update
     return res.status(200).send({
@@ -61,11 +61,11 @@ async function deleteTrack(req, res) {
   const { id } = req.params;
   try {
     //Deleting existing track
-    const {owner} = await Tracks.findByIdAndRemove(id);
-    //Finding the user to update mySongs property and saving the document
+    const { owner } = await Tracks.findByIdAndRemove(id);
+    //Finding the user to update myTracks property and saving the document
     const userFound = await Users.findById(owner);
-    const trackToRemove = userFound.mySongs.indexOf(id);
-    userFound.mySongs.splice(trackToRemove, 1);
+    const trackToRemove = userFound.myTracks.indexOf(id);
+    userFound.myTracks.splice(trackToRemove, 1);
     await userFound.save();
     //Returning statuts after track delete and user document update
     return res.status(200).send({
@@ -107,10 +107,66 @@ async function updateTrack(req, res) {
   }
 }
 
+async function pushLikeTrack(req, res) {
+  const { trackId, userId } = req.body;
+  try {
+    // Push userId into totalLikes array of tracks
+    const trackDoc = await Tracks.findById(trackId);
+    trackDoc.totalLikes.push(userId);
+    await trackDoc.save();
+
+    // Push trackId into favTracks array of users
+    const userDoc = await Users.findById(userId);
+    userDoc.favTracks.push(trackId);
+    await userDoc.save();
+
+    res.status(200).send({
+      message: "Like track registered",
+      trackId: trackId,
+      userId: userId,
+    });
+  } catch (error) {
+    res.status(500).send({
+      data: req.params.id,
+      error: error.message,
+    });
+  }
+}
+
+async function removeLikeTrack(req, res) {
+  const { trackId, userId } = req.body;
+  try {
+    // Remove userId from totalLikes array of tracks
+    const trackDoc = await Tracks.findById(trackId);
+    const userToRemove = trackDoc.totalLikes.indexOf(userId);
+    trackDoc.totalLikes.splice(userToRemove, 1);
+    await trackDoc.save();
+
+    // Remove trackId from favTracks array of users
+    const userDoc = await Users.findById(userId);
+    const trackToRemove = userDoc.favTracks.indexOf(trackId);
+    userDoc.favTracks.splice(trackToRemove, 1);
+    await userDoc.save();
+
+    res.status(200).send({
+      message: "Like track removed",
+      trackId: trackId,
+      userId: userId,
+    });
+  } catch (error) {
+    res.status(500).send({
+      data: req.params.id,
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   getAllTracks: getAllTracks,
   getTrackById: getTrackById,
   uploadTrack: uploadTrack,
   deleteTrack: deleteTrack,
   updateTrack: updateTrack,
+  pushLikeTrack: pushLikeTrack,
+  removeLikeTrack: removeLikeTrack,
 };
