@@ -15,7 +15,7 @@ import RightMenu from "../../components/RightMenu";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 import Input from "../../components/Input";
 import { Row, Col } from "react-bootstrap";
-import Modal from "../../components/Modal";
+import ModalTrackUp from "../../components/ModalTrackUp";
 
 function Profile() {
   const [currentUser, setCurrentUser] = useState("");
@@ -107,7 +107,7 @@ function Profile() {
   return (
     <>
       <RightMenu />
-      {showModal && <Modal handleClose={handleCloseModal} />}
+      {showModal && <ModalTrackUp handleClose={handleCloseModal} />}
       <main>
         <Container>
           <Row>

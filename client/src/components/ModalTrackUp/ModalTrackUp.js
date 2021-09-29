@@ -4,8 +4,8 @@ import "./styles.css";
 
 //Import components
 import { Row, Col } from "react-bootstrap";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
+import Button from "../Button";
+import Input from "../Input";
 
 function Modal({ handleClose }) {
   const [trackData, setTrackData] = useState({
@@ -19,7 +19,6 @@ function Modal({ handleClose }) {
     owner: "object id",
     totalPlays: 0,
     totalLikes: 0,
-    duration: "time",
   });
 
   const handlesubmit = (e) => {
