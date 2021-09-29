@@ -16,16 +16,12 @@ export default function RightMenu() {
     return (
       <aside className="mobile-bottom-menu">
         <Row>
-          <Col xs={3} className="mobile-bottom-menu-button">
-            Home
+          <Col className="mobile-bottom-menu-button">
+            <Link to="/">Home</Link>
           </Col>
-          <Col xs={3} className="mobile-bottom-menu-button">
-            Search
-          </Col>
-          <Col xs={3} className="mobile-bottom-menu-button">
-            test
-          </Col>
-          <Col xs={3} className="mobile-bottom-menu-button">
+          <Col className="mobile-bottom-menu-button">Search</Col>
+          <Col className="mobile-bottom-menu-button">Library</Col>
+          <Col className="mobile-bottom-menu-button">
             <Link to="/profile" className="right-menu-row">
               <ProfileCircleIcon />
             </Link>
