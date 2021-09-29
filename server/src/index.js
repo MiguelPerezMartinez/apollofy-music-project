@@ -7,11 +7,11 @@ const {connect} = require("./db");
 // connection and connection test
 connect().then(async function seed(){
   console.log("connection success");
-  const isExist = await db.userModel.find({});
+  const isExist = await db.Users.find({});
   if(isExist.length!=0){
     console.log("some user exist")
   }else{
-    const { _id } = await db.userModel.create({
+    const { _id } = await db.Users.create({
       active:true,
       role:"admin",
       username:"admin",
