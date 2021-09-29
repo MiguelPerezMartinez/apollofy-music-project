@@ -1,6 +1,18 @@
 const initialTrackState = {
-  isPlayVarDisplaye: false,
+  isPlayVarDisplayed: false,
   isPlaying: false,
-  trackObject: "",
+  trackObject: {
+    title: "",
+    author: "",
+    album: "",
+    releaseYear: "",
+    genre: "",
+    urlImage: "",
+    urlTrack: "",
+    owner: "object id",
+    totalPlays: 0,
+    totalLikes: 0,
+    duration: "time",
+  },
 };
 export default initialTrackState;
