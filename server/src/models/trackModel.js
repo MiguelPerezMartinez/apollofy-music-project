@@ -35,7 +35,7 @@ const TrackSchema = new Schema(
       type: String,
       default: "",
     },
-    urlSong: {
+    urlTrack: {
       type: String,
       required: [true, "Please input a song URL"],
     },

@@ -8,6 +8,8 @@ import { Row, Col } from "react-bootstrap";
 import Button from "../Button";
 import Input from "../Input";
 
+import { trackUpload } from "../../services/api/index";
+
 function Modal({ handleClose }) {
   const [isUploaded, setIsUploaded] = useState(false);
   const [isFileSelected, setIsFileSelected] = useState(false);
@@ -19,9 +21,7 @@ function Modal({ handleClose }) {
     genre: "",
     urlImage: "",
     urlTrack: "",
-    owner: "object id",
-    totalPlays: 0,
-    totalLikes: 0,
+    owner: "614ca9e29d57e31debbf06a1",
   });
 
   const [songToUpload, setSongToUpload] = useState({
@@ -36,7 +36,11 @@ function Modal({ handleClose }) {
 
   const handlesubmit = (e) => {
     e.preventDefault();
+
     //Connexion con base de datos
+    trackUpload(trackData).then((response) => {
+      console.log(response);
+    });
   };
 
   const handleBlur = (e) => {
