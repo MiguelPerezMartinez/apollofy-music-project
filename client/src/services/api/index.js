@@ -6,6 +6,9 @@ import {
   updateById,
   setIsActive,
 } from "./apiAuth";
+
+import { trackUpload } from "./trackUpload";
+
 export {
   registerInApi,
   getById,
@@ -13,4 +16,5 @@ export {
   updateCurrentUser,
   updateById,
   setIsActive,
+  trackUpload,
 };
