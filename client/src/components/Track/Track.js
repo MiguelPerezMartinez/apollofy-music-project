@@ -4,7 +4,7 @@ import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { trackObjectAction } from "../../redux/trackData/actions";
 import { isPlayBarDisplayed, isPlaying } from "../../redux/trackData/actions";
-
+import { Container } from "react-bootstrap";
 function Track({ dataTrack }) {
   const track = useSelector((state) => state.trackReducer);
   const { trackObject } = track;
@@ -20,7 +20,7 @@ function Track({ dataTrack }) {
     dispatch(isPlaying(true));
   }, [trackObject]);
   return (
-    <div className="general-container" onClick={setReduxTrackData}>
+    <Container className="general-container" onClick={setReduxTrackData}>
       <div className="rowGrid">
         <img
           className="image-track-long"
@@ -44,7 +44,7 @@ function Track({ dataTrack }) {
           <p className="text-long-track">{dataTrack.duration}</p>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 
