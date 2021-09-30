@@ -148,6 +148,23 @@ async function handlerTrackLike(req, res) {
   }
 }
 
+async function incrementTotalPlays(req, res) {
+  const { id: trackId } = req.params;
+  try{
+    const trackDoc = await Tracks.findById(trackId);
+    trackDoc.totalPlays += 1;
+    trackDoc.save();
+    res.status(200).send({
+      message: "Track total plays incremented",
+      trackId: trackId,
+    });
+  }catch (error) {
+    res.status(500).send({
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   getAllTracks: getAllTracks,
   getTrackById: getTrackById,
@@ -155,4 +172,5 @@ module.exports = {
   deleteTrack: deleteTrack,
   updateTrack: updateTrack,
   handlerTrackLike: handlerTrackLike,
+  incrementTotalPlays: incrementTotalPlays,
 };
