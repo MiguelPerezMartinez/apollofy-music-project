@@ -11,7 +11,6 @@ import { getCurrentUser, updateCurrentUser } from "../../services/api/index";
 import { updateUserPass } from "../../services/firebase";
 
 import { logOut } from "../../services/firebase";
-
 //Import components
 import RightMenu from "../../components/RightMenu";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
@@ -55,6 +54,7 @@ function Profile() {
         birthday: response.birthday,
         country: response.country,
       });
+
       setCurrentUser(response);
     });
   }, []);

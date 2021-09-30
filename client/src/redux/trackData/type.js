@@ -1,0 +1,3 @@
+export const IS_PLAY_BAR_DISPLAYED = "IS_PLAY_BAR_DISPLAYED";
+export const IS_PLAYING = "IS_PLAYING";
+export const TRACK_OBJECT = "TRACK_OBJECT";
