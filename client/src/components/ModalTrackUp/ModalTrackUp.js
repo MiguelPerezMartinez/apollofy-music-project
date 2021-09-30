@@ -37,6 +37,11 @@ function ModalTrackUp({ handleClose }) {
     owner: "6151de84f24ba470b66e13c7",
   });
 
+  const [tempUrl, setTempUrl] = useState({
+    urlCover: "",
+    urlTrack: "",
+  });
+
   const [uploadState, setUploadState] = useState({
     isReady: false,
     isUploaded: false,
@@ -47,6 +52,14 @@ function ModalTrackUp({ handleClose }) {
       uploadFiles("cover");
     }
   }, [coverUpload.isSelected]);
+
+  useEffect(() => {
+    setTrackData({
+      ...trackData,
+      urlCover: tempUrl.urlCover,
+      urlTrack: tempUrl.urlTrack,
+    });
+  }, [tempUrl]);
 
   useEffect(() => {
     if (trackUpload.isSelected === true) {
@@ -117,7 +130,7 @@ function ModalTrackUp({ handleClose }) {
             isUploaded: true,
           });
           const { data } = response;
-          setTrackData({ ...trackData, urlImage: data.url });
+          setTempUrl({ ...tempUrl, urlCover: data.url });
         })
         .catch((error) => {
           setCoverUpload({
@@ -144,7 +157,7 @@ function ModalTrackUp({ handleClose }) {
             isUploaded: true,
           });
           const { data } = response;
-          setTrackData({ ...trackData, urlTrack: data.url });
+          setTempUrl({ ...tempUrl, urlTrack: data.url });
         })
         .catch((error) => {
           setTrackUpload({
