@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
+import BarsAndModal from "../../hoc/BarsAndModal";
 
 //Components
-import RightMenu from "../../components/RightMenu";
 import Track from "../../components/Track";
 import PlayButton from "../../components/PlayButton";
 
@@ -46,7 +46,6 @@ function Home() {
 
   return (
     <>
-      <RightMenu />
       <main>
         <h1>HOME</h1>
         <h2>Songs</h2>
@@ -59,4 +58,4 @@ function Home() {
   );
 }
 
-export default withAuth(Home);
+export default withAuth(BarsAndModal(Home));

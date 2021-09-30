@@ -10,7 +10,7 @@ import Input from "../Input";
 
 import { trackUpload } from "../../services/api/index";
 
-function Modal({ handleClose }) {
+function ModalTrackUp({ handleClose }) {
   const [isUploaded, setIsUploaded] = useState(false);
   const [isFileSelected, setIsFileSelected] = useState(false);
   const [trackData, setTrackData] = useState({
@@ -210,4 +210,4 @@ function Modal({ handleClose }) {
   );
 }
 
-export default Modal;
+export default ModalTrackUp;

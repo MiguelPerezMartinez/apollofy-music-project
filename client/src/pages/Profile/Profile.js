@@ -9,10 +9,10 @@ import "./spinner.css";
 import withAuth from "../../hoc/withAuth";
 import { getCurrentUser, updateCurrentUser } from "../../services/api/index";
 import { updateUserPass } from "../../services/firebase";
-
 import { logOut } from "../../services/firebase";
+
 //Import components
-import RightMenu from "../../components/RightMenu";
+import BarsAndModal from "../../hoc/BarsAndModal";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 import Input from "../../components/Input";
 import { Row, Col } from "react-bootstrap";
@@ -108,7 +108,6 @@ function Profile() {
 
   return (
     <>
-      <RightMenu />
       {showModal && <ModalTrackUp handleClose={handleCloseModal} />}
       <main>
         <Container>
@@ -367,4 +366,4 @@ function Profile() {
   );
 }
 
-export default withAuth(Profile);
+export default withAuth(BarsAndModal(Profile));

@@ -13,7 +13,7 @@ import ProfileCircleIcon from "../ProfileCircleIcon";
 //user from userReducer
 import { useSelector } from "react-redux";
 
-export default function RightMenu() {
+export default function RightMenu({ handleOpenModal }) {
   const username = useSelector((state) => state.userReducer.username);
   const w = window.innerWidth;
   if (w <= 400) {
@@ -72,6 +72,20 @@ export default function RightMenu() {
               className="right-menu-icon"
             />
             <div className="right-menu-row-title">Logout</div>
+          </div>
+        </div>
+        <div
+          onClick={() => {
+            handleOpenModal();
+          }}
+        >
+          <div className="right-menu-row">
+            <img
+              src="./assets/img/upload.svg"
+              alt="logout"
+              className="right-menu-icon"
+            />
+            <div className="right-menu-row-title">Upload</div>
           </div>
         </div>
       </aside>
