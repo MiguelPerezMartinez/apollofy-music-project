@@ -9,17 +9,17 @@ function PlayButton() {
   const waveformRef = useRef();
 
   useEffect(() => {
-    WaveSurfer.create({
-      container: waveformRef.current,
-      waveColor: "#D9DCFF",
-      progressColor: "#4353FF",
-      cursorColor: "#4353FF",
-      barWidth: 2,
-      barRadius: 3,
-      cursorWidth: 1,
-      height: 200,
-      barGap: 3,
-    });
+    // WaveSurfer.create({
+    //   container: waveformRef.current,
+    //   waveColor: "#D9DCFF",
+    //   progressColor: "#4353FF",
+    //   cursorColor: "#4353FF",
+    //   barWidth: 2,
+    //   barRadius: 3,
+    //   cursorWidth: 1,
+    //   height: 200,
+    //   barGap: 3,
+    // });
   }, []);
   function play() {
     if (isPlayed) {

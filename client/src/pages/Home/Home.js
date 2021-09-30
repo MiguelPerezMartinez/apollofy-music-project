@@ -3,11 +3,12 @@ import React, { useEffect } from "react";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
+import BarsAndModal from "../../hoc/BarsAndModal";
 
 //Components
-import RightMenu from "../../components/RightMenu";
 import Track from "../../components/Track";
-import PlayButton from "../../components/PlayButton";
+// import PlayButton from "../../components/PlayButton";
+import PlayBar from "../../components/PlayBar";
 
 //imports to set userRedux
 import { useDispatch, useSelector } from "react-redux";
@@ -46,17 +47,18 @@ function Home() {
 
   return (
     <>
-      <RightMenu />
       <main>
         <h1>HOME</h1>
         <h2>Songs</h2>
         <h3>My plylist</h3>
 
+        {/* <Track dataTrack={dataTrack} />
+        {isPlayBarDisplayed && <PlayButton />} */}
         <Track dataTrack={dataTrack} />
-        {isPlayBarDisplayed && <PlayButton />}
       </main>
+        {isPlayBarDisplayed && <PlayBar />}
     </>
   );
 }
 
-export default withAuth(Home);
+export default withAuth(BarsAndModal(Home));
