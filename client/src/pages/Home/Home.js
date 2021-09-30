@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
-
+import sound from "./sound.wav";
 //Components
 import RightMenu from "../../components/RightMenu";
 import Track from "../../components/Track";
@@ -51,9 +51,14 @@ function Home() {
         <h1>HOME</h1>
         <h2>Songs</h2>
         <h3>My plylist</h3>
+        <audio controls>
+          <source src={sound} type="audio/wav" />
+        </audio>
 
         <Track dataTrack={dataTrack} />
-        {isPlayBarDisplayed && <PlayButton />}
+        {isPlayBarDisplayed && (
+          <PlayButton className="playBar" trackUrl={sound} />
+        )}
       </main>
     </>
   );
