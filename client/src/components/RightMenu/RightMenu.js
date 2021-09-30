@@ -14,7 +14,8 @@ import ProfileCircleIcon from "../ProfileCircleIcon";
 import { useSelector } from "react-redux";
 
 export default function RightMenu({ handleOpenModal }) {
-  const username = useSelector((state) => state.userReducer.username);
+  const { username, profileImg } = useSelector((state) => state.userReducer);
+  console.log(profileImg);
   const w = window.innerWidth;
   if (w <= 400) {
     return (
@@ -38,7 +39,7 @@ export default function RightMenu({ handleOpenModal }) {
           </Col>
           <Col className="mobile-bottom-menu-button">
             <Link to="/profile" className="right-menu-row">
-              <ProfileCircleIcon />
+              <ProfileCircleIcon profileImg={profileImg} />
             </Link>
           </Col>
         </Row>

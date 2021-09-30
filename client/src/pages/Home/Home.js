@@ -25,6 +25,7 @@ function Home() {
         setUser({
           user_id: response._id,
           username: response.username,
+          profileImg: response.profileImg,
         }),
       );
     });
