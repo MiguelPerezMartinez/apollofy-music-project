@@ -7,21 +7,24 @@ import withAuth from "../../hoc/withAuth";
 //Components
 import RightMenu from "../../components/RightMenu";
 import Track from "../../components/Track";
+import PlayButton from "../../components/PlayButton";
 
 //imports to set userRedux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "../../services/api/index";
 import { setUser } from "../../redux/userData/actions";
 
 function Home() {
   const dispatch = useDispatch();
-<<<<<<< HEAD
+
   // const isDisplayed = useSelector(
   //   (state) => state.trackReducer.isPlayBarDisplayed,
   // );
 
   //Hacer peticion y cambiar por dataTrack
-=======
+  const trackReducer = useSelector((stete) => stete.trackReducer);
+  const { isPlayBarDisplayed } = trackReducer;
+
   // set data in userReducer
   useEffect(() => {
     getCurrentUser().then((response) => {
@@ -33,30 +36,32 @@ function Home() {
       );
     });
   }, []);
->>>>>>> 29e81d220a3a17ccdf45643c2762c336e0a4a045
+
   const dataTrack = {
-    title: "La conga",
-    author: "Congito",
-    album: "Los congitos",
-    releaseYear: "2002",
-    genre: "Samba",
-    urlImage: "eeeeeee",
+    title: "Deltoya",
+    author: "Robe",
+    album: "Deltoya",
+    releaseYear: "15 de juny de 1992",
+    genre: "Transgressive rock",
+    urlImage:
+      "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/extremoduro-robe-iniesta-separacion-1576666810.jpg?crop=1xw:0.75xh;center,top&resize=1200:*",
     urlTrack: "res",
     owner: "object id",
     totalPlays: 0,
     totalLikes: 0,
-    duration: "time",
+    duration: "2 min",
   };
 
   return (
     <>
       <RightMenu />
       <main>
-        <Track dataTrack={dataTrack} />
         <h1>HOME</h1>
         <h2>Songs</h2>
         <h3>My plylist</h3>
-        <div className="general-container">Home Page</div>
+
+        <Track dataTrack={dataTrack} />
+        {isPlayBarDisplayed && <PlayButton />}
       </main>
     </>
   );
