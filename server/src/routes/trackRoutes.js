@@ -22,5 +22,10 @@ trackRouter.patch(
   authMiddleware,
   trackController.handlerTrackLike,
 );
+trackRouter.patch(
+  "/increment-total-plays/:id",
+  authMiddleware,
+  trackController.incrementTotalPlays,
+);
 
 module.exports = trackRouter;
