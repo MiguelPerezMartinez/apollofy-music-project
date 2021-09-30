@@ -1,6 +1,5 @@
 //Imports
 import React, { useState, useEffect } from "react";
-import Container from "react-bootstrap/Container";
 
 import "./styles.css";
 import "./spinner.css";
@@ -9,13 +8,13 @@ import "./spinner.css";
 import withAuth from "../../hoc/withAuth";
 import { getCurrentUser, updateCurrentUser } from "../../services/api/index";
 import { updateUserPass } from "../../services/firebase";
-
 import { logOut } from "../../services/firebase";
+
 //Import components
-import RightMenu from "../../components/RightMenu";
+import BarsAndModal from "../../hoc/BarsAndModal";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 import Input from "../../components/Input";
-import { Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import ModalTrackUp from "../../components/ModalTrackUp";
 
 function Profile() {
@@ -108,7 +107,6 @@ function Profile() {
 
   return (
     <>
-      <RightMenu />
       {showModal && <ModalTrackUp handleClose={handleCloseModal} />}
       <main>
         <Container>
@@ -349,15 +347,17 @@ function Profile() {
                     Edit profile info
                   </button>
                 </Col>
-                <Col className="d-flex justify-content-center">
-                  <div className="button" onClick={handleOpenModal}>
-                    Upload track
-                  </div>
-                </Col>
               </Row>
             )}
           </form>
           <div className="xl-separator" />
+        </Container>
+        <Container className="general-container">
+          <Col className="d-flex justify-content-center">
+            <div className="button" onClick={handleOpenModal}>
+              Upload track
+            </div>
+          </Col>
         </Container>
         <div className="xl-separator" />
         <div className="xl-separator" />
@@ -367,4 +367,4 @@ function Profile() {
   );
 }
 
-export default withAuth(Profile);
+export default withAuth(BarsAndModal(Profile));

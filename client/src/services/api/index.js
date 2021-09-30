@@ -7,7 +7,7 @@ import {
   setIsActive,
 } from "./apiAuth";
 
-import { trackUpload } from "./trackUpload";
+import { apiTrackUpload } from "./trackUpload";
 
 export {
   registerInApi,
@@ -16,5 +16,5 @@ export {
   updateCurrentUser,
   updateById,
   setIsActive,
-  trackUpload,
+  apiTrackUpload,
 };

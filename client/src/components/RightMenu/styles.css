@@ -6,7 +6,7 @@
   max-height: 95vh;
   padding: 1rem 0.2rem;
   background-color: var(--main-container-color);
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
 }
@@ -31,6 +31,7 @@
   justify-content: center;
   min-height: 2.8rem;
   max-height: 2.8rem;
+  cursor: pointer;
 }
 
 .right-menu-row:hover {
@@ -39,6 +40,7 @@
 
 .no-hover:hover {
   background-color: var(--main-container-color) !important;
+  cursor: default;
 }
 
 .right-menu-row > div {
@@ -96,6 +98,7 @@
   width: 100vw;
   background-color: var(--main-container-color);
   display: flex;
+  z-index: 20;
 }
 
 .mobile-bottom-menu > div {
