@@ -4,10 +4,12 @@ import React, { useEffect } from "react";
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
 import sound from "./sound.wav";
+import BarsAndModal from "../../hoc/BarsAndModal";
+
 //Components
-import RightMenu from "../../components/RightMenu";
 import Track from "../../components/Track";
 import PlayButton from "../../components/PlayButton";
+import PlayBar from "../../components/PlayBar";
 
 //imports to set userRedux
 import { useDispatch, useSelector } from "react-redux";
@@ -46,7 +48,6 @@ function Home() {
 
   return (
     <>
-      <RightMenu />
       <main>
         <h1>HOME</h1>
         <h2>Songs</h2>
@@ -55,13 +56,16 @@ function Home() {
           <source src={sound} type="audio/wav" />
         </audio>
 
+        {/* <Track dataTrack={dataTrack} />
+        {isPlayBarDisplayed && <PlayButton />} */}
         <Track dataTrack={dataTrack} />
         {isPlayBarDisplayed && (
           <PlayButton className="playBar" trackUrl={sound} />
         )}
       </main>
+      {isPlayBarDisplayed && <PlayBar />}
     </>
   );
 }
 
-export default withAuth(Home);
+export default withAuth(BarsAndModal(Home));
