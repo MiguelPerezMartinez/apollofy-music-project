@@ -21,3 +21,19 @@
 .cancel-button {
   cursor: pointer;
 }
+
+@media (max-width: 400px) {
+  .upload-separator > div {
+    margin-bottom: 2rem;
+  }
+}
+
+.uploaded-file {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.uploaded-file > img {
+  max-width: 5rem;
+}

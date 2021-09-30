@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function trackUpload(trackData) {
+export async function apiTrackUpload(trackData) {
   return axios({
     method: "POST",
     url: `http://localhost:4000/tracks/upload-track`,
@@ -8,5 +8,11 @@ export async function trackUpload(trackData) {
     // headers: {
     //   Authorization: `Bearer ${userToken}`,
     // },
-  });
+  })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }

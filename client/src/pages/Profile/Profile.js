@@ -1,6 +1,5 @@
 //Imports
 import React, { useState, useEffect } from "react";
-import Container from "react-bootstrap/Container";
 
 import "./styles.css";
 import "./spinner.css";
@@ -16,7 +15,7 @@ import { logOut } from "../../services/firebase";
 import RightMenu from "../../components/RightMenu";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 import Input from "../../components/Input";
-import { Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import ModalTrackUp from "../../components/ModalTrackUp";
 
 function Profile() {

@@ -5,18 +5,27 @@ import "./styles.css";
 
 //Import components
 import { Row, Col } from "react-bootstrap";
-import Button from "../Button";
 import Input from "../Input";
 
-import { trackUpload } from "../../services/api/index";
+import { apiTrackUpload } from "../../services/api/index";
 
 function Modal({ handleClose }) {
-  const [isTrackUploaded, setIsTrackUploaded] = useState(false);
-  const [isTrackSelected, setIsTrackSelected] = useState(false);
-  const [isCoverUploaded, setIsCoverUploaded] = useState(false);
-  const [isCoverSelected, setIsCoverSelected] = useState(false);
-  const [isUploaded, setIsUploaded] = useState(false);
-  const [isFileSelected, setIsFileSelected] = useState(false);
+  const [coverUpload, setCoverUpload] = useState({
+    file: "",
+    isSelected: false,
+    isUploading: false,
+    isUploaded: false,
+    error: "",
+  });
+
+  const [trackUpload, setTrackUpload] = useState({
+    file: "",
+    isSelected: false,
+    isUploading: false,
+    isUploaded: false,
+    error: "",
+  });
+
   const [trackData, setTrackData] = useState({
     title: "",
     author: "",
@@ -28,24 +37,31 @@ function Modal({ handleClose }) {
     owner: "6151de84f24ba470b66e13c7",
   });
 
-  const [songToUpload, setSongToUpload] = useState({
-    file: "",
-    isUploading: false,
+  const [uploadState, setUploadState] = useState({
+    isReady: false,
+    isUploaded: false,
   });
 
   useEffect(() => {
-    console.log(songToUpload);
-    console.log(trackData);
-  }, [trackData, songToUpload]);
+    if (coverUpload.isSelected === true) {
+      uploadFiles("cover");
+    }
+  }, [coverUpload.isSelected]);
 
-  const handlesubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (trackUpload.isSelected === true) {
+      uploadFiles("track");
+    }
+  }, [trackUpload.isSelected]);
 
-    //Connexion con base de datos
-    trackUpload(trackData).then((response) => {
-      console.log(response);
-    });
-  };
+  useEffect(() => {
+    if (trackData.urlImage !== "" && trackData.urlTrack !== "") {
+      setUploadState({
+        ...uploadState,
+        isReady: true,
+      });
+    }
+  }, [trackData]);
 
   const handleBlur = (e) => {
     if (e.target.className === "modal-background") {
@@ -62,38 +78,88 @@ function Modal({ handleClose }) {
   }
 
   function handleCoverUploadChange(e) {
-    //setCoverToUpload
-    setIsCoverSelected(true);
+    setCoverUpload({
+      ...coverUpload,
+      file: e.target.files[0],
+      isSelected: true,
+    });
   }
 
   function handleTrackUploadChange(e) {
-    //setTrackToUpload
-    setIsTrackSelected(true);
-  }
-
-  function handleUploadChange(e) {
-    setSongToUpload({
-      ...songToUpload,
+    setTrackUpload({
+      ...trackUpload,
       file: e.target.files[0],
+      isSelected: true,
     });
-    setIsFileSelected(true);
   }
 
-  async function uploadFiles() {
-    setSongToUpload({ ...songToUpload, isUploading: true });
-    setIsFileSelected(false);
+  function uploadFiles(folder) {
+    if (folder === "cover") {
+      setCoverUpload({ ...coverUpload, isUploading: true });
+    } else {
+      setTrackUpload({ ...trackUpload, isUploading: true });
+    }
     const formData = new FormData();
-    formData.append("file", songToUpload.file);
-    formData.append("upload_preset", "upload_apollofy");
 
-    await axios
-      .post("https://api.cloudinary.com/v1_1/apollofy/video/upload", formData)
-      .then((response) => {
-        setSongToUpload({ ...songToUpload, isUploading: false });
-        const { data } = response;
-        setTrackData({ ...trackData, urlTrack: data.url });
-        setIsUploaded(true);
-      });
+    if (folder === "cover") {
+      formData.append("file", coverUpload.file);
+      formData.append("upload_preset", "upload_apollofy");
+      formData.append("folder", folder);
+      axios
+        .post(
+          `https://api.cloudinary.com/v1_1/apollofy/image/upload/`,
+          formData,
+        )
+        .then((response) => {
+          setCoverUpload({
+            ...coverUpload,
+            isUploading: false,
+            isUploaded: true,
+          });
+          const { data } = response;
+          setTrackData({ ...trackData, urlImage: data.url });
+        })
+        .catch((error) => {
+          setCoverUpload({
+            ...coverUpload,
+            error: error,
+            file: "",
+            isUploading: false,
+            isUploaded: false,
+          });
+        });
+    } else {
+      formData.append("file", trackUpload.file);
+      formData.append("upload_preset", "upload_apollofy");
+      formData.append("folder", folder);
+      axios
+        .post(
+          `https://api.cloudinary.com/v1_1/apollofy/video/upload/`,
+          formData,
+        )
+        .then((response) => {
+          setTrackUpload({
+            ...trackUpload,
+            isUploading: false,
+            isUploaded: true,
+          });
+          const { data } = response;
+          setTrackData({ ...trackData, urlTrack: data.url });
+        })
+        .catch((error) => {
+          setTrackUpload({
+            ...coverUpload,
+            error: error,
+            file: "",
+            isUploading: false,
+            isUploaded: false,
+          });
+        });
+    }
+  }
+
+  async function onSubmit() {
+    await apiTrackUpload(trackData).then(handleClose());
   }
 
   return (
@@ -102,210 +168,143 @@ function Modal({ handleClose }) {
         <Row>
           <Col xs={12} md={6} className="track-upload">
             <h1 className="h3 mb-3 fw-normal">Upload track</h1>
-            <form onSubmit={handlesubmit}>
-              <Input
-                type="text"
-                id="title"
-                label="title"
-                value={trackData.title}
-                placeholder="Type title"
-                handleChange={handleChange}
-              />
-              <Input
-                type="text"
-                id="author"
-                label="author"
-                value={trackData.author}
-                placeholder="Type author"
-                handleChange={handleChange}
-              />
-              <Input
-                type="text"
-                id="album"
-                label="album"
-                value={trackData.album}
-                placeholder="Type album"
-                handleChange={handleChange}
-              />
-              <Input
-                type="releaseYear"
-                id="releaseYear"
-                label="Release year"
-                value={trackData.releaseYear}
-                placeholder="Type release year"
-                handleChange={handleChange}
-              />
-              <Input
-                type="text"
-                id="genre"
-                label="genre"
-                value={trackData.genre}
-                placeholder="Type genre"
-                handleChange={handleChange}
-              />
-              <Input
-                type="text"
-                name="urlImage"
-                id="urlImage"
-                label="Image URL"
-                value={trackData.urlImage}
-                placeholder="Paste URL"
-                handleChange={handleChange}
-              />
-              <Input
-                type="text"
-                name="urlTrack"
-                id="urlTrack"
-                label="Track"
-                value={trackData.urlTrack}
-                placeholder="Paste URL "
-                handleChange={() => {}}
-              />
+            <Input
+              type="text"
+              id="title"
+              label="title"
+              value={trackData.title}
+              placeholder="Type title"
+              handleChange={handleChange}
+            />
+            <Input
+              type="text"
+              id="author"
+              label="author"
+              value={trackData.author}
+              placeholder="Type author"
+              handleChange={handleChange}
+            />
+            <Input
+              type="text"
+              id="album"
+              label="album"
+              value={trackData.album}
+              placeholder="Type album"
+              handleChange={handleChange}
+            />
+            <Input
+              type="releaseYear"
+              id="releaseYear"
+              label="Release year"
+              value={trackData.releaseYear}
+              placeholder="Type release year"
+              handleChange={handleChange}
+            />
+            <Input
+              type="text"
+              id="genre"
+              label="genre"
+              value={trackData.genre}
+              placeholder="Type genre"
+              handleChange={handleChange}
+            />
+            <Input
+              type="text"
+              name="urlImage"
+              id="urlImage"
+              label="Image URL"
+              value={trackData.urlImage}
+              placeholder="Paste URL"
+              handleChange={handleChange}
+            />
+            <Input
+              type="text"
+              name="urlTrack"
+              id="urlTrack"
+              label="Track"
+              value={trackData.urlTrack}
+              placeholder="Paste URL "
+              handleChange={() => {}}
+            />
 
-              <div className="xl-separator" />
+            <div className="xl-separator" />
 
-              <Row className="">
-                <Col xs={12} md={6} lg={6} className="position-relative">
-                  {isCoverUploaded ? (
-                    <>
-                      <Row className="lds-ripple">
-                        <div></div>
-                        <div></div>
-                      </Row>
-                      <h3>Uploading cover</h3>
-                    </>
-                  ) : (
-                    <>
-                      <h5>Upload cover:</h5>
-                      <input
-                        type="file"
-                        onChange={handleCoverUploadChange}
-                        className="upload-file-input"
-                      />
-                      <div className="upload-file-container">
-                        <h1>+</h1>
-                      </div>
-                    </>
-                  )}
-                </Col>
-                <Col xs={12} md={6} lg={6} className="position-relative">
-                  {isTrackUploaded ? (
-                    <>
-                      <div className="lds-ripple">
-                        <div></div>
-                        <div></div>
-                      </div>
-                      <h3>Uploading track</h3>
-                    </>
-                  ) : (
-                    <>
-                      <h5>Upload track:</h5>
-                      <input
-                        type="file"
-                        onChange={handleTrackUploadChange}
-                        className="upload-file-input"
-                      />
-                      <div className="upload-file-container">
-                        <h1>+</h1>
-                      </div>
-                    </>
-                  )}
-                </Col>
-              </Row>
-              <div className="xl-separator" />
-              <Row>
-                <Col
-                  xs={6}
-                  md={6}
-                  lg={6}
-                  className="d-flex justify-content-center"
-                >
-                  {isCoverSelected && (
-                    <>
-                      <button
-                        onClick={uploadFiles}
-                        className="button"
-                        title="Upload"
-                      >
-                        Upload cover
-                      </button>
-                    </>
-                  )}
-                </Col>
-                <Col
-                  xs={6}
-                  md={6}
-                  lg={6}
-                  className="d-flex justify-content-center"
-                >
-                  {isTrackSelected && (
-                    <>
-                      <button
-                        onClick={uploadFiles}
-                        className="button"
-                        title="Upload"
-                      >
-                        Upload track
-                      </button>
-                    </>
-                  )}
-                </Col>
-              </Row>
-
-              {/* <Row className="general-container uploading-file">
-                {songToUpload.isUploading ? (
+            <Row className="upload-separator">
+              <Col xs={12} md={6} lg={6} className="position-relative">
+                {coverUpload.isUploaded ? (
                   <>
-                    <div className="lds-ripple">
+                    <Col className="uploaded-file">
+                      <h3>Cover uploaded</h3>
+                      <img src="./assets/img/uploaded.svg" alt="uploaded" />
+                    </Col>
+                  </>
+                ) : coverUpload.isUploading ? (
+                  <>
+                    <Col className="lds-ripple">
                       <div></div>
                       <div></div>
-                    </div>
-                    <h3>Uploading file</h3>
+                    </Col>
+                    <h3>Uploading cover</h3>
                   </>
                 ) : (
                   <>
+                    <h5>Upload cover:</h5>
                     <input
                       type="file"
-                      onChange={handleUploadChange}
+                      onChange={handleCoverUploadChange}
                       className="upload-file-input"
                     />
                     <div className="upload-file-container">
-                      <h1>
-                        <img
-                          src="./assets/img/upload.svg"
-                          alt="upload new track"
-                        />
-                      </h1>
+                      <h1>+</h1>
                     </div>
                   </>
                 )}
-              </Row> */}
-              {isFileSelected && (
-                <>
-                  <div className="login-register-button-centered">
-                    <Col className="d-flex justify-content-center">
-                      <button
-                        onClick={uploadFiles}
-                        className="button"
-                        title="Upload"
-                      >
-                        Upload song
-                      </button>
+              </Col>
+              <Col xs={12} md={6} lg={6} className="position-relative">
+                {trackUpload.isUploaded ? (
+                  <>
+                    <Col className="uploaded-file">
+                      <h3>Track uploaded</h3>
+                      <img src="./assets/img/uploaded.svg" alt="uploaded" />
                     </Col>
-                  </div>
-                </>
-              )}
-              {isUploaded ? (
-                <>
-                  <div className="login-register-button-centered">
-                    <Col className="d-flex justify-content-center">
-                      <Button title="Save song" />
+                  </>
+                ) : trackUpload.isUploading ? (
+                  <>
+                    <Col className="lds-ripple">
+                      <div></div>
+                      <div></div>
                     </Col>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
-            </form>
+                    <h3>Uploading track</h3>
+                  </>
+                ) : (
+                  <>
+                    <h5>Upload track:</h5>
+                    <input
+                      type="file"
+                      onChange={handleTrackUploadChange}
+                      className="upload-file-input"
+                    />
+                    <div className="upload-file-container">
+                      <h1>+</h1>
+                    </div>
+                  </>
+                )}
+              </Col>
+            </Row>
+
+            <div className="xl-separator" />
+
+            {uploadState.isReady && (
+              <>
+                <div className="login-register-button-centered">
+                  <Col className="d-flex justify-content-center">
+                    <button className="button" onClick={onSubmit}>
+                      Save song
+                    </button>
+                  </Col>
+                </div>
+              </>
+            )}
           </Col>
         </Row>
       </div>
