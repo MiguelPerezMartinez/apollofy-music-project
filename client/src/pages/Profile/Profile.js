@@ -2,9 +2,11 @@
 import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 
+import "./styles.css";
+import "./spinner.css";
+
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
-import "./styles.css";
 import { getCurrentUser, updateCurrentUser } from "../../services/api/index";
 import { updateUserPass } from "../../services/firebase";
 
@@ -14,6 +16,7 @@ import RightMenu from "../../components/RightMenu";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 import Input from "../../components/Input";
 import { Row, Col } from "react-bootstrap";
+import ModalTrackUp from "../../components/ModalTrackUp";
 
 function Profile() {
   const [currentUser, setCurrentUser] = useState("");
@@ -33,6 +36,11 @@ function Profile() {
     password: "",
     confirmPassword: "",
   });
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleOpenModal = () => setShowModal(true);
 
   //Load user
   useEffect(() => {
@@ -101,6 +109,7 @@ function Profile() {
   return (
     <>
       <RightMenu />
+      {showModal && <ModalTrackUp handleClose={handleCloseModal} />}
       <main>
         <Container>
           <Row>
@@ -124,6 +133,7 @@ function Profile() {
               />
             </Col>
           </Row>
+          <div className="xl-separator" />
           <div className="xl-separator" />
           <form onSubmit={handleSubmit}>
             <Row className="mt-4 general-container">
@@ -308,7 +318,7 @@ function Profile() {
                 )}
               </Col>
             </Row>
-            <div className="m-separator" />
+            <div className="xl-separator" />
             {editing ? (
               <>
                 <Row className="mt-2">
@@ -339,10 +349,19 @@ function Profile() {
                     Edit profile info
                   </button>
                 </Col>
+                <Col className="d-flex justify-content-center">
+                  <div className="button" onClick={handleOpenModal}>
+                    Upload track
+                  </div>
+                </Col>
               </Row>
             )}
           </form>
+          <div className="xl-separator" />
         </Container>
+        <div className="xl-separator" />
+        <div className="xl-separator" />
+        <div className="xl-separator" />
       </main>
     </>
   );
