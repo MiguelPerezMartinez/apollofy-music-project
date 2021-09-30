@@ -4,11 +4,16 @@ import React, { useState, useEffect } from "react";
 import "./styles.css";
 import "./spinner.css";
 
+import { getCurrentUserToken } from "../../services/firebase";
+
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
+
+//Functions
 import { getCurrentUser, updateCurrentUser } from "../../services/api/index";
 import { updateUserPass } from "../../services/firebase";
 import { logOut } from "../../services/firebase";
+import { changeMyProfilePicture } from "../../services/api/index";
 
 //Import components
 import BarsAndModal from "../../hoc/BarsAndModal";
@@ -38,6 +43,13 @@ function Profile() {
 
   const [showModal, setShowModal] = useState(false);
 
+  const [profilePicture, setProfilePicture] = useState({
+    file: "",
+    isSelected: false,
+    isUploading: false,
+    isUploaded: false,
+  });
+
   const handleCloseModal = () => setShowModal(false);
   const handleOpenModal = () => setShowModal(true);
 
@@ -52,11 +64,16 @@ function Profile() {
         email: response.email,
         birthday: response.birthday,
         country: response.country,
+        profileImg: response.profileImg,
       });
 
       setCurrentUser(response);
     });
   }, []);
+
+  useEffect(() => {
+    uploadProfilePicture();
+  }, [profilePicture.isSelected]);
 
   //Toggle editing fields
   function handleEdit() {
@@ -91,7 +108,6 @@ function Profile() {
   //Update profile changes
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("fitrbaseUpdateEmpty");
     await updateCurrentUser(state);
     setCurrentUser(state);
     setEditing(false);
@@ -105,14 +121,52 @@ function Profile() {
     setEditingPass(false);
   }
 
+  function handleProfilePictureChange(e) {
+    setProfilePicture({
+      ...profilePicture,
+      file: e.target.files[0],
+      isSelected: true,
+      isUploading: true,
+    });
+  }
+
+  async function uploadProfilePicture() {
+    if (profilePicture.isSelected) {
+      changeMyProfilePicture(profilePicture.file).then((response) => {
+        console.log(response);
+        setProfilePicture({
+          ...profilePicture,
+          isUploading: false,
+          isUploaded: true,
+        });
+        updateCurrentUser({ id: state.id, profileImg: response.data.url });
+        return true;
+      });
+    }
+  }
+
   return (
     <>
       {showModal && <ModalTrackUp handleClose={handleCloseModal} />}
       <main>
         <Container>
           <Row>
-            <Col className="profile-view-profile-image" xs={3} md={3} lg={3}>
-              <ProfileCircleIcon />
+            <Col
+              className="profile-view-profile-image position-relative"
+              xs={3}
+              md={3}
+              lg={3}
+            >
+              <ProfileCircleIcon profileImg={state.profileImg} />
+
+              <div className="change-profile-picture d-flex justify-content-center">
+                <h4>Change my picture</h4>
+                <input
+                  type="file"
+                  onChange={handleProfilePictureChange}
+                  className="upload-file-input"
+                />
+              </div>
             </Col>
             <Col xs={8} md={6} lg={6} className="profile-user-title">
               <h1>Welcome {currentUser.username}</h1>
