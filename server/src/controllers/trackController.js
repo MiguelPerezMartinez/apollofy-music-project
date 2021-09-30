@@ -28,6 +28,7 @@ async function getTrackById(req, res) {
   } catch (error) {
     console.log(error.message);
     return res.status(500).send({
+      data: req.params.id,
       error: error.message,
     });
   }
@@ -77,6 +78,7 @@ async function deleteTrack(req, res) {
   } catch (error) {
     console.log(error.message);
     return res.status(500).send({
+      data: req.params.id,
       error: error.message,
     });
   }
@@ -107,55 +109,40 @@ async function updateTrack(req, res) {
   }
 }
 
-async function pushLikeTrack(req, res) {
+async function handlerTrackLike(req, res) {
   const { trackId, userId } = req.body;
+  let messageResponse = "";
   try {
-    // Push userId into totalLikes array of tracks
+    // Collect both documents: trackDoc and userDoc by id's
     const trackDoc = await Tracks.findById(trackId);
-    trackDoc.totalLikes.push(userId);
-    await trackDoc.save();
-
-    // Push trackId into favTracks array of users
     const userDoc = await Users.findById(userId);
-    userDoc.favTracks.push(trackId);
+
+    // Check if the like is registered in both docs
+    const userIndex = trackDoc.totalLikes.indexOf(userId);
+    const trackIndex = userDoc.favTracks.indexOf(trackId);
+
+    // Do handling action
+    if (userIndex >= 0 && trackIndex >= 0) {
+      messageResponse = "Track like removed";
+      trackDoc.totalLikes.splice(userIndex, 1);
+      userDoc.favTracks.splice(trackIndex, 1);
+    } else {
+      messageResponse = "Track like added";
+      trackDoc.totalLikes.push(userId);
+      userDoc.favTracks.push(trackId);
+    }
+
+    // Update the docs
+    await trackDoc.save();
     await userDoc.save();
 
     res.status(200).send({
-      message: "Like track registered",
+      message: messageResponse,
       trackId: trackId,
       userId: userId,
     });
   } catch (error) {
     res.status(500).send({
-      data: req.params.id,
-      error: error.message,
-    });
-  }
-}
-
-async function removeLikeTrack(req, res) {
-  const { trackId, userId } = req.body;
-  try {
-    // Remove userId from totalLikes array of tracks
-    const trackDoc = await Tracks.findById(trackId);
-    const userToRemove = trackDoc.totalLikes.indexOf(userId);
-    trackDoc.totalLikes.splice(userToRemove, 1);
-    await trackDoc.save();
-
-    // Remove trackId from favTracks array of users
-    const userDoc = await Users.findById(userId);
-    const trackToRemove = userDoc.favTracks.indexOf(trackId);
-    userDoc.favTracks.splice(trackToRemove, 1);
-    await userDoc.save();
-
-    res.status(200).send({
-      message: "Like track removed",
-      trackId: trackId,
-      userId: userId,
-    });
-  } catch (error) {
-    res.status(500).send({
-      data: req.params.id,
       error: error.message,
     });
   }
@@ -167,6 +154,5 @@ module.exports = {
   uploadTrack: uploadTrack,
   deleteTrack: deleteTrack,
   updateTrack: updateTrack,
-  pushLikeTrack: pushLikeTrack,
-  removeLikeTrack: removeLikeTrack,
+  handlerTrackLike: handlerTrackLike,
 };
