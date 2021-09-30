@@ -1,13 +1,13 @@
 import initialState from "./state";
-import { SET_TRACK } from "./types";
+import { SET_USER } from "./types";
 
-const stringTestReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_TRACK:
+    case SET_USER:
       return action.payload;
     default:
       return state;
   }
 };
 
-export default stringTestReducer;
+export default userReducer;

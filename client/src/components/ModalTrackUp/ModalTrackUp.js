@@ -9,7 +9,7 @@ import Input from "../Input";
 
 import { apiTrackUpload } from "../../services/api/index";
 
-function Modal({ handleClose }) {
+function ModalTrackUp({ handleClose }) {
   const [coverUpload, setCoverUpload] = useState({
     file: "",
     isSelected: false,
@@ -312,4 +312,4 @@ function Modal({ handleClose }) {
   );
 }
 
-export default Modal;
+export default ModalTrackUp;

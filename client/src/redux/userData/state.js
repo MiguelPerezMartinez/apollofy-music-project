@@ -1,2 +1,5 @@
-const initialState = "no track";
+const initialState = {
+  user_id: "",
+  username: "",
+};
 export default initialState;
