@@ -42,14 +42,14 @@ const UserSchema = new Schema(
       type: Date,
       default: "",
     },
-    mySongs: [
+    myTracks: [
       {
         type: Schema.Types.ObjectId,
         ref: "tracks",
       },
     ],
 
-    favSongs: [
+    favTracks: [
       {
         type: Schema.Types.ObjectId,
         ref: "tracks",
