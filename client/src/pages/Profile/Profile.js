@@ -108,6 +108,8 @@ function Profile() {
 
   return (
     <>
+      {/* <div ref={waveformRef}>
+    </div> */}
       <RightMenu />
       {showModal && <ModalTrackUp handleClose={handleCloseModal} />}
       <main>
