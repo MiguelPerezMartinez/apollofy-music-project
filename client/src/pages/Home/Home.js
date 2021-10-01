@@ -7,7 +7,9 @@ import BarsAndModal from "../../hoc/BarsAndModal";
 
 //Components
 import Track from "../../components/Track";
+import TrackBox from "../../components/TrackBox";
 import PlayButton from "../../components/PlayButton";
+import { Container, Row, Col } from "react-bootstrap";
 
 //imports to set userRedux
 import { useDispatch, useSelector } from "react-redux";
@@ -44,15 +46,59 @@ function Home() {
     duration: "2 min",
   };
 
+  const topTracks = [1, 2, 3, 4, 5];
+  const tracks = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const recomendedTracks = [1, 2, 3, 4, 5, 6];
+
   return (
     <>
       <main>
-        <h1>HOME</h1>
-        <h2>Songs</h2>
-        <h3>My plylist</h3>
+        <Container>
+          <Row>
+            <Col xs={12} md={6} lg={6}>
+              <div className="home-top-col">
+                <h1>HOME</h1>
+                <h2>Songs</h2>
+                <h3>My plylist</h3>
+              </div>
+            </Col>
+            <Col xs={12} md={6} lg={6}>
+              <div className="home-top-col">
+                {topTracks.map(() => {
+                  return (
+                    <Col xs={4} md={4} lg={2}>
+                      <Track dataTrack={dataTrack} />
+                    </Col>
+                  );
+                })}
+              </div>
+            </Col>
+          </Row>
+          <div className="xl-separator" />
 
-        <Track dataTrack={dataTrack} />
-        {isPlayBarDisplayed && <PlayButton />}
+          <Row>
+            {tracks.map(() => {
+              return (
+                <Col>
+                  <TrackBox />
+                </Col>
+              );
+            })}
+          </Row>
+          <div className="xl-separator" />
+
+          <Row xs={4} md={4} lg={2}>
+            {recomendedTracks.map(() => {
+              return (
+                <Col xs={4} md={4} lg={2}>
+                  <TrackBox />
+                </Col>
+              );
+            })}
+          </Row>
+
+          {isPlayBarDisplayed && <PlayButton />}
+        </Container>
       </main>
     </>
   );
