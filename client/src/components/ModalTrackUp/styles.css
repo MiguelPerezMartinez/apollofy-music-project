@@ -23,6 +23,11 @@
 }
 
 @media (max-width: 400px) {
+  .track-upload {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
   .upload-separator > div {
     margin-bottom: 2rem;
   }
