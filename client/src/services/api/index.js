@@ -8,6 +8,7 @@ import {
 } from "./apiAuth";
 
 import { apiTrackUpload } from "./trackUpload";
+import { changeMyProfilePicture } from "./fileUploader";
 
 export {
   registerInApi,
@@ -17,4 +18,5 @@ export {
   updateById,
   setIsActive,
   apiTrackUpload,
+  changeMyProfilePicture,
 };

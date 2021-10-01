@@ -21,7 +21,7 @@ body {
 
 main {
   padding-top: 2rem;
-  background: linear-gradient(var(--blue), black);
+  background: linear-gradient(var(--blue) 50%, black);
   width: 100vw;
   height: 100vh;
 }
@@ -44,6 +44,10 @@ main {
 
 .xl-separator {
   padding-top: 2rem;
+}
+
+.m-separator {
+  padding-top: 0.5rem;
 }
 
 h1 {
@@ -74,4 +78,10 @@ code {
 a {
   text-decoration: none !important;
   color: white !important;
+}
+
+@media (max-width: 400px) {
+  main {
+    padding-bottom: 5rem !important;
+  }
 }

@@ -1,5 +1,6 @@
 //Imports
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
@@ -9,11 +10,10 @@ import BarsAndModal from "../../hoc/BarsAndModal";
 
 //Components
 import Track from "../../components/Track";
-import PlayButton from "../../components/PlayButton";
+
 import PlayBar from "../../components/PlayBar";
 
 //imports to set userRedux
-import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "../../services/api/index";
 import { setUser } from "../../redux/userData/actions";
 
@@ -29,6 +29,7 @@ function Home() {
         setUser({
           user_id: response._id,
           username: response.username,
+          profileImg: response.profileImg,
         }),
       );
     });
