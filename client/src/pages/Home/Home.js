@@ -67,7 +67,7 @@ function Home() {
               <div className="home-top-col">
                 {topTracks.map(() => {
                   return (
-                    <Col xs={4} md={4} lg={2}>
+                    <Col xs={12} md={12} lg={12}>
                       <Track dataTrack={dataTrack} />
                     </Col>
                   );

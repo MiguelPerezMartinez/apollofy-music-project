@@ -4,7 +4,8 @@ import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { trackObjectAction } from "../../redux/trackData/actions";
 import { isPlayBarDisplayed, isPlaying } from "../../redux/trackData/actions";
-import { Container } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
+import Image from "react-bootstrap/Image";
 function Track({ dataTrack }) {
   const track = useSelector((state) => state.trackReducer);
   const { trackObject } = track;
@@ -20,31 +21,33 @@ function Track({ dataTrack }) {
     dispatch(isPlaying(true));
   }, [trackObject]);
   return (
-    <Container className="general-container" onClick={setReduxTrackData}>
-      <div className="rowGrid">
-        <img
-          className="image-track-long"
-          src={dataTrack.urlImage}
-          alt="songpicture"
-        ></img>
+    <Row className="track-row" onClick={setReduxTrackData}>
+      <Col>
+        <div className="track-row-img-container">
+          <Image src={dataTrack.urlImage} fluid />
+        </div>
+      </Col>
+      <Col>
         <div className="text-long-box">
-          {/* <p className="titleText-long-track">Song:</p> */}
           <p className="text-long-track">{dataTrack.title}</p>
         </div>
+      </Col>
+      <Col>
         <div className="text-long-box">
-          {/* <p className="titleText-long-track">Album:</p> */}
           <p className="text-long-track">{dataTrack.album}</p>
         </div>
+      </Col>
+      <Col>
         <div className="text-long-box">
-          {/* <p className="titleText-long-track">Author:</p> */}
           <p className="text-long-track">{dataTrack.author}</p>
         </div>
+      </Col>
+      <Col>
         <div className="text-long-box">
-          {/* <p className="titleText-long-track">Duration:</p> */}
           <p className="text-long-track">{dataTrack.duration}</p>
         </div>
-      </div>
-    </Container>
+      </Col>
+    </Row>
   );
 }
 
