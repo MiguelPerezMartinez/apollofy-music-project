@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import "./styles.css";
 
@@ -10,13 +11,21 @@ import { Row, Col } from "react-bootstrap";
 
 import ProfileCircleIcon from "../ProfileCircleIcon";
 
-//user from userReducer
-import { useSelector } from "react-redux";
+export default function RightMenu({ handleOpenModal, handleCloseModal }) {
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
-export default function RightMenu({ handleOpenModal }) {
   const { username, profileImg } = useSelector((state) => state.userReducer);
-  console.log(profileImg);
+
+  useEffect(() => {
+    console.log(isUploadModalOpen);
+  }, [isUploadModalOpen]);
+
   const w = window.innerWidth;
+
+  function handleChange() {
+    isUploadModalOpen ? handleCloseModal() : handleOpenModal();
+    setIsUploadModalOpen(!isUploadModalOpen);
+  }
   if (w <= 400) {
     return (
       <aside className="mobile-bottom-menu">
@@ -28,7 +37,7 @@ export default function RightMenu({ handleOpenModal }) {
           <Col
             className="mobile-bottom-menu-button"
             onClick={() => {
-              handleOpenModal();
+              handleChange();
             }}
           >
             <img
@@ -88,7 +97,9 @@ export default function RightMenu({ handleOpenModal }) {
         </div>
         <div
           onClick={() => {
-            handleOpenModal();
+            isUploadModalOpen
+              ? handleCloseModal() && setIsUploadModalOpen(false)
+              : handleOpenModal() && setIsUploadModalOpen(true);
           }}
         >
           <div className="right-menu-row">
