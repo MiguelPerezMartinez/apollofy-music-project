@@ -10,6 +10,7 @@ import Track from "../../components/Track";
 import TrackBox from "../../components/TrackBox";
 import PlayButton from "../../components/PlayButton";
 import { Container, Row, Col } from "react-bootstrap";
+import ScrollContainer from "react-indiana-drag-scroll";
 
 //imports to set userRedux
 import { useDispatch, useSelector } from "react-redux";
@@ -47,7 +48,7 @@ function Home() {
   };
 
   const topTracks = [1, 2, 3, 4, 5];
-  const tracks = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const tracks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   const recomendedTracks = [1, 2, 3, 4, 5, 6];
 
   return (
@@ -76,22 +77,24 @@ function Home() {
           </Row>
           <div className="xl-separator" />
 
-          <Row>
-            {tracks.map(() => {
-              return (
-                <Col>
-                  <TrackBox />
-                </Col>
-              );
-            })}
-          </Row>
+          <ScrollContainer className="scroll-container">
+            <Row className="scroll-wrapper-tracks">
+              {tracks.map((trackNum) => {
+                return (
+                  <Col>
+                    <TrackBox trackNum={trackNum} />
+                  </Col>
+                );
+              })}
+            </Row>
+          </ScrollContainer>
           <div className="xl-separator" />
 
           <Row xs={4} md={4} lg={2}>
             {recomendedTracks.map(() => {
               return (
                 <Col xs={4} md={4} lg={2}>
-                  <TrackBox />
+                  <TrackBox size="big" />
                 </Col>
               );
             })}
