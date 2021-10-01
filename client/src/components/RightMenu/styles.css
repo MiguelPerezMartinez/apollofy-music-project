@@ -92,7 +92,6 @@
 }
 
 .mobile-bottom-menu {
-  overflow: hidden;
   position: fixed;
   bottom: 0;
   width: 100vw;
@@ -108,7 +107,7 @@
 .mobile-bottom-menu-button {
   position: relative;
   width: 25%;
-  height: 5rem;
+  height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
