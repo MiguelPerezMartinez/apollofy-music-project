@@ -1,7 +1,8 @@
 .blockTrack-Container {
-  width: 200px;
+  width: 220px;
   height: 200px;
   margin-top: 20px;
+  align-items: center;
 }
 .blockTrack-img {
   width: 100%;

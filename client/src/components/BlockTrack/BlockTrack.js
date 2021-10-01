@@ -33,12 +33,13 @@ function BlockTrack({ dataTrack }) {
           ></img>
         </Row>
         <Row className="name-TrackBlock">
-          <Col xs={9}>
+          <Col xs={4}>
             <p className="text-long-track">{dataTrack.title}</p>
           </Col>
           <Col xs={3}>
             <FavButton />
           </Col>
+          <Col xs={3}>...</Col>
         </Row>
       </div>
     </Container>
