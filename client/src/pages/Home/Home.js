@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
 import sound from "./sound.wav";
+import sound2 from "./sound2.wav";
 import BarsAndModal from "../../hoc/BarsAndModal";
 
 //Components
@@ -18,8 +19,9 @@ import { setUser } from "../../redux/userData/actions";
 
 function Home() {
   const dispatch = useDispatch();
-  const trackReducer = useSelector((stete) => stete.trackReducer);
-  const { isPlayBarDisplayed } = trackReducer;
+  const trackReducer = useSelector((state) => state.trackReducer);
+  const { isPlayBarDisplayed, trackObject } = trackReducer;
+
   // set data in userReducer
   useEffect(() => {
     getCurrentUser().then((response) => {
@@ -52,18 +54,15 @@ function Home() {
         <h1>HOME</h1>
         <h2>Songs</h2>
         <h3>My plylist</h3>
-        <audio controls>
-          <source src={sound} type="audio/wav" />
-        </audio>
 
-        {/* <Track dataTrack={dataTrack} />
-        {isPlayBarDisplayed && <PlayButton />} */}
         <Track dataTrack={dataTrack} />
         {isPlayBarDisplayed && (
           <PlayButton className="playBar" trackUrl={sound} />
         )}
+        {isPlayBarDisplayed && (
+          <PlayBar trackUrl={sound2} dataTrack={trackObject} />
+        )}
       </main>
-      {isPlayBarDisplayed && <PlayBar />}
     </>
   );
 }

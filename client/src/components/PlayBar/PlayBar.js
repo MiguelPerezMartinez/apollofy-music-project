@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isPlaying } from "../../redux/trackData/actions";
-
+import PlayButton from "../PlayButton";
 import "./styles.css";
 
 //Components
 import { Row, Col } from "react-bootstrap";
 
-function PlayBar() {
+function PlayBar({ dataTrack, trackUrl }) {
   const playing = useSelector((state) => state.trackReducer.isPlaying);
   const dispatch = useDispatch();
   const [isMute, setMute] = useState(false);
   const [isChromeCast, setChromecast] = useState(false);
-
+  console.log(dataTrack);
   function isItPlaying() {
     if (playing) {
       dispatch(isPlaying(false));
@@ -40,9 +40,9 @@ function PlayBar() {
   return (
     <>
       <div className="main-playbar-container">
-        <Row>
+        {/* <Row>
           <Col>
-            <img src="" alt="thumbnail" className="" />
+            <img src={dataTrack.urlImage} alt="thumbnail" className="" />
           </Col>
           <Col>
             <Row>Track name</Row>
@@ -89,6 +89,66 @@ function PlayBar() {
                 <img src="" alt="chromecast on icon" className="" />
               </div>
             )}
+          </Col>
+        </Row> */}
+        <Row>
+          <Col>
+            <Col>
+              <img
+                src={dataTrack.urlImage}
+                alt="thumbnail"
+                className="thumbnail"
+              />
+            </Col>
+            <Col>
+              <Row>{dataTrack.title}</Row>
+              <Row>{dataTrack.album}</Row>
+            </Col>
+          </Col>
+          <Col>
+            <Col>
+              <div>
+                <img src="" alt="previous track btn" className="" />
+              </div>
+            </Col>
+            <Col>
+              {isPlaying ? (
+                <div onClick={isItPlaying}>
+                  <img src="" alt="play btn" className="" />
+                </div>
+              ) : (
+                <div onClick={isItPlaying}>
+                  <img src="" alt="pause btn" className="" />
+                </div>
+              )}
+            </Col>
+            <Col>
+              <div>
+                <img src="" alt="next track btn" className="" />
+              </div>
+            </Col>
+          </Col>
+          <Col>
+            <PlayButton trackUrl={trackUrl} />
+          </Col>
+          <Col>
+            <Col>
+              <img src="" alt="speaker on icon" className="" />
+            </Col>
+            <Col>
+              <input type="range" />
+            </Col>
+            <Col>
+              {!isChromeCast ? (
+                <div onClick={isChromeCastOn} className="">
+                  <img src="" alt="chromecast off icon" className="" />
+                </div>
+              ) : (
+                <div onClick={isChromeCastOn}>
+                  <img src="" alt="chromecast on icon" className="" />
+                </div>
+              )}
+            </Col>
           </Col>
         </Row>
       </div>

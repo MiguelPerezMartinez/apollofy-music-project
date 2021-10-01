@@ -19,7 +19,7 @@ function PlayButton({ trackUrl }) {
       cursorWidth: 2,
       height: 100,
       barGap: 5,
-      maxCanvasWidth: 8,
+      maxCanvasWidth: 100,
       autoCenter: true,
       responsive: true,
     });
@@ -41,9 +41,7 @@ function PlayButton({ trackUrl }) {
   }
   return (
     <>
-      <div className="repreoductorBox">
-        <div className="wave" ref={waveformRef}></div>
-      </div>
+      <div className="wave" ref={waveformRef}></div>
       <button onClick={play}>Play</button>;<button onClick={close}>X</button>;
     </>
   );
