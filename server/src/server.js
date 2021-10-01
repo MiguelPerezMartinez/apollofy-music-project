@@ -8,7 +8,7 @@ const cors = require("cors");
 // routes
 const {
   // productRouter,
-  // modelRouter,
+  trackRouter,
   userRouter,
   // personRouter,
   // movieRouter,
@@ -25,7 +25,7 @@ app.use(json());
 app.use(cors());
 
 // app used routes
-// app.use("/products", productRouter);
+app.use("/tracks", trackRouter);
 app.use("/users", userRouter);
 // app.use("/models", modelRouter);
 

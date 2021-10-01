@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import "./styles.css";
 
@@ -10,28 +11,40 @@ import { Row, Col } from "react-bootstrap";
 
 import ProfileCircleIcon from "../ProfileCircleIcon";
 
-//user from userReducer
-import { useSelector } from "react-redux";
+export default function RightMenu({ handleOpenModal, handleCloseModal }) {
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
-export default function RightMenu() {
-  const username = useSelector((state) => state.userReducer.username);
+  const { username, profileImg } = useSelector((state) => state.userReducer);
+
   const w = window.innerWidth;
+
+  function handleChange() {
+    isUploadModalOpen ? handleCloseModal() : handleOpenModal();
+    setIsUploadModalOpen(!isUploadModalOpen);
+  }
   if (w <= 400) {
     return (
       <aside className="mobile-bottom-menu">
         <Row>
-          <Col xs={3} className="mobile-bottom-menu-button">
-            Home
+          <Col className="mobile-bottom-menu-button">
+            <Link to="/">Home</Link>
           </Col>
-          <Col xs={3} className="mobile-bottom-menu-button">
-            Search
+          <Col className="mobile-bottom-menu-button">Search</Col>
+          <Col
+            className="mobile-bottom-menu-button"
+            onClick={() => {
+              handleChange();
+            }}
+          >
+            <img
+              src="./assets/img/upload.svg"
+              alt="logout"
+              className="right-menu-icon"
+            />
           </Col>
-          <Col xs={3} className="mobile-bottom-menu-button">
-            test
-          </Col>
-          <Col xs={3} className="mobile-bottom-menu-button">
+          <Col className="mobile-bottom-menu-button">
             <Link to="/profile" className="right-menu-row">
-              <ProfileCircleIcon />
+              <ProfileCircleIcon profileImg={profileImg} />
             </Link>
           </Col>
         </Row>
@@ -42,7 +55,7 @@ export default function RightMenu() {
       <aside className="right-menu">
         <div>
           <Link to="/profile" className="right-menu-row">
-            <ProfileCircleIcon />
+            <ProfileCircleIcon profileImg={profileImg} />
             <div className="right-menu-row-title">Welcome {username}</div>
           </Link>
         </div>
@@ -76,6 +89,22 @@ export default function RightMenu() {
               className="right-menu-icon"
             />
             <div className="right-menu-row-title">Logout</div>
+          </div>
+        </div>
+        <div
+          onClick={() => {
+            isUploadModalOpen
+              ? handleCloseModal() && setIsUploadModalOpen(false)
+              : handleOpenModal() && setIsUploadModalOpen(true);
+          }}
+        >
+          <div className="right-menu-row">
+            <img
+              src="./assets/img/upload.svg"
+              alt="logout"
+              className="right-menu-icon"
+            />
+            <div className="right-menu-row-title">Upload</div>
           </div>
         </div>
       </aside>

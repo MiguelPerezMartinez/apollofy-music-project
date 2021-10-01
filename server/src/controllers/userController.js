@@ -1,4 +1,4 @@
-const { userModel } = require("../models");
+const { Users } = require("../models");
 
 async function register(req, res) {
   const { email, ...reqBody } = req.body;
@@ -6,11 +6,11 @@ async function register(req, res) {
   console.log(email);
   //   const { uid, username, email } = req.body;
   try {
-    const foundUser = await userModel.findOne({
+    const foundUser = await Users.findOne({
       email: email,
     });
     if (!foundUser) {
-      const { _id } = await userModel.create({
+      const { _id } = await Users.create({
         email: email,
         ...reqBody,
       });
@@ -36,7 +36,7 @@ async function register(req, res) {
 async function getById(req, res) {
   const { id: firebase_id } = req.params;
   try {
-    const foundUser = await userModel.findOne({
+    const foundUser = await Users.findOne({
       firebase_id: firebase_id,
     });
     return res.status(200).send({
@@ -94,12 +94,11 @@ async function getById(req, res) {
 // }
 async function updateById(req, res) {
   const { id } = req.params;
-  console.log("body request ->", req.body);
   const bodyReq = req.body;
   try {
     console.log("id => ", id);
     console.log("bodyReq => ", bodyReq);
-    const dbResponse = await userModel.findByIdAndUpdate(id, bodyReq, {
+    const dbResponse = await Users.findByIdAndUpdate(id, bodyReq, {
       new: true,
     });
 

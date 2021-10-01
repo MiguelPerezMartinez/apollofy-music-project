@@ -6,6 +6,10 @@ import {
   updateById,
   setIsActive,
 } from "./apiAuth";
+
+import { apiTrackUpload } from "./trackUpload";
+import { changeMyProfilePicture } from "./fileUploader";
+
 export {
   registerInApi,
   getById,
@@ -13,4 +17,6 @@ export {
   updateCurrentUser,
   updateById,
   setIsActive,
+  apiTrackUpload,
+  changeMyProfilePicture,
 };

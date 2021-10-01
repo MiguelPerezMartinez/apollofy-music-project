@@ -1,29 +1,23 @@
 //Imports
 import React, { useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
+import BarsAndModal from "../../hoc/BarsAndModal";
 
 //Components
-import RightMenu from "../../components/RightMenu";
 import Track from "../../components/Track";
 import PlayButton from "../../components/PlayButton";
 import BlockTrack from "../../components/BlockTrack";
 
 //imports to set userRedux
-import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "../../services/api/index";
 import { setUser } from "../../redux/userData/actions";
 
 function Home() {
   const dispatch = useDispatch();
-
-  // const isDisplayed = useSelector(
-  //   (state) => state.trackReducer.isPlayBarDisplayed,
-  // );
-
-  //Hacer peticion y cambiar por dataTrack
-  const trackReducer = useSelector((stete) => stete.trackReducer);
+  const trackReducer = useSelector((state) => state.trackReducer);
   const { isPlayBarDisplayed } = trackReducer;
 
   // set data in userReducer
@@ -33,6 +27,7 @@ function Home() {
         setUser({
           user_id: response._id,
           username: response.username,
+          profileImg: response.profileImg,
         }),
       );
     });
@@ -55,7 +50,6 @@ function Home() {
 
   return (
     <>
-      <RightMenu />
       <main>
         <h1>HOME</h1>
         <h2>Songs</h2>
@@ -71,4 +65,4 @@ function Home() {
   );
 }
 
-export default withAuth(Home);
+export default withAuth(BarsAndModal(Home));
