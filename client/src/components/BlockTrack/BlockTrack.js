@@ -26,13 +26,11 @@ function BlockTrack({ dataTrack }) {
     <Container>
       <div className="blockTrack-Container">
         <Row className="blockTrack-img" onClick={setReduxTrackData}>
-          <Col>
-            <img
-              className="image-track-block"
-              src={dataTrack.urlImage}
-              alt="songpicture"
-            ></img>
-          </Col>
+          <img
+            className="image-track-block"
+            src={dataTrack.urlImage}
+            alt="songpicture"
+          ></img>
         </Row>
         <Row className="name-TrackBlock">
           <Col xs={9}>
