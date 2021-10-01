@@ -1,6 +1,6 @@
 //Imports
 import React, { useEffect } from "react";
-
+import { Container, Row, Col } from "react-bootstrap";
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
 
@@ -8,6 +8,7 @@ import withAuth from "../../hoc/withAuth";
 import RightMenu from "../../components/RightMenu";
 import Track from "../../components/Track";
 import PlayButton from "../../components/PlayButton";
+import BlockTrack from "../../components/BlockTrack";
 
 //imports to set userRedux
 import { useDispatch, useSelector } from "react-redux";
@@ -61,6 +62,9 @@ function Home() {
         <h3>My plylist</h3>
 
         <Track dataTrack={dataTrack} />
+
+        <BlockTrack dataTrack={dataTrack} />
+
         {isPlayBarDisplayed && <PlayButton />}
       </main>
     </>
