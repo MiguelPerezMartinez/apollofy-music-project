@@ -1,8 +1,13 @@
+.profile-picture-container {
+  position: relative;
+}
+
 .profile-circle-background {
   position: relative;
   width: 90%;
   border-radius: 50%;
   padding: 0.14rem;
+  background-color: green;
 
   animation: rotate 3s linear infinite;
   top: 0;
@@ -10,6 +15,12 @@
   border-radius: 100%;
 
   box-shadow: inset 5px 5px 5px 0px var(--active-user);
+}
+
+.profile-circle-background:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
 }
 
 @keyframes rotate {
@@ -24,23 +35,25 @@
 .profile-picture {
   position: absolute;
   border-radius: 50%;
-  width: 90%;
+  width: 80%;
   min-height: 90%;
-  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   top: 5%;
   left: 5%;
+  right: 5%;
+  bottom: 5%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: white;
 }
 
-.profile-circle-background:before {
-  content: "";
-  display: block;
-  padding-top: 100%;
-}
-
-.profile-picture:before {
+.profile-picture > img {
   position: absolute;
-  top: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
 }
