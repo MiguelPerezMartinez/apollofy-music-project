@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isPlaying } from "../../redux/trackData/actions";
-import PlayButton from "../PlayButton";
+import WaveSound from "../PlayButton";
 import "./styles.css";
 
 //Components
@@ -92,63 +92,69 @@ function PlayBar({ dataTrack, trackUrl }) {
           </Col>
         </Row> */}
         <Row>
-          <Col>
-            <Col>
-              <img
-                src={dataTrack.urlImage}
-                alt="thumbnail"
-                className="thumbnail"
-              />
-            </Col>
-            <Col>
-              <Row>{dataTrack.title}</Row>
-              <Row>{dataTrack.album}</Row>
-            </Col>
+          <Col lg={2}>
+            <Row>
+              <Col>
+                <img
+                  src={dataTrack.urlImage}
+                  alt="thumbnail"
+                  className="thumbnail"
+                />
+              </Col>
+              <Col>
+                <Row>{dataTrack.title}</Row>
+                <Row>{dataTrack.album}</Row>
+              </Col>
+            </Row>
           </Col>
-          <Col>
-            <Col>
-              <div>
-                <img src="" alt="previous track btn" className="" />
-              </div>
-            </Col>
-            <Col>
-              {isPlaying ? (
-                <div onClick={isItPlaying}>
-                  <img src="" alt="play btn" className="" />
+          <Col lg={2}>
+            <Row>
+              <Col>
+                <div>
+                  <img src="" alt="previous track btn" className="" />
                 </div>
-              ) : (
-                <div onClick={isItPlaying}>
-                  <img src="" alt="pause btn" className="" />
+              </Col>
+              <Col>
+                {isPlaying ? (
+                  <div onClick={isItPlaying}>
+                    <img src="" alt="play btn" className="" />
+                  </div>
+                ) : (
+                  <div onClick={isItPlaying}>
+                    <img src="" alt="pause btn" className="" />
+                  </div>
+                )}
+              </Col>
+              <Col>
+                <div>
+                  <img src="" alt="next track btn" className="" />
                 </div>
-              )}
-            </Col>
-            <Col>
-              <div>
-                <img src="" alt="next track btn" className="" />
-              </div>
-            </Col>
+              </Col>
+            </Row>
           </Col>
-          <Col>
-            <PlayButton trackUrl={trackUrl} />
+          <Col lg={5}>
+            <WaveSound trackUrl={trackUrl} />
           </Col>
-          <Col>
-            <Col>
-              <img src="" alt="speaker on icon" className="" />
-            </Col>
-            <Col>
-              <input type="range" />
-            </Col>
-            <Col>
-              {!isChromeCast ? (
-                <div onClick={isChromeCastOn} className="">
-                  <img src="" alt="chromecast off icon" className="" />
-                </div>
-              ) : (
-                <div onClick={isChromeCastOn}>
-                  <img src="" alt="chromecast on icon" className="" />
-                </div>
-              )}
-            </Col>
+          <Col lg={3}>
+            <Row>
+              <Col>
+                <img src="" alt="speaker on icon" className="" />
+              </Col>
+              <Col>
+                <input type="range" />
+              </Col>
+              <Col>
+                {!isChromeCast ? (
+                  <div onClick={isChromeCastOn} className="">
+                    <img src="" alt="chromecast off icon" className="" />
+                  </div>
+                ) : (
+                  <div onClick={isChromeCastOn}>
+                    <img src="" alt="chromecast on icon" className="" />
+                  </div>
+                )}
+              </Col>
+            </Row>
           </Col>
         </Row>
       </div>

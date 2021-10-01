@@ -56,9 +56,9 @@ function Home() {
         <h3>My plylist</h3>
 
         <Track dataTrack={dataTrack} />
-        {isPlayBarDisplayed && (
+        {/* {isPlayBarDisplayed && (
           <PlayButton className="playBar" trackUrl={sound} />
-        )}
+        )} */}
         {isPlayBarDisplayed && (
           <PlayBar trackUrl={sound2} dataTrack={trackObject} />
         )}

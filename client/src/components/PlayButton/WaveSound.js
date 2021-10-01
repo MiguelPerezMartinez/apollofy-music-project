@@ -3,7 +3,7 @@ import WaveSurfer from "wavesurfer.js";
 import { useDispatch, useSelector } from "react-redux";
 import { isPlaying, isPlayBarDisplayed } from "../../redux/trackData/actions";
 // import sound from "./sound2.wav";
-function PlayButton({ trackUrl }) {
+function WaveSound({ trackUrl }) {
   const isPlayed = useSelector((state) => state.trackReducer.isPlaying);
   const dispatch = useDispatch();
   const waveformRef = useRef();
@@ -15,10 +15,10 @@ function PlayButton({ trackUrl }) {
       progressColor: "#4353FF",
       cursorColor: "#4353FF",
       barWidth: 3,
-      barRadius: 5,
+      barRadius: 3,
       cursorWidth: 2,
       height: 100,
-      barGap: 5,
+      barGap: 2,
       maxCanvasWidth: 100,
       autoCenter: true,
       responsive: true,
@@ -47,4 +47,4 @@ function PlayButton({ trackUrl }) {
   );
 }
 
-export default PlayButton;
+export default WaveSound;
