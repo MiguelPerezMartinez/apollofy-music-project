@@ -1,12 +1,11 @@
-/* .main-playbar-container {
-  display: flex;
-  flex-direction: row;
+.main-playbar-container {
   position: fixed;
-  bottom: 0;
+  bottom: 100px;
   height: 3rem;
   width: 100vw;
   background-color: var(--main-container-color);
-} */
+}
+
 .thumbnail {
   width: 70%;
 }

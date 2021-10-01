@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isPlay } from "../../redux/trackData/actions";
 import WaveSound from "../WaveSound";
@@ -6,20 +6,37 @@ import "./styles.css";
 
 //Components
 import { Row, Col } from "react-bootstrap";
+// import PlayArrowOutlined from "@material-ui/icons/PlayArrowOutlined";
 
 function PlayBar({ dataTrack }) {
+  //Redux vars
   const trackReducer = useSelector((state) => state.trackReducer);
   const { isPlaying, waveSurfer } = trackReducer;
   const dispatch = useDispatch();
+
+  //State vars
   const [isMute, setMute] = useState(false);
+  const [isPlayPause, setPlayPause] = useState(true);
   const [isChromeCast, setChromecast] = useState(false);
-  console.log(dataTrack);
-  function isItPlaying() {
+  //   console.log(dataTrack);
+
+  function playPause() {
+    waveSurfer.playPause();
     if (isPlaying) {
+      setPlayPause(false);
       dispatch(isPlay(false));
     } else {
+      setPlayPause(true);
       dispatch(isPlay(true));
     }
+  }
+
+  function goPreviousTrack() {
+    console.log("go previous track");
+  }
+
+  function goNextTrack() {
+    console.log("go next track");
   }
 
   function isItMute() {
@@ -32,20 +49,16 @@ function PlayBar({ dataTrack }) {
 
   function isChromeCastOn() {
     if (isChromeCast) {
+      console.log("Chromecast is off");
       setChromecast(false);
     } else {
+      console.log("Chromecast is on");
       setChromecast(true);
     }
   }
 
-  function play() {
-    waveSurfer.playPause();
-    if (isPlaying) {
-      dispatch(isPlay(false));
-    } else {
-      dispatch(isPlay(true));
-    }
-  }
+  //update on icons change
+  useEffect(() => {}, [isPlayPause, isMute, isChromeCast]);
 
   return (
     <>
@@ -120,26 +133,26 @@ function PlayBar({ dataTrack }) {
           <Col lg={2}>
             <Row>
               <Col>
-                <div>
+                <button onClick={goPreviousTrack}>
                   <img src="" alt="previous track btn" className="" />
-                </div>
+                </button>
               </Col>
               <Col>
-                <button onClick={play}>play</button>
-                {/* {isPlay ? (
-                  <button onClick={play}>
+                {/* <button onClick={play}>play</button> */}
+                {isPlayPause ? (
+                  <button onClick={playPause}>
                     <img src="" alt="play btn" className="" />
                   </button>
                 ) : (
-                  <div onClick={play}>
+                  <div onClick={playPause}>
                     <img src="" alt="pause btn" className="" />
                   </div>
-                )} */}
+                )}
               </Col>
               <Col>
-                <div>
+                <button onClick={goNextTrack}>
                   <img src="" alt="next track btn" className="" />
-                </div>
+                </button>
               </Col>
             </Row>
           </Col>
@@ -149,7 +162,16 @@ function PlayBar({ dataTrack }) {
           <Col lg={3}>
             <Row>
               <Col>
-                <img src="" alt="speaker on icon" className="" />
+                {/* <img src="" alt="speaker on icon" className="" /> */}
+                {!isMute ? (
+                  <div onClick={isItMute} className="">
+                    <img src="" alt="speaker on icon" className="" />
+                  </div>
+                ) : (
+                  <div onClick={isItMute} className="">
+                    <img src="" alt="speaker off icon" className="" />
+                  </div>
+                )}
               </Col>
               <Col>
                 <input type="range" />

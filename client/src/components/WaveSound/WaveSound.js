@@ -18,10 +18,10 @@ function WaveSound({ trackUrl }) {
       cursorColor: "#4353FF",
       barWidth: 3,
       barRadius: 3,
-      cursorWidth: 2,
-      height: 100,
+      cursorWidth: 0,
+      height: 48,
       barGap: 2,
-      maxCanvasWidth: 100,
+      maxCanvasWidth: 50,
       autoCenter: true,
       responsive: true,
     });
