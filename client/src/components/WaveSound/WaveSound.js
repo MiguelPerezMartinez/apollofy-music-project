@@ -1,13 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
-import WaveSurfer from "wavesurfer.js";
+//import WaveSurfer from "wavesurfer.js";
 import { useDispatch, useSelector } from "react-redux";
-import { isPlaying, isPlayBarDisplayed } from "../../redux/trackData/actions";
+import { isPlay, isPlayBarDisplayed } from "../../redux/trackData/actions";
+import { setWaveSurfer } from "../../redux/trackData/actions";
+import WaveSurfer from "wavesurfer.js";
 // import sound from "./sound2.wav";
 function WaveSound({ trackUrl }) {
-  const isPlayed = useSelector((state) => state.trackReducer.isPlaying);
   const dispatch = useDispatch();
   const waveformRef = useRef();
-  const [waveForm, steWaveForm] = useState();
+  // const waveformRef = useRef();
+  // const [waveForm, steWaveForm] = useState();
   useEffect(() => {
     const wavesurfer = WaveSurfer.create({
       container: waveformRef.current,
@@ -23,18 +25,18 @@ function WaveSound({ trackUrl }) {
       autoCenter: true,
       responsive: true,
     });
+    dispatch(setWaveSurfer(wavesurfer));
     wavesurfer.load(trackUrl);
-    steWaveForm(wavesurfer);
   }, []);
 
-  function play() {
-    waveForm.playPause();
-    if (isPlayed) {
-      dispatch(isPlaying(false));
-    } else {
-      dispatch(isPlaying(true));
-    }
-  }
+  // function play() {
+  //   waveSurfer.playPause();
+  //   if (isPlaying) {
+  //     dispatch(isPlay(false));
+  //   } else {
+  //     dispatch(isPlay(true));
+  //   }
+  // }
 
   function close() {
     dispatch(isPlayBarDisplayed(false));
@@ -42,7 +44,6 @@ function WaveSound({ trackUrl }) {
   return (
     <>
       <div className="wave" ref={waveformRef}></div>
-      <button onClick={play}>Play</button>;<button onClick={close}>X</button>;
     </>
   );
 }

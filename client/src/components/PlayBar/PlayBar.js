@@ -1,23 +1,24 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isPlaying } from "../../redux/trackData/actions";
-import WaveSound from "../PlayButton";
+import { isPlay } from "../../redux/trackData/actions";
+import WaveSound from "../WaveSound";
 import "./styles.css";
 
 //Components
 import { Row, Col } from "react-bootstrap";
 
-function PlayBar({ dataTrack, trackUrl }) {
-  const playing = useSelector((state) => state.trackReducer.isPlaying);
+function PlayBar({ dataTrack }) {
+  const trackReducer = useSelector((state) => state.trackReducer);
+  const { isPlaying, waveSurfer } = trackReducer;
   const dispatch = useDispatch();
   const [isMute, setMute] = useState(false);
   const [isChromeCast, setChromecast] = useState(false);
   console.log(dataTrack);
   function isItPlaying() {
-    if (playing) {
-      dispatch(isPlaying(false));
+    if (isPlaying) {
+      dispatch(isPlay(false));
     } else {
-      dispatch(isPlaying(true));
+      dispatch(isPlay(true));
     }
   }
 
@@ -34,6 +35,15 @@ function PlayBar({ dataTrack, trackUrl }) {
       setChromecast(false);
     } else {
       setChromecast(true);
+    }
+  }
+
+  function play() {
+    waveSurfer.playPause();
+    if (isPlaying) {
+      dispatch(isPlay(false));
+    } else {
+      dispatch(isPlay(true));
     }
   }
 
@@ -115,15 +125,16 @@ function PlayBar({ dataTrack, trackUrl }) {
                 </div>
               </Col>
               <Col>
-                {isPlaying ? (
-                  <div onClick={isItPlaying}>
+                <button onClick={play}>play</button>
+                {/* {isPlay ? (
+                  <button onClick={play}>
                     <img src="" alt="play btn" className="" />
-                  </div>
+                  </button>
                 ) : (
-                  <div onClick={isItPlaying}>
+                  <div onClick={play}>
                     <img src="" alt="pause btn" className="" />
                   </div>
-                )}
+                )} */}
               </Col>
               <Col>
                 <div>
@@ -133,7 +144,7 @@ function PlayBar({ dataTrack, trackUrl }) {
             </Row>
           </Col>
           <Col lg={5}>
-            <WaveSound trackUrl={trackUrl} />
+            <WaveSound trackUrl={dataTrack.urlTrack} />
           </Col>
           <Col lg={3}>
             <Row>

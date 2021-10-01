@@ -1,5 +1,5 @@
 //Imports
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 //Hoc Authorization
@@ -12,6 +12,7 @@ import BarsAndModal from "../../hoc/BarsAndModal";
 import Track from "../../components/Track";
 
 import PlayBar from "../../components/PlayBar";
+//waveSurfer
 
 //imports to set userRedux
 import { getCurrentUser } from "../../services/api/index";
@@ -21,7 +22,7 @@ function Home() {
   const dispatch = useDispatch();
   const trackReducer = useSelector((state) => state.trackReducer);
   const { isPlayBarDisplayed, trackObject } = trackReducer;
-
+  const waveformRef = useRef();
   // set data in userReducer
   useEffect(() => {
     getCurrentUser().then((response) => {
@@ -33,6 +34,8 @@ function Home() {
         }),
       );
     });
+
+    // wavesurfer.load(trackUrl);
   }, []);
   const dataTrack = {
     title: "Deltoya",
@@ -42,7 +45,8 @@ function Home() {
     genre: "Transgressive rock",
     urlImage:
       "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/extremoduro-robe-iniesta-separacion-1576666810.jpg?crop=1xw:0.75xh;center,top&resize=1200:*",
-    urlTrack: "res",
+    urlTrack:
+      "http://res.cloudinary.com/apollofy/video/upload/v1633098067/track/zgwakszoia30bwch8dpc.wav",
     owner: "object id",
     totalPlays: 0,
     totalLikes: 0,
@@ -55,14 +59,12 @@ function Home() {
         <h1>HOME</h1>
         <h2>Songs</h2>
         <h3>My plylist</h3>
-
+        {/* <div id="wave"></div> */}
         <Track dataTrack={dataTrack} />
         {/* {isPlayBarDisplayed && (
           <PlayButton className="playBar" trackUrl={sound} />
         )} */}
-        {isPlayBarDisplayed && (
-          <PlayBar trackUrl={sound2} dataTrack={trackObject} />
-        )}
+        {isPlayBarDisplayed && <PlayBar dataTrack={trackObject} />}
       </main>
     </>
   );

@@ -4,7 +4,7 @@ import "./styles.css";
 //import TrackReducer
 import { useDispatch, useSelector } from "react-redux";
 import { trackObjectAction } from "../../redux/trackData/actions";
-import { isPlayBarDisplayed, isPlaying } from "../../redux/trackData/actions";
+import { isPlayBarDisplayed, isPlay } from "../../redux/trackData/actions";
 import { Container } from "react-bootstrap";
 function Track({ dataTrack }) {
   const track = useSelector((state) => state.trackReducer);
@@ -15,11 +15,14 @@ function Track({ dataTrack }) {
   function setReduxTrackData() {
     console.log(dataTrack);
     dispatch(trackObjectAction(dataTrack));
-  }
-  useEffect(() => {
     dispatch(isPlayBarDisplayed(true));
-    dispatch(isPlaying(true));
-  }, [trackObject]);
+    dispatch(isPlay(true));
+  }
+  // useEffect(() => {
+
+  //   // dispatch(isPlayBarDisplayed(true));
+  //   // dispatch(isPlaying(true));
+  // }, [trackObject]);
   return (
     <Container className="general-container" onClick={setReduxTrackData}>
       <div className="rowGrid">
