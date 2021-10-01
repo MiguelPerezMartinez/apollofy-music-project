@@ -16,7 +16,7 @@ import { getState } from "./redux/isAuthorized/actions";
 function App() {
   // Redux State to get the authorization
   const dispatch = useDispatch();
-  const isAuthorized = useSelector((state) => state.isAuthorized);
+  const { isAuthorized } = useSelector((state) => state);
 
   // Get the state of authorization
   useEffect(() => {

@@ -16,10 +16,6 @@ export default function RightMenu({ handleOpenModal, handleCloseModal }) {
 
   const { username, profileImg } = useSelector((state) => state.userReducer);
 
-  useEffect(() => {
-    console.log(isUploadModalOpen);
-  }, [isUploadModalOpen]);
-
   const w = window.innerWidth;
 
   function handleChange() {
@@ -59,7 +55,7 @@ export default function RightMenu({ handleOpenModal, handleCloseModal }) {
       <aside className="right-menu">
         <div>
           <Link to="/profile" className="right-menu-row">
-            <ProfileCircleIcon />
+            <ProfileCircleIcon profileImg={profileImg} />
             <div className="right-menu-row-title">Welcome {username}</div>
           </Link>
         </div>
