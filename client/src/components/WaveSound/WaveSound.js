@@ -6,6 +6,8 @@ import { setWaveSurfer } from "../../redux/trackData/actions";
 import WaveSurfer from "wavesurfer.js";
 // import sound from "./sound2.wav";
 function WaveSound({ trackUrl }) {
+  const trackReducer = useSelector((state) => state.trackReducer);
+  const { waveSurfer } = trackReducer;
   const dispatch = useDispatch();
   const waveformRef = useRef();
   // const waveformRef = useRef();
@@ -16,19 +18,28 @@ function WaveSound({ trackUrl }) {
       waveColor: "#D9DCFF",
       progressColor: "#4353FF",
       cursorColor: "#4353FF",
-      barWidth: 3,
+      barWidth: 2,
       barRadius: 3,
       cursorWidth: 0,
       height: 48,
       barGap: 2,
-      maxCanvasWidth: 50,
+      maxCanvasWidth: 10,
       autoCenter: true,
       responsive: true,
     });
-    dispatch(setWaveSurfer(wavesurfer));
+    dispatch(setWaveSurfer(wavesurfer.current));
     wavesurfer.load(trackUrl);
+
+    // // current time capture event
+    wavesurfer.on("audioprocess", function (e) {
+      console.log("current time => ", wavesurfer.getCurrentTime());
+    });
   }, []);
 
+  // current time capture event
+  waveSurfer.on("audioprocess", function (e) {
+    console.log("current time => ", waveSurfer.getCurrentTime());
+  });
   // function play() {
   //   waveSurfer.playPause();
   //   if (isPlaying) {
