@@ -39,11 +39,6 @@ function PlayBar({ dataTrack }) {
     if (isPlaying) {
       setPlayPause(false);
       dispatch(isPlay(false));
-
-      setTrackDurationTime(waveSurfer.getDuration());
-      setTrackProgressTime(waveSurfer.getCurrentTime());
-      console.log("trackProgressTime => ", waveSurfer.getCurrentTime());
-      console.log("trackDurationTime => ", waveSurfer.getDuration());
     } else {
       setPlayPause(true);
       dispatch(isPlay(true));
@@ -82,12 +77,6 @@ function PlayBar({ dataTrack }) {
     }
   }
 
-  // waveSurfer.on("audioprocess", (e) => {
-  //   setTrackProgressTime(waveSurfer.getCurrentTime());
-  //   console.log(trackProgressTime);
-  // });
-
-  //update on icons change and progress time
   useEffect(() => {
     const wavesurfer = WaveSurfer.create({
       container: waveformRef.current,
@@ -107,12 +96,10 @@ function PlayBar({ dataTrack }) {
     wavesurfer.load(dataTrack.urlTrack);
 
     //events
-
     //set track progress time
     wavesurfer.on("audioprocess", function (e) {
       setTrackProgressTime(wavesurfer.getCurrentTime());
     });
-
     //reset play button
     wavesurfer.on("finish", function (e) {
       setPlayPause(true);
