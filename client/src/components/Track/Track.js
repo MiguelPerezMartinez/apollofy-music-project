@@ -11,7 +11,7 @@ import FavButton from "../FavButton";
 import TrackImg from "../../components/TrackImg";
 
 function Track({ dataTrack }) {
-  const track = useSelector((state) => state.trackReducer);
+  const { trackObject } = useSelector((state) => state.trackReducer);
 
   const dispatch = useDispatch();
 
