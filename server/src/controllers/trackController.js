@@ -150,7 +150,7 @@ async function handlerTrackLike(req, res) {
 
 async function incrementTotalPlays(req, res) {
   const { id: trackId } = req.params;
-  try{
+  try {
     const trackDoc = await Tracks.findById(trackId);
     trackDoc.totalPlays += 1;
     trackDoc.save();
@@ -158,7 +158,33 @@ async function incrementTotalPlays(req, res) {
       message: "Track total plays incremented",
       trackId: trackId,
     });
-  }catch (error) {
+  } catch (error) {
+    res.status(500).send({
+      error: error.message,
+    });
+  }
+}
+
+async function isLikedByUser(req, res) {
+  const { id: trackId } = req.params;
+  const { userId } = req.body;
+
+  try {
+    const trackDoc = await Tracks.findById(trackId);
+    const userInLikesArray = trackDoc.totalLikes.indexOf(userId);
+
+    if (userInLikesArray == 0) {
+      res.status(200).send({
+        message: `User: ${userId} likes track: ${trackId}`,
+        isLiked: true,
+      });
+    } else {
+      res.status(200).send({
+        message: `User: ${userId} likes track: ${trackId}`,
+        isLiked: false,
+      });
+    }
+  } catch (error) {
     res.status(500).send({
       error: error.message,
     });
@@ -173,4 +199,5 @@ module.exports = {
   updateTrack: updateTrack,
   handlerTrackLike: handlerTrackLike,
   incrementTotalPlays: incrementTotalPlays,
+  isLikedByUser: isLikedByUser,
 };
