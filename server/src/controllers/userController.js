@@ -51,6 +51,40 @@ async function getById(req, res) {
   }
 }
 
+async function getMyTracksById(req, res) {
+  const { id } = req.params;
+  try {
+    const userDoc = await Users.findById(id).populate("myTracks");
+
+    return res.status(200).send({
+      message: "User found",
+      data: userDoc.myTracks,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({
+      error: error.message,
+    });
+  }
+}
+
+async function getFavouriteTracksById(req, res) {
+  const { id } = req.params;
+  try {
+    const userDoc = await Users.findById(id).populate("favTracks");
+
+    return res.status(200).send({
+      message: "User found",
+      data: userDoc.favTracks,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({
+      error: error.message,
+    });
+  }
+}
+
 // async function updateUser(req, res, next) {
 //   console.log(req.body)
 //   try {
@@ -127,4 +161,6 @@ module.exports = {
   register: register,
   getById: getById,
   updateProfile: updateById,
+  getMyTracksById: getMyTracksById,
+  getFavouriteTracksById: getFavouriteTracksById,
 };
