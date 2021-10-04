@@ -4,7 +4,7 @@ import FavButton from "../FavButton";
 
 import { useDispatch, useSelector } from "react-redux";
 import { trackObjectAction } from "../../redux/trackData/actions";
-import { isPlayBarDisplayed, isPlaying } from "../../redux/trackData/actions";
+import { isPlayBarDisplayed, isPlay } from "../../redux/trackData/actions";
 
 import { Container, Row, Col } from "react-bootstrap";
 
@@ -17,8 +17,9 @@ function BlockTrack({ dataTrack, size = "small" }) {
     console.log(dataTrack);
     dispatch(trackObjectAction(dataTrack));
     dispatch(isPlayBarDisplayed(true));
-    // dispatch(isPlay(true));
+    dispatch(isPlay(true));
   }
+
   return (
     <Container className={"blockTrack-Container-" + size}>
       <Row className="blockTrack-img" onClick={setReduxTrackData}>

@@ -1,19 +1,23 @@
 //Imports
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
+import sound from "./sound.wav";
+import sound2 from "./sound2.wav";
 import BarsAndModal from "../../hoc/BarsAndModal";
 
 //Components
 import Track from "../../components/Track";
-import TrackBox from "../../components/TrackBox";
-import PlayButton from "../../components/PlayButton";
 import { Container, Row, Col } from "react-bootstrap";
 import ScrollContainer from "react-indiana-drag-scroll";
 import BlockTrack from "../../components/BlockTrack";
 
+import PlayBar from "../../components/PlayBar";
+//waveSurfer
+
+import DialogBox from "../../components/DialogBox";
 //imports to set userRedux
 import { getCurrentUser } from "../../services/api/index";
 import { setUser } from "../../redux/userData/actions";
@@ -21,8 +25,8 @@ import { setUser } from "../../redux/userData/actions";
 function Home() {
   const dispatch = useDispatch();
   const trackReducer = useSelector((state) => state.trackReducer);
-  const { isPlayBarDisplayed } = trackReducer;
-
+  const { isPlayBarDisplayed, trackObject } = trackReducer;
+  const waveformRef = useRef();
   // set data in userReducer
   useEffect(() => {
     getCurrentUser().then((response) => {
@@ -34,6 +38,8 @@ function Home() {
         }),
       );
     });
+
+    // wavesurfer.load(trackUrl);
   }, []);
 
   const dataTrack = {
@@ -44,7 +50,8 @@ function Home() {
     genre: "Transgressive rock",
     urlImage:
       "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/extremoduro-robe-iniesta-separacion-1576666810.jpg?crop=1xw:0.75xh;center,top&resize=1200:*",
-    urlTrack: "res",
+    urlTrack:
+      "http://res.cloudinary.com/apollofy/video/upload/v1633098067/track/zgwakszoia30bwch8dpc.wav",
     owner: "object id",
     totalPlays: 0,
     totalLikes: 0,
@@ -113,7 +120,7 @@ function Home() {
             })}
           </Row>
 
-          {isPlayBarDisplayed && <PlayButton />}
+          {isPlayBarDisplayed && <PlayBar dataTrack={dataTrack} />}
         </Container>
       </main>
     </>

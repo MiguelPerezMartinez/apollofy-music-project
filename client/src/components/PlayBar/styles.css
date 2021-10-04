@@ -1,0 +1,53 @@
+.main-playbar-container {
+  position: fixed;
+  bottom: 0px;
+  height: 150px;
+  width: 100vw;
+  background-color: var(--main-container-color);
+  /* background-image: linear-gradient(45deg rgb(100, 225, 33), rgb(34, 36, 37)); */
+  border-top: 1px solid yellow;
+  padding-left: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.wave {
+  margin: 0px;
+}
+.thumbnail {
+  border: 1px solid var(--purple);
+  min-width: 150px;
+  width: 100%;
+}
+
+.title-album-container {
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 16px;
+}
+
+.album {
+  font-size: 14px;
+}
+
+.icon {
+  height: 30px;
+  width: 30px;
+}
+.time {
+  margin: 0px 50px;
+  max-width: 20px;
+}
+.buttons-box {
+  align-items: center;
+  justify-content: center;
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  background-color: rgb(164, 217, 248);
+  border-radius: 10px;
+  height: 12px;
+}

@@ -1,30 +1,27 @@
 import React, { useEffect } from "react";
 import "./styles.css";
+
 //import TrackReducer
 import { useDispatch, useSelector } from "react-redux";
 import { trackObjectAction } from "../../redux/trackData/actions";
-import { isPlayBarDisplayed, isPlaying } from "../../redux/trackData/actions";
 import { Col, Row } from "react-bootstrap";
-import Image from "react-bootstrap/Image";
+import { isPlayBarDisplayed, isPlay } from "../../redux/trackData/actions";
 import FavButton from "../FavButton";
-import { Container } from "react-bootstrap";
 
 import TrackImg from "../../components/TrackImg";
 
 function Track({ dataTrack }) {
   const track = useSelector((state) => state.trackReducer);
-  const { trackObject } = track;
 
   const dispatch = useDispatch();
 
   function setReduxTrackData() {
     console.log(dataTrack);
     dispatch(trackObjectAction(dataTrack));
-  }
-  useEffect(() => {
     dispatch(isPlayBarDisplayed(true));
-    dispatch(isPlaying(true));
-  }, [trackObject]);
+    dispatch(isPlay(true));
+  }
+
   return (
     <Row className="track-row" onClick={setReduxTrackData}>
       <Col xs={2} md={2} lg={2}>

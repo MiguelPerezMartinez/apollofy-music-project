@@ -27,5 +27,10 @@ trackRouter.patch(
   authMiddleware,
   trackController.incrementTotalPlays,
 );
+trackRouter.get(
+  "/get-track/:id/liked",
+  authMiddleware,
+  trackController.isLikedByUser,
+);
 
 module.exports = trackRouter;
