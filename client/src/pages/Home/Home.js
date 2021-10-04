@@ -10,7 +10,7 @@ import BarsAndModal from "../../hoc/BarsAndModal";
 import Track from "../../components/Track";
 import PlayButton from "../../components/PlayButton";
 import BlockTrack from "../../components/BlockTrack";
-
+import DialogBox from "../../components/DialogBox";
 //imports to set userRedux
 import { getCurrentUser } from "../../services/api/index";
 import { setUser } from "../../redux/userData/actions";
@@ -51,6 +51,7 @@ function Home() {
   return (
     <>
       <main>
+        <DialogBox />
         <h1>HOME</h1>
         <h2>Songs</h2>
         <h3>My plylist</h3>
