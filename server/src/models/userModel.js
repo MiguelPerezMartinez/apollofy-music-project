@@ -69,6 +69,7 @@ const UserSchema = new Schema(
         ref: "playlists",
       },
     ],
+
     lastSongs: [
       {
         type: Schema.Types.ObjectId,
@@ -82,6 +83,11 @@ const UserSchema = new Schema(
         ref: "users",
       },
     ],
+
+    profileImg: {
+      type: String,
+      default: "",
+    },
 
     // genres:[{
     //     type: Schema.Types.ObjectId,

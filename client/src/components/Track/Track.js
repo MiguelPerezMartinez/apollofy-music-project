@@ -1,50 +1,55 @@
 import React, { useEffect } from "react";
 import "./styles.css";
+
 //import TrackReducer
 import { useDispatch, useSelector } from "react-redux";
 import { trackObjectAction } from "../../redux/trackData/actions";
-import { isPlayBarDisplayed, isPlaying } from "../../redux/trackData/actions";
-import { Container } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
+import { isPlayBarDisplayed, isPlay } from "../../redux/trackData/actions";
+import FavButton from "../FavButton";
+
+import TrackImg from "../../components/TrackImg";
+
 function Track({ dataTrack }) {
   const track = useSelector((state) => state.trackReducer);
-  const { trackObject } = track;
 
   const dispatch = useDispatch();
 
   function setReduxTrackData() {
     console.log(dataTrack);
     dispatch(trackObjectAction(dataTrack));
-  }
-  useEffect(() => {
     dispatch(isPlayBarDisplayed(true));
-    dispatch(isPlaying(true));
-  }, [trackObject]);
+    dispatch(isPlay(true));
+  }
+
   return (
-    <Container className="general-container" onClick={setReduxTrackData}>
-      <div className="rowGrid">
-        <img
-          className="image-track-long"
-          src={dataTrack.urlImage}
-          alt="songpicture"
-        ></img>
-        <div className="text-long-box">
-          {/* <p className="titleText-long-track">Song:</p> */}
-          <p className="text-long-track">{dataTrack.title}</p>
+    <Row className="track-row" onClick={setReduxTrackData}>
+      <Col xs={2} md={2} lg={2}>
+        <div className="track-row-img-container">
+          <TrackImg urlImage={dataTrack.urlImage} />
         </div>
+      </Col>
+      <Col xs={4} md={4} lg={4}>
+        <p className="track-title">{dataTrack.title}</p>
+
+        <p className="track-author">{dataTrack.author}</p>
+      </Col>
+      <Col>
         <div className="text-long-box">
-          {/* <p className="titleText-long-track">Album:</p> */}
           <p className="text-long-track">{dataTrack.album}</p>
         </div>
-        <div className="text-long-box">
-          {/* <p className="titleText-long-track">Author:</p> */}
-          <p className="text-long-track">{dataTrack.author}</p>
-        </div>
-        <div className="text-long-box">
-          {/* <p className="titleText-long-track">Duration:</p> */}
-          <p className="text-long-track">{dataTrack.duration}</p>
-        </div>
-      </div>
-    </Container>
+      </Col>
+      <Col>
+        <Row>
+          <Col xs={6} md={6} lg={6}>
+            <p className="">{dataTrack.duration}</p>
+          </Col>
+          <Col xs={6} md={6} lg={6}>
+            <FavButton />
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   );
 }
 

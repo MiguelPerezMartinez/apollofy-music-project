@@ -11,7 +11,10 @@ function BarsAndModal(WrappedComponent) {
     const handleOpenModal = () => setShowModal(true);
     return (
       <>
-        <RightMenu handleOpenModal={handleOpenModal} />
+        <RightMenu
+          handleOpenModal={handleOpenModal}
+          handleCloseModal={handleCloseModal}
+        />
         {showModal && <ModalTrackUp handleClose={handleCloseModal} />}
         <WrappedComponent />
       </>

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import "./styles.css";
 
@@ -8,37 +9,45 @@ import { logOut } from "../../services/firebase";
 //Components
 import { Row, Col } from "react-bootstrap";
 
+//Icons
+import { HomeOutlined, CloudUpload, SearchOutlined } from "@material-ui/icons";
+
 import ProfileCircleIcon from "../ProfileCircleIcon";
 
-//user from userReducer
-import { useSelector } from "react-redux";
-
-export default function RightMenu({ handleOpenModal }) {
-  const { username } = useSelector((state) => state.userReducer.data);
+export default function RightMenu({ handleOpenModal, handleCloseModal }) {
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const { username, profileImg } = useSelector(
+    (state) => state.userReducer.data,
+  );
   const w = window.innerWidth;
+
+  function handleChange() {
+    isUploadModalOpen ? handleCloseModal() : handleOpenModal();
+    setIsUploadModalOpen(!isUploadModalOpen);
+  }
   if (w <= 400) {
     return (
       <aside className="mobile-bottom-menu">
         <Row>
           <Col className="mobile-bottom-menu-button">
-            <Link to="/">Home</Link>
+            <Link to="/">
+              <HomeOutlined fontSize="large" />
+            </Link>
           </Col>
-          <Col className="mobile-bottom-menu-button">Search</Col>
+          <Col className="mobile-bottom-menu-button">
+            <SearchOutlined fontSize="large" />
+          </Col>
           <Col
             className="mobile-bottom-menu-button"
             onClick={() => {
-              handleOpenModal();
+              handleChange();
             }}
           >
-            <img
-              src="./assets/img/upload.svg"
-              alt="logout"
-              className="right-menu-icon"
-            />
+            <CloudUpload fontSize="large" />
           </Col>
           <Col className="mobile-bottom-menu-button">
             <Link to="/profile" className="right-menu-row">
-              <ProfileCircleIcon />
+              <ProfileCircleIcon profileImg={profileImg} />
             </Link>
           </Col>
         </Row>
@@ -49,17 +58,27 @@ export default function RightMenu({ handleOpenModal }) {
       <aside className="right-menu">
         <div>
           <Link to="/profile" className="right-menu-row">
-            <ProfileCircleIcon />
+            <ProfileCircleIcon profileImg={profileImg} />
             <div className="right-menu-row-title">Welcome {username}</div>
           </Link>
         </div>
+
+        <div
+          onClick={() => {
+            isUploadModalOpen
+              ? handleCloseModal() && setIsUploadModalOpen(false)
+              : handleOpenModal() && setIsUploadModalOpen(true);
+          }}
+        >
+          <div className="right-menu-row">
+            <CloudUpload fontSize="large" />
+            <div className="right-menu-row-title">Upload song</div>
+          </div>
+        </div>
+        <div className="xl-separator" />
         <div>
           <div className="right-menu-row no-hover">
-            <img
-              src="./assets/img/search.svg"
-              alt="search"
-              className="right-menu-icon"
-            />
+            <SearchOutlined fontSize="large" />
             <div className="right-menu-row-title">
               <input type="text" placeholder="Search" />
             </div>
@@ -67,15 +86,16 @@ export default function RightMenu({ handleOpenModal }) {
         </div>
         <div>
           <Link to="/" className="right-menu-row">
-            <img
+            {/* <img
               src="./assets/img/home.svg"
               alt="home"
               className="right-menu-icon"
-            />
+            /> */}
+            <HomeOutlined fontSize="large" />
             <div className="right-menu-row-title">Home</div>
           </Link>
         </div>
-        <div onClick={logOut}>
+        <div onClick={logOut} className="right-menu-logout">
           <div className="right-menu-row">
             <img
               src="./assets/img/logout.svg"
@@ -83,20 +103,6 @@ export default function RightMenu({ handleOpenModal }) {
               className="right-menu-icon"
             />
             <div className="right-menu-row-title">Logout</div>
-          </div>
-        </div>
-        <div
-          onClick={() => {
-            handleOpenModal();
-          }}
-        >
-          <div className="right-menu-row">
-            <img
-              src="./assets/img/upload.svg"
-              alt="logout"
-              className="right-menu-icon"
-            />
-            <div className="right-menu-row-title">Upload</div>
           </div>
         </div>
       </aside>

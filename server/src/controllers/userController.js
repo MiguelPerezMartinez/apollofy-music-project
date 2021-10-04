@@ -128,7 +128,6 @@ async function getFavouriteTracksById(req, res) {
 // }
 async function updateById(req, res) {
   const { id } = req.params;
-  console.log("body request ->", req.body);
   const bodyReq = req.body;
   try {
     console.log("id => ", id);
