@@ -1,174 +1,191 @@
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isPlay } from "../../redux/trackData/actions";
-import WaveSound from "../WaveSound";
+import { setWaveSurfer } from "../../redux/trackData/actions";
+import WaveSurfer from "wavesurfer.js";
+// import WaveSound from "../WaveSound";
 import "./styles.css";
 
-//Components
+//Components and MUI icons
 import { Row, Col } from "react-bootstrap";
+import PlayArrowOutlined from "@material-ui/icons/PlayArrowOutlined";
+import PauseOutlined from "@material-ui/icons/PauseOutlined";
+import SkipPreviousOutlined from "@material-ui/icons/SkipPreviousOutlined";
+import SkipNextOutlined from "@material-ui/icons/SkipNextOutlined";
+// import FastForwardOutlined from "@material-ui/icons/FastForwardOutlined";
+// import FastRewindOutlined from "@material-ui/icons/SkipPreviousOutlined";
+import VolumeUpOutlined from "@material-ui/icons/VolumeUpOutlined";
+import VolumeOffOutlined from "@material-ui/icons/VolumeOffOutlined";
+import CastOutlined from "@material-ui/icons/CastOutlined";
+import CastConnected from "@material-ui/icons/CastConnected";
 
 function PlayBar({ dataTrack }) {
+  //Redux and ref vars
   const trackReducer = useSelector((state) => state.trackReducer);
   const { isPlaying, waveSurfer } = trackReducer;
   const dispatch = useDispatch();
+  const waveformRef = useRef();
+
+  //State vars
   const [isMute, setMute] = useState(false);
+  const [isPlayPause, setPlayPause] = useState(true);
   const [isChromeCast, setChromecast] = useState(false);
-  console.log(dataTrack);
-  function isItPlaying() {
+  const [trackProgressTime, setTrackProgressTime] = useState(0);
+  const [trackDurationTime, setTrackDurationTime] = useState(0);
+  //   console.log(dataTrack);
+
+  function playPause() {
+    waveSurfer.playPause();
     if (isPlaying) {
+      setPlayPause(false);
       dispatch(isPlay(false));
     } else {
+      setPlayPause(true);
       dispatch(isPlay(true));
     }
+  }
+
+  function skipBackward() {
+    waveSurfer.skipBackward(5);
+  }
+
+  function skipForward() {
+    waveSurfer.skipForward(5);
   }
 
   function isItMute() {
     if (isMute) {
       setMute(false);
+      waveSurfer.setMute(false);
     } else {
       setMute(true);
+      waveSurfer.setMute(true);
     }
+  }
+
+  function handleVolume(e) {
+    waveSurfer.setVolume(e.target.value / 100);
   }
 
   function isChromeCastOn() {
     if (isChromeCast) {
+      console.log("Chromecast is off");
       setChromecast(false);
     } else {
+      console.log("Chromecast is on");
       setChromecast(true);
     }
   }
 
-  function play() {
-    waveSurfer.playPause();
-    if (isPlaying) {
-      dispatch(isPlay(false));
-    } else {
-      dispatch(isPlay(true));
-    }
-  }
+  useEffect(() => {
+    const wavesurfer = WaveSurfer.create({
+      container: waveformRef.current,
+      waveColor: "#D9DCFF",
+      progressColor: "#4353FF",
+      cursorColor: "#4353FF",
+      barWidth: 2,
+      barRadius: 3,
+      cursorWidth: 0,
+      height: 48,
+      barGap: 2,
+      maxCanvasWidth: 10,
+      autoCenter: true,
+      responsive: true,
+    });
+    dispatch(setWaveSurfer(wavesurfer));
+    wavesurfer.load(dataTrack.urlTrack);
+
+    //events
+    //set track progress time
+    wavesurfer.on("audioprocess", function (e) {
+      setTrackProgressTime(wavesurfer.getCurrentTime());
+    });
+    //reset play button
+    wavesurfer.on("finish", function (e) {
+      setPlayPause(true);
+    });
+  }, []);
 
   return (
     <>
-      <div className="main-playbar-container">
-        {/* <Row>
-          <Col>
-            <img src={dataTrack.urlImage} alt="thumbnail" className="" />
-          </Col>
-          <Col>
-            <Row>Track name</Row>
-            <Row>Author - Album</Row>
-          </Col>
-          <Col>
-            <div>
-              <img src="" alt="previous track btn" className="" />
-            </div>
-            {isPlaying ? (
-              <div onClick={isItPlaying}>
-                <img src="" alt="play btn" className="" />
+      <Row className="main-playbar-container">
+        <Col lg={2}>
+          <Row>
+            <Col lg={4} className="thumbnail-container">
+              <img
+                src={dataTrack.urlImage}
+                alt="thumbnail"
+                className="thumbnail"
+              />
+            </Col>
+            <Col className="title-album-container">
+              <Row className="title">{dataTrack.title}</Row>
+              <Row className="album">{dataTrack.album}</Row>
+            </Col>
+          </Row>
+        </Col>
+        <Col lg={2}>
+          <Row>
+            <Col>
+              <div onClick={skipBackward}>
+                <SkipPreviousOutlined fontSize="large" />
               </div>
-            ) : (
-              <div onClick={isItPlaying}>
-                <img src="" alt="pause btn" className="" />
-              </div>
-            )}
-            <div>
-              <img src="" alt="next track btn" className="" />
-            </div>
-          </Col>
-          <Col>Song progress bar/equalizer</Col>
-          <Col>show progress time and total time</Col>
-          <Col>
-            {!isMute ? (
-              <div onClick={isItMute} className="">
-                <img src="" alt="speaker on icon" className="" />
-              </div>
-            ) : (
-              <div onClick={isItMute} className="">
-                <img src="" alt="speaker off icon" className="" />
-              </div>
-            )}
-          </Col>
-          <Col>volume bar</Col>
-          <Col>
-            {!isChromeCast ? (
-              <div onClick={isChromeCastOn} className="">
-                <img src="" alt="chromecast off icon" className="" />
-              </div>
-            ) : (
-              <div onClick={isChromeCastOn}>
-                <img src="" alt="chromecast on icon" className="" />
-              </div>
-            )}
-          </Col>
-        </Row> */}
-        <Row>
-          <Col lg={2}>
-            <Row>
-              <Col>
-                <img
-                  src={dataTrack.urlImage}
-                  alt="thumbnail"
-                  className="thumbnail"
-                />
-              </Col>
-              <Col>
-                <Row>{dataTrack.title}</Row>
-                <Row>{dataTrack.album}</Row>
-              </Col>
-            </Row>
-          </Col>
-          <Col lg={2}>
-            <Row>
-              <Col>
-                <div>
-                  <img src="" alt="previous track btn" className="" />
+            </Col>
+            <Col>
+              {isPlayPause ? (
+                <div onClick={playPause}>
+                  <PlayArrowOutlined fontSize="large" />
                 </div>
-              </Col>
-              <Col>
-                <button onClick={play}>play</button>
-                {/* {isPlay ? (
-                  <button onClick={play}>
-                    <img src="" alt="play btn" className="" />
-                  </button>
-                ) : (
-                  <div onClick={play}>
-                    <img src="" alt="pause btn" className="" />
-                  </div>
-                )} */}
-              </Col>
-              <Col>
-                <div>
-                  <img src="" alt="next track btn" className="" />
+              ) : (
+                <div onClick={playPause}>
+                  <PauseOutlined fontSize="large" />
                 </div>
-              </Col>
-            </Row>
-          </Col>
-          <Col lg={5}>
-            <WaveSound trackUrl={dataTrack.urlTrack} />
-          </Col>
-          <Col lg={3}>
-            <Row>
-              <Col>
-                <img src="" alt="speaker on icon" className="" />
-              </Col>
-              <Col>
-                <input type="range" />
-              </Col>
-              <Col>
-                {!isChromeCast ? (
-                  <div onClick={isChromeCastOn} className="">
-                    <img src="" alt="chromecast off icon" className="" />
-                  </div>
-                ) : (
-                  <div onClick={isChromeCastOn}>
-                    <img src="" alt="chromecast on icon" className="" />
-                  </div>
-                )}
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </div>
+              )}
+            </Col>
+            <Col>
+              <div onClick={skipForward}>
+                <SkipNextOutlined fontSize="large" />
+              </div>
+            </Col>
+          </Row>
+        </Col>
+        <Col lg={5}>
+          {/* <WaveSound trackUrl={dataTrack.urlTrack} /> */}
+          <div className="wave" ref={waveformRef}></div>
+          <span>
+            {trackProgressTime} / {trackDurationTime}
+          </span>
+        </Col>
+        <Col lg={3}>
+          <Row>
+            <Col>
+              {!isMute ? (
+                <div onClick={isItMute} className="">
+                  <VolumeUpOutlined />
+                </div>
+              ) : (
+                <div onClick={isItMute} className="">
+                  <VolumeOffOutlined />
+                </div>
+              )}
+            </Col>
+            <Col>
+              <input type="range" onChange={handleVolume} />
+            </Col>
+            <Col>
+              {!isChromeCast ? (
+                <div onClick={isChromeCastOn} className="">
+                  <CastOutlined />
+                </div>
+              ) : (
+                <div onClick={isChromeCastOn}>
+                  <CastConnected />
+                </div>
+              )}
+            </Col>
+          </Row>
+        </Col>
+      </Row>
     </>
   );
 }
