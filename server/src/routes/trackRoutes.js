@@ -32,5 +32,10 @@ trackRouter.get(
   // authMiddleware,
   trackController.isLikedByUser,
 );
+trackRouter.get(
+  "/get-track/last-updated",
+  // authMiddleware,
+  trackController.isLikedByUser,
+);
 
 module.exports = trackRouter;
