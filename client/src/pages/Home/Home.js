@@ -15,7 +15,7 @@ import PlayBar from "../../components/PlayBar";
 //waveSurfer
 
 import BlockTrack from "../../components/BlockTrack";
-
+import DialogBox from "../../components/DialogBox";
 //imports to set userRedux
 import { getCurrentUser } from "../../services/api/index";
 import { setUser } from "../../redux/userData/actions";
