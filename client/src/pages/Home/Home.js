@@ -9,6 +9,7 @@ import BarsAndModal from "../../hoc/BarsAndModal";
 //Components
 import Track from "../../components/Track";
 import PlayButton from "../../components/PlayButton";
+import BlockTrack from "../../components/BlockTrack";
 
 //imports to set userRedux
 import { getCurrentUser } from "../../services/api/index";
@@ -18,6 +19,7 @@ function Home() {
   const dispatch = useDispatch();
   const trackReducer = useSelector((state) => state.trackReducer);
   const { isPlayBarDisplayed } = trackReducer;
+
   // set data in userReducer
   useEffect(() => {
     getCurrentUser().then((response) => {
@@ -30,6 +32,7 @@ function Home() {
       );
     });
   }, []);
+
   const dataTrack = {
     title: "Deltoya",
     author: "Robe",
@@ -53,6 +56,9 @@ function Home() {
         <h3>My plylist</h3>
 
         <Track dataTrack={dataTrack} />
+
+        <BlockTrack dataTrack={dataTrack} />
+
         {isPlayBarDisplayed && <PlayButton />}
       </main>
     </>
