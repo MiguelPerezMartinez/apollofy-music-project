@@ -51,7 +51,6 @@ function Home() {
   return (
     <>
       <main>
-        <DialogBox />
         <h1>HOME</h1>
         <h2>Songs</h2>
         <h3>My plylist</h3>
