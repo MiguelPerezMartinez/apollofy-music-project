@@ -69,14 +69,14 @@ function Home() {
       <main>
         <Container>
           <Row>
-            <Col xs={12} md={6} lg={6}>
+            <Col xs={12} md={5} lg={5}>
               <div className="home-top-col">
                 <h1>HOME</h1>
                 <h2>Songs</h2>
                 <h3>My plylist</h3>
               </div>
             </Col>
-            <Col xs={12} md={6} lg={6}>
+            <Col xs={12} md={7} lg={7}>
               <div className="home-top-col">
                 {topTracks.map(() => {
                   return (

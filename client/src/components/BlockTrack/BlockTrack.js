@@ -11,17 +11,14 @@ import { Container, Row, Col } from "react-bootstrap";
 function BlockTrack({ dataTrack, size = "small" }) {
   const track = useSelector((state) => state.trackReducer);
   const { trackObject } = track;
-
   const dispatch = useDispatch();
 
   function setReduxTrackData() {
     console.log(dataTrack);
     dispatch(trackObjectAction(dataTrack));
-  }
-  useEffect(() => {
     dispatch(isPlayBarDisplayed(true));
-    dispatch(isPlaying(true));
-  }, [trackObject]);
+    // dispatch(isPlay(true));
+  }
   return (
     <Container className={"blockTrack-Container-" + size}>
       <Row className="blockTrack-img" onClick={setReduxTrackData}>

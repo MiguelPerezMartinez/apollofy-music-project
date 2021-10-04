@@ -49,6 +49,9 @@ main {
 .m-separator {
   padding-top: 0.5rem;
 }
+.s-separator {
+  padding-top: 0.2rem;
+}
 
 h1 {
   color: white;
