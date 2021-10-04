@@ -1,20 +1,19 @@
-.blockTrack-Container {
-  width: 220px;
-  height: 200px;
-  margin-top: 20px;
+.blockTrack-Container-small {
+  width: 6.6rem;
+  height: 6rem;
   align-items: center;
+  border: 1px solid darkorchid;
 }
-.blockTrack-img {
-  width: 100%;
-  height: 100%;
+.blockTrack-Container-big {
+  width: 8.8rem;
+  height: 8rem;
+  align-items: center;
+  border: 1px solid darkorchid;
 }
-.image-track-block {
-  width: 100%;
-  height: 100%;
-}
+
 .name-TrackBlock {
   text-align: center;
-  margin-top: 20px;
+  /* margin-top: 0.7rem; */
 }
 .icon {
   color: red;
