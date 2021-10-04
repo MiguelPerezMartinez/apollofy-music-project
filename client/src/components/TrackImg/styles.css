@@ -1,0 +1,16 @@
+.track-image-component-container {
+  position: relative;
+}
+
+.track-image-component-image {
+  position: relative;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.track-image-component-image:before {
+  padding-top: 100%;
+  content: "";
+  display: block;
+}

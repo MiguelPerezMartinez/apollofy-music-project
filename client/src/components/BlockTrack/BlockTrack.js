@@ -8,10 +8,9 @@ import { isPlayBarDisplayed, isPlay } from "../../redux/trackData/actions";
 
 import { Container, Row, Col } from "react-bootstrap";
 
-function BlockTrack({ dataTrack }) {
+function BlockTrack({ dataTrack, size = "small" }) {
   const track = useSelector((state) => state.trackReducer);
   const { trackObject } = track;
-
   const dispatch = useDispatch();
 
   function setReduxTrackData() {
@@ -22,24 +21,22 @@ function BlockTrack({ dataTrack }) {
   }
 
   return (
-    <Container>
-      <div className="blockTrack-Container">
-        <Row className="blockTrack-img" onClick={setReduxTrackData}>
-          <img
-            className="image-track-block"
-            src={dataTrack.urlImage}
-            alt="songpicture"
-          ></img>
-        </Row>
-        <Row className="name-TrackBlock">
-          <Col xs={8}>
-            <p className="text-long-track">{dataTrack.title}</p>
-          </Col>
-          <Col xs={3}>
-            <FavButton />
-          </Col>
-        </Row>
-      </div>
+    <Container className={"blockTrack-Container-" + size}>
+      <Row className="blockTrack-img" onClick={setReduxTrackData}>
+        <img
+          className="image-track-block"
+          src={dataTrack.urlImage}
+          alt="songpicture"
+        ></img>
+      </Row>
+      <Row className="name-TrackBlock">
+        <Col xs={8}>
+          <p className="text-long-track">{dataTrack.title}</p>
+        </Col>
+        <Col xs={3}>
+          <FavButton />
+        </Col>
+      </Row>
     </Container>
   );
 }
