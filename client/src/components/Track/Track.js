@@ -5,6 +5,7 @@ import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { trackObjectAction } from "../../redux/trackData/actions";
 import { isPlayBarDisplayed, isPlay } from "../../redux/trackData/actions";
+import FavButton from "../FavButton";
 import { Container } from "react-bootstrap";
 function Track({ dataTrack }) {
   const track = useSelector((state) => state.trackReducer);

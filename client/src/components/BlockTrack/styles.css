@@ -1,0 +1,21 @@
+.blockTrack-Container {
+  width: 220px;
+  height: 200px;
+  margin-top: 20px;
+  align-items: center;
+}
+.blockTrack-img {
+  width: 100%;
+  height: 100%;
+}
+.image-track-block {
+  width: 100%;
+  height: 100%;
+}
+.name-TrackBlock {
+  text-align: center;
+  margin-top: 20px;
+}
+.icon {
+  color: red;
+}

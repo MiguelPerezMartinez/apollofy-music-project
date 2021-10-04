@@ -14,6 +14,8 @@ import Track from "../../components/Track";
 import PlayBar from "../../components/PlayBar";
 //waveSurfer
 
+import BlockTrack from "../../components/BlockTrack";
+
 //imports to set userRedux
 import { getCurrentUser } from "../../services/api/index";
 import { setUser } from "../../redux/userData/actions";
@@ -37,6 +39,7 @@ function Home() {
 
     // wavesurfer.load(trackUrl);
   }, []);
+
   const dataTrack = {
     title: "Deltoya",
     author: "Robe",
@@ -64,6 +67,7 @@ function Home() {
         {/* {isPlayBarDisplayed && (
           <PlayButton className="playBar" trackUrl={sound} />
         )} */}
+        <BlockTrack dataTrack={dataTrack} />
         {isPlayBarDisplayed && <PlayBar dataTrack={trackObject} />}
       </main>
     </>
