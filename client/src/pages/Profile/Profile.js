@@ -1,5 +1,5 @@
 //Imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./styles.css";
@@ -106,15 +106,18 @@ function Profile() {
 
   async function uploadProfilePicture() {
     if (profilePicture.isSelected) {
-      changeMyProfilePicture(profilePicture.file).then((response) => {
-        setProfilePicture({
-          ...profilePicture,
-          isUploading: false,
-          isUploaded: true,
-        });
-        updateCurrentUser({ id: state.id, profileImg: response.data.url });
-        return true;
+      const resp = await changeMyProfilePicture(profilePicture.file);
+      setProfilePicture({
+        ...profilePicture,
+        isUploading: false,
+        isUploaded: true,
       });
+      await updateCurrentUser({
+        userId: currentUser.userId,
+        profileImg: resp.data.url,
+      });
+      dispatch(fetchUserData());
+      return true;
     }
   }
 
@@ -130,7 +133,7 @@ function Profile() {
               md={3}
               lg={3}
             >
-              <ProfileCircleIcon profileImg={state.profileImg} />
+              <ProfileCircleIcon profileImg={currentUser.profileImg} />
 
               <div className="change-profile-picture d-flex justify-content-center">
                 <h4>Change my picture</h4>

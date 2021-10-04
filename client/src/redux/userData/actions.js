@@ -15,6 +15,7 @@ export const fetchUserData = () => {
           email: response.email,
           birthday: response.birthday,
           country: response.country,
+          profileImg: response.profileImg,
         },
       });
     });
