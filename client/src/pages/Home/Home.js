@@ -51,9 +51,18 @@ function Home() {
     duration: "2 min",
   };
 
-  const topTracks = [1, 2, 3, 4, 5];
-  const tracks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-  const recomendedTracks = [1, 2, 3, 4, 5, 6];
+  // track arrays mocks
+  const topTracks = [dataTrack, dataTrack, dataTrack, dataTrack, dataTrack];
+
+  let recomendedTracks = [];
+  for (let i = 0; i < 14; i++) {
+    recomendedTracks.push(dataTrack);
+  }
+
+  let lastUploadedTracks = [];
+  for (let i = 0; i < 6; i++) {
+    lastUploadedTracks.push(dataTrack);
+  }
 
   return (
     <>
@@ -83,10 +92,10 @@ function Home() {
 
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
-              {tracks.map((trackNum) => {
+              {recomendedTracks.map((track) => {
                 return (
                   <Col>
-                    <TrackBox trackNum={trackNum} />
+                    <BlockTrack dataTrack={track} size="small" />
                   </Col>
                 );
               })}
@@ -95,10 +104,10 @@ function Home() {
           <div className="xl-separator" />
 
           <Row xs={4} md={4} lg={2}>
-            {recomendedTracks.map(() => {
+            {lastUploadedTracks.map((track) => {
               return (
                 <Col xs={4} md={4} lg={2}>
-                  <TrackBox size="big" />
+                  <BlockTrack dataTrack={track} size="big" />
                 </Col>
               );
             })}
@@ -106,9 +115,6 @@ function Home() {
 
           {isPlayBarDisplayed && <PlayButton />}
         </Container>
-        <Track dataTrack={dataTrack} />
-
-        <BlockTrack dataTrack={dataTrack} />
       </main>
     </>
   );
