@@ -6,6 +6,16 @@ const { authMiddleware } = require("../middlewares");
 //end points routes:
 userRouter.post("/register", userController.register);
 userRouter.get("/get-user/:id", authMiddleware, userController.getById);
+userRouter.get(
+  "/get-user/:id/my-tracks",
+  authMiddleware,
+  userController.getMyTracksById,
+);
+userRouter.get(
+  "/get-user/:id/favourite-tracks",
+  authMiddleware,
+  userController.getFavouriteTracksById,
+);
 userRouter.patch(
   "/update-user/:id",
   authMiddleware,

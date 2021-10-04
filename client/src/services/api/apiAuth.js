@@ -38,6 +38,28 @@ export async function getCurrentUser() {
   return currentUser;
 }
 
+export async function getMyTracksByUserId(userId) {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "GET",
+    url: `http://localhost:4000/users/get-user/${userId}/my-tracks`,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
+
+export async function getFavouriteTracksByUserId(userId) {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "GET",
+    url: `http://localhost:4000/users/get-user/${userId}/favourite-tracks`,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
+
 export async function updateById(id, userToken, bodyReq) {
   return axios({
     method: "PATCH",
@@ -50,13 +72,13 @@ export async function updateById(id, userToken, bodyReq) {
 }
 
 export async function updateCurrentUser(state) {
-  const { id, ...bodyReq } = state;
+  const { userId, ...bodyReq } = state;
   const { email } = bodyReq;
   const userToken = await getCurrentUserToken();
   // const userId = await getCurrentUserId();
   if (email !== "") {
     await firebaseEmailUpdate(email);
-    await updateById(id, userToken, bodyReq);
+    await updateById(userId, userToken, bodyReq);
   }
 }
 
