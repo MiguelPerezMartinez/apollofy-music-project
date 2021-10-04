@@ -6,6 +6,8 @@ import { trackObjectAction } from "../../redux/trackData/actions";
 import { isPlayBarDisplayed, isPlaying } from "../../redux/trackData/actions";
 import { Col, Row } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
+import FavButton from "../FavButton";
+import { Container } from "react-bootstrap";
 function Track({ dataTrack }) {
   const track = useSelector((state) => state.trackReducer);
   const { trackObject } = track;

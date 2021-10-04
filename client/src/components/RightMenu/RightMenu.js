@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import "./styles.css";
 
@@ -10,12 +11,17 @@ import { Row, Col } from "react-bootstrap";
 
 import ProfileCircleIcon from "../ProfileCircleIcon";
 
-//user from userReducer
-import { useSelector } from "react-redux";
+export default function RightMenu({ handleOpenModal, handleCloseModal }) {
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
-export default function RightMenu({ handleOpenModal }) {
-  const username = useSelector((state) => state.userReducer.username);
+  const { username, profileImg } = useSelector((state) => state.userReducer);
+
   const w = window.innerWidth;
+
+  function handleChange() {
+    isUploadModalOpen ? handleCloseModal() : handleOpenModal();
+    setIsUploadModalOpen(!isUploadModalOpen);
+  }
   if (w <= 400) {
     return (
       <aside className="mobile-bottom-menu">
@@ -27,7 +33,7 @@ export default function RightMenu({ handleOpenModal }) {
           <Col
             className="mobile-bottom-menu-button"
             onClick={() => {
-              handleOpenModal();
+              handleChange();
             }}
           >
             <img
@@ -38,7 +44,7 @@ export default function RightMenu({ handleOpenModal }) {
           </Col>
           <Col className="mobile-bottom-menu-button">
             <Link to="/profile" className="right-menu-row">
-              <ProfileCircleIcon />
+              <ProfileCircleIcon profileImg={profileImg} />
             </Link>
           </Col>
         </Row>
@@ -49,7 +55,7 @@ export default function RightMenu({ handleOpenModal }) {
       <aside className="right-menu">
         <div>
           <Link to="/profile" className="right-menu-row">
-            <ProfileCircleIcon />
+            <ProfileCircleIcon profileImg={profileImg} />
             <div className="right-menu-row-title">Welcome {username}</div>
           </Link>
         </div>
@@ -87,7 +93,9 @@ export default function RightMenu({ handleOpenModal }) {
         </div>
         <div
           onClick={() => {
-            handleOpenModal();
+            isUploadModalOpen
+              ? handleCloseModal() && setIsUploadModalOpen(false)
+              : handleOpenModal() && setIsUploadModalOpen(true);
           }}
         >
           <div className="right-menu-row">

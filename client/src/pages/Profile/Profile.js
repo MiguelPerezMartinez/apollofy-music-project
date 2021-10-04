@@ -4,8 +4,6 @@ import React, { useState, useEffect } from "react";
 import "./styles.css";
 import "./spinner.css";
 
-import { getCurrentUserToken } from "../../services/firebase";
-
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
 
@@ -133,7 +131,6 @@ function Profile() {
   async function uploadProfilePicture() {
     if (profilePicture.isSelected) {
       changeMyProfilePicture(profilePicture.file).then((response) => {
-        console.log(response);
         setProfilePicture({
           ...profilePicture,
           isUploading: false,

@@ -1,5 +1,6 @@
 //Imports
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
@@ -11,16 +12,17 @@ import TrackBox from "../../components/TrackBox";
 import PlayButton from "../../components/PlayButton";
 import { Container, Row, Col } from "react-bootstrap";
 import ScrollContainer from "react-indiana-drag-scroll";
+import BlockTrack from "../../components/BlockTrack";
 
 //imports to set userRedux
-import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "../../services/api/index";
 import { setUser } from "../../redux/userData/actions";
 
 function Home() {
   const dispatch = useDispatch();
-  const trackReducer = useSelector((stete) => stete.trackReducer);
+  const trackReducer = useSelector((state) => state.trackReducer);
   const { isPlayBarDisplayed } = trackReducer;
+
   // set data in userReducer
   useEffect(() => {
     getCurrentUser().then((response) => {
@@ -28,10 +30,12 @@ function Home() {
         setUser({
           user_id: response._id,
           username: response.username,
+          profileImg: response.profileImg,
         }),
       );
     });
   }, []);
+
   const dataTrack = {
     title: "Deltoya",
     author: "Robe",
@@ -102,6 +106,9 @@ function Home() {
 
           {isPlayBarDisplayed && <PlayButton />}
         </Container>
+        <Track dataTrack={dataTrack} />
+
+        <BlockTrack dataTrack={dataTrack} />
       </main>
     </>
   );
