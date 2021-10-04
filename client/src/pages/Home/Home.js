@@ -119,9 +119,8 @@ function Home() {
               );
             })}
           </Row>
-
-          {isPlayBarDisplayed && <PlayBar dataTrack={dataTrack} />}
         </Container>
+        {isPlayBarDisplayed && <PlayBar dataTrack={dataTrack} />}
       </main>
     </>
   );
