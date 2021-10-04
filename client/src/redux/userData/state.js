@@ -1,6 +1,5 @@
 const initialState = {
-  user_id: "",
-  username: "",
-  profileImg: "",
+  data: {},
+  loaded: false,
 };
 export default initialState;

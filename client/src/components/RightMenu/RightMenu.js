@@ -16,9 +16,9 @@ import ProfileCircleIcon from "../ProfileCircleIcon";
 
 export default function RightMenu({ handleOpenModal, handleCloseModal }) {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
-
-  const { username, profileImg } = useSelector((state) => state.userReducer);
-
+  const { username, profileImg } = useSelector(
+    (state) => state.userReducer.data,
+  );
   const w = window.innerWidth;
 
   function handleChange() {

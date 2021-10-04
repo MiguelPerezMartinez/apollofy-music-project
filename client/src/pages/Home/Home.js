@@ -1,11 +1,9 @@
 //Imports
-import React, { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
-import sound from "./sound.wav";
-import sound2 from "./sound2.wav";
 import BarsAndModal from "../../hoc/BarsAndModal";
 
 //Components
@@ -13,34 +11,10 @@ import Track from "../../components/Track";
 import { Container, Row, Col } from "react-bootstrap";
 import ScrollContainer from "react-indiana-drag-scroll";
 import BlockTrack from "../../components/BlockTrack";
-
 import PlayBar from "../../components/PlayBar";
-//waveSurfer
-
-import DialogBox from "../../components/DialogBox";
-//imports to set userRedux
-import { getCurrentUser } from "../../services/api/index";
-import { setUser } from "../../redux/userData/actions";
 
 function Home() {
-  const dispatch = useDispatch();
-  const trackReducer = useSelector((state) => state.trackReducer);
-  const { isPlayBarDisplayed, trackObject } = trackReducer;
-  const waveformRef = useRef();
-  // set data in userReducer
-  useEffect(() => {
-    getCurrentUser().then((response) => {
-      dispatch(
-        setUser({
-          user_id: response._id,
-          username: response.username,
-          profileImg: response.profileImg,
-        }),
-      );
-    });
-
-    // wavesurfer.load(trackUrl);
-  }, []);
+  const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
 
   const dataTrack = {
     title: "Deltoya",
@@ -119,9 +93,8 @@ function Home() {
               );
             })}
           </Row>
-
-          {isPlayBarDisplayed && <PlayBar dataTrack={dataTrack} />}
         </Container>
+        {isPlayBarDisplayed && <PlayBar dataTrack={dataTrack} />}
       </main>
     </>
   );
