@@ -14,7 +14,7 @@ import ProfileCircleIcon from "../ProfileCircleIcon";
 import { useSelector } from "react-redux";
 
 export default function RightMenu({ handleOpenModal }) {
-  const username = useSelector((state) => state.userReducer.username);
+  const { username } = useSelector((state) => state.userReducer.data);
   const w = window.innerWidth;
   if (w <= 400) {
     return (
