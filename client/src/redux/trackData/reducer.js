@@ -1,5 +1,10 @@
 import initialTrackState from "./state";
-import { IS_PLAY_BAR_DISPLAYED, IS_PLAYING, TRACK_OBJECT } from "./type";
+import {
+  IS_PLAY_BAR_DISPLAYED,
+  IS_PLAYING,
+  TRACK_OBJECT,
+  WAVESURFER_PROPERTIES,
+} from "./type";
 
 const trackReducer = (state = initialTrackState, action) => {
   switch (action.type) {
@@ -9,6 +14,8 @@ const trackReducer = (state = initialTrackState, action) => {
       return { ...state, isPlaying: action.payload };
     case TRACK_OBJECT:
       return { ...state, trackObject: action.payload };
+    case WAVESURFER_PROPERTIES:
+      return { ...state, waveSurfer: action.payload };
     default:
       return state;
   }
