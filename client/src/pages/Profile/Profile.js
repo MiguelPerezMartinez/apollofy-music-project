@@ -1,12 +1,13 @@
 //Imports
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./styles.css";
 import "./spinner.css";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
-import { getCurrentUser, updateCurrentUser } from "../../services/api/index";
+import { updateCurrentUser } from "../../services/api/index";
 import { updateUserPass } from "../../services/firebase";
 import { logOut } from "../../services/firebase";
 
@@ -17,20 +18,15 @@ import Input from "../../components/Input";
 import { Container, Row, Col } from "react-bootstrap";
 import ModalTrackUp from "../../components/ModalTrackUp";
 
+import { fetchUserData } from "../../redux/userData/actions";
+
 function Profile() {
-  const [currentUser, setCurrentUser] = useState("");
+  const dispatch = useDispatch();
+  const { data: currentUser } = useSelector((state) => state.userReducer);
 
   const [editing, setEditing] = useState(false);
   const [editingPass, setEditingPass] = useState(false);
-  const [state, setState] = useState({
-    id: "",
-    firstname: "",
-    lastname: "",
-    username: "",
-    email: "",
-    birthday: "",
-    country: "",
-  });
+  const [state, setState] = useState(currentUser);
   const [passState, setPassState] = useState({
     password: "",
     confirmPassword: "",
@@ -40,23 +36,6 @@ function Profile() {
 
   const handleCloseModal = () => setShowModal(false);
   const handleOpenModal = () => setShowModal(true);
-
-  //Load user
-  useEffect(() => {
-    getCurrentUser().then((response) => {
-      setState({
-        id: response._id,
-        firstname: response.firstname,
-        lastname: response.lastname,
-        username: response.username,
-        email: response.email,
-        birthday: response.birthday,
-        country: response.country,
-      });
-
-      setCurrentUser(response);
-    });
-  }, []);
 
   //Toggle editing fields
   function handleEdit() {
@@ -91,10 +70,9 @@ function Profile() {
   //Update profile changes
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("fitrbaseUpdateEmpty");
     await updateCurrentUser(state);
-    setCurrentUser(state);
     setEditing(false);
+    dispatch(fetchUserData());
   }
 
   //Update profile changes

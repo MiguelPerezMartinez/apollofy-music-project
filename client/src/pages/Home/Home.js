@@ -10,25 +10,12 @@ import Track from "../../components/Track";
 import PlayButton from "../../components/PlayButton";
 
 //imports to set userRedux
-import { useDispatch, useSelector } from "react-redux";
-// import { getCurrentUser } from "../../services/api/index";
-// import { setUser } from "../../redux/userData/actions";
+import { useSelector } from "react-redux";
 
 function Home() {
-  const dispatch = useDispatch();
-  const trackReducer = useSelector((stete) => stete.trackReducer);
+  const trackReducer = useSelector((state) => state.trackReducer);
   const { isPlayBarDisplayed } = trackReducer;
-  // set data in userReducer
-  // useEffect(() => {
-  //   getCurrentUser().then((response) => {
-  //     dispatch(
-  //       setUser({
-  //         user_id: response._id,
-  //         username: response.username,
-  //       }),
-  //     );
-  //   });
-  // }, []);
+
   const dataTrack = {
     title: "Deltoya",
     author: "Robe",
