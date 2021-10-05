@@ -2,14 +2,15 @@ import React from "react";
 
 import "./styles.css";
 
-export default function TrackImg({ urlImage }) {
+export default function TrackImg({ urlCover }) {
   return (
     <>
       <div className="track-image-component-container">
         <div
           className="track-image-component-image"
-          style={{ backgroundImage: `url(${urlImage})` }}
-        />
+          style={{ backgroundImage: `url(${urlCover})` }}
+        ></div>
+        <div className="track-play-hover" />
       </div>
     </>
   );

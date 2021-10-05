@@ -18,9 +18,11 @@
 
 .playbar-image {
   min-height: 100%;
+  align-items: center;
 }
 
 .playbar-info {
+  height: 8vh;
   align-items: center;
 }
 

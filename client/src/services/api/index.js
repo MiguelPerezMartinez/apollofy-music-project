@@ -5,6 +5,7 @@ import {
   updateCurrentUser,
   updateById,
   setIsActive,
+  getAllTracks,
 } from "./apiAuth";
 
 import { apiTrackUpload } from "./trackUpload";
@@ -19,4 +20,5 @@ export {
   setIsActive,
   apiTrackUpload,
   changeMyProfilePicture,
+  getAllTracks,
 };

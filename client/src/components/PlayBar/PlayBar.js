@@ -138,7 +138,7 @@ function PlayBar() {
               <Row className="playbar-info">
                 <Col lg={3}>
                   <div className="playbar-image">
-                    <TrackImg urlImage={trackObject.urlImage} />
+                    <TrackImg urlCover={trackObject.urlCover} />
                   </div>
                 </Col>
                 <Col lg={9}>
