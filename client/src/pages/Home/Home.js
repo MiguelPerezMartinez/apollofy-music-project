@@ -1,11 +1,13 @@
 //Imports
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import "./styles.css";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
 import BarsAndModal from "../../hoc/BarsAndModal";
+
+import { getAllTracks } from "../../services/api/index";
 
 //Components
 import Track from "../../components/Track";
@@ -17,46 +19,38 @@ import PlayBar from "../../components/PlayBar";
 function Home() {
   const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
 
-  const dataTrack = {
-    _id: "61547351faa5f860b59a6cda",
-    title: "Deltoya",
-    author: "Robe",
-    album: "Deltoya",
-    releaseYear: "15 de juny de 1992",
-    genre: "Transgressive rock",
-    urlImage:
-      "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/extremoduro-robe-iniesta-separacion-1576666810.jpg?crop=1xw:0.75xh;center,top&resize=1200:*",
-    urlTrack:
-      "http://res.cloudinary.com/apollofy/video/upload/v1633098067/track/zgwakszoia30bwch8dpc.wav",
-    owner: "object id",
-    totalPlays: 0,
-    totalLikes: 0,
-    duration: "2:34",
-  };
+  const [allTracks, setAlltracks] = useState([]);
+  // const [tracksLoaded, setTracksLoaded] = useState(false);
+  useEffect(() => {
+    getAllTracks().then((response) => {
+      setAlltracks(response.data.tracks);
+      // setTracksLoaded(true);
+    });
+  }, []);
 
   // track arrays mocks
 
   let topTracks = [];
   for (let i = 0; i < 5; i++) {
-    topTracks.push({ ...dataTrack, _id: dataTrack._id + `top${i}` });
+    topTracks.push(allTracks[i]);
   }
 
   let recomendedTracks = [];
   for (let i = 0; i < 14; i++) {
-    recomendedTracks.push({
-      ...dataTrack,
-      _id: dataTrack._id + `recommended${i}`,
-    });
+    recomendedTracks.push(allTracks[i + 5]);
   }
 
   let lastUploadedTracks = [];
   for (let i = 0; i < 6; i++) {
-    lastUploadedTracks.push({
-      ...dataTrack,
-      _id: dataTrack._id + `lastUp${i}`,
-    });
+    lastUploadedTracks.push(allTracks[i + 19]);
   }
-
+  // if (!tracksLoaded) {
+  //   return (
+  //     <>
+  //       <main>Loading</main>
+  //     </>
+  //   );
+  // }
   return (
     <>
       <main>
@@ -71,8 +65,10 @@ function Home() {
             </Col>
             <Col xs={12} md={7} lg={7}>
               <div className="home-top-col">
-                {topTracks.map((track) => {
-                  return <Track dataTrack={track} key={track._id} />;
+                {topTracks.map((track, index) => {
+                  return (
+                    <Track dataTrack={track} key={track ? track._id : index} />
+                  );
                 })}
               </div>
             </Col>
@@ -81,9 +77,9 @@ function Home() {
 
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
-              {recomendedTracks.map((track) => {
+              {recomendedTracks.map((track, index) => {
                 return (
-                  <Col key={track._id}>
+                  <Col key={track ? track._id : index}>
                     <BlockTrack dataTrack={track} size="small" />
                   </Col>
                 );
@@ -93,16 +89,16 @@ function Home() {
           <div className="xl-separator" />
 
           <Row xs={4} md={4} lg={2}>
-            {lastUploadedTracks.map((track) => {
+            {lastUploadedTracks.map((track, index) => {
               return (
-                <Col xs={4} md={4} lg={2} key={track._id}>
+                <Col xs={4} md={4} lg={2} key={track ? track._id : index}>
                   <BlockTrack dataTrack={track} size="big" />
                 </Col>
               );
             })}
           </Row>
         </Container>
-        {isPlayBarDisplayed && <PlayBar dataTrack={dataTrack} />}
+        {isPlayBarDisplayed && <PlayBar dataTrack={topTracks[0]} />}
       </main>
     </>
   );

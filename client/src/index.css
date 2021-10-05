@@ -89,3 +89,7 @@ a {
     padding-bottom: 5rem !important;
   }
 }
+
+.is-loading-component {
+  background-color: var(--main-container-color-hover) !important;
+}
