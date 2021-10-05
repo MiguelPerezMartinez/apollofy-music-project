@@ -17,6 +17,12 @@
   border-radius: 2%;
 }
 
+.blockTrack-img-container {
+  --bs-gutter-x: 0rem;
+  margin-right: 0rem;
+  margin-left: 0rem;
+}
+
 .blockTrack-background:hover {
   background: var(--main-container-color-hover);
 }

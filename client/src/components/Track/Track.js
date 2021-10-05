@@ -23,8 +23,8 @@ function Track({ dataTrack }) {
   }
 
   return (
-    <Row className="track-row" onClick={setReduxTrackData}>
-      <Col xs={2} md={2} lg={2}>
+    <Row key={dataTrack._id} id={dataTrack._id} className="track-row">
+      <Col xs={2} md={2} lg={2} onClick={setReduxTrackData}>
         <div className="track-row-img-container">
           <TrackImg urlImage={dataTrack.urlImage} />
         </div>

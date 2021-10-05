@@ -18,6 +18,7 @@ function Home() {
   const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
 
   const dataTrack = {
+    _id: "61547351faa5f860b59a6cda",
     title: "Deltoya",
     author: "Robe",
     album: "Deltoya",
@@ -30,20 +31,30 @@ function Home() {
     owner: "object id",
     totalPlays: 0,
     totalLikes: 0,
-    duration: "2 min",
+    duration: "2:34",
   };
 
   // track arrays mocks
-  const topTracks = [dataTrack, dataTrack, dataTrack, dataTrack, dataTrack];
+
+  let topTracks = [];
+  for (let i = 0; i < 5; i++) {
+    topTracks.push({ ...dataTrack, _id: dataTrack._id + `top${i}` });
+  }
 
   let recomendedTracks = [];
   for (let i = 0; i < 14; i++) {
-    recomendedTracks.push(dataTrack);
+    recomendedTracks.push({
+      ...dataTrack,
+      _id: dataTrack._id + `recommended${i}`,
+    });
   }
 
   let lastUploadedTracks = [];
   for (let i = 0; i < 6; i++) {
-    lastUploadedTracks.push(dataTrack);
+    lastUploadedTracks.push({
+      ...dataTrack,
+      _id: dataTrack._id + `lastUp${i}`,
+    });
   }
 
   return (
@@ -60,12 +71,8 @@ function Home() {
             </Col>
             <Col xs={12} md={7} lg={7}>
               <div className="home-top-col">
-                {topTracks.map(() => {
-                  return (
-                    <Col xs={12} md={12} lg={12}>
-                      <Track dataTrack={dataTrack} />
-                    </Col>
-                  );
+                {topTracks.map((track) => {
+                  return <Track dataTrack={track} key={track._id} />;
                 })}
               </div>
             </Col>
@@ -76,7 +83,7 @@ function Home() {
             <Row className="scroll-wrapper-tracks">
               {recomendedTracks.map((track) => {
                 return (
-                  <Col>
+                  <Col key={track._id}>
                     <BlockTrack dataTrack={track} size="small" />
                   </Col>
                 );
@@ -88,7 +95,7 @@ function Home() {
           <Row xs={4} md={4} lg={2}>
             {lastUploadedTracks.map((track) => {
               return (
-                <Col xs={4} md={4} lg={2}>
+                <Col xs={4} md={4} lg={2} key={track._id}>
                   <BlockTrack dataTrack={track} size="big" />
                 </Col>
               );

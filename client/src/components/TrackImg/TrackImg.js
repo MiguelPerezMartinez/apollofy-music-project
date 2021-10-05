@@ -9,7 +9,8 @@ export default function TrackImg({ urlImage }) {
         <div
           className="track-image-component-image"
           style={{ backgroundImage: `url(${urlImage})` }}
-        />
+        ></div>
+        <div className="track-play-hover" />
       </div>
     </>
   );

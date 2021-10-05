@@ -24,7 +24,7 @@ function BlockTrack({ dataTrack, size = "small" }) {
 
   return (
     <Container className={"blockTrack-background blockTrack-Container-" + size}>
-      <Row className="blockTrack-img" onClick={setReduxTrackData}>
+      <Row className="blockTrack-img-container" onClick={setReduxTrackData}>
         <TrackImg urlImage={dataTrack.urlImage} />
       </Row>
       <Row className="name-TrackBlock">
