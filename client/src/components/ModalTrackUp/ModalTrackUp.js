@@ -15,7 +15,7 @@ import { apiTrackUpload } from "../../services/api/index";
 function ModalTrackUp({ handleClose }) {
   const form = useRef();
   const dispatch = useDispatch();
-  const userReducer = useSelector((state) => state.userReducer);
+  const userReducer = useSelector((state) => state.userReducer.data);
 
   const [coverUpload, setCoverUpload] = useState({
     file: "",
@@ -54,7 +54,7 @@ function ModalTrackUp({ handleClose }) {
   useEffect(() => {
     setTrackData({
       ...trackData,
-      owner: userReducer.user_id,
+      owner: userReducer.userId,
     });
   }, []);
 
@@ -88,7 +88,7 @@ function ModalTrackUp({ handleClose }) {
   function handleChange(e) {
     setTrackData({
       ...trackData,
-      owner: userReducer.user_id,
+      owner: userReducer.userId,
       [e.target.name]: e.target.value,
     });
     console.log(trackData);
