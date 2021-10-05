@@ -12,13 +12,13 @@ import { HomeOutlined, CloudUpload, SearchOutlined } from "@material-ui/icons";
 
 import ProfileCircleIcon from "../ProfileCircleIcon";
 
-export default function BottomMenu() {
+export default function BottomMenu({ handleOpenModal, handleCloseModal }) {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const { username, profileImg } = useSelector(
     (state) => state.userReducer.data,
   );
 
-  function handleChange({ handleOpenModal, handleCloseModal }) {
+  function handleChange() {
     isUploadModalOpen ? handleCloseModal() : handleOpenModal();
     setIsUploadModalOpen(!isUploadModalOpen);
   }

@@ -13,7 +13,10 @@ function BarsAndModal(WrappedComponent) {
 
     return (
       <>
-        <BottomMenu />
+        <BottomMenu
+          handleOpenModal={handleOpenModal}
+          handleCloseModal={handleCloseModal}
+        />
         <RightMenu
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}
