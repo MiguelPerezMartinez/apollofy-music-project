@@ -3,23 +3,36 @@ import "./styles.css";
 
 //import TrackReducer
 import { useDispatch, useSelector } from "react-redux";
-import { trackObjectAction } from "../../redux/trackData/actions";
+
 import { Col, Row } from "react-bootstrap";
-import { isPlayBarDisplayed, isPlay } from "../../redux/trackData/actions";
+import {
+  isPlayBarDisplayedAction,
+  isPlay,
+  trackObjectAction,
+} from "../../redux/trackData/actions";
 import FavButton from "../FavButton";
 
 import TrackImg from "../../components/TrackImg";
 
 function Track({ dataTrack }) {
-  const track = useSelector((state) => state.trackReducer);
+  const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
 
   const dispatch = useDispatch();
 
   function setReduxTrackData() {
-    console.log(dataTrack);
     dispatch(trackObjectAction(dataTrack));
-    dispatch(isPlayBarDisplayed(true));
+    localStorage.setItem("Queue", dataTrack);
+    // if (!isPlayBarDisplayed) {
+    dispatch(isPlayBarDisplayedAction(true));
+    // } else {
+    //   dispatch(isPlayBarDisplayedAction(false));
+    //   dispatch(isPlayBarDisplayedAction(true));
+    // }
     dispatch(isPlay(true));
+  }
+
+  function addQueue() {
+    localStorage.setItem("queueTrack", JSON.stringify());
   }
 
   return (
@@ -38,6 +51,9 @@ function Track({ dataTrack }) {
         <div className="text-long-box">
           <p className="text-long-track">{dataTrack.album}</p>
         </div>
+      </Col>
+      <Col>
+        <button onClick={addQueue}>queue</button>
       </Col>
       <Col>
         <Row>

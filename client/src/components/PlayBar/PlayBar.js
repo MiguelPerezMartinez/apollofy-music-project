@@ -45,12 +45,18 @@ function PlayBar({ dataTrack }) {
     }
   }
 
-  function skipBackward() {
+  function rewindBackward() {
     waveSurfer.skipBackward(5);
   }
 
-  function skipForward() {
+  function fastForward() {
     waveSurfer.skipForward(5);
+  }
+  function skipBackward() {
+    waveSurfer.load(dataTrack.urlTrack);
+  }
+  function skipForward() {
+    waveSurfer.load(dataTrack.urlTrack);
   }
 
   function isItMute() {
@@ -78,6 +84,10 @@ function PlayBar({ dataTrack }) {
   }
 
   useEffect(() => {
+    console.log("datatrack playbar", dataTrack);
+    if (waveSurfer != null) {
+      waveSurfer.destroy();
+    }
     const wavesurfer = WaveSurfer.create({
       container: waveformRef.current,
       waveColor: "#D9DCFF",
@@ -89,13 +99,27 @@ function PlayBar({ dataTrack }) {
       height: 48,
       barGap: 2,
 
+      fillParent: true,
       maxCanvasWidth: 20,
       // autoCenter: true,
       responsive: true,
     });
     dispatch(setWaveSurfer(wavesurfer));
+
     wavesurfer.load(dataTrack.urlTrack);
 
+    // const localStorageContent = [localStorage.getItem("Queue")];
+    // if (!localStorageContent) {
+
+    localStorage.setItem("Queue", dataTrack.urlTrack);
+    let arryQueue = [localStorage.getItem("Queue")];
+    if (localStorage.getItem("Queue")) {
+      arryQueue.push(localStorage.getItem("Queue"));
+      localStorage.setItem("Queue", arryQueue);
+    }
+    //   localStorage.setItem("Queue", JSON.stringify(arryQueue));
+    //   // console.log(localStorageContent);
+    // }
     //events
     //set track duration time
     wavesurfer.on("ready", (e) => {
@@ -122,7 +146,7 @@ function PlayBar({ dataTrack }) {
     wavesurfer.on("finish", function (e) {
       setPlayPause(true);
     });
-  }, []);
+  }, [dataTrack]);
 
   return (
     <>
@@ -154,7 +178,7 @@ function PlayBar({ dataTrack }) {
               </div>
             </Col>
             <Col lg={1}>
-              <div onClick={skipBackward}>
+              <div onClick={rewindBackward}>
                 <FastRewindOutlined fontSize="large" />
               </div>
             </Col>
@@ -170,7 +194,7 @@ function PlayBar({ dataTrack }) {
               )}
             </Col>
             <Col lg={1}>
-              <div onClick={skipForward}>
+              <div onClick={fastForward}>
                 <FastForwardOutlined fontSize="large" />
               </div>
             </Col>

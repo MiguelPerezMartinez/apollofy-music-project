@@ -5,7 +5,7 @@ import {
   WAVESURFER_PROPERTIES,
 } from "./type";
 //Reproductor (Solo cambia a true)
-export const isPlayBarDisplayed = (value) => ({
+export const isPlayBarDisplayedAction = (value) => ({
   type: IS_PLAY_BAR_DISPLAYED,
   payload: value,
 });
