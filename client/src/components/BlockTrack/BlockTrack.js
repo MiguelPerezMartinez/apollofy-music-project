@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./styles.css";
+
 import FavButton from "../FavButton";
+import TrackImg from "../TrackImg";
 
 import { useDispatch, useSelector } from "react-redux";
 import { trackObjectAction } from "../../redux/trackData/actions";
@@ -21,17 +23,14 @@ function BlockTrack({ dataTrack, size = "small" }) {
   }
 
   return (
-    <Container className={"blockTrack-Container-" + size}>
+    <Container className={"blockTrack-background blockTrack-Container-" + size}>
       <Row className="blockTrack-img" onClick={setReduxTrackData}>
-        <img
-          className="image-track-block"
-          src={dataTrack.urlImage}
-          alt="songpicture"
-        ></img>
+        <TrackImg urlImage={dataTrack.urlImage} />
       </Row>
       <Row className="name-TrackBlock">
         <Col xs={8}>
-          <p className="text-long-track">{dataTrack.title}</p>
+          <p className="blockTrack-title">{dataTrack.title}</p>
+          <p className="blockTrack-author">{dataTrack.author}</p>
         </Col>
         <Col xs={3}>
           <FavButton />

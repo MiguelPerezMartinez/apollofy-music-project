@@ -1,5 +1,6 @@
 .track-image-component-container {
   position: relative;
+  border-radius: 5%;
 }
 
 .track-image-component-image {
@@ -7,6 +8,7 @@
   width: 100%;
   background-repeat: no-repeat;
   background-size: cover;
+  border-radius: 5%;
 }
 
 .track-image-component-image:before {

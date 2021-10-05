@@ -1,20 +1,38 @@
 .blockTrack-Container-small {
-  width: 6.6rem;
-  height: 6rem;
+  width: 7.6rem;
+  /* height: 6rem; */
   align-items: center;
-  border: 1px solid darkorchid;
+  /* border: 1px solid darkorchid; */
 }
 .blockTrack-Container-big {
-  width: 8.8rem;
-  height: 8rem;
+  width: 9.8rem;
+  /* height: 8rem; */
   align-items: center;
-  border: 1px solid darkorchid;
+  /* border: 1px solid darkorchid; */
 }
 
-.name-TrackBlock {
-  text-align: center;
-  /* margin-top: 0.7rem; */
+.blockTrack-background {
+  background: var(--main-container-color);
+  padding: 0.3rem 0.3rem;
+  border-radius: 2%;
 }
+
+.blockTrack-background:hover {
+  background: var(--main-container-color-hover);
+}
+
+.blockTrack-title {
+  margin-bottom: 0rem;
+  font-weight: normal;
+  font-size: 0.7rem;
+}
+
+.blockTrack-author {
+  margin-bottom: 0rem;
+  font-size: 0.5rem;
+  font-weight: lighter;
+}
+
 .icon {
   color: red;
 }
