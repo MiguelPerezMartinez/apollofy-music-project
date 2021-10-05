@@ -14,9 +14,7 @@ import ProfileCircleIcon from "../ProfileCircleIcon";
 
 export default function BottomMenu({ handleOpenModal, handleCloseModal }) {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
-  const { username, profileImg } = useSelector(
-    (state) => state.userReducer.data,
-  );
+  const { profileImg } = useSelector((state) => state.userReducer.data);
 
   function handleChange() {
     isUploadModalOpen ? handleCloseModal() : handleOpenModal();
@@ -42,7 +40,7 @@ export default function BottomMenu({ handleOpenModal, handleCloseModal }) {
           <CloudUpload fontSize="large" />
         </Col>
         <Col className="mobile-bottom-menu-button">
-          <Link to="/profile" className="right-menu-row">
+          <Link to="/profile" className="mobile-bottom-menu-row">
             <ProfileCircleIcon profileImg={profileImg} />
           </Link>
         </Col>

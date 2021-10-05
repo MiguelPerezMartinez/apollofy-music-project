@@ -20,10 +20,6 @@ export default function RightMenu({ handleOpenModal, handleCloseModal }) {
     (state) => state.userReducer.data,
   );
 
-  function handleChange() {
-    isUploadModalOpen ? handleCloseModal() : handleOpenModal();
-    setIsUploadModalOpen(!isUploadModalOpen);
-  }
   return (
     <aside className="right-menu">
       <div>
@@ -56,11 +52,6 @@ export default function RightMenu({ handleOpenModal, handleCloseModal }) {
       </div>
       <div>
         <Link to="/" className="right-menu-row">
-          {/* <img
-              src="./assets/img/home.svg"
-              alt="home"
-              className="right-menu-icon"
-            /> */}
           <HomeOutlined fontSize="large" />
           <div className="right-menu-row-title">Home</div>
         </Link>
