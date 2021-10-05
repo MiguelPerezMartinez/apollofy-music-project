@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import RightMenu from "../components/RightMenu";
+import BottomMenu from "../components/BottomMenu";
 import ModalTrackUp from "../components/ModalTrackUp";
 import Button from "../components/Button";
 
@@ -9,8 +10,10 @@ function BarsAndModal(WrappedComponent) {
     const [showModal, setShowModal] = useState(false);
     const handleCloseModal = () => setShowModal(false);
     const handleOpenModal = () => setShowModal(true);
+
     return (
       <>
+        <BottomMenu />
         <RightMenu
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}

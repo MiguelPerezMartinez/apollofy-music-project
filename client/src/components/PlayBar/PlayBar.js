@@ -88,6 +88,8 @@ function PlayBar({ dataTrack }) {
       cursorWidth: 0,
       height: 48,
       barGap: 2,
+      hideScrollbar: true,
+      // fillParent: true
 
       maxCanvasWidth: 20,
       // autoCenter: true,

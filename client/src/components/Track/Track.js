@@ -23,33 +23,36 @@ function Track({ dataTrack }) {
   }
 
   return (
-    <Row className="track-row" onClick={setReduxTrackData}>
-      <Col xs={2} md={2} lg={2}>
-        <div className="track-row-img-container">
-          <TrackImg urlImage={dataTrack.urlImage} />
-        </div>
-      </Col>
-      <Col xs={4} md={4} lg={4}>
-        <p className="track-title">{dataTrack.title}</p>
+    <>
+      <Row className="track-row" onClick={setReduxTrackData}>
+        <Col xs={2} md={2} lg={2}>
+          <div className="track-row-img-container">
+            <TrackImg urlImage={dataTrack.urlImage} />
+          </div>
+        </Col>
+        <Col xs={4} md={4} lg={4}>
+          <p className="track-title">{dataTrack.title}</p>
 
-        <p className="track-author">{dataTrack.author}</p>
-      </Col>
-      <Col>
-        <div className="text-long-box">
-          <p className="text-long-track">{dataTrack.album}</p>
-        </div>
-      </Col>
-      <Col>
-        <Row>
-          <Col xs={6} md={6} lg={6}>
-            <p className="">{dataTrack.duration}</p>
-          </Col>
-          <Col xs={6} md={6} lg={6}>
-            <FavButton />
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+          <p className="track-author">{dataTrack.author}</p>
+        </Col>
+        <Col>
+          <div className="text-long-box">
+            <p className="text-long-track">{dataTrack.album}</p>
+          </div>
+        </Col>
+
+        <Col>
+          <Row>
+            <Col xs={6} md={6} lg={6}>
+              <p className="">{dataTrack.duration}</p>
+            </Col>
+            <Col xs={6} md={6} lg={6}>
+              <FavButton />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </>
   );
 }
 

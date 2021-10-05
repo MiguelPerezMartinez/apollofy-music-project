@@ -1,0 +1,27 @@
+@media (max-width: 399px) {
+  .right-menu {
+    display: none;
+  }
+
+  .mobile-bottom-menu {
+    position: fixed !important;
+    bottom: 0;
+    width: 100vw;
+    background-color: var(--main-container-color);
+    display: flex;
+    z-index: 20;
+  }
+
+  .mobile-bottom-menu > div {
+    width: 100%;
+  }
+
+  .mobile-bottom-menu-button {
+    position: relative;
+    width: 25%;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
