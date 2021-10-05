@@ -97,6 +97,32 @@ function Home() {
               );
             })}
           </Row>
+          <div className="xl-separator" />
+
+          <ScrollContainer className="scroll-container">
+            <Row className="scroll-wrapper-tracks">
+              {recomendedTracks.map((track, index) => {
+                return (
+                  <Col key={track ? track._id : index}>
+                    <BlockTrack dataTrack={track} size="small" />
+                  </Col>
+                );
+              })}
+            </Row>
+          </ScrollContainer>
+          <div className="xl-separator" />
+
+          <ScrollContainer className="scroll-container">
+            <Row className="scroll-wrapper-tracks">
+              {recomendedTracks.map((track, index) => {
+                return (
+                  <Col key={track ? track._id : index}>
+                    <BlockTrack dataTrack={track} size="small" />
+                  </Col>
+                );
+              })}
+            </Row>
+          </ScrollContainer>
         </Container>
         {isPlayBarDisplayed && <PlayBar dataTrack={topTracks[0]} />}
       </main>
