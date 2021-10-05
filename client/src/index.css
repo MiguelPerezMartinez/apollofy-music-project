@@ -6,6 +6,7 @@
 }
 
 html {
+  overflow-x: hidden;
   background-color: black;
 }
 
@@ -25,6 +26,12 @@ main {
   background: linear-gradient(var(--blue) 50%, black);
   width: 100vw;
   height: 100vh;
+}
+
+@media (min-width: 400px) {
+  main {
+    padding-right: 3rem;
+  }
 }
 
 .general-container {

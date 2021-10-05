@@ -4,6 +4,7 @@ import {
   TRACK_OBJECT,
   WAVESURFER_PROPERTIES,
 } from "./type";
+
 //Reproductor (Solo cambia a true)
 export const isPlayBarDisplayed = (value) => ({
   type: IS_PLAY_BAR_DISPLAYED,

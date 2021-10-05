@@ -7,8 +7,8 @@
     position: fixed;
     right: -17rem;
     width: 20rem;
-    min-height: 95vh;
-    max-height: 95vh;
+    min-height: 90vh;
+    max-height: 90vh;
     padding: 1rem 0.2rem;
     background-color: var(--main-container-color);
     transition: all 0.3s ease-in-out;
