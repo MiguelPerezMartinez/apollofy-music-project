@@ -1,53 +1,86 @@
 .main-playbar-container {
   position: fixed;
   bottom: 0px;
-  height: 150px;
-  width: 100vw;
+  height: 10vh;
+  max-height: 10vh;
+  width: 97vw;
   background-color: var(--main-container-color);
   /* background-image: linear-gradient(45deg rgb(100, 225, 33), rgb(34, 36, 37)); */
-  border-top: 1px solid yellow;
-  padding-left: 10px;
+  border-top: 1px solid var(--yellow);
   justify-content: center;
+  padding-top: 1vh;
+}
+
+.playbar-track-info-container {
+  padding-left: 3rem;
+  max-height: 10vh;
+}
+
+.playbar-image {
+  min-height: 100%;
   align-items: center;
 }
 
-.wave {
-  margin: 0px;
+.playbar-info {
+  height: 8vh;
+  align-items: center;
 }
-.thumbnail {
-  border: 1px solid var(--purple);
-  min-width: 150px;
+
+.playbar-buttons-container {
+  justify-content: center;
+  max-height: 5vh;
+}
+
+.playbar-wave-container {
+  align-items: center;
+  justify-content: center;
+  max-height: 5vh;
+}
+
+.playbar-title {
+  font-size: 1.5rem;
+}
+
+.playbar-author {
+  font-size: 1rem;
+}
+
+.playbar-volume-container {
+  height: 8vh;
+  align-items: center;
+}
+
+.playbar-volume-container > div > input[type="range"] {
   width: 100%;
-}
-
-.title-album-container {
-  align-items: center;
-  justify-content: center;
-}
-
-.title {
-  font-size: 16px;
-}
-
-.album {
-  font-size: 14px;
-}
-
-.icon {
-  height: 30px;
-  width: 30px;
-}
-.time {
-  margin: 0px 50px;
-  max-width: 20px;
-}
-.buttons-box {
-  align-items: center;
-  justify-content: center;
-}
-input[type="range"] {
   -webkit-appearance: none;
-  background-color: rgb(164, 217, 248);
+  background-color: white;
   border-radius: 10px;
   height: 12px;
+}
+
+.playbar-timer {
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.playbar-cast-container {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  height: 10vh;
+  width: 3rem;
+  background-color: var(--purple);
+  border-top: 1px solid var(--yellow);
+  margin: 0px;
+  justify-content: center;
+  align-items: center;
+}
+
+.cast-block,
+.cast-block > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }

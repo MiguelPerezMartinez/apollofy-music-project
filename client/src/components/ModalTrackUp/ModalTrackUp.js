@@ -16,6 +16,7 @@ function ModalTrackUp({ handleClose }) {
   const form = useRef();
   const dispatch = useDispatch();
   const userReducer = useSelector((state) => state.userReducer);
+  const { data } = userReducer;
 
   const [coverUpload, setCoverUpload] = useState({
     file: "",
@@ -54,13 +55,13 @@ function ModalTrackUp({ handleClose }) {
   useEffect(() => {
     setTrackData({
       ...trackData,
-      owner: userReducer.user_id,
+      owner: data.userId,
     });
   }, []);
 
   useEffect(() => {
     if (coverUpload.isSelected === true) {
-      uploadFiles("cover");
+      uploadFiles("developCovers");
     }
   }, [coverUpload.isSelected]);
 
@@ -74,7 +75,7 @@ function ModalTrackUp({ handleClose }) {
 
   useEffect(() => {
     if (trackUpload.isSelected === true) {
-      uploadFiles("track");
+      uploadFiles("developTracks");
     }
   }, [trackUpload.isSelected]);
 
@@ -88,7 +89,7 @@ function ModalTrackUp({ handleClose }) {
   function handleChange(e) {
     setTrackData({
       ...trackData,
-      owner: userReducer.user_id,
+      owner: data.userId,
       [e.target.name]: e.target.value,
     });
     console.log(trackData);
@@ -111,14 +112,14 @@ function ModalTrackUp({ handleClose }) {
   }
 
   async function uploadFiles(folder) {
-    if (folder === "cover") {
+    if (folder === "developCovers") {
       setCoverUpload({ ...coverUpload, isUploading: true });
     } else {
       setTrackUpload({ ...trackUpload, isUploading: true });
     }
     const formData = new FormData();
 
-    if (folder === "cover") {
+    if (folder === "developCovers") {
       formData.append("file", coverUpload.file);
       formData.append("upload_preset", "upload_apollofy");
       formData.append("folder", folder);

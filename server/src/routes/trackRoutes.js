@@ -29,7 +29,12 @@ trackRouter.patch(
 );
 trackRouter.get(
   "/get-track/:id/liked",
-  authMiddleware,
+  // authMiddleware,
+  trackController.isLikedByUser,
+);
+trackRouter.get(
+  "/get-track/last-updated",
+  // authMiddleware,
   trackController.isLikedByUser,
 );
 

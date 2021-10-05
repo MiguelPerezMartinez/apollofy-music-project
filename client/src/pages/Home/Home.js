@@ -73,8 +73,9 @@ function Home() {
               </div>
             </Col>
           </Row>
-          <div className="xl-separator" />
-
+        </Container>
+        <div className="xl-separator" />
+        <Container>
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
               {recomendedTracks.map((track, index) => {
@@ -97,9 +98,31 @@ function Home() {
               );
             })}
           </Row>
+          <ScrollContainer className="scroll-container">
+            <Row className="scroll-wrapper-tracks">
+              {recomendedTracks.map((track) => {
+                return (
+                  <Col>
+                    <BlockTrack dataTrack={track} size="small" />
+                  </Col>
+                );
+              })}
+            </Row>
+          </ScrollContainer>
+          <ScrollContainer className="scroll-container">
+            <Row className="scroll-wrapper-tracks">
+              {recomendedTracks.map((track) => {
+                return (
+                  <Col>
+                    <BlockTrack dataTrack={track} size="small" />
+                  </Col>
+                );
+              })}
+            </Row>
+          </ScrollContainer>
         </Container>
-        {isPlayBarDisplayed && <PlayBar dataTrack={topTracks[0]} />}
       </main>
+      {isPlayBarDisplayed && <PlayBar />}
     </>
   );
 }
