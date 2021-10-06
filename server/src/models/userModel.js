@@ -70,7 +70,7 @@ const UserSchema = new Schema(
       },
     ],
 
-    lastSongs: [
+    trackHistory: [
       {
         type: Schema.Types.ObjectId,
         ref: "tracks",

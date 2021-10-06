@@ -29,8 +29,23 @@ trackRouter.patch(
 );
 trackRouter.get(
   "/get-track/:id/liked",
-  authMiddleware,
+  // authMiddleware,
   trackController.isLikedByUser,
+);
+trackRouter.get(
+  "/get-track/last-updated",
+  // authMiddleware,
+  trackController.isLikedByUser,
+);
+trackRouter.get(
+  "/get-most-played",
+  authMiddleware,
+  trackController.getMostPlayed,
+);
+trackRouter.get(
+  "/get-most-liked",
+  authMiddleware,
+  trackController.getMostLiked,
 );
 
 module.exports = trackRouter;

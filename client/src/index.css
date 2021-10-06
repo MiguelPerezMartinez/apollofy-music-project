@@ -6,6 +6,7 @@
 }
 
 html {
+  overflow-x: hidden;
   background-color: black;
 }
 
@@ -24,7 +25,13 @@ main {
   padding-top: 2rem;
   background: linear-gradient(var(--blue) 50%, black);
   width: 100vw;
-  height: 100vh;
+  padding-bottom: 12vh;
+}
+
+@media (min-width: 400px) {
+  main {
+    padding-right: 3rem;
+  }
 }
 
 .general-container {
@@ -82,12 +89,6 @@ code {
 a {
   text-decoration: none !important;
   color: white !important;
-}
-
-@media (max-width: 400px) {
-  main {
-    padding-bottom: 5rem !important;
-  }
 }
 
 .is-loading-component {

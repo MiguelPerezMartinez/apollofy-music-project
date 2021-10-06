@@ -14,6 +14,7 @@ const initialTrackState = {
     totalLikes: 0,
     duration: "time",
   },
-  waveSurfer: {},
+  waveSurfer: null,
+  emptyHistoryQueue: true,
 };
 export default initialTrackState;

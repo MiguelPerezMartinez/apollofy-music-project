@@ -17,7 +17,9 @@ import BlockTrack from "../../components/BlockTrack";
 import PlayBar from "../../components/PlayBar";
 
 function Home() {
-  const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
+  const { isPlayBarDisplayed, trackObject } = useSelector(
+    (state) => state.trackReducer,
+  );
 
   const [allTracks, setAlltracks] = useState([]);
   // const [tracksLoaded, setTracksLoaded] = useState(false);
@@ -44,13 +46,9 @@ function Home() {
   for (let i = 0; i < 6; i++) {
     lastUploadedTracks.push(allTracks[i + 19]);
   }
-  // if (!tracksLoaded) {
-  //   return (
-  //     <>
-  //       <main>Loading</main>
-  //     </>
-  //   );
-  // }
+  function saveInQueue(e) {
+    console.log(e.target.key);
+  }
   return (
     <>
       <main>
@@ -67,14 +65,19 @@ function Home() {
               <div className="home-top-col">
                 {topTracks.map((track, index) => {
                   return (
-                    <Track dataTrack={track} key={track ? track._id : index} />
+                    <Track
+                      onClick={saveInQueue}
+                      dataTrack={track}
+                      key={track ? track._id : index}
+                    />
                   );
                 })}
               </div>
             </Col>
           </Row>
-          <div className="xl-separator" />
-
+        </Container>
+        <div className="xl-separator" />
+        <Container>
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
               {recomendedTracks.map((track, index) => {
@@ -124,8 +127,8 @@ function Home() {
             </Row>
           </ScrollContainer>
         </Container>
-        {isPlayBarDisplayed && <PlayBar dataTrack={topTracks[0]} />}
       </main>
+      {isPlayBarDisplayed && <PlayBar />}
     </>
   );
 }

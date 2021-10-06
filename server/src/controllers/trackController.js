@@ -2,9 +2,12 @@ const { Tracks } = require("../models");
 const { Users } = require("../models");
 
 async function getAllTracks(req, res) {
+  //Receive the limitation by req.body, by default 20
+  const { limit = 20 } = req.body;
   try {
-    const tracks = await Tracks.find({});
+    const tracks = await Tracks.find({}).sort({ createdAt: -1 }).limit(limit);
     return res.status(200).send({
+      tracksSize: limit,
       tracks: tracks,
     });
   } catch (error) {
@@ -191,6 +194,40 @@ async function isLikedByUser(req, res) {
   }
 }
 
+async function getMostPlayed(req, res) {
+  //Receive the limitation by req.body, by default 20
+  const { limit = 20 } = req.body;
+  try {
+    const tracks = await Tracks.find({}).sort({ totalPlays: -1 }).limit(limit);
+    return res.status(200).send({
+      tracksSize: limit,
+      tracks: tracks,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({
+      error: error.message,
+    });
+  }
+}
+
+async function getMostLiked(req, res) {
+  //Receive the limitation by req.body, by default 20
+  const { limit = 20 } = req.body;
+  try {
+    const tracks = await Tracks.find({}).sort({ totalLikes: -1 }).limit(limit);
+    return res.status(200).send({
+      tracksSize: limit,
+      tracks: tracks,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   getAllTracks: getAllTracks,
   getTrackById: getTrackById,
@@ -200,4 +237,6 @@ module.exports = {
   handlerTrackLike: handlerTrackLike,
   incrementTotalPlays: incrementTotalPlays,
   isLikedByUser: isLikedByUser,
+  getMostPlayed: getMostPlayed,
+  getMostLiked: getMostLiked,
 };
