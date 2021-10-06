@@ -1,0 +1,20 @@
+.dialogue-box {
+  position: absolute;
+  z-index: 11;
+  width: 150px;
+  border: 1px solid black;
+  background-color: gray;
+}
+
+.dialogue-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.back-context {
+  position: absolute;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+}

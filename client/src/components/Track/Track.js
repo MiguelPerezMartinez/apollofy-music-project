@@ -1,23 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Col, Row } from "react-bootstrap";
 import "./styles.css";
 
 //import TrackReducer
-import { useDispatch, useSelector } from "react-redux";
-
-import { Col, Row } from "react-bootstrap";
 import {
   isPlayBarDisplayedAction,
   isPlay,
   trackObjectAction,
   setemptyHistoryQueue,
 } from "../../redux/trackData/actions";
-import FavButton from "../FavButton";
 
+//import dialogueHandlerReducer
+import { showDialogue } from "../../redux/dialogueHandler/actions";
+//Components
+import FavButton from "../FavButton";
 import TrackImg from "../../components/TrackImg";
+
+// import DialogueBox from "../DialogueBox";
 
 function Track({ dataTrack }) {
   const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
-
   const dispatch = useDispatch();
 
   function setReduxTrackData() {
@@ -42,6 +45,10 @@ function Track({ dataTrack }) {
     localStorage.setItem("trackHistory", JSON.stringify());
   }
 
+  function openDialogue(e) {
+    dispatch(showDialogue(dataTrack, { x: e.clientX, y: e.clientY }));
+  }
+
   if (dataTrack !== undefined) {
     return (
       <Row key={dataTrack._id} id={dataTrack._id} className="track-row">
@@ -64,6 +71,8 @@ function Track({ dataTrack }) {
             </Col>
             <Col xs={6} md={6} lg={6} className="track-field-centered">
               <FavButton />
+              {/* {isDialogueOpened && <DialogueBox />} */}
+              <div onClick={openDialogue}>...</div>
             </Col>
           </Row>
         </Col>
