@@ -106,6 +106,17 @@ function PlayBar() {
       setChromecast(true);
     }
   }
+  function setHistoryQueueLocalStorage(track) {
+    let existingHistoryQueue = JSON.parse(localStorage.getItem("trackHistory"));
+
+    if (existingHistoryQueue === null) {
+      existingHistoryQueue = [];
+    }
+
+    existingHistoryQueue.push(track);
+
+    localStorage.setItem("trackHistory", JSON.stringify(existingHistoryQueue));
+  }
 
   useEffect(() => {
     if (waveSurfer != null) {
@@ -134,6 +145,7 @@ function PlayBar() {
     wavesurfer.load(trackObject.urlTrack);
 
     wavesurfer.on("ready", (e) => {
+      setHistoryQueueLocalStorage(trackObject);
       let finalsecond = Math.floor(wavesurfer.getDuration() % 60);
       let finalminute = Math.floor((wavesurfer.getDuration() / 60) % 60);
       if (finalsecond < 10) {
@@ -158,6 +170,7 @@ function PlayBar() {
       setPlayPause(true);
     });
   }, [trackObject]);
+
   return (
     <>
       <Row>
