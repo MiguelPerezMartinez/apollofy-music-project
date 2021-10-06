@@ -25,7 +25,7 @@ function Track({ dataTrack }) {
     dispatch(isPlayBarDisplayedAction(true));
     dispatch(isPlay(true));
 
-    let existingQueue = JSON.parse(localStorage.getItem("Queue"));
+    let existingQueue = JSON.parse(localStorage.getItem("trackHistory"));
     console.log(existingQueue);
     if (existingQueue === null) {
       existingQueue = [];
@@ -33,13 +33,13 @@ function Track({ dataTrack }) {
 
     existingQueue.push(dataTrack);
 
-    localStorage.setItem("Queue", JSON.stringify(existingQueue));
+    localStorage.setItem("trackHistory", JSON.stringify(existingQueue));
 
     dispatch(setemptyHistoryQueue(true));
   }
 
   function addQueue() {
-    localStorage.setItem("queueTrack", JSON.stringify());
+    localStorage.setItem("trackHistory", JSON.stringify());
   }
 
   return (

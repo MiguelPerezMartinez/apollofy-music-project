@@ -57,7 +57,7 @@ function PlayBar() {
     waveSurfer.skipForward(5);
   }
   function skipBackward() {
-    const historySongs = JSON.parse(localStorage.getItem("Queue"));
+    const historySongs = JSON.parse(localStorage.getItem("trackHistory"));
     let prevSongPos = 0;
     if (historySongs.length === 1) {
       prevSongPos = historySongs.length - 1;
@@ -66,10 +66,12 @@ function PlayBar() {
       prevSongPos = historySongs.length - 2;
     }
 
-    const prevSong = JSON.parse(localStorage.getItem("Queue"))[prevSongPos];
+    const prevSong = JSON.parse(localStorage.getItem("trackHistory"))[
+      prevSongPos
+    ];
     historySongs.pop();
 
-    localStorage.setItem("Queue", JSON.stringify(historySongs));
+    localStorage.setItem("trackHistory", JSON.stringify(historySongs));
 
     dispatch(trackObjectAction(prevSong));
   }
