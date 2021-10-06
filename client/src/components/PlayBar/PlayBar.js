@@ -71,7 +71,7 @@ function PlayBar() {
       (item) => item._id === trackObject._id,
     );
     onePositionBack = position - 1;
-    console.log("index", onePositionBack);
+
     if (onePositionBack <= 0) {
       onePositionBack = 0;
     }
@@ -88,25 +88,26 @@ function PlayBar() {
   function skipForward() {
     const historySongs = JSON.parse(localStorage.getItem("trackHistory"));
 
-    let onePositionBack;
+    let onePositionForward;
 
     let position = historySongs.findIndex(
       (item) => item._id === trackObject._id,
     );
-    onePositionBack = position + 1;
-    console.log("index", onePositionBack);
-    if (onePositionBack <= 0) {
-      onePositionBack = 0;
+    onePositionForward = position + 1;
+
+    let lastIndex = historySongs.length - 1;
+    if (onePositionForward === lastIndex) {
+      onePositionForward = lastIndex;
     }
 
-    const prevSong = JSON.parse(localStorage.getItem("trackHistory"))[
-      onePositionBack
+    const nextSong = JSON.parse(localStorage.getItem("trackHistory"))[
+      onePositionForward
     ];
     // historySongs.pop();
 
     localStorage.setItem("trackHistory", JSON.stringify(historySongs));
 
-    dispatch(trackObjectAction(prevSong));
+    dispatch(trackObjectAction(nextSong));
   }
 
   function isItMute() {
@@ -180,6 +181,7 @@ function PlayBar() {
       }
 
       setTrackDurationTime(finalminute + ":" + finalsecond);
+      wavesurfer.play();
     });
     //set track progress time
     wavesurfer.on("audioprocess", function (e) {
@@ -194,7 +196,7 @@ function PlayBar() {
     });
     //reset play button
     wavesurfer.on("finish", function (e) {
-      setPlayPause(true);
+      skipForward();
     });
   }, [trackObject]);
 
