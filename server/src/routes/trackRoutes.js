@@ -37,5 +37,15 @@ trackRouter.get(
   // authMiddleware,
   trackController.isLikedByUser,
 );
+trackRouter.get(
+  "/get-most-played",
+  authMiddleware,
+  trackController.getMostPlayed,
+);
+trackRouter.get(
+  "/get-most-liked",
+  authMiddleware,
+  trackController.getMostLiked,
+);
 
 module.exports = trackRouter;

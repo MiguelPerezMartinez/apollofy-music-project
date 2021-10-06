@@ -85,47 +85,6 @@ async function getFavouriteTracksById(req, res) {
   }
 }
 
-// async function updateUser(req, res, next) {
-//   console.log(req.body)
-//   try {
-//     var { pass, ...bodyReq } = req.body;
-//     if (pass) {
-//       pass = await encryptString(pass);
-//       bodyReq = { ...bodyReq, pass };
-//     }
-//     const dbResponse = await db.Users.findByIdAndUpdate(
-//       req.params.id,
-//       bodyReq,
-//       {
-//         new: true,
-//       },
-//     );
-
-//     if (!dbResponse) {
-//       res.status(400).send(
-//         generateResponse({
-//           data: null,
-//           error: "User ID doesn't exist",
-//         }),
-//       );
-//     }
-
-//     res.status(200).send(
-//       generateResponse({
-//         data: dbResponse,
-//       }),
-//     );
-//   } catch (error) {
-//     res.status(500).send(
-//       generateResponse({
-//         data: req.params.id,
-//         error: error,
-//       }),
-//     );
-
-//     next(error);
-//   }
-// }
 async function updateById(req, res) {
   const { id } = req.params;
   const bodyReq = req.body;
@@ -156,10 +115,32 @@ async function updateById(req, res) {
   }
 }
 
+async function setTrackHistory(req, res) {
+  const { id: userId } = req.params;
+  const { history } = req.body;
+  try {
+    const userDoc = await Users.findById(userId);
+    userDoc.trackHistory = history;
+    userDoc.save();
+    // console.log(userDoc.trackHistory);
+    res.status(200).send({
+      message: "History saved correctly",
+      userId: userId,
+      data: history,
+    });
+  } catch (error) {
+    res.status(500).send({
+      userId: userId,
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   register: register,
   getById: getById,
   updateProfile: updateById,
   getMyTracksById: getMyTracksById,
   getFavouriteTracksById: getFavouriteTracksById,
+  setTrackHistory: setTrackHistory,
 };
