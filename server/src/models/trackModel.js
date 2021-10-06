@@ -19,11 +19,11 @@ const TrackSchema = new Schema(
     ],
     author: {
       type: String,
-      default: "unknown",
+      default: "",
     },
     album: {
       type: String,
-      default: "unknown",
+      default: "",
     },
     title: {
       type: String,
@@ -31,9 +31,9 @@ const TrackSchema = new Schema(
     },
     releaseYear: {
       type: String,
-      default: "unknown",
+      default: "",
     },
-    urlImage: {
+    urlCover: {
       type: String,
       default: "",
     },
@@ -43,7 +43,7 @@ const TrackSchema = new Schema(
     },
     genre: {
       type: String,
-      default: "unknown",
+      default: "",
     },
   },
   {
