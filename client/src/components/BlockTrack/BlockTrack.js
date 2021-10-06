@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./styles.css";
+
 import FavButton from "../FavButton";
+import TrackImg from "../TrackImg";
 
 import { useDispatch, useSelector } from "react-redux";
 import { trackObjectAction } from "../../redux/trackData/actions";
@@ -23,25 +25,51 @@ function BlockTrack({ dataTrack, size = "small" }) {
     dispatch(isPlay(true));
   }
 
-  return (
-    <Container className={"blockTrack-Container-" + size}>
-      <Row className="blockTrack-img" onClick={setReduxTrackData}>
-        <img
-          className="image-track-block"
-          src={dataTrack.urlImage}
-          alt="songpicture"
-        ></img>
-      </Row>
-      <Row className="name-TrackBlock">
-        <Col xs={8}>
-          <p className="text-long-track">{dataTrack.title}</p>
-        </Col>
-        <Col xs={3}>
-          <FavButton />
-        </Col>
-      </Row>
-    </Container>
-  );
+  if (dataTrack !== undefined) {
+    return (
+      <Container
+        className={"blockTrack-background blockTrack-Container-" + size}
+      >
+        <Row className="blockTrack-img-container" onClick={setReduxTrackData}>
+          <TrackImg urlCover={dataTrack.urlCover} />
+        </Row>
+        <Row className="name-TrackBlock">
+          <Col xs={8}>
+            <p className="blockTrack-title">{dataTrack.title}</p>
+            <p className="blockTrack-author">{dataTrack.author}</p>
+          </Col>
+          <Col xs={3}>
+            <FavButton />
+          </Col>
+        </Row>
+      </Container>
+    );
+  } else {
+    return (
+      <>
+        <Container
+          className={"blockTrack-Container-" + size + " is-loading-component"}
+        />
+      </>
+    );
+  }
+
+  // return (
+  //   <Container className={"blockTrack-background blockTrack-Container-" + size}>
+  //     <Row className="blockTrack-img-container" onClick={setReduxTrackData}>
+  //       <TrackImg urlCover={dataTrack.urlCover} />
+  //     </Row>
+  //     <Row className="name-TrackBlock">
+  //       <Col xs={8}>
+  //         <p className="blockTrack-title">{dataTrack.title}</p>
+  //         <p className="blockTrack-author">{dataTrack.author}</p>
+  //       </Col>
+  //       <Col xs={3}>
+  //         <FavButton />
+  //       </Col>
+  //     </Row>
+  //   </Container>
+  // );
 }
 
 export default BlockTrack;

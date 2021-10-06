@@ -21,5 +21,9 @@ userRouter.patch(
   authMiddleware,
   userController.updateProfile,
 );
-
+userRouter.patch(
+  "/set-track-history/:id",
+  authMiddleware,
+  userController.setTrackHistory,
+);
 module.exports = userRouter;

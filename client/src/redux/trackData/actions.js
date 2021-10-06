@@ -5,6 +5,7 @@ import {
   WAVESURFER_PROPERTIES,
   BACK_TRACK,
 } from "./type";
+
 //Reproductor (Solo cambia a true)
 export const isPlayBarDisplayedAction = (value) => ({
   type: IS_PLAY_BAR_DISPLAYED,
