@@ -4,6 +4,7 @@ import {
   IS_PLAYING,
   TRACK_OBJECT,
   WAVESURFER_PROPERTIES,
+  BACK_TRACK,
 } from "./type";
 
 const trackReducer = (state = initialTrackState, action) => {
@@ -16,6 +17,8 @@ const trackReducer = (state = initialTrackState, action) => {
       return { ...state, trackObject: action.payload };
     case WAVESURFER_PROPERTIES:
       return { ...state, waveSurfer: action.payload };
+    case BACK_TRACK:
+      return { ...state, emptyHistoryQueue: action.payload };
     default:
       return state;
   }

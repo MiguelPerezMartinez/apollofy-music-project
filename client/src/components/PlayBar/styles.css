@@ -47,7 +47,7 @@
 }
 input[type="range"] {
   -webkit-appearance: none;
-  background-color: rgb(164, 217, 248);
+  background-color: rgb(95, 116, 128);
   border-radius: 10px;
   height: 12px;
 }

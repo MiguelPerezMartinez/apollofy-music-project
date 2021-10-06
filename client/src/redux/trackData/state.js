@@ -15,5 +15,6 @@ const initialTrackState = {
     duration: "time",
   },
   waveSurfer: null,
+  emptyHistoryQueue: true,
 };
 export default initialTrackState;

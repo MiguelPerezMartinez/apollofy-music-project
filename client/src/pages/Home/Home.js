@@ -136,7 +136,7 @@ function Home() {
             })}
           </Row>
         </Container>
-        {isPlayBarDisplayed && <PlayBar dataTrack={trackObject} />}
+        {isPlayBarDisplayed && <PlayBar />}
       </main>
     </>
   );

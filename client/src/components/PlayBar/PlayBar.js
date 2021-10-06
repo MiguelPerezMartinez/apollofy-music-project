@@ -1,7 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isPlay } from "../../redux/trackData/actions";
-import { setWaveSurfer } from "../../redux/trackData/actions";
+import {
+  setWaveSurfer,
+  trackObjectAction,
+  setemptyHistoryQueue,
+} from "../../redux/trackData/actions";
 import WaveSurfer from "wavesurfer.js";
 // import WaveSound from "../WaveSound";
 import "./styles.css";
@@ -19,10 +23,11 @@ import VolumeOffOutlined from "@material-ui/icons/VolumeOffOutlined";
 import CastOutlined from "@material-ui/icons/CastOutlined";
 import CastConnected from "@material-ui/icons/CastConnected";
 
-function PlayBar({ dataTrack }) {
+function PlayBar() {
   //Redux and ref vars
   const trackReducer = useSelector((state) => state.trackReducer);
-  const { isPlaying, waveSurfer } = trackReducer;
+  const { isPlaying, waveSurfer, trackObject, emptyHistoryQueue } =
+    trackReducer;
   const dispatch = useDispatch();
   const waveformRef = useRef();
 
@@ -32,7 +37,6 @@ function PlayBar({ dataTrack }) {
   const [isChromeCast, setChromecast] = useState(false);
   const [trackProgressTime, setTrackProgressTime] = useState(0);
   const [trackDurationTime, setTrackDurationTime] = useState(0);
-  //   console.log(dataTrack);
 
   function playPause() {
     waveSurfer.playPause();
@@ -53,11 +57,23 @@ function PlayBar({ dataTrack }) {
     waveSurfer.skipForward(5);
   }
   function skipBackward() {
-    waveSurfer.load(dataTrack.urlTrack);
+    const historySongs = JSON.parse(localStorage.getItem("Queue"));
+    let prevSongPos = 0;
+    if (historySongs.length === 1) {
+      prevSongPos = historySongs.length - 1;
+      dispatch(setemptyHistoryQueue(false));
+    } else if (historySongs.length >= 2) {
+      prevSongPos = historySongs.length - 2;
+    }
+
+    const prevSong = JSON.parse(localStorage.getItem("Queue"))[prevSongPos];
+    historySongs.pop();
+
+    localStorage.setItem("Queue", JSON.stringify(historySongs));
+
+    dispatch(trackObjectAction(prevSong));
   }
-  function skipForward() {
-    waveSurfer.load(dataTrack.urlTrack);
-  }
+  function skipForward() {}
 
   function isItMute() {
     if (isMute) {
@@ -84,7 +100,6 @@ function PlayBar({ dataTrack }) {
   }
 
   useEffect(() => {
-    console.log("datatrack playbar", dataTrack);
     if (waveSurfer != null) {
       waveSurfer.destroy();
     }
@@ -106,29 +121,15 @@ function PlayBar({ dataTrack }) {
     });
     dispatch(setWaveSurfer(wavesurfer));
 
-    wavesurfer.load(dataTrack.urlTrack);
+    wavesurfer.load(trackObject.urlTrack);
 
-    // const localStorageContent = [localStorage.getItem("Queue")];
-    // if (!localStorageContent) {
-
-    localStorage.setItem("Queue", dataTrack.urlTrack);
-    let arryQueue = [localStorage.getItem("Queue")];
-    if (localStorage.getItem("Queue")) {
-      arryQueue.push(localStorage.getItem("Queue"));
-      localStorage.setItem("Queue", arryQueue);
-    }
-    //   localStorage.setItem("Queue", JSON.stringify(arryQueue));
-    //   // console.log(localStorageContent);
-    // }
-    //events
-    //set track duration time
     wavesurfer.on("ready", (e) => {
       let finalsecond = Math.floor(wavesurfer.getDuration() % 60);
       let finalminute = Math.floor((wavesurfer.getDuration() / 60) % 60);
       if (finalsecond < 10) {
         finalsecond = "0" + finalminute;
       }
-      console.log(wavesurfer.getDuration());
+
       setTrackDurationTime(finalminute + ":" + finalsecond);
     });
     //set track progress time
@@ -146,7 +147,7 @@ function PlayBar({ dataTrack }) {
     wavesurfer.on("finish", function (e) {
       setPlayPause(true);
     });
-  }, [dataTrack]);
+  }, [trackObject]);
 
   return (
     <>
@@ -155,14 +156,14 @@ function PlayBar({ dataTrack }) {
           <Row>
             <Col lg={6} className="thumbnail-container">
               <img
-                src={dataTrack.urlImage}
+                src={trackObject.urlImage}
                 alt="thumbnail"
                 className="thumbnail"
               />
             </Col>
             <Col lg={6} className="title-album-container">
-              <Row className="title">{dataTrack.title}</Row>
-              <Row className="album">{dataTrack.album}</Row>
+              <Row className="title">{trackObject.title}</Row>
+              <Row className="album">{trackObject.album}</Row>
             </Col>
           </Row>
         </Col>
@@ -173,9 +174,15 @@ function PlayBar({ dataTrack }) {
           </Row>
           <Row className="buttons-box">
             <Col lg={1}>
-              <div onClick={skipBackward}>
-                <SkipPreviousOutlined fontSize="large" />
-              </div>
+              {emptyHistoryQueue ? (
+                <div onClick={skipBackward}>
+                  <SkipPreviousOutlined fontSize="large" />
+                </div>
+              ) : (
+                <div>
+                  <SkipPreviousOutlined fontSize="medium" />
+                </div>
+              )}
             </Col>
             <Col lg={1}>
               <div onClick={rewindBackward}>

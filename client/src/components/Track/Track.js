@@ -9,6 +9,7 @@ import {
   isPlayBarDisplayedAction,
   isPlay,
   trackObjectAction,
+  setemptyHistoryQueue,
 } from "../../redux/trackData/actions";
 import FavButton from "../FavButton";
 
@@ -21,14 +22,20 @@ function Track({ dataTrack }) {
 
   function setReduxTrackData() {
     dispatch(trackObjectAction(dataTrack));
-    localStorage.setItem("Queue", dataTrack);
-    // if (!isPlayBarDisplayed) {
     dispatch(isPlayBarDisplayedAction(true));
-    // } else {
-    //   dispatch(isPlayBarDisplayedAction(false));
-    //   dispatch(isPlayBarDisplayedAction(true));
-    // }
     dispatch(isPlay(true));
+
+    let existingQueue = JSON.parse(localStorage.getItem("Queue"));
+    console.log(existingQueue);
+    if (existingQueue === null) {
+      existingQueue = [];
+    }
+
+    existingQueue.push(dataTrack);
+
+    localStorage.setItem("Queue", JSON.stringify(existingQueue));
+
+    dispatch(setemptyHistoryQueue(true));
   }
 
   function addQueue() {
