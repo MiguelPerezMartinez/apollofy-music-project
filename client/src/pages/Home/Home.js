@@ -100,22 +100,26 @@ function Home() {
               );
             })}
           </Row>
+          <div className="xl-separator" />
+
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
-              {recomendedTracks.map((track) => {
+              {recomendedTracks.map((track, index) => {
                 return (
-                  <Col>
+                  <Col key={track ? track._id : index}>
                     <BlockTrack dataTrack={track} size="small" />
                   </Col>
                 );
               })}
             </Row>
           </ScrollContainer>
+          <div className="xl-separator" />
+
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
-              {recomendedTracks.map((track) => {
+              {recomendedTracks.map((track, index) => {
                 return (
-                  <Col>
+                  <Col key={track ? track._id : index}>
                     <BlockTrack dataTrack={track} size="small" />
                   </Col>
                 );
