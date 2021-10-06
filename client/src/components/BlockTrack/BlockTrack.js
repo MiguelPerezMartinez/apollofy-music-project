@@ -6,7 +6,10 @@ import TrackImg from "../TrackImg";
 
 import { useDispatch, useSelector } from "react-redux";
 import { trackObjectAction } from "../../redux/trackData/actions";
-import { isPlayBarDisplayed, isPlay } from "../../redux/trackData/actions";
+import {
+  isPlayBarDisplayedAction,
+  isPlay,
+} from "../../redux/trackData/actions";
 
 import { Container, Row, Col } from "react-bootstrap";
 
@@ -18,7 +21,7 @@ function BlockTrack({ dataTrack, size = "small" }) {
   function setReduxTrackData() {
     console.log(dataTrack);
     dispatch(trackObjectAction(dataTrack));
-    dispatch(isPlayBarDisplayed(true));
+    dispatch(isPlayBarDisplayedAction(true));
     dispatch(isPlay(true));
   }
 
