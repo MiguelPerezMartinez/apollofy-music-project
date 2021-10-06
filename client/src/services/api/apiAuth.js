@@ -30,6 +30,17 @@ export async function getById(uid, userToken) {
   });
 }
 
+export async function getAllTracks() {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "GET",
+    url: `http://localhost:4000/tracks/`,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
+
 export async function getCurrentUser() {
   const userToken = await getCurrentUserToken();
   const userId = await getCurrentUserId();
