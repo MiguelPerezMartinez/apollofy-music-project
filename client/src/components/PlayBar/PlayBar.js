@@ -64,24 +64,50 @@ function PlayBar() {
   }
   function skipBackward() {
     const historySongs = JSON.parse(localStorage.getItem("trackHistory"));
-    let prevSongPos = 0;
-    if (historySongs.length === 1) {
-      prevSongPos = historySongs.length - 1;
-      dispatch(setemptyHistoryQueue(false));
-    } else if (historySongs.length >= 2) {
-      prevSongPos = historySongs.length - 2;
+
+    let onePositionBack;
+
+    let position = historySongs.findIndex(
+      (item) => item._id === trackObject._id,
+    );
+    onePositionBack = position - 1;
+    console.log("index", onePositionBack);
+    if (onePositionBack <= 0) {
+      onePositionBack = 0;
     }
 
     const prevSong = JSON.parse(localStorage.getItem("trackHistory"))[
-      prevSongPos
+      onePositionBack
     ];
-    historySongs.pop();
+    // historySongs.pop();
 
     localStorage.setItem("trackHistory", JSON.stringify(historySongs));
 
     dispatch(trackObjectAction(prevSong));
   }
-  function skipForward() {}
+  function skipForward() {
+    const historySongs = JSON.parse(localStorage.getItem("trackHistory"));
+
+    let onePositionBack;
+
+    let position = historySongs.findIndex(
+      (item) => item._id === trackObject._id,
+    );
+    onePositionBack = position + 1;
+    console.log("index", onePositionBack);
+    if (onePositionBack <= 0) {
+      onePositionBack = 0;
+    }
+
+    const prevSong = JSON.parse(localStorage.getItem("trackHistory"))[
+      onePositionBack
+    ];
+    // historySongs.pop();
+
+    localStorage.setItem("trackHistory", JSON.stringify(historySongs));
+
+    dispatch(trackObjectAction(prevSong));
+  }
 
   function isItMute() {
     if (isMute) {
@@ -117,6 +143,7 @@ function PlayBar() {
 
     localStorage.setItem("trackHistory", JSON.stringify(existingHistoryQueue));
   }
+  // setHistoryQueueLocalStorage(trackObject);
 
   useEffect(() => {
     if (waveSurfer != null) {
@@ -134,7 +161,7 @@ function PlayBar() {
       barGap: 2,
       hideScrollbar: true,
       // fillParent: true
-
+      partialRender: true,
       fillParent: true,
       maxCanvasWidth: 20,
       // autoCenter: true,
@@ -145,7 +172,7 @@ function PlayBar() {
     wavesurfer.load(trackObject.urlTrack);
 
     wavesurfer.on("ready", (e) => {
-      setHistoryQueueLocalStorage(trackObject);
+      // setHistoryQueueLocalStorage(trackObject);
       let finalsecond = Math.floor(wavesurfer.getDuration() % 60);
       let finalminute = Math.floor((wavesurfer.getDuration() / 60) % 60);
       if (finalsecond < 10) {
@@ -197,7 +224,7 @@ function PlayBar() {
                   </div>
                 </Col>
                 <Col lg={1}>
-                  <div onClick={skipBackward}>
+                  <div onClick={rewindBackward}>
                     <FastRewindOutlined fontSize="large" />
                   </div>
                 </Col>
@@ -213,7 +240,7 @@ function PlayBar() {
                   )}
                 </Col>
                 <Col lg={1}>
-                  <div onClick={skipForward}>
+                  <div onClick={fastForward}>
                     <FastForwardOutlined fontSize="large" />
                   </div>
                 </Col>
