@@ -12,6 +12,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import ScrollContainer from "react-indiana-drag-scroll";
 import BlockTrack from "../../components/BlockTrack";
 import PlayBar from "../../components/PlayBar";
+import DialogBox from "../../components/DialogBox";
 
 function Home() {
   const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
@@ -44,7 +45,6 @@ function Home() {
   for (let i = 0; i < 6; i++) {
     lastUploadedTracks.push(dataTrack);
   }
-
   return (
     <>
       <main>

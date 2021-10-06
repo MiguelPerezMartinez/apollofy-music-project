@@ -7,7 +7,7 @@ import { trackObjectAction } from "../../redux/trackData/actions";
 import { Col, Row } from "react-bootstrap";
 import { isPlayBarDisplayed, isPlay } from "../../redux/trackData/actions";
 import FavButton from "../FavButton";
-
+import ThreeButtons from "../ThreeButtons";
 import TrackImg from "../../components/TrackImg";
 
 function Track({ dataTrack }) {
@@ -44,8 +44,11 @@ function Track({ dataTrack }) {
           <Col xs={6} md={6} lg={6}>
             <p className="">{dataTrack.duration}</p>
           </Col>
-          <Col xs={6} md={6} lg={6}>
+          <Col xs={3} md={3} lg={3}>
             <FavButton />
+          </Col>
+          <Col xs={3} md={3} lg={3}>
+            <ThreeButtons />
           </Col>
         </Row>
       </Col>
