@@ -1,7 +1,13 @@
 import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isPlay, isPlayBarDisplayed } from "../../redux/trackData/actions";
-import { setWaveSurfer } from "../../redux/trackData/actions";
+
+import {
+  isPlay,
+  isPlayBarDisplayed,
+  setWaveSurfer,
+  trackObjectAction,
+  setemptyHistoryQueue,
+} from "../../redux/trackData/actions";
 import WaveSurfer from "wavesurfer.js";
 // import WaveSound from "../WaveSound";
 import "./styles.css";
@@ -24,9 +30,9 @@ import {
 
 function PlayBar() {
   //Redux and ref vars
-  const { isPlaying, waveSurfer, trackObject } = useSelector(
-    (state) => state.trackReducer,
-  );
+  const trackReducer = useSelector((state) => state.trackReducer);
+  const { isPlaying, waveSurfer, trackObject, emptyHistoryQueue } =
+    trackReducer;
 
   const dispatch = useDispatch();
   const waveformRef = useRef();
@@ -49,13 +55,33 @@ function PlayBar() {
     }
   }
 
-  function skipBackward() {
+  function rewindBackward() {
     waveSurfer.skipBackward(5);
   }
 
-  function skipForward() {
+  function fastForward() {
     waveSurfer.skipForward(5);
   }
+  function skipBackward() {
+    const historySongs = JSON.parse(localStorage.getItem("trackHistory"));
+    let prevSongPos = 0;
+    if (historySongs.length === 1) {
+      prevSongPos = historySongs.length - 1;
+      dispatch(setemptyHistoryQueue(false));
+    } else if (historySongs.length >= 2) {
+      prevSongPos = historySongs.length - 2;
+    }
+
+    const prevSong = JSON.parse(localStorage.getItem("trackHistory"))[
+      prevSongPos
+    ];
+    historySongs.pop();
+
+    localStorage.setItem("trackHistory", JSON.stringify(historySongs));
+
+    dispatch(trackObjectAction(prevSong));
+  }
+  function skipForward() {}
 
   function isItMute() {
     if (isMute) {
@@ -82,6 +108,9 @@ function PlayBar() {
   }
 
   useEffect(() => {
+    if (waveSurfer != null) {
+      waveSurfer.destroy();
+    }
     const wavesurfer = WaveSurfer.create({
       container: waveformRef.current,
       waveColor: "#D9DCFF",
@@ -95,22 +124,22 @@ function PlayBar() {
       hideScrollbar: true,
       // fillParent: true
 
+      fillParent: true,
       maxCanvasWidth: 20,
       // autoCenter: true,
       responsive: true,
     });
     dispatch(setWaveSurfer(wavesurfer));
+
     wavesurfer.load(trackObject.urlTrack);
 
-    //events
-    //set track duration time
     wavesurfer.on("ready", (e) => {
       let finalsecond = Math.floor(wavesurfer.getDuration() % 60);
       let finalminute = Math.floor((wavesurfer.getDuration() / 60) % 60);
       if (finalsecond < 10) {
         finalsecond = "0" + finalminute;
       }
-      console.log(wavesurfer.getDuration());
+
       setTrackDurationTime(finalminute + ":" + finalsecond);
     });
     //set track progress time
@@ -128,7 +157,7 @@ function PlayBar() {
     wavesurfer.on("finish", function (e) {
       setPlayPause(true);
     });
-  }, []);
+  }, [trackObject]);
   return (
     <>
       <Row>
