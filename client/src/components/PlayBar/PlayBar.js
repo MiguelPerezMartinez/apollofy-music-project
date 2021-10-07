@@ -124,11 +124,8 @@ function PlayBar() {
       height: 48,
       barGap: 2,
       hideScrollbar: true,
-      // fillParent: true
-
       fillParent: true,
-      maxCanvasWidth: 20,
-      // autoCenter: true,
+      autoCenter: true,
       responsive: true,
     });
     dispatch(setWaveSurfer(wavesurfer));
@@ -162,6 +159,9 @@ function PlayBar() {
   }, [trackObject]);
   return (
     <>
+      <div class="animated">
+        <span>A really long text to scroll through</span>
+      </div>
       <Row>
         <Col>
           <Row className="main-playbar-container">
@@ -173,8 +173,12 @@ function PlayBar() {
                   </div>
                 </Col>
                 <Col lg={9} md={9} xs={6}>
-                  <Row className="playbar-title">{trackObject.title}</Row>
-                  <Row className="playbar-author">{trackObject.author}</Row>
+                  <Row className="playbar-title">
+                    <span>{trackObject.title}</span>
+                  </Row>
+                  <Row className="playbar-author">
+                    <span>{trackObject.author}</span>
+                  </Row>
                 </Col>
               </Row>
             </Col>
@@ -241,11 +245,7 @@ function PlayBar() {
                 </Col>
               </Row>
             </Col>
-            <Col
-              md={2}
-              xs={2}
-              className="d-none d-md-block d-xs-block playbar-fav-button"
-            >
+            <Col md={2} className="d-none d-md-block playbar-fav-button">
               <FavButton />
             </Col>
           </Row>

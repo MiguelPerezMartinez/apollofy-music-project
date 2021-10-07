@@ -54,14 +54,14 @@ function Home() {
       <main>
         <Container>
           <Row>
-            <Col sm xs={12} md={5} lg={5}>
+            <Col sm xs={12} md={12} lg={5}>
               <div className="home-top-col">
                 <h1>HOME</h1>
                 <h2>Songs</h2>
                 <h3>My plylist</h3>
               </div>
             </Col>
-            <Col sm xs={12} md={7} lg={7}>
+            <Col sm xs={12} md={12} lg={7}>
               <div className="home-top-col">
                 {topTracks.map((track, index) => {
                   return (
@@ -97,7 +97,7 @@ function Home() {
           <Row sm xs={4} md={4} lg={2}>
             {lastUploadedTracks.map((track, index) => {
               return (
-                <Col sm xs={4} md={4} lg={2} key={track ? track._id : index}>
+                <Col sm xs={2} md={4} lg={2} key={track ? track._id : index}>
                   <BlockTrack dataTrack={track} size="big" />
                 </Col>
               );
