@@ -28,6 +28,11 @@ body {
 
 main {
   padding-top: 2rem;
+<<<<<<< HEAD
+=======
+  background: linear-gradient(var(--blue) 30vh, black);
+  /* background-color: black; */
+>>>>>>> 5e987dbd55546707d5eb3028cbae6c9c8a6d9dc7
   width: 100vw;
   padding-bottom: 12vh;
 }
