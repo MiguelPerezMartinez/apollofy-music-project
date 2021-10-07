@@ -11,7 +11,8 @@
   position: relative;
   top: 0;
   left: 0;
-  width: 100%;
+  width: auto;
+  min-height: 100%;
   background-repeat: no-repeat;
   background-size: cover;
   /* background-position: center; */
@@ -33,7 +34,7 @@
 }
 
 .track-play-hover:hover {
-  background-image: url("play-button-hover.svg");
+  background-image: url("./play-button-hover.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }
