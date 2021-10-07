@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
+import { MoreHoriz } from "@material-ui/icons";
 import "./styles.css";
 
 //import TrackReducer
@@ -13,6 +14,7 @@ import {
 
 //import dialogueHandlerReducer
 import { showDialogue } from "../../redux/dialogueHandler/actions";
+
 //Components
 import FavButton from "../FavButton";
 import TrackImg from "../../components/TrackImg";
@@ -71,8 +73,7 @@ function Track({ dataTrack }) {
             </Col>
             <Col xs={6} md={6} lg={6} className="track-field-centered">
               <FavButton />
-              {/* {isDialogueOpened && <DialogueBox />} */}
-              <div onClick={openDialogue}>...</div>
+              <MoreHoriz onClick={openDialogue} />
             </Col>
           </Row>
         </Col>
