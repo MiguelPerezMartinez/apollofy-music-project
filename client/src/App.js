@@ -11,8 +11,6 @@ import ResetPassword from "./pages/RecoverPassword";
 import ChangePassword from "./pages/ChangePassword";
 import ElementsList from "./pages/ElementsList";
 
-import DialogueBox from "./components/DialogueBox";
-
 //Redux actions
 import { fetchStateIsAuthorized } from "./redux/isAuthorized/actions";
 import { fetchUserData, resetUserData } from "./redux/userData/actions";
@@ -24,8 +22,6 @@ function App() {
   const dispatch = useDispatch();
   const isAuthorized = useSelector((state) => state.isAuthorized);
   const userData = useSelector((state) => state.userReducer);
-
-  const dialogueHandler = useSelector((state) => state.dialogueHandler);
 
   useEffect(() => {
     if (isAuthorized.loaded && isAuthorized.value) {
@@ -59,7 +55,6 @@ function App() {
 
   return (
     <>
-      {dialogueHandler.active && <DialogueBox />}
       <Switch>
         <Route path="/favourite-tracks" component={ElementsList} />
         <Route path="/my-tracks" component={ElementsList} />
