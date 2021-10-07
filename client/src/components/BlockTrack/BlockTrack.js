@@ -9,7 +9,10 @@ import { trackObjectAction } from "../../redux/trackData/actions";
 import {
   isPlayBarDisplayedAction,
   isPlay,
+  setPositionInHistory,
 } from "../../redux/trackData/actions";
+
+import { setTrackHistoryInLocalStorage } from "../../services/localStorage";
 
 import { Container, Row, Col } from "react-bootstrap";
 
@@ -19,20 +22,12 @@ function BlockTrack({ dataTrack, size = "small" }) {
   const dispatch = useDispatch();
 
   function setReduxTrackData() {
-    console.log(dataTrack);
     dispatch(trackObjectAction(dataTrack));
     dispatch(isPlayBarDisplayedAction(true));
     dispatch(isPlay(true));
-
-    let existingHistoryQueue = JSON.parse(localStorage.getItem("trackHistory"));
-
-    if (existingHistoryQueue === null) {
-      existingHistoryQueue = [];
-    }
-
-    existingHistoryQueue.push(dataTrack);
-
-    localStorage.setItem("trackHistory", JSON.stringify(existingHistoryQueue));
+    const historyLength = setTrackHistoryInLocalStorage(dataTrack);
+    const resetedHistoryPosition = historyLength > 1 ? historyLength - 2 : 0;
+    dispatch(setPositionInHistory(resetedHistoryPosition));
   }
 
   if (dataTrack !== undefined) {

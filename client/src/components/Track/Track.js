@@ -10,13 +10,17 @@ import {
   isPlay,
   trackObjectAction,
   setemptyHistoryQueue,
+  setPositionInHistory,
 } from "../../redux/trackData/actions";
 import FavButton from "../FavButton";
 
 import TrackImg from "../../components/TrackImg";
+import { setTrackHistoryInLocalStorage } from "../../services/localStorage";
 
 function Track({ dataTrack }) {
-  const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
+  const { isPlayBarDisplayed } = useSelector(
+    (state) => state.trackReducer,
+  );
 
   const dispatch = useDispatch();
 
@@ -24,16 +28,9 @@ function Track({ dataTrack }) {
     dispatch(trackObjectAction(dataTrack));
     dispatch(isPlayBarDisplayedAction(true));
     dispatch(isPlay(true));
-
-    let existingHistoryQueue = JSON.parse(localStorage.getItem("trackHistory"));
-
-    if (existingHistoryQueue === null) {
-      existingHistoryQueue = [];
-    }
-
-    existingHistoryQueue.push(dataTrack);
-
-    localStorage.setItem("trackHistory", JSON.stringify(existingHistoryQueue));
+    const historyLength = setTrackHistoryInLocalStorage(dataTrack);
+    const resetedHistoryPosition = historyLength > 1 ? historyLength - 2 : 0;
+    dispatch(setPositionInHistory(resetedHistoryPosition));
   }
 
   function addQueue() {

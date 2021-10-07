@@ -7,6 +7,7 @@ import {
   setWaveSurfer,
   trackObjectAction,
   setemptyHistoryQueue,
+  setPositionInHistory,
 } from "../../redux/trackData/actions";
 import WaveSurfer from "wavesurfer.js";
 // import WaveSound from "../WaveSound";
@@ -31,17 +32,11 @@ import {
 function PlayBar() {
   //Redux and ref vars
   const trackReducer = useSelector((state) => state.trackReducer);
-  const { isPlaying, waveSurfer, trackObject, emptyHistoryQueue } =
+  const { isPlaying, waveSurfer, trackObject, positionInHistory } =
     trackReducer;
 
   const dispatch = useDispatch();
   const waveformRef = useRef();
-
-  let initialHistoryPosition =
-    JSON.parse(localStorage.getItem("trackHistory")).length - 2;
-  if (initialHistoryPosition < 0) {
-    initialHistoryPosition = 0;
-  }
 
   //State vars
   const [isMute, setMute] = useState(false);
@@ -49,9 +44,7 @@ function PlayBar() {
   const [isChromeCast, setChromecast] = useState(false);
   const [trackProgressTime, setTrackProgressTime] = useState(0);
   const [trackDurationTime, setTrackDurationTime] = useState(0);
-  const [positionInHistory, setPositionInHistory] = useState(
-    initialHistoryPosition,
-  );
+
 
   function playPause() {
     waveSurfer.playPause();
@@ -79,14 +72,13 @@ function PlayBar() {
     // );
 
     if (positionInHistory > 0) {
-      setPositionInHistory(positionInHistory - 1);
+      dispatch(setPositionInHistory(positionInHistory - 1));
     }
 
-    const onePositionBack = positionInHistory;
-    console.log("position ", onePositionBack);
+    console.log("position ", positionInHistory);
 
     const prevSong = JSON.parse(localStorage.getItem("trackHistory"))[
-      onePositionBack
+      positionInHistory
     ];
 
     localStorage.setItem("trackHistory", JSON.stringify(historySongs));
@@ -180,7 +172,7 @@ function PlayBar() {
 
     wavesurfer.load(trackObject.urlTrack);
 
-    wavesurfer.on("ready", (e) => {
+    wavesurfer.on("ready", () => {
       // setHistoryQueueLocalStorage(trackObject);
       let finalsecond = Math.floor(wavesurfer.getDuration() % 60);
       let finalminute = Math.floor((wavesurfer.getDuration() / 60) % 60);
