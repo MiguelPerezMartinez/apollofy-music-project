@@ -1,6 +1,5 @@
 //Imports
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import "./styles.css";
 
 //Hoc Authorization
@@ -14,13 +13,8 @@ import Track from "../../components/Track";
 import { Container, Row, Col } from "react-bootstrap";
 import ScrollContainer from "react-indiana-drag-scroll";
 import BlockTrack from "../../components/BlockTrack";
-import PlayBar from "../../components/PlayBar";
 
 function Home() {
-  const { isPlayBarDisplayed, trackObject } = useSelector(
-    (state) => state.trackReducer,
-  );
-
   const [allTracks, setAlltracks] = useState([]);
   // const [tracksLoaded, setTracksLoaded] = useState(false);
   useEffect(() => {
@@ -128,7 +122,6 @@ function Home() {
           </ScrollContainer>
         </Container>
       </main>
-      {isPlayBarDisplayed && <PlayBar />}
     </>
   );
 }

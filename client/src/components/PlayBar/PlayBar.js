@@ -37,12 +37,21 @@ function PlayBar() {
   const dispatch = useDispatch();
   const waveformRef = useRef();
 
+  let initialHistoryPosition =
+    JSON.parse(localStorage.getItem("trackHistory")).length - 2;
+  if (initialHistoryPosition < 0) {
+    initialHistoryPosition = 0;
+  }
+
   //State vars
   const [isMute, setMute] = useState(false);
   const [isPlayPause, setPlayPause] = useState(true);
   const [isChromeCast, setChromecast] = useState(false);
   const [trackProgressTime, setTrackProgressTime] = useState(0);
   const [trackDurationTime, setTrackDurationTime] = useState(0);
+  const [positionInHistory, setPositionInHistory] = useState(
+    initialHistoryPosition,
+  );
 
   function playPause() {
     waveSurfer.playPause();
@@ -65,21 +74,20 @@ function PlayBar() {
   function skipBackward() {
     const historySongs = JSON.parse(localStorage.getItem("trackHistory"));
 
-    let onePositionBack;
+    // let position = historySongs.findIndex(
+    //   (item) => item._id === trackObject._id,
+    // );
 
-    let position = historySongs.findIndex(
-      (item) => item._id === trackObject._id,
-    );
-    onePositionBack = position - 1;
-
-    if (onePositionBack <= 0) {
-      onePositionBack = 0;
+    if (positionInHistory > 0) {
+      setPositionInHistory(positionInHistory - 1);
     }
+
+    const onePositionBack = positionInHistory;
+    console.log("position ", onePositionBack);
 
     const prevSong = JSON.parse(localStorage.getItem("trackHistory"))[
       onePositionBack
     ];
-    // historySongs.pop();
 
     localStorage.setItem("trackHistory", JSON.stringify(historySongs));
 
