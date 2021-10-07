@@ -37,9 +37,9 @@ function Home() {
     topTracks.push(allTracks[i]);
   }
 
-  let recomendedTracks = [];
+  let RecommendedTracks = [];
   for (let i = 0; i < 14; i++) {
-    recomendedTracks.push(allTracks[i + 5]);
+    RecommendedTracks.push(allTracks[i + 5]);
   }
 
   let lastUploadedTracks = [];
@@ -78,10 +78,10 @@ function Home() {
         </Container>
         <div className="xl-separator" />
         <Container>
-          <h1>Recomended for you:</h1>
+          <h1>Recommended for you:</h1>
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
-              {recomendedTracks.map((track, index) => {
+              {RecommendedTracks.map((track, index) => {
                 return (
                   <Col key={track ? track._id : index}>
                     <BlockTrack dataTrack={track} size="small" />
@@ -106,10 +106,10 @@ function Home() {
 
           <div className="xl-separator" />
 
-          <h1>Recomended for you:</h1>
+          <h1>Recommended for you:</h1>
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
-              {recomendedTracks.map((track, index) => {
+              {RecommendedTracks.map((track, index) => {
                 return (
                   <Col key={track ? track._id : index}>
                     <BlockTrack dataTrack={track} size="small" />
@@ -121,10 +121,10 @@ function Home() {
 
           <div className="xl-separator" />
 
-          <h1>Recomended for you:</h1>
+          <h1>Recommended for you:</h1>
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
-              {recomendedTracks.map((track, index) => {
+              {RecommendedTracks.map((track, index) => {
                 return (
                   <Col key={track ? track._id : index}>
                     <BlockTrack dataTrack={track} size="small" />
