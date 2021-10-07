@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@200;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap");
+
 * {
   /* outline: 1px solid red !important; */
   margin: 0;
@@ -18,13 +21,13 @@ body {
   font-size: larger !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(var(--blue) 30vh, black);
   color: white !important;
+  height: 100vh;
 }
 
 main {
   padding-top: 2rem;
-  /* background: linear-gradient(var(--blue) 30vh, black); */
-  background-color: black;
   width: 100vw;
   padding-bottom: 12vh;
 }
@@ -63,6 +66,11 @@ main {
 }
 
 h1 {
+  padding-top: 2rem;
+  padding-left: 2rem;
+  font-weight: 700;
+  font-family: "Noto Sans", sans-serif;
+  /* font-family: "IBM Plex Serif", serif; */
   color: white;
 }
 

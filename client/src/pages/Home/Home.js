@@ -78,6 +78,7 @@ function Home() {
         </Container>
         <div className="xl-separator" />
         <Container>
+          <h1>Recomended for you:</h1>
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
               {recomendedTracks.map((track, index) => {
@@ -89,8 +90,10 @@ function Home() {
               })}
             </Row>
           </ScrollContainer>
+
           <div className="xl-separator" />
 
+          <h1>Last uploaded:</h1>
           <Row xs={4} md={4} lg={2}>
             {lastUploadedTracks.map((track, index) => {
               return (
@@ -100,8 +103,10 @@ function Home() {
               );
             })}
           </Row>
+
           <div className="xl-separator" />
 
+          <h1>Recomended for you:</h1>
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
               {recomendedTracks.map((track, index) => {
@@ -113,8 +118,10 @@ function Home() {
               })}
             </Row>
           </ScrollContainer>
+
           <div className="xl-separator" />
 
+          <h1>Recomended for you:</h1>
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
               {recomendedTracks.map((track, index) => {
