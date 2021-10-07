@@ -3,23 +3,43 @@ import "./styles.css";
 
 //import TrackReducer
 import { useDispatch, useSelector } from "react-redux";
-import { trackObjectAction } from "../../redux/trackData/actions";
+
 import { Col, Row } from "react-bootstrap";
-import { isPlayBarDisplayed, isPlay } from "../../redux/trackData/actions";
+import {
+  isPlayBarDisplayedAction,
+  isPlay,
+  trackObjectAction,
+  setemptyHistoryQueue,
+} from "../../redux/trackData/actions";
 import FavButton from "../FavButton";
 import ThreeButtons from "../ThreeButtons";
 import TrackImg from "../../components/TrackImg";
 
 function Track({ dataTrack }) {
-  const { trackObject } = useSelector((state) => state.trackReducer);
+  const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
 
   const dispatch = useDispatch();
 
   function setReduxTrackData() {
-    console.log(dataTrack);
     dispatch(trackObjectAction(dataTrack));
-    dispatch(isPlayBarDisplayed(true));
+    dispatch(isPlayBarDisplayedAction(true));
     dispatch(isPlay(true));
+
+    let existingQueue = JSON.parse(localStorage.getItem("trackHistory"));
+    console.log(existingQueue);
+    if (existingQueue === null) {
+      existingQueue = [];
+    }
+
+    existingQueue.push(dataTrack);
+
+    localStorage.setItem("trackHistory", JSON.stringify(existingQueue));
+
+    dispatch(setemptyHistoryQueue(true));
+  }
+
+  function addQueue() {
+    localStorage.setItem("trackHistory", JSON.stringify());
   }
 
   if (dataTrack !== undefined) {

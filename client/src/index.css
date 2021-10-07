@@ -23,7 +23,8 @@ body {
 
 main {
   padding-top: 2rem;
-  background: linear-gradient(var(--blue) 50%, black);
+  background: linear-gradient(var(--blue) 30vh, black);
+  /* background-color: black; */
   width: 100vw;
   padding-bottom: 12vh;
 }

@@ -33,7 +33,7 @@
 }
 
 .track-play-hover:hover {
-  background-image: url("play-button-hover.svg");
+  background-image: url("./play-button-hover.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }
