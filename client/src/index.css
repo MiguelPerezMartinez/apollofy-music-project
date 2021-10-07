@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@200;400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap");
+@font-face {
+  font-family: "nightInTokyo";
+  src: url("./typos/nightInTokyo/NightinTokyo.ttf") format("truetype");
+}
 
 * {
   /* outline: 1px solid red !important; */
@@ -39,7 +43,8 @@ body {
   font-size: larger !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(var(--blue) 30vh, black);
+  background-color: black !important;
+  /* background: linear-gradient(var(--blue) 30vh, black); */
   color: white !important;
   height: 100vh;
 }
@@ -92,8 +97,9 @@ main {
 h1 {
   padding-top: 2rem;
   padding-left: 2rem;
-  font-weight: 700;
-  font-family: "Noto Sans", sans-serif;
+  font-size: 3rem !important;
+  font-family: "nightInTokyo", Fallback, sans-serif !important;
+  /* font-family: "Noto Sans", sans-serif; */
   /* font-family: "IBM Plex Serif", serif; */
   color: white;
 }
