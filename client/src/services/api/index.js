@@ -6,6 +6,8 @@ import {
   updateById,
   setIsActive,
   getAllTracks,
+  getMostLikedTracks,
+  getMostPlayedTracks,
 } from "./apiAuth";
 
 import { apiTrackUpload } from "./trackUpload";
@@ -21,4 +23,6 @@ export {
   apiTrackUpload,
   changeMyProfilePicture,
   getAllTracks,
+  getMostLikedTracks,
+  getMostPlayedTracks,
 };
