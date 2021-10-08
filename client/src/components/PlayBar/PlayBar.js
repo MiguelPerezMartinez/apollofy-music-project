@@ -15,7 +15,7 @@ import "./styles.css";
 //Components and MUI icons
 import { Row, Col } from "react-bootstrap";
 import TrackImg from "../TrackImg";
-import FavButton from "../FavButton";
+// import FavButton from "../FavButton";
 import {
   CastOutlined,
   CastConnected,
@@ -245,7 +245,7 @@ function PlayBar() {
               sm={2}
               className="d-none d-md-block d-sm-block playbar-fav-button"
             >
-              <FavButton />
+              {/* <FavButton /> */}
             </Col>
           </Row>
         </Col>
