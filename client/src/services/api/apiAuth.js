@@ -6,6 +6,7 @@ import {
   firebaseEmailUpdate,
 } from "../firebase";
 
+//User requests and functions
 export async function registerInApi(userData, uid) {
   return axios({
     method: "POST",
@@ -30,16 +31,6 @@ export async function getById(uid, userToken) {
   });
 }
 
-export async function getAllTracks() {
-  const userToken = await getCurrentUserToken();
-  return axios({
-    method: "GET",
-    url: `http://localhost:4000/tracks/`,
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  });
-}
 
 export async function getCurrentUser() {
   const userToken = await getCurrentUserToken();
@@ -107,4 +98,38 @@ export async function setIsActive(isActive) {
 
 function decodeToken(token) {
   return JSON.parse(atob(token.split(".")[1]));
+}
+
+//Tracks requests and functions
+export async function getAllTracks() {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "GET",
+    url: `http://localhost:4000/tracks/`,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
+
+export async function getMostLikedTracks() {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "GET",
+    url: `http://localhost:4000/tracks/get-most-liked`,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
+
+export async function getMostPlayedTracks() {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "GET",
+    url: `http://localhost:4000/tracks/get-most-played`,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
 }

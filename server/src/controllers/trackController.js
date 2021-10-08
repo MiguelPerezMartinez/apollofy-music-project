@@ -3,7 +3,7 @@ const { Users } = require("../models");
 
 async function getAllTracks(req, res) {
   //Receive the limitation by req.body, by default 20
-  const { limit = 20 } = req.body;
+  const { limit = 31 } = req.body;
   try {
     const tracks = await Tracks.find({}).sort({ createdAt: -1 }).limit(limit);
     return res.status(200).send({
@@ -197,7 +197,7 @@ async function isLikedByUser(req, res) {
 
 async function getMostPlayed(req, res) {
   //Receive the limitation by req.body, by default 20
-  const { limit = 20 } = req.body;
+  const { limit = 5 } = req.body;
   try {
     const tracks = await Tracks.find({}).sort({ totalPlays: -1 }).limit(limit);
     return res.status(200).send({
@@ -214,7 +214,7 @@ async function getMostPlayed(req, res) {
 
 async function getMostLiked(req, res) {
   //Receive the limitation by req.body, by default 20
-  const { limit = 20 } = req.body;
+  const { limit = 14 } = req.body;
   try {
     const tracks = await Tracks.find({}).sort({ totalLikes: -1 }).limit(limit);
     return res.status(200).send({

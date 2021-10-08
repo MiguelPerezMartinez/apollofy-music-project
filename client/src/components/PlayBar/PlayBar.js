@@ -187,9 +187,6 @@ function PlayBar() {
 
   return (
     <>
-      <div className="animated">
-        <span>A really long text to scroll through</span>
-      </div>
       <Row>
         <Col>
           <Row className="main-playbar-container">
