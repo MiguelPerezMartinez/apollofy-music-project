@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { addTotalPlay } from "../../services/api/trackUpload";
 import {
   isPlay,
   isPlayBarDisplayed,
@@ -116,18 +116,10 @@ function PlayBar() {
       setChromecast(true);
     }
   }
-  function setHistoryQueueLocalStorage(track) {
-    let existingHistoryQueue = JSON.parse(localStorage.getItem("trackHistory"));
-
-    if (existingHistoryQueue === null) {
-      existingHistoryQueue = [];
-    }
-
-    existingHistoryQueue.push(track);
-
-    localStorage.setItem("trackHistory", JSON.stringify(existingHistoryQueue));
+  function incrementPlays() {
+    console.log(trackObject._id);
+    addTotalPlay(trackObject._id);
   }
-  // setHistoryQueueLocalStorage(trackObject);
 
   useEffect(() => {
     if (waveSurfer != null) {
@@ -165,6 +157,7 @@ function PlayBar() {
       setTrackDurationTime(finalminute + ":" + finalsecond);
       wavesurfer.play();
       dispatch(isPlay(true));
+      incrementPlays();
     });
     //set track progress time
     wavesurfer.on("audioprocess", function (e) {
