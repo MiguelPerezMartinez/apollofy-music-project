@@ -66,10 +66,6 @@ function PlayBar() {
   function skipBackward() {
     const historySongs = JSON.parse(localStorage.getItem("trackHistory"));
 
-    // let position = historySongs.findIndex(
-    //   (item) => item._id === trackObject._id,
-    // );
-
     if (positionInHistory > 0) {
       dispatch(setPositionInHistory(positionInHistory - 1));
     }
@@ -84,29 +80,17 @@ function PlayBar() {
 
     dispatch(trackObjectAction(prevSong));
   }
+
   function skipForward() {
-    const historySongs = JSON.parse(localStorage.getItem("trackHistory"));
+    const trackQueue = JSON.parse(localStorage.getItem("trackQueue"));
 
-    let onePositionForward;
-
-    let position = historySongs.findIndex(
-      (item) => item._id === trackObject._id,
-    );
-    onePositionForward = position + 1;
-
-    let lastIndex = historySongs.length - 1;
-    if (onePositionForward === lastIndex) {
-      onePositionForward = lastIndex;
+    if (trackQueue === null || trackQueue.length < 1) {
+      console.log("Play recomended ", trackQueue);
+    } else {
+      const nextSong = trackQueue.shift();
+      localStorage.setItem("trackQueue", JSON.stringify(trackQueue));
+      dispatch(trackObjectAction(nextSong));
     }
-
-    const nextSong = JSON.parse(localStorage.getItem("trackHistory"))[
-      onePositionForward
-    ];
-    // historySongs.pop();
-
-    localStorage.setItem("trackHistory", JSON.stringify(historySongs));
-
-    dispatch(trackObjectAction(nextSong));
   }
 
   function isItMute() {
@@ -201,7 +185,7 @@ function PlayBar() {
 
   return (
     <>
-      <div class="animated">
+      <div className="animated">
         <span>A really long text to scroll through</span>
       </div>
       <Row>

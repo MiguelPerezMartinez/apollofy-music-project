@@ -3,7 +3,6 @@ import {
   IS_PLAYING,
   TRACK_OBJECT,
   WAVESURFER_PROPERTIES,
-  BACK_TRACK,
   SET_POSITION_IN_HISTORY,
 } from "./type";
 
@@ -25,10 +24,6 @@ export const setWaveSurfer = (value) => ({
   payload: value,
 });
 
-export const setemptyHistoryQueue = (value) => ({
-  type: BACK_TRACK,
-  payload: value,
-});
 
 export const setPositionInHistory = (value) => ({
   type: SET_POSITION_IN_HISTORY,

@@ -11,3 +11,18 @@ export function setTrackHistoryInLocalStorage(dataTrack) {
 
   return existingHistoryQueue.length;
 }
+
+export function setTrackQueueInLocalStorage(dataTrack) {
+  let existingTrackQueue = JSON.parse(localStorage.getItem("trackQueue"));
+
+  if (existingTrackQueue === null) {
+    existingTrackQueue = [];
+  }
+
+  existingTrackQueue.push(dataTrack);
+
+  localStorage.setItem("trackQueue", JSON.stringify(existingTrackQueue));
+
+  return existingTrackQueue.length;
+}
+
