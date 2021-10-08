@@ -1,6 +1,7 @@
 //Imports
 import React, { useState, useEffect } from "react";
 import "./styles.css";
+import { Link } from "react-router-dom";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
@@ -51,8 +52,10 @@ function Home() {
             <Col sm xs={12} md={12} lg={5}>
               <div className="home-top-col">
                 <h1>HOME</h1>
-                <h2>Songs</h2>
                 <h3>My plylist</h3>
+                <Link to="/history-tracks">
+                  <h3>Go to History</h3>
+                </Link>
               </div>
             </Col>
             <Col sm xs={12} md={12} lg={7}>

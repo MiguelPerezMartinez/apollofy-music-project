@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import {
   isPlay,
@@ -284,7 +285,10 @@ function PlayBar() {
                   <FavButton />
                 </Col>
                 <Col md={2} className="d-none d-md-block playbar-fav-button">
-                  <button>show queue</button>
+                  {/* TEMPORAL BUTTONS */}
+                  <Link to="/queue-tracks">
+                    <div>show queue</div>
+                  </Link>
                 </Col>
               </Row>
             </Col>
