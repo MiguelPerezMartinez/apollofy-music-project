@@ -26,3 +26,7 @@ export function setTrackQueueInLocalStorage(dataTrack) {
   return existingTrackQueue.length;
 }
 
+export function resetPositionInHistory() {
+  const historyLength = JSON.parse(localStorage.getItem("trackHistory")).length;
+  return historyLength > 1 ? historyLength - 2 : 0;
+}

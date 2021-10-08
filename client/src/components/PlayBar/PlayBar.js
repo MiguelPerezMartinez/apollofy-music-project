@@ -9,6 +9,11 @@ import {
   setemptyHistoryQueue,
   setPositionInHistory,
 } from "../../redux/trackData/actions";
+import {
+  setTrackHistoryInLocalStorage,
+  resetPositionInHistory,
+} from "../../services/localStorage";
+
 import WaveSurfer from "wavesurfer.js";
 // import WaveSound from "../WaveSound";
 
@@ -91,6 +96,8 @@ function PlayBar() {
       localStorage.setItem("trackQueue", JSON.stringify(trackQueue));
       dispatch(trackObjectAction(nextSong));
     }
+    const resetedHistoryPosition = resetPositionInHistory();
+    dispatch(setPositionInHistory(resetedHistoryPosition));
   }
 
   function isItMute() {
@@ -155,7 +162,6 @@ function PlayBar() {
     wavesurfer.load(trackObject.urlTrack);
 
     wavesurfer.on("ready", () => {
-      // setHistoryQueueLocalStorage(trackObject);
       let finalsecond = Math.floor(wavesurfer.getDuration() % 60);
       let finalminute = Math.floor((wavesurfer.getDuration() / 60) % 60);
       if (finalsecond < 10) {
@@ -164,6 +170,7 @@ function PlayBar() {
 
       setTrackDurationTime(finalminute + ":" + finalsecond);
       wavesurfer.play();
+      setTrackHistoryInLocalStorage(trackObject);
       dispatch(isPlay(true));
     });
     //set track progress time

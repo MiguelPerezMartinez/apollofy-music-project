@@ -13,7 +13,7 @@ import {
   setPositionInHistory,
 } from "../../redux/trackData/actions";
 
-import { setTrackHistoryInLocalStorage } from "../../services/localStorage";
+import { resetPositionInHistory } from "../../services/localStorage";
 //import dialogueHandlerReducer
 import { showDialogue } from "../../redux/dialogueHandler/actions";
 
@@ -28,8 +28,8 @@ function BlockTrack({ dataTrack, size = "small" }) {
     dispatch(trackObjectAction(dataTrack));
     dispatch(isPlayBarDisplayedAction(true));
     dispatch(isPlay(true));
-    const historyLength = setTrackHistoryInLocalStorage(dataTrack);
-    const resetedHistoryPosition = historyLength > 1 ? historyLength - 2 : 0;
+
+    const resetedHistoryPosition = resetPositionInHistory();
     dispatch(setPositionInHistory(resetedHistoryPosition));
   }
 
