@@ -271,8 +271,15 @@ function PlayBar() {
                 </Col>
               </Row>
             </Col>
-            <Col md={2} className="d-none d-md-block playbar-fav-button">
-              <FavButton />
+            <Col md={2}>
+              <Row>
+                <Col md={1} className="d-none d-md-block playbar-fav-button">
+                  <FavButton />
+                </Col>
+                <Col md={2} className="d-none d-md-block playbar-fav-button">
+                  <button>show queue</button>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Col>
