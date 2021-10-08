@@ -5,6 +5,7 @@ import RightMenu from "../components/RightMenu";
 import BottomMenu from "../components/BottomMenu";
 import ModalTrackUp from "../components/ModalTrackUp";
 import PlayBar from "../components/PlayBar";
+import DialogueBox from "../components/DialogueBox";
 
 function BarsAndModal(WrappedComponent) {
   function WrapperComponent() {
@@ -13,6 +14,8 @@ function BarsAndModal(WrappedComponent) {
 
     const handleCloseModal = () => setShowModal(false);
     const handleOpenModal = () => setShowModal(true);
+
+    const dialogueHandler = useSelector((state) => state.dialogueHandler);
 
     return (
       <>
@@ -24,6 +27,7 @@ function BarsAndModal(WrappedComponent) {
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}
         />
+        {dialogueHandler.active && <DialogueBox />}
         {showModal && <ModalTrackUp handleClose={handleCloseModal} />}
         <WrappedComponent />
         {isPlayBarDisplayed && <PlayBar />}

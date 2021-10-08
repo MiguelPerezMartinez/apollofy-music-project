@@ -11,11 +11,13 @@ import {
 } from "../../redux/trackData/actions";
 import WaveSurfer from "wavesurfer.js";
 // import WaveSound from "../WaveSound";
+
 import "./styles.css";
 
 //Components and MUI icons
 import { Row, Col } from "react-bootstrap";
 import TrackImg from "../TrackImg";
+import FavButton from "../FavButton";
 import {
   CastOutlined,
   CastConnected,
@@ -40,7 +42,7 @@ function PlayBar() {
 
   //State vars
   const [isMute, setMute] = useState(false);
-
+  const [isPlayPause, setPlayPause] = useState(true);
   const [isChromeCast, setChromecast] = useState(false);
   const [trackProgressTime, setTrackProgressTime] = useState(0);
   const [trackDurationTime, setTrackDurationTime] = useState(0);
@@ -161,8 +163,7 @@ function PlayBar() {
       // fillParent: true
       partialRender: true,
       fillParent: true,
-      maxCanvasWidth: 20,
-      // autoCenter: true,
+      autoCenter: true,
       responsive: true,
     });
     dispatch(setWaveSurfer(wavesurfer));
@@ -200,35 +201,42 @@ function PlayBar() {
 
   return (
     <>
+      <div class="animated">
+        <span>A really long text to scroll through</span>
+      </div>
       <Row>
         <Col>
           <Row className="main-playbar-container">
-            <Col lg={3} className="playbar-track-info-container">
+            <Col lg={3} md={6} xs={5} className="playbar-track-info-container">
               <Row className="playbar-info">
-                <Col lg={3}>
+                <Col lg={3} md={3} xs={6}>
                   <div className="playbar-image">
                     <TrackImg urlCover={trackObject.urlCover} />
                   </div>
                 </Col>
-                <Col lg={9}>
-                  <Row className="playbar-title">{trackObject.title}</Row>
-                  <Row className="playbar-author">{trackObject.author}</Row>
+                <Col lg={9} md={9} xs={6}>
+                  <Row className="playbar-title">
+                    <span>{trackObject.title}</span>
+                  </Row>
+                  <Row className="playbar-author">
+                    <span>{trackObject.author}</span>
+                  </Row>
                 </Col>
               </Row>
             </Col>
-            <Col lg={6}>
+            <Col lg={4} md={4} xs={5}>
               <Row className="playbar-buttons-container">
-                <Col lg={1}>
+                <Col lg={1} md={4} xs={4} className="skip-backward">
                   <div onClick={skipBackward}>
                     <SkipPreviousOutlined fontSize="large" />
                   </div>
                 </Col>
-                <Col lg={1}>
+                <Col lg={1} className="d-none d-lg-block">
                   <div onClick={rewindBackward}>
                     <FastRewindOutlined fontSize="large" />
                   </div>
                 </Col>
-                <Col lg={1}>
+                <Col lg={1} md={4} xs={4}>
                   {isPlaying ? (
                     <div onClick={playPause}>
                       <PauseOutlined fontSize="large" />
@@ -239,29 +247,29 @@ function PlayBar() {
                     </div>
                   )}
                 </Col>
-                <Col lg={1}>
+                <Col lg={1} className="d-none d-lg-block">
                   <div onClick={fastForward}>
                     <FastForwardOutlined fontSize="large" />
                   </div>
                 </Col>
-                <Col lg={1}>
+                <Col lg={1} md={4} xs={4}>
                   <div onClick={skipForward}>
                     <SkipNextOutlined fontSize="large" />
                   </div>
                 </Col>
               </Row>
-              <Row className="playbar-wave-container">
-                <Col lg={11}>
+              <Row className="playbar-wave-container d-none d-lg-block">
+                <Col>
                   <div className="playbar-wave" ref={waveformRef} />
                 </Col>
               </Row>
             </Col>
-            <Col lg={1}>
+            <Col lg={1} className="d-none d-lg-block">
               <Row className="playbar-timer">
                 {trackProgressTime} / {trackDurationTime}
               </Row>
             </Col>
-            <Col lg={2}>
+            <Col lg={2} className="d-none d-lg-block">
               <Row className="playbar-volume-container">
                 <Col lg={2}>
                   {!isMute ? (
@@ -279,10 +287,13 @@ function PlayBar() {
                 </Col>
               </Row>
             </Col>
+            <Col md={2} className="d-none d-md-block playbar-fav-button">
+              <FavButton />
+            </Col>
           </Row>
         </Col>
         <Col>
-          <Row className="playbar-cast-container">
+          <Row className="playbar-cast-container d-none d-lg-block d-md-block">
             {!isChromeCast ? (
               <div onClick={isChromeCastOn} className="cast-block">
                 <CastOutlined fontSize="medium" />
