@@ -1,13 +1,21 @@
 import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
+import { addTotalPlay } from "../../services/api/trackUpload";
 import {
   isPlay,
   isPlayBarDisplayed,
   setWaveSurfer,
   trackObjectAction,
   setemptyHistoryQueue,
+  setPositionInHistory,
 } from "../../redux/trackData/actions";
+import {
+  setTrackHistoryInLocalStorage,
+  resetPositionInHistory,
+} from "../../services/localStorage";
+
 import WaveSurfer from "wavesurfer.js";
 // import WaveSound from "../WaveSound";
 
@@ -33,14 +41,14 @@ import {
 function PlayBar() {
   //Redux and ref vars
   const trackReducer = useSelector((state) => state.trackReducer);
-  const { isPlaying, waveSurfer, trackObject, emptyHistoryQueue } =
+  const { isPlaying, waveSurfer, trackObject, positionInHistory } =
     trackReducer;
 
   const dispatch = useDispatch();
   const waveformRef = useRef();
 
   //State vars
-  const [ixsute, setMute] = useState(false);
+  const [isMute, setMute] = useState(false);
   const [isPlayPause, setPlayPause] = useState(true);
   const [isChromeCast, setChromecast] = useState(false);
   const [trackProgressTime, setTrackProgressTime] = useState(0);
@@ -49,10 +57,8 @@ function PlayBar() {
   function playPause() {
     waveSurfer.playPause();
     if (isPlaying) {
-      setPlayPause(false);
       dispatch(isPlay(false));
     } else {
-      setPlayPause(true);
       dispatch(isPlay(true));
     }
   }
@@ -66,27 +72,38 @@ function PlayBar() {
   }
   function skipBackward() {
     const historySongs = JSON.parse(localStorage.getItem("trackHistory"));
-    let prevSongPos = 0;
-    if (historySongs.length === 1) {
-      prevSongPos = historySongs.length - 1;
-      dispatch(setemptyHistoryQueue(false));
-    } else if (historySongs.length >= 2) {
-      prevSongPos = historySongs.length - 2;
+
+    if (positionInHistory > 0) {
+      dispatch(setPositionInHistory(positionInHistory - 1));
     }
 
+    console.log("position ", positionInHistory);
+
     const prevSong = JSON.parse(localStorage.getItem("trackHistory"))[
-      prevSongPos
+      positionInHistory
     ];
-    historySongs.pop();
 
     localStorage.setItem("trackHistory", JSON.stringify(historySongs));
 
     dispatch(trackObjectAction(prevSong));
   }
-  function skipForward() {}
+
+  function skipForward() {
+    const trackQueue = JSON.parse(localStorage.getItem("trackQueue"));
+
+    if (trackQueue === null || trackQueue.length < 1) {
+      console.log("Play recomended ", trackQueue);
+    } else {
+      const nextSong = trackQueue.shift();
+      localStorage.setItem("trackQueue", JSON.stringify(trackQueue));
+      dispatch(trackObjectAction(nextSong));
+    }
+    const resetedHistoryPosition = resetPositionInHistory();
+    dispatch(setPositionInHistory(resetedHistoryPosition));
+  }
 
   function isItMute() {
-    if (ixsute) {
+    if (isMute) {
       setMute(false);
       waveSurfer.setMute(false);
     } else {
@@ -108,6 +125,10 @@ function PlayBar() {
       setChromecast(true);
     }
   }
+  function incrementPlays() {
+    console.log(trackObject._id);
+    addTotalPlay(trackObject._id);
+  }
 
   useEffect(() => {
     if (waveSurfer != null) {
@@ -124,6 +145,8 @@ function PlayBar() {
       height: 48,
       barGap: 2,
       hideScrollbar: true,
+      // fillParent: true
+      partialRender: true,
       fillParent: true,
       autoCenter: true,
       responsive: true,
@@ -132,7 +155,7 @@ function PlayBar() {
 
     wavesurfer.load(trackObject.urlTrack);
 
-    wavesurfer.on("ready", (e) => {
+    wavesurfer.on("ready", () => {
       let finalsecond = Math.floor(wavesurfer.getDuration() % 60);
       let finalminute = Math.floor((wavesurfer.getDuration() / 60) % 60);
       if (finalsecond < 10) {
@@ -140,6 +163,10 @@ function PlayBar() {
       }
 
       setTrackDurationTime(finalminute + ":" + finalsecond);
+      wavesurfer.play();
+      setTrackHistoryInLocalStorage(trackObject);
+      dispatch(isPlay(true));
+      incrementPlays();
     });
     //set track progress time
     wavesurfer.on("audioprocess", function (e) {
@@ -154,12 +181,13 @@ function PlayBar() {
     });
     //reset play button
     wavesurfer.on("finish", function (e) {
-      setPlayPause(true);
+      skipForward();
     });
   }, [trackObject]);
+
   return (
     <>
-      <div class="animated">
+      <div className="animated">
         <span>A really long text to scroll through</span>
       </div>
       <Row>
@@ -190,23 +218,23 @@ function PlayBar() {
                   </div>
                 </Col>
                 <Col lg={1} className="d-none d-lg-block">
-                  <div onClick={skipBackward}>
+                  <div onClick={rewindBackward}>
                     <FastRewindOutlined fontSize="large" />
                   </div>
                 </Col>
                 <Col lg={1} md={4} xs={4}>
-                  {isPlayPause ? (
+                  {isPlaying ? (
                     <div onClick={playPause}>
-                      <PlayArrowOutlined fontSize="large" />
+                      <PauseOutlined fontSize="large" />
                     </div>
                   ) : (
                     <div onClick={playPause}>
-                      <PauseOutlined fontSize="large" />
+                      <PlayArrowOutlined fontSize="large" />
                     </div>
                   )}
                 </Col>
                 <Col lg={1} className="d-none d-lg-block">
-                  <div onClick={skipForward}>
+                  <div onClick={fastForward}>
                     <FastForwardOutlined fontSize="large" />
                   </div>
                 </Col>
@@ -230,7 +258,7 @@ function PlayBar() {
             <Col lg={2} className="d-none d-lg-block">
               <Row className="playbar-volume-container">
                 <Col lg={2}>
-                  {!ixsute ? (
+                  {!isMute ? (
                     <div onClick={isItMute}>
                       <VolumeUpOutlined fontSize="medium" />
                     </div>
@@ -245,8 +273,18 @@ function PlayBar() {
                 </Col>
               </Row>
             </Col>
-            <Col md={2} className="d-none d-md-block playbar-fav-button">
-              <FavButton />
+            <Col md={2}>
+              <Row>
+                <Col md={1} className="d-none d-md-block playbar-fav-button">
+                  <FavButton />
+                </Col>
+                <Col md={2} className="d-none d-md-block playbar-fav-button">
+                  {/* TEMPORAL BUTTONS */}
+                  <Link to="/queue-tracks">
+                    <div>show queue</div>
+                  </Link>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Col>

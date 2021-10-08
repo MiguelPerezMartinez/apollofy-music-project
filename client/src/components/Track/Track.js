@@ -10,6 +10,7 @@ import {
   isPlay,
   trackObjectAction,
   setemptyHistoryQueue,
+  setPositionInHistory,
 } from "../../redux/trackData/actions";
 
 //import dialogueHandlerReducer
@@ -18,6 +19,7 @@ import { showDialogue } from "../../redux/dialogueHandler/actions";
 //Components
 import FavButton from "../FavButton";
 import TrackImg from "../../components/TrackImg";
+import { resetPositionInHistory } from "../../services/localStorage";
 
 // import DialogueBox from "../DialogueBox";
 
@@ -30,21 +32,8 @@ function Track({ dataTrack }) {
     dispatch(isPlayBarDisplayedAction(true));
     dispatch(isPlay(true));
 
-    let existingQueue = JSON.parse(localStorage.getItem("trackHistory"));
-    console.log(existingQueue);
-    if (existingQueue === null) {
-      existingQueue = [];
-    }
-
-    existingQueue.push(dataTrack);
-
-    localStorage.setItem("trackHistory", JSON.stringify(existingQueue));
-
-    dispatch(setemptyHistoryQueue(true));
-  }
-
-  function addQueue() {
-    localStorage.setItem("trackHistory", JSON.stringify());
+    const resetedHistoryPosition = resetPositionInHistory();
+    dispatch(setPositionInHistory(resetedHistoryPosition));
   }
 
   function openDialogue(e) {

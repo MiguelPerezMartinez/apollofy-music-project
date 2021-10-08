@@ -1,7 +1,7 @@
 //Imports
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import "./styles.css";
+import { Link } from "react-router-dom";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
@@ -14,13 +14,8 @@ import Track from "../../components/Track";
 import { Container, Row, Col } from "react-bootstrap";
 import ScrollContainer from "react-indiana-drag-scroll";
 import BlockTrack from "../../components/BlockTrack";
-import PlayBar from "../../components/PlayBar";
 
 function Home() {
-  const { isPlayBarDisplayed, trackObject } = useSelector(
-    (state) => state.trackReducer,
-  );
-
   const [allTracks, setAlltracks] = useState([]);
   // const [tracksLoaded, setTracksLoaded] = useState(false);
   useEffect(() => {
@@ -57,8 +52,10 @@ function Home() {
             <Col sm xs={12} md={12} lg={5}>
               <div className="home-top-col">
                 <h1>HOME</h1>
-                <h2>Songs</h2>
                 <h3>My plylist</h3>
+                <Link to="/history-tracks">
+                  <h3>Go to History</h3>
+                </Link>
               </div>
             </Col>
             <Col sm xs={12} md={12} lg={7}>
@@ -135,7 +132,6 @@ function Home() {
           </ScrollContainer>
         </Container>
       </main>
-      {isPlayBarDisplayed && <PlayBar />}
     </>
   );
 }

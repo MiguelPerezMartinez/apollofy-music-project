@@ -10,8 +10,10 @@ import { trackObjectAction } from "../../redux/trackData/actions";
 import {
   isPlayBarDisplayedAction,
   isPlay,
+  setPositionInHistory,
 } from "../../redux/trackData/actions";
 
+import { resetPositionInHistory } from "../../services/localStorage";
 //import dialogueHandlerReducer
 import { showDialogue } from "../../redux/dialogueHandler/actions";
 
@@ -23,10 +25,12 @@ function BlockTrack({ dataTrack, size = "small" }) {
   const dispatch = useDispatch();
 
   function setReduxTrackData() {
-    console.log(dataTrack);
     dispatch(trackObjectAction(dataTrack));
     dispatch(isPlayBarDisplayedAction(true));
     dispatch(isPlay(true));
+
+    const resetedHistoryPosition = resetPositionInHistory();
+    dispatch(setPositionInHistory(resetedHistoryPosition));
   }
 
   function openDialogue(e) {

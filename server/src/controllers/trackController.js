@@ -153,6 +153,7 @@ async function handlerTrackLike(req, res) {
 
 async function incrementTotalPlays(req, res) {
   const { id: trackId } = req.params;
+  console.log(trackId);
   try {
     const trackDoc = await Tracks.findById(trackId);
     trackDoc.totalPlays += 1;
