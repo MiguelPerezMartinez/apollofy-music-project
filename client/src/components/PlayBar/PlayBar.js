@@ -40,19 +40,16 @@ function PlayBar() {
 
   //State vars
   const [isMute, setMute] = useState(false);
-  const [isPlayPause, setPlayPause] = useState(true);
+
   const [isChromeCast, setChromecast] = useState(false);
   const [trackProgressTime, setTrackProgressTime] = useState(0);
   const [trackDurationTime, setTrackDurationTime] = useState(0);
 
-
   function playPause() {
     waveSurfer.playPause();
     if (isPlaying) {
-      setPlayPause(false);
       dispatch(isPlay(false));
     } else {
-      setPlayPause(true);
       dispatch(isPlay(true));
     }
   }
@@ -182,6 +179,7 @@ function PlayBar() {
 
       setTrackDurationTime(finalminute + ":" + finalsecond);
       wavesurfer.play();
+      dispatch(isPlay(true));
     });
     //set track progress time
     wavesurfer.on("audioprocess", function (e) {
@@ -231,13 +229,13 @@ function PlayBar() {
                   </div>
                 </Col>
                 <Col lg={1}>
-                  {isPlayPause ? (
+                  {isPlaying ? (
                     <div onClick={playPause}>
-                      <PlayArrowOutlined fontSize="large" />
+                      <PauseOutlined fontSize="large" />
                     </div>
                   ) : (
                     <div onClick={playPause}>
-                      <PauseOutlined fontSize="large" />
+                      <PlayArrowOutlined fontSize="large" />
                     </div>
                   )}
                 </Col>
