@@ -1,6 +1,6 @@
 .main-playbar-container {
   position: fixed;
-  bottom: 0px;
+  top: 90vh;
   height: 10vh;
   max-height: 10vh;
   width: 98vw;
@@ -38,18 +38,33 @@
   max-height: 5vh;
 }
 
+.playbar-wave {
+  width: 100%;
+}
+
 .playbar-title {
-  font-size: 1.5rem;
   overflow: hidden;
+  font-size: 1.5rem;
   white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 .playbar-author {
   font-size: 1rem;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
+}
+
+@keyframes move {
+  0%,
+  25% {
+    transform: translateX(0%);
+    left: 0%;
+  }
+  75%,
+  100% {
+    transform: translateX(-100%);
+    left: 100%;
+  }
 }
 
 .playbar-volume-container {
@@ -75,7 +90,7 @@
 .playbar-cast-container {
   position: fixed;
   bottom: 0px;
-  right: 0px;
+  right: 0;
   height: 10vh;
   width: 3rem;
   background-color: var(--purple);
@@ -92,7 +107,33 @@
   height: 100%;
 }
 
-@media (max-height: 900px) {
+@media (max-width: 425px) {
+  .main-playbar-container,
+  .playbar-cast-container {
+    position: fixed;
+    top: 80vh;
+    left: 0;
+    right: 0;
+    width: auto;
+  }
+
+  .playbar-track-info-container {
+    padding-left: 0rem;
+  }
+
+  .playbar-title > *,
+  .playbar-author > * {
+    padding: 0;
+    animation: 5s linear 0s infinite alternate move;
+  }
+
+  .playbar-title > *.min,
+  .playbar-author > *.min {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 800px) {
   .playbar-buttons-container {
     min-height: 8vh !important;
   }
@@ -107,5 +148,53 @@
 
   .playbar-fav-button > div > svg {
     font-size: 3rem;
+  }
+
+  .playbar-image {
+    max-height: 7vh;
+  }
+
+  .playbar-info {
+    max-height: 7vh;
+  }
+
+  .playbar-title {
+    font-size: 1rem;
+  }
+
+  .playbar-author {
+    font-size: 0.8rem;
+  }
+}
+
+@-webkit-keyframes ellipsis-movement {
+  from {
+    left: 0;
+    text-overflow: ellipsis clip;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  to {
+    right: 0;
+    text-overflow: clip ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+@keyframes ellipsis-movement {
+  from {
+    left: 0;
+    text-overflow: ellipsis clip;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  to {
+    right: 0;
+    text-overflow: clip ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 }
