@@ -17,6 +17,8 @@ import BlockTrack from "../../components/BlockTrack";
 import PlayBar from "../../components/PlayBar";
 import DialogBox from "../../components/DialogBox";
 import LikedSongs from "../../components/LikedSongs";
+import FavPlaylist from "../../components/FavPlaylist";
+import YourRadio from "../../components/YourRadio";
 function Home() {
   const { isPlayBarDisplayed, trackObject } = useSelector(
     (state) => state.trackReducer,
@@ -63,7 +65,19 @@ function Home() {
               </div> */}
 
               <div className="home-top-col">
-                <LikedSongs />
+                <Row>
+                  <Col xs={12}>
+                    <LikedSongs />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12} md={12} lg={6}>
+                    <FavPlaylist />
+                  </Col>
+                  <Col xs={12} md={12} lg={6}>
+                    <YourRadio />
+                  </Col>
+                </Row>
               </div>
             </Col>
             <Col xs={12} md={7} lg={7}>
