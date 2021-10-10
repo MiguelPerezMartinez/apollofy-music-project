@@ -10,6 +10,8 @@ import Register from "./pages/Register";
 import ResetPassword from "./pages/RecoverPassword";
 import ChangePassword from "./pages/ChangePassword";
 import ElementsList from "./pages/ElementsList";
+import FavPlaylist from "./pages/FavPlaylist";
+import Radio from "./pages/Radio";
 
 //Redux actions
 import { fetchStateIsAuthorized } from "./redux/isAuthorized/actions";
@@ -56,6 +58,7 @@ function App() {
   return (
     <>
       <Switch>
+        <Route path="/favourite-playlists" component={FavPlaylist} />
         <Route path="/favourite-tracks" component={ElementsList} />
         <Route path="/my-tracks" component={ElementsList} />
         <Route path="/change-password" component={ChangePassword} />
@@ -63,6 +66,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
         <Route path="/login" component={Login} />
+        <Route path="/radio" component={Radio} />
         <Route exact path="/" component={Home} />
       </Switch>
     </>
