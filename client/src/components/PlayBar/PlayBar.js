@@ -209,17 +209,17 @@ function PlayBar() {
             </Col>
             <Col lg={4} md={4} xs={5}>
               <Row className="playbar-buttons-container">
-                <Col lg={1} md={4} xs={4} className="skip-backward">
+                <Col lg={2} md={4} xs={4} className="skip-backward">
                   <div onClick={skipBackward}>
                     <SkipPreviousOutlined fontSize="large" />
                   </div>
                 </Col>
-                <Col lg={1} className="d-none d-lg-block">
+                <Col lg={2} className="d-none d-lg-block">
                   <div onClick={rewindBackward}>
                     <FastRewindOutlined fontSize="large" />
                   </div>
                 </Col>
-                <Col lg={1} md={4} xs={4}>
+                <Col lg={2} md={4} xs={4}>
                   {isPlaying ? (
                     <div onClick={playPause}>
                       <PauseOutlined fontSize="large" />
@@ -230,12 +230,12 @@ function PlayBar() {
                     </div>
                   )}
                 </Col>
-                <Col lg={1} className="d-none d-lg-block">
+                <Col lg={2} className="d-none d-lg-block">
                   <div onClick={fastForward}>
                     <FastForwardOutlined fontSize="large" />
                   </div>
                 </Col>
-                <Col lg={1} md={4} xs={4}>
+                <Col lg={2} md={4} xs={4}>
                   <div onClick={skipForward}>
                     <SkipNextOutlined fontSize="large" />
                   </div>

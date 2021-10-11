@@ -98,7 +98,7 @@ h1 {
   padding-top: 2rem;
   padding-left: 2rem;
   font-size: 3rem !important;
-  font-family: "nightInTokyo", Fallback, sans-serif !important;
+  /* font-family: "nightInTokyo", Fallback, sans-serif !important; */
   /* font-family: "Noto Sans", sans-serif; */
   /* font-family: "IBM Plex Serif", serif; */
   color: white;
