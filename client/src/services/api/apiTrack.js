@@ -6,7 +6,7 @@ export async function likeHandlerRequest(userId, trackId) {
   const userToken = await getCurrentUserToken();
   return axios({
     method: "PATCH",
-    url: `http://localhost:4000/tracks/handler-track-like/`,
+    url: `${process.env.REACT_APP_URL}tracks/handler-track-like/`,
     data: {
       userId: userId,
       trackId: trackId,
