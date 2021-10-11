@@ -5,6 +5,8 @@ import "./styles.css";
 //import dialogueHandlerReducer
 import { hideDialogue } from "../../redux/dialogueHandler/actions";
 
+import { setTrackQueueInLocalStorage } from "../../services/localStorage";
+
 function DialogueBox() {
   const dispatch = useDispatch();
   const dialogueHandler = useSelector((state) => state.dialogueHandler);
@@ -22,7 +24,7 @@ function DialogueBox() {
 
   // Set owner option handler
   useEffect(() => {
-    if (userData.userId === dialogueHandler.trackData.owner) {
+    if (userData.userId === dialogueHandler.trackDataDialog.owner) {
       setIsOwner(true);
     } else {
       setIsOwner(false);
@@ -60,6 +62,8 @@ function DialogueBox() {
 
   function handlerAddToQueue() {
     //Code to add the track to queue
+    setTrackQueueInLocalStorage(dialogueHandler.trackDataDialog);
+    alert(`${dialogueHandler.trackDataDialog.title} added to queue.`);
   }
 
   function handlerEdit() {

@@ -3,7 +3,7 @@ import {
   IS_PLAYING,
   TRACK_OBJECT,
   WAVESURFER_PROPERTIES,
-  BACK_TRACK,
+  SET_POSITION_IN_HISTORY,
 } from "./type";
 
 //Reproductor (Solo cambia a true)
@@ -24,7 +24,8 @@ export const setWaveSurfer = (value) => ({
   payload: value,
 });
 
-export const setemptyHistoryQueue = (value) => ({
-  type: BACK_TRACK,
+
+export const setPositionInHistory = (value) => ({
+  type: SET_POSITION_IN_HISTORY,
   payload: value,
 });

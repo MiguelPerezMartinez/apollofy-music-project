@@ -1,15 +1,24 @@
 import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
+import { addTotalPlay } from "../../services/api/trackUpload";
 import {
   isPlay,
   isPlayBarDisplayed,
   setWaveSurfer,
   trackObjectAction,
   setemptyHistoryQueue,
+  setPositionInHistory,
 } from "../../redux/trackData/actions";
+import {
+  setTrackHistoryInLocalStorage,
+  resetPositionInHistory,
+} from "../../services/localStorage";
+
 import WaveSurfer from "wavesurfer.js";
 // import WaveSound from "../WaveSound";
+
 import "./styles.css";
 
 //Components and MUI icons
@@ -32,7 +41,7 @@ import {
 function PlayBar() {
   //Redux and ref vars
   const trackReducer = useSelector((state) => state.trackReducer);
-  const { isPlaying, waveSurfer, trackObject, emptyHistoryQueue } =
+  const { isPlaying, waveSurfer, trackObject, positionInHistory } =
     trackReducer;
 
   const dispatch = useDispatch();
@@ -48,10 +57,8 @@ function PlayBar() {
   function playPause() {
     waveSurfer.playPause();
     if (isPlaying) {
-      setPlayPause(false);
       dispatch(isPlay(false));
     } else {
-      setPlayPause(true);
       dispatch(isPlay(true));
     }
   }
@@ -65,24 +72,35 @@ function PlayBar() {
   }
   function skipBackward() {
     const historySongs = JSON.parse(localStorage.getItem("trackHistory"));
-    let prevSongPos = 0;
-    if (historySongs.length === 1) {
-      prevSongPos = historySongs.length - 1;
-      dispatch(setemptyHistoryQueue(false));
-    } else if (historySongs.length >= 2) {
-      prevSongPos = historySongs.length - 2;
+
+    if (positionInHistory > 0) {
+      dispatch(setPositionInHistory(positionInHistory - 1));
     }
 
+    console.log("position ", positionInHistory);
+
     const prevSong = JSON.parse(localStorage.getItem("trackHistory"))[
-      prevSongPos
+      positionInHistory
     ];
-    historySongs.pop();
 
     localStorage.setItem("trackHistory", JSON.stringify(historySongs));
 
     dispatch(trackObjectAction(prevSong));
   }
-  function skipForward() {}
+
+  function skipForward() {
+    const trackQueue = JSON.parse(localStorage.getItem("trackQueue"));
+
+    if (trackQueue === null || trackQueue.length < 1) {
+      console.log("Play recomended ", trackQueue);
+    } else {
+      const nextSong = trackQueue.shift();
+      localStorage.setItem("trackQueue", JSON.stringify(trackQueue));
+      dispatch(trackObjectAction(nextSong));
+    }
+    const resetedHistoryPosition = resetPositionInHistory();
+    dispatch(setPositionInHistory(resetedHistoryPosition));
+  }
 
   function isItMute() {
     if (isMute) {
@@ -107,6 +125,10 @@ function PlayBar() {
       setChromecast(true);
     }
   }
+  function incrementPlays() {
+    console.log(trackObject._id);
+    addTotalPlay(trackObject._id);
+  }
 
   useEffect(() => {
     if (waveSurfer != null) {
@@ -124,17 +146,16 @@ function PlayBar() {
       barGap: 2,
       hideScrollbar: true,
       // fillParent: true
-
+      partialRender: true,
       fillParent: true,
-      maxCanvasWidth: 20,
-      // autoCenter: true,
+      autoCenter: true,
       responsive: true,
     });
     dispatch(setWaveSurfer(wavesurfer));
 
     wavesurfer.load(trackObject.urlTrack);
 
-    wavesurfer.on("ready", (e) => {
+    wavesurfer.on("ready", () => {
       let finalsecond = Math.floor(wavesurfer.getDuration() % 60);
       let finalminute = Math.floor((wavesurfer.getDuration() / 60) % 60);
       if (finalsecond < 10) {
@@ -142,6 +163,10 @@ function PlayBar() {
       }
 
       setTrackDurationTime(finalminute + ":" + finalsecond);
+      wavesurfer.play();
+      setTrackHistoryInLocalStorage(trackObject);
+      dispatch(isPlay(true));
+      incrementPlays();
     });
     //set track progress time
     wavesurfer.on("audioprocess", function (e) {
@@ -156,56 +181,61 @@ function PlayBar() {
     });
     //reset play button
     wavesurfer.on("finish", function (e) {
-      setPlayPause(true);
+      skipForward();
     });
   }, [trackObject]);
+
   return (
     <>
       <Row>
         <Col>
           <Row className="main-playbar-container">
-            <Col lg={3} md={6} sm={6} className="playbar-track-info-container">
+            <Col lg={3} md={6} xs={5} className="playbar-track-info-container">
               <Row className="playbar-info">
-                <Col lg={3} md={3} sm={3}>
+                <Col lg={3} md={3} xs={6}>
                   <div className="playbar-image">
                     <TrackImg urlCover={trackObject.urlCover} />
                   </div>
                 </Col>
-                <Col lg={9} md={9} sm={9}>
-                  <Row className="playbar-title">{trackObject.title}</Row>
-                  <Row className="playbar-author">{trackObject.author}</Row>
+                <Col lg={9} md={9} xs={6}>
+                  <Row className="playbar-title">
+                    <span>{trackObject.title}</span>
+                  </Row>
+                  <Row className="playbar-author">
+                    <span>{trackObject.author}</span>
+                  </Row>
                 </Col>
               </Row>
             </Col>
-            <Col lg={6} md={4} sm={4}>
+            <Col lg={4} md={4} xs={5}>
               <Row className="playbar-buttons-container">
-                <Col lg={1} md={2} sm={2} className="skip-backward">
+                <Col lg={1} md={4} xs={4} className="skip-backward">
                   <div onClick={skipBackward}>
                     <SkipPreviousOutlined fontSize="large" />
                   </div>
                 </Col>
                 <Col lg={1} className="d-none d-lg-block">
-                  <div onClick={skipBackward}>
+                  <div onClick={rewindBackward}>
                     <FastRewindOutlined fontSize="large" />
                   </div>
                 </Col>
-                <Col lg={1} md={2} sm={2}>
-                  {isPlayPause ? (
+                <Col lg={1} md={4} xs={4}>
+                  {isPlaying ? (
                     <div onClick={playPause}>
-                      <PlayArrowOutlined fontSize="large" />
+                      <PauseOutlined fontSize="large" />
                     </div>
                   ) : (
                     <div onClick={playPause}>
-                      <PauseOutlined fontSize="large" />
+                      <PlayArrowOutlined fontSize="large" />
                     </div>
                   )}
                 </Col>
                 <Col lg={1} className="d-none d-lg-block">
-                  <div onClick={skipForward}>
+                  <div onClick={fastForward}>
                     <FastForwardOutlined fontSize="large" />
                   </div>
                 </Col>
-                <Col lg={1} md={2} sm={2}>
+                <Col lg={1} md={4} xs={4}>
                   <div onClick={skipForward}>
                     <SkipNextOutlined fontSize="large" />
                   </div>
@@ -240,17 +270,23 @@ function PlayBar() {
                 </Col>
               </Row>
             </Col>
-            <Col
-              md={2}
-              sm={2}
-              className="d-none d-md-block d-sm-block playbar-fav-button"
-            >
-              {/* <FavButton /> */}
+            <Col md={2}>
+              <Row>
+                <Col md={1} className="d-none d-md-block playbar-fav-button">
+                  {/* <FavButton /> */}
+                </Col>
+                <Col md={2} className="d-none d-md-block playbar-fav-button">
+                  {/* TEMPORAL BUTTONS */}
+                  <Link to="/queue-tracks">
+                    <div>show queue</div>
+                  </Link>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Col>
         <Col>
-          <Row className="playbar-cast-container">
+          <Row className="playbar-cast-container d-none d-lg-block d-md-block">
             {!isChromeCast ? (
               <div onClick={isChromeCastOn} className="cast-block">
                 <CastOutlined fontSize="medium" />
