@@ -59,6 +59,8 @@ function App() {
         <Route path="/favourite-playlists" component={ElementsList} />
         <Route path="/favourite-tracks" component={ElementsList} />
         <Route path="/my-tracks" component={ElementsList} />
+        <Route path="/history-tracks" component={ElementsList} />
+        <Route path="/queue-tracks" component={ElementsList} />
         <Route path="/change-password" component={ChangePassword} />
         <Route path="/recover-password" component={ResetPassword} />
         <Route path="/register" component={Register} />

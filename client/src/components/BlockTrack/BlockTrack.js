@@ -1,4 +1,5 @@
 import React from "react";
+import { MoreVert } from "@material-ui/icons";
 import "./styles.css";
 
 import FavButton from "../FavButton";
@@ -9,7 +10,12 @@ import { trackObjectAction } from "../../redux/trackData/actions";
 import {
   isPlayBarDisplayedAction,
   isPlay,
+  setPositionInHistory,
 } from "../../redux/trackData/actions";
+
+import { resetPositionInHistory } from "../../services/localStorage";
+//import dialogueHandlerReducer
+import { showDialogue } from "../../redux/dialogueHandler/actions";
 
 import { Container, Row, Col } from "react-bootstrap";
 
@@ -19,10 +25,16 @@ function BlockTrack({ dataTrack, size = "small" }) {
   const dispatch = useDispatch();
 
   function setReduxTrackData() {
-    console.log(dataTrack);
     dispatch(trackObjectAction(dataTrack));
     dispatch(isPlayBarDisplayedAction(true));
     dispatch(isPlay(true));
+
+    const resetedHistoryPosition = resetPositionInHistory();
+    dispatch(setPositionInHistory(resetedHistoryPosition));
+  }
+
+  function openDialogue(e) {
+    dispatch(showDialogue(dataTrack, { x: e.clientX, y: e.clientY }));
   }
 
   if (dataTrack !== undefined) {
@@ -40,6 +52,7 @@ function BlockTrack({ dataTrack, size = "small" }) {
           </Col>
           <Col xs={3}>
             <FavButton />
+            <MoreVert onClick={openDialogue} />
           </Col>
         </Row>
       </Container>
