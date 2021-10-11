@@ -1,7 +1,11 @@
-let initialHistoryPosition =
-  JSON.parse(localStorage.getItem("trackHistory")).length - 2;
-if (initialHistoryPosition < 0) {
-  initialHistoryPosition = 0;
+const history = JSON.parse(localStorage.getItem("trackHistory"));
+let initialHistoryPosition = 0;
+
+if (history) {
+  initialHistoryPosition = history.length - 2;
+  if (initialHistoryPosition < 0) {
+    initialHistoryPosition = 0;
+  }
 }
 
 const initialTrackState = {
