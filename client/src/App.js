@@ -56,6 +56,7 @@ function App() {
   return (
     <>
       <Switch>
+        <Route path="/favourite-playlists" component={ElementsList} />
         <Route path="/favourite-tracks" component={ElementsList} />
         <Route path="/my-tracks" component={ElementsList} />
         <Route path="/history-tracks" component={ElementsList} />
@@ -65,6 +66,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/profile" component={Profile} />
         <Route path="/login" component={Login} />
+        <Route path="/radio" component={ElementsList} />
         <Route exact path="/" component={Home} />
       </Switch>
     </>

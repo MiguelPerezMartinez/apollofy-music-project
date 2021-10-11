@@ -185,7 +185,6 @@ function PlayBar() {
       skipForward();
     });
   }, [trackObject]);
-
   return (
     <>
       <Row>
