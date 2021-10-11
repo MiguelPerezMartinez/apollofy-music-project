@@ -36,6 +36,7 @@ import {
   FastRewindOutlined,
   VolumeUpOutlined,
   VolumeOffOutlined,
+  Favorite,
 } from "@material-ui/icons";
 
 function PlayBar() {
@@ -273,7 +274,7 @@ function PlayBar() {
             <Col md={2}>
               <Row>
                 <Col md={1} className="d-none d-md-block playbar-fav-button">
-                  {/* <FavButton /> */}
+                  <Favorite className="like-disabled" />
                 </Col>
                 <Col md={2} className="d-none d-md-block playbar-fav-button">
                   {/* TEMPORAL BUTTONS */}
