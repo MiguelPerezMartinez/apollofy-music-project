@@ -20,7 +20,6 @@ import ScrollContainer from "react-indiana-drag-scroll";
 import BlockTrack from "../../components/BlockTrack";
 
 function Home() {
-
   const [lastUploadedTracks, setlastUploadedTracks] = useState([]);
   const [trashTracks, setTrashTracks] = useState([]);
   const [pachangaTracks, setPachangaTracks] = useState([]);
@@ -111,9 +110,11 @@ function Home() {
               })}
             </Row>
           </ScrollContainer>
+        </Container>
 
-          <div className="xl-separator" />
+        <div className="xl-separator" />
 
+        <Container>
           <h1>Last Uploaded:</h1>
           <Row sm xs={4} md={4} lg={2}>
             {lastUploadedTracks.map((track, index) => {
@@ -124,9 +125,11 @@ function Home() {
               );
             })}
           </Row>
+        </Container>
 
-          <div className="xl-separator" />
+        <div className="xl-separator" />
 
+        <Container>
           <h1>Trash Tracks:</h1>
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
@@ -139,9 +142,11 @@ function Home() {
               })}
             </Row>
           </ScrollContainer>
+        </Container>
 
-          <div className="xl-separator" />
+        <div className="xl-separator" />
 
+        <Container>
           <h1>Pachanga selection for you:</h1>
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">

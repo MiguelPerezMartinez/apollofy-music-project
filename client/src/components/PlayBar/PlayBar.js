@@ -272,10 +272,10 @@ function PlayBar() {
             </Col>
             <Col md={2}>
               <Row>
-                <Col md={1} className="d-none d-md-block playbar-fav-button">
+                <Col md={4} className="d-none d-md-block playbar-fav-button">
                   <FavButton />
                 </Col>
-                <Col md={2} className="d-none d-md-block playbar-fav-button">
+                <Col md={8} className="d-none d-md-block playbar-fav-button">
                   {/* TEMPORAL BUTTONS */}
                   <Link to="/queue-tracks">
                     <div>show queue</div>
