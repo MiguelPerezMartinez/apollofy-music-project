@@ -24,7 +24,6 @@ export const setWaveSurfer = (value) => ({
   payload: value,
 });
 
-
 export const setPositionInHistory = (value) => ({
   type: SET_POSITION_IN_HISTORY,
   payload: value,
