@@ -15,7 +15,7 @@ playlistRouter.patch(
   playlistController.updatePlaylistById,
 );
 playlistRouter.patch(
-  "/delete-playlist-track/:id",
+  "/delete-playlist-track",
   // authMiddleware,
   playlistController.deleteTrackFromPlaylist,
 );

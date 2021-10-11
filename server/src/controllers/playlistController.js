@@ -63,12 +63,11 @@ async function updatePlaylistById(req, res) {
 }
 
 async function deleteTrackFromPlaylist(req, res) {
-  const { id } = req.params;
-  const { trackId } = req.body;
+  const { trackId, playlistId } = req.body;
   let messageResponse = "Track not found";
   try {
     //Collect playlist document and track to delete index
-    const playlistDoc = await Playlists.findOne({ _id: id });
+    const playlistDoc = await Playlists.findOne({ _id: playlistId });
     const trackIndexToDelete = playlistDoc.tracks.indexOf(trackId);
 
     //Checking if index exists, removing it from playlist and updating playlistDoc
@@ -80,7 +79,7 @@ async function deleteTrackFromPlaylist(req, res) {
     res.status(200).send({
       message: messageResponse,
       trackId: trackId,
-      playListId: playlistDoc._id,
+      playListId: playlistId,
     });
   } catch (error) {
     res.status(500).send({
