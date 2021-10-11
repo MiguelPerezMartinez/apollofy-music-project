@@ -18,6 +18,9 @@ import Track from "../../components/Track";
 import { Container, Row, Col } from "react-bootstrap";
 import ScrollContainer from "react-indiana-drag-scroll";
 import BlockTrack from "../../components/BlockTrack";
+import FavPlaylist from "../../components/FavPlaylist";
+import LikedSongs from "../../components/LikedSongs";
+import YourRadio from "../../components/YourRadio";
 
 function Home() {
   const [lastUploadedTracks, setlastUploadedTracks] = useState([]);
@@ -71,12 +74,20 @@ function Home() {
         <Container>
           <Row>
             <Col sm xs={12} md={12} lg={5}>
-              <div className="home-top-col">
-                <h1>HOME</h1>
-                <h3>My plylist</h3>
-                <Link to="/history-tracks">
-                  <h3>Go to History</h3>
-                </Link>
+              <div className="home-top-col-targets">
+                <Row>
+                  <Col xs={12}>
+                    <LikedSongs />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12} md={12} lg={6}>
+                    <FavPlaylist />
+                  </Col>
+                  <Col xs={12} md={12} lg={6}>
+                    <YourRadio />
+                  </Col>
+                </Row>
               </div>
             </Col>
             <Col sm xs={12} md={12} lg={7}>
