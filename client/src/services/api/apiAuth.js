@@ -10,7 +10,7 @@ import {
 export async function registerInApi(userData, uid) {
   return axios({
     method: "POST",
-    url: `http://localhost:4000/users/register`,
+    url: `${process.env.REACT_APP_URL}users/register`,
     data: {
       firebase_id: uid,
       ...userData,
@@ -24,13 +24,12 @@ export async function registerInApi(userData, uid) {
 export async function getById(uid, userToken) {
   return axios({
     method: "GET",
-    url: `http://localhost:4000/users/get-user/${uid}`,
+    url: `${process.env.REACT_APP_URL}users/get-user/${uid}`,
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
   });
 }
-
 
 export async function getCurrentUser() {
   const userToken = await getCurrentUserToken();
@@ -44,7 +43,7 @@ export async function getMyTracksByUserId(userId) {
   const userToken = await getCurrentUserToken();
   return axios({
     method: "GET",
-    url: `http://localhost:4000/users/get-user/${userId}/my-tracks`,
+    url: `${process.env.REACT_APP_URL}users/get-user/${userId}/my-tracks`,
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
@@ -55,7 +54,7 @@ export async function getFavouriteTracksByUserId(userId) {
   const userToken = await getCurrentUserToken();
   return axios({
     method: "GET",
-    url: `http://localhost:4000/users/get-user/${userId}/favourite-tracks`,
+    url: `${process.env.REACT_APP_URL}users/get-user/${userId}/favourite-tracks`,
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
@@ -65,7 +64,7 @@ export async function getFavouriteTracksByUserId(userId) {
 export async function updateById(id, userToken, bodyReq) {
   return axios({
     method: "PATCH",
-    url: `http://localhost:4000/users/update-user/${id}`,
+    url: `${process.env.REACT_APP_URL}users/update-user/${id}`,
     data: bodyReq,
     headers: {
       Authorization: `Bearer ${userToken}`,
@@ -105,7 +104,7 @@ export async function getAllTracks() {
   const userToken = await getCurrentUserToken();
   return axios({
     method: "GET",
-    url: `http://localhost:4000/tracks/`,
+    url: `${process.env.REACT_APP_URL}tracks/`,
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
@@ -116,7 +115,7 @@ export async function getMostLikedTracks() {
   const userToken = await getCurrentUserToken();
   return axios({
     method: "GET",
-    url: `http://localhost:4000/tracks/get-most-liked`,
+    url: `${process.env.REACT_APP_URL}tracks/get-most-liked`,
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
@@ -127,7 +126,7 @@ export async function getMostPlayedTracks() {
   const userToken = await getCurrentUserToken();
   return axios({
     method: "GET",
-    url: `http://localhost:4000/tracks/get-most-played`,
+    url: `${process.env.REACT_APP_URL}tracks/get-most-played`,
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
