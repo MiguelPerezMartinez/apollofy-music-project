@@ -5,11 +5,17 @@ const { authMiddleware } = require("../middlewares");
 
 //end points routes:
 trackRouter.get("/", authMiddleware, trackController.getAllTracks);
-trackRouter.get("/get-track/:id", authMiddleware, trackController.getTrackById);
-trackRouter.post("/upload-track", authMiddleware, trackController.uploadTrack);
+trackRouter.get(
+  "/get-track/:id",
+  authMiddleware,
+  trackController.getTrackById,
+);
+trackRouter.post("/upload-track", 
+authMiddleware, 
+trackController.uploadTrack);
 trackRouter.delete(
   "/delete-track/:id",
-  authMiddleware,
+  // authMiddleware,
   trackController.deleteTrack,
 );
 trackRouter.patch(
@@ -29,12 +35,12 @@ trackRouter.patch(
 );
 trackRouter.get(
   "/get-track/:id/liked",
-  // authMiddleware,
+  authMiddleware,
   trackController.isLikedByUser,
 );
 trackRouter.get(
   "/get-track/last-updated",
-  // authMiddleware,
+  authMiddleware,
   trackController.isLikedByUser,
 );
 trackRouter.get(

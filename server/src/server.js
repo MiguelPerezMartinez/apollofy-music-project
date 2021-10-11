@@ -6,14 +6,7 @@ const { json } = require("body-parser");
 const cors = require("cors");
 
 // routes
-const {
-  // productRouter,
-  trackRouter,
-  userRouter,
-  // personRouter,
-  // movieRouter,
-  // movieGenreRouter,
-} = require("./routes");
+const { trackRouter, userRouter, playlistRouter } = require("./routes");
 
 // app creation
 const app = express();
@@ -27,7 +20,7 @@ app.use(cors());
 // app used routes
 app.use("/tracks", trackRouter);
 app.use("/users", userRouter);
-// app.use("/models", modelRouter);
+app.use("/playlists", playlistRouter);
 
 // test request to see server works properly
 app.get("/", (req, res) => {

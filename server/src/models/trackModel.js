@@ -6,6 +6,7 @@ const TrackSchema = new Schema(
     owner: {
       type: Schema.Types.ObjectId,
       required: [true, "Please input an owner"],
+      ref: "users",
     },
     totalPlays: {
       type: Number,

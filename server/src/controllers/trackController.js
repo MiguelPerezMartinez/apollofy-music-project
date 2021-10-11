@@ -1,5 +1,4 @@
-const { Tracks } = require("../models");
-const { Users } = require("../models");
+const { Tracks, Users, Playlists } = require("../models");
 
 async function getAllTracks(req, res) {
   //Receive the limitation by req.body, by default 20
@@ -66,11 +65,35 @@ async function deleteTrack(req, res) {
   try {
     //Deleting existing track
     const { owner } = await Tracks.findByIdAndRemove(id);
-    //Finding the user to update myTracks property and saving the document
+    //Finding the owner user to update myTracks property and saving the document
     const userFound = await Users.findById(owner);
     const trackToRemove = userFound.myTracks.indexOf(id);
     userFound.myTracks.splice(trackToRemove, 1);
     await userFound.save();
+    //Finding all user documents to update their favTracks and trackHistory properties
+    //and saving them
+    const users = await Users.find({});
+    for (const user of users) {
+      userFavTrackToRemove = user.favTracks.indexOf(id);
+      if (userFavTrackToRemove >= 0) {
+        user.favTracks.splice(userFavTrackToRemove, 1);
+        await user.save();
+      }
+      userHistoryTrackToRemove = user.trackHistory.indexOf(id);
+      if (userHistoryTrackToRemove >= 0) {
+        user.trackHistory.splice(userHistoryTrackToRemove, 1);
+        await user.save();
+      }
+    }
+    //Finding the playlist documents to update their tracks property and saving them
+    const playlists = await Playlists.find({});
+    for (const playlist of playlists) {
+      let playlistTrackToRemove = playlist.tracks.indexOf(id);
+      if (playlistTrackToRemove >= 0) {
+        playlist.tracks.splice(playlistTrackToRemove, 1);
+        await playlist.save();
+      }
+    }
     //Returning statuts after track delete and user document update
     return res.status(200).send({
       message: "Track deleted very successfully",
