@@ -6,33 +6,34 @@ const { authMiddleware } = require("../middlewares");
 //end point routes:
 playlistRouter.post(
   "/create-playlist",
-  // authMiddleware,
+  authMiddleware,
   playlistController.createPlaylist,
 );
 playlistRouter.patch(
   "/update-playlist/:id",
-  // authMiddleware,
+  authMiddleware,
   playlistController.updatePlaylistById,
 );
 playlistRouter.patch(
   "/delete-playlist-track",
-  // authMiddleware,
+  authMiddleware,
   playlistController.deleteTrackFromPlaylist,
 );
 playlistRouter.delete(
   "/delete-playlist/:id",
-  // authMiddleware,
+  authMiddleware,
   playlistController.deletePlaylistById,
 );
 playlistRouter.get(
   "/",
-  // authMiddleware,
+  authMiddleware,
   playlistController.getAllPlaylists,
 );
 playlistRouter.get(
   "/get-playlist/:id",
-  // authMiddleware,
+  authMiddleware,
   playlistController.getPlaylistById,
 );
+
 //exports
 module.exports = playlistRouter;
