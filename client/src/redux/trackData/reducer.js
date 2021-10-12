@@ -5,6 +5,7 @@ import {
   TRACK_OBJECT,
   WAVESURFER_PROPERTIES,
   SET_POSITION_IN_HISTORY,
+  RELOAD_FETCH,
 } from "./type";
 
 const trackReducer = (state = initialTrackState, action) => {
@@ -19,6 +20,8 @@ const trackReducer = (state = initialTrackState, action) => {
       return { ...state, waveSurfer: action.payload };
     case SET_POSITION_IN_HISTORY:
       return { ...state, positionInHistory: action.payload };
+    case RELOAD_FETCH:
+      return { ...state, reloadFetch: action.payload };
     default:
       return state;
   }

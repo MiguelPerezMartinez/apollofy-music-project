@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
 import BarsAndModal from "../../hoc/BarsAndModal";
@@ -23,6 +23,7 @@ import LikedSongs from "../../components/LikedSongs";
 import YourRadio from "../../components/YourRadio";
 
 function Home() {
+  const { reloadFetch } = useSelector((state) => state.trackReducer);
   const [lastUploadedTracks, setlastUploadedTracks] = useState([]);
   const [trashTracks, setTrashTracks] = useState([]);
   const [pachangaTracks, setPachangaTracks] = useState([]);
@@ -47,7 +48,7 @@ function Home() {
     getMostLikedTracks().then((response) => {
       setMostLikedTracks(response.data.tracks);
     });
-  }, []);
+  }, [reloadFetch]);
 
   // track arrays mocks
   // let topTracks = [];

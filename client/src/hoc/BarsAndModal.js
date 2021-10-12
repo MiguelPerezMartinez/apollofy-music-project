@@ -6,6 +6,8 @@ import BottomMenu from "../components/BottomMenu";
 import ModalTrackUp from "../components/ModalTrackUp";
 import PlayBar from "../components/PlayBar";
 import DialogueBox from "../components/DialogueBox";
+import UpdateModal from "../components/UpdateTrackModal";
+import DeleteModal from "../components/DeleteTrackModal";
 
 function BarsAndModal(WrappedComponent) {
   function WrapperComponent() {
@@ -15,7 +17,9 @@ function BarsAndModal(WrappedComponent) {
     const handleCloseModal = () => setShowModal(false);
     const handleOpenModal = () => setShowModal(true);
 
-    const dialogueHandler = useSelector((state) => state.dialogueHandler);
+    const { active, showDelete, showUpdate } = useSelector(
+      (state) => state.dialogueHandler,
+    );
 
     return (
       <>
@@ -27,7 +31,9 @@ function BarsAndModal(WrappedComponent) {
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}
         />
-        {dialogueHandler.active && <DialogueBox />}
+        {active && <DialogueBox />}
+        {showDelete && <DeleteModal />}
+        {showUpdate && <UpdateModal />}
         {showModal && <ModalTrackUp handleClose={handleCloseModal} />}
         <WrappedComponent />
         {isPlayBarDisplayed && <PlayBar />}

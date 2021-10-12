@@ -1,0 +1,11 @@
+.updateModal {
+  position: fixed;
+  background-color: var(--blue);
+  max-width: 50%;
+  left: 25%;
+  top: 30%;
+  z-index: 100;
+  border-radius: 25px;
+  border: 1px solid yellow;
+  padding: 5%;
+}

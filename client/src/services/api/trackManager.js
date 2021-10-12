@@ -37,3 +37,22 @@ export async function addTotalPlay(trackData) {
       console.log(error);
     });
 }
+
+export async function deleteTrack(track) {
+  // console.log("That's the track to delete", track);
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "DELETE",
+    url: `${process.env.REACT_APP_URL}tracks/delete-track/${track}`,
+
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}

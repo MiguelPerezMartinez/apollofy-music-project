@@ -4,6 +4,7 @@ import {
   TRACK_OBJECT,
   WAVESURFER_PROPERTIES,
   SET_POSITION_IN_HISTORY,
+  RELOAD_FETCH,
 } from "./type";
 
 //Reproductor (Solo cambia a true)
@@ -26,5 +27,10 @@ export const setWaveSurfer = (value) => ({
 
 export const setPositionInHistory = (value) => ({
   type: SET_POSITION_IN_HISTORY,
+  payload: value,
+});
+
+export const reloadFetchAction = (value) => ({
+  type: RELOAD_FETCH,
   payload: value,
 });
