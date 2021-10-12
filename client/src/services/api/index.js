@@ -10,7 +10,12 @@ import {
   getMostPlayedTracks,
 } from "./apiAuth";
 
-import { apiTrackUpload, addTotalPlay, deleteTrack } from "./trackManager";
+import {
+  apiTrackUpload,
+  addTotalPlay,
+  deleteTrack,
+  updateTrack,
+} from "./trackManager";
 import { changeMyProfilePicture } from "./fileUploader";
 
 export {
@@ -27,4 +32,5 @@ export {
   getMostPlayedTracks,
   addTotalPlay,
   deleteTrack,
+  updateTrack,
 };

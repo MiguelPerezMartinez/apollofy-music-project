@@ -56,3 +56,22 @@ export async function deleteTrack(track) {
       console.log(error);
     });
 }
+export async function updateTrack(track) {
+  // console.log("That's the track to delete", track);
+  const userToken = await getCurrentUserToken();
+  const { _id, ...trackBody } = track;
+  return axios({
+    method: "PATCH",
+    url: `${process.env.REACT_APP_URL}tracks/update-track/${_id}`,
+    data: trackBody,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
