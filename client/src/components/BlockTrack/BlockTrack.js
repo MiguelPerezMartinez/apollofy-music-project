@@ -1,8 +1,7 @@
-import React from "react";
-import { MoreVert } from "@material-ui/icons";
+import React, { useState, useEffect } from "react";
+import { MoreVert, Favorite } from "@material-ui/icons";
 import "./styles.css";
 
-import FavButton from "../FavButton";
 import TrackImg from "../TrackImg";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -17,12 +16,39 @@ import { resetPositionInHistory } from "../../services/localStorage";
 //import dialogueHandlerReducer
 import { showDialogue } from "../../redux/dialogueHandler/actions";
 
+import { likeHandlerRequest } from "../../services/api/apiTrack";
+
 import { Container, Row, Col } from "react-bootstrap";
 
 function BlockTrack({ dataTrack, size = "small" }) {
   const track = useSelector((state) => state.trackReducer);
   const { trackObject } = track;
+  const userData = useSelector((state) => state.userReducer.data);
   const dispatch = useDispatch();
+
+  const [isLiked, setIsLiked] = useState({
+    state: false,
+    loaded: false,
+  });
+
+  useEffect(() => {
+    if (dataTrack !== undefined) {
+      const userIndex = dataTrack.totalLikes.indexOf(userData.userId);
+      if (userIndex >= 0) setIsLiked({ state: true, loaded: true });
+      else setIsLiked({ state: false, loaded: true });
+    }
+  }, []);
+
+  function handlerLike() {
+    setIsLiked({ ...isLiked, loaded: false });
+    likeHandlerRequest(userData.userId, dataTrack._id)
+      .then(() => {
+        setIsLiked({ state: !isLiked.state, loaded: true });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   function setReduxTrackData() {
     dispatch(trackObjectAction(dataTrack));
@@ -51,7 +77,14 @@ function BlockTrack({ dataTrack, size = "small" }) {
             <p className="blockTrack-author">{dataTrack.author}</p>
           </Col>
           <Col xs={3}>
-            <FavButton />
+            {isLiked.loaded ? (
+              <Favorite
+                className={isLiked.state ? "liked" : ""}
+                onClick={handlerLike}
+              />
+            ) : (
+              <Favorite className="like-disabled" />
+            )}
             <MoreVert onClick={openDialogue} />
           </Col>
         </Row>

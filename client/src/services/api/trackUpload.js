@@ -6,7 +6,7 @@ export async function apiTrackUpload(trackData) {
   const userToken = await getCurrentUserToken();
   return axios({
     method: "POST",
-    url: `http://localhost:4000/tracks/upload-track`,
+    url: `${process.env.REACT_APP_URL}tracks/upload-track`,
     data: trackData,
     headers: {
       Authorization: `Bearer ${userToken}`,
@@ -24,7 +24,7 @@ export async function addTotalPlay(trackData) {
   const userToken = await getCurrentUserToken();
   return axios({
     method: "PATCH",
-    url: `http://localhost:4000/tracks/increment-total-plays/${trackData}`,
+    url: `${process.env.REACT_APP_URL}tracks/increment-total-plays/${trackData}`,
 
     headers: {
       Authorization: `Bearer ${userToken}`,

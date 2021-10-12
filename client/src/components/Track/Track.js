@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Col, Row } from "react-bootstrap";
-import { MoreHoriz } from "@material-ui/icons";
+import { Col, Row } from "react-bootstrap";
+import { MoreHoriz, Favorite } from "@material-ui/icons";
 import "./styles.css";
 
 //import TrackReducer
@@ -17,15 +17,41 @@ import {
 import { showDialogue } from "../../redux/dialogueHandler/actions";
 
 //Components
-import FavButton from "../FavButton";
 import TrackImg from "../../components/TrackImg";
 import { resetPositionInHistory } from "../../services/localStorage";
+
+import { likeHandlerRequest } from "../../services/api/apiTrack";
 
 // import DialogueBox from "../DialogueBox";
 
 function Track({ dataTrack }) {
   const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
+  const userData = useSelector((state) => state.userReducer.data);
   const dispatch = useDispatch();
+
+  const [isLiked, setIsLiked] = useState({
+    state: false,
+    loaded: false,
+  });
+
+  useEffect(() => {
+    if (dataTrack !== undefined) {
+      const userIndex = dataTrack.totalLikes.indexOf(userData.userId);
+      if (userIndex >= 0) setIsLiked({ state: true, loaded: true });
+      else setIsLiked({ state: false, loaded: true });
+    }
+  }, []);
+
+  function handlerLike() {
+    setIsLiked({ ...isLiked, loaded: false });
+    likeHandlerRequest(userData.userId, dataTrack._id)
+      .then(() => {
+        setIsLiked({ state: !isLiked.state, loaded: true });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   function setReduxTrackData() {
     dispatch(trackObjectAction(dataTrack));
@@ -67,7 +93,14 @@ function Track({ dataTrack }) {
                   <p>{dataTrack.duration}</p>
                 </Col>
                 <Col xs={4} md={4} lg={4}>
-                  <FavButton />
+                  {isLiked.loaded ? (
+                    <Favorite
+                      className={isLiked.state ? "liked" : ""}
+                      onClick={handlerLike}
+                    />
+                  ) : (
+                    <Favorite className="like-disabled" />
+                  )}
                 </Col>
                 <Col xs={4} md={4} lg={4}>
                   <MoreHoriz onClick={openDialogue} />
