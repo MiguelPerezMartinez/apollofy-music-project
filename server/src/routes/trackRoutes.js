@@ -15,7 +15,7 @@ authMiddleware,
 trackController.uploadTrack);
 trackRouter.delete(
   "/delete-track/:id",
-  // authMiddleware,
+  authMiddleware,
   trackController.deleteTrack,
 );
 trackRouter.patch(

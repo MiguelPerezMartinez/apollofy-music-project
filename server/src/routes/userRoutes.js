@@ -18,7 +18,7 @@ userRouter.get(
 );
 userRouter.patch(
   "/update-user/:id",
-  // authMiddleware,
+  authMiddleware,
   userController.updateProfile,
 );
 userRouter.patch(
