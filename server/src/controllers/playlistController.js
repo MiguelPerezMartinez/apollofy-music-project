@@ -2,6 +2,8 @@
 const { Tracks, Users, Playlists } = require("../models");
 
 // functions
+
+//POST
 async function createPlaylist(req, res) {
   const { title, owner, ...bodyReq } = req.body;
   try {
@@ -37,6 +39,7 @@ async function createPlaylist(req, res) {
   }
 }
 
+//UPDATE
 async function updatePlaylistById(req, res) {
   const { id } = req.params;
   try {
@@ -57,6 +60,45 @@ async function updatePlaylistById(req, res) {
   } catch (error) {
     res.status(500).send({
       data: req.params.id,
+      error: error.message,
+    });
+  }
+}
+
+async function handlerPlaylistLike(req, res) {
+  const { playlistId, userId } = req.body;
+  let messageResponse = "";
+  try {
+    // Collect both documents: playListDoc and userDoc by id's
+    const playListDoc = await Playlists.findById(playlistId);
+    const userDoc = await Users.findById(userId);
+
+    // Check if the like is registered in both documents
+    const userIndex = playListDoc.totalLikes.indexOf(userId);
+    const playlistIndex = userDoc.favPlaylists.indexOf(playlistId);
+
+    // Do handling action
+    if (userIndex >= 0 && playlistIndex >= 0) {
+      messageResponse = "Playlist like removed";
+      playListDoc.totalLikes.splice(userIndex, 1);
+      userDoc.favPlaylists.splice(playlistIndex, 1);
+    } else {
+      messageResponse = "Playlist like added";
+      playListDoc.totalLikes.push(userId);
+      userDoc.favPlaylists.push(playlistId);
+    }
+
+    // Update the documents
+    await playListDoc.save();
+    await userDoc.save();
+
+    res.status(200).send({
+      message: messageResponse,
+      playlistId: playlistId,
+      userId: userId,
+    });
+  } catch (error) {
+    res.status(500).send({
       error: error.message,
     });
   }
@@ -88,6 +130,7 @@ async function deleteTrackFromPlaylist(req, res) {
   }
 }
 
+//DELETE
 async function deletePlaylistById(req, res) {
   const { id } = req.params;
   try {
@@ -123,6 +166,7 @@ async function deletePlaylistById(req, res) {
   }
 }
 
+//GET
 async function getAllPlaylists(req, res) {
   //Receive the limitation by req.body, by default 20
   const { limit = 20 } = req.body;
@@ -159,12 +203,60 @@ async function getPlaylistById(req, res) {
   }
 }
 
+async function isLikedByUser(req, res) {
+  const { id: playlistId } = req.params;
+  const { userId } = req.body;
+
+  try {
+    const playlistDoc = await Playlists.findById(playlistId);
+    const userInLikesArray = playlistDoc.totalLikes.indexOf(userId);
+
+    if (userInLikesArray >= 0) {
+      res.status(200).send({
+        message: `User: ${userId} likes playlist: ${playlistId}`,
+        isLiked: true,
+      });
+    } else {
+      res.status(200).send({
+        message: `User: ${userId} doesn't like playlist: ${playlistId}`,
+        isLiked: false,
+      });
+    }
+  } catch (error) {
+    res.status(500).send({
+      error: error.message,
+    });
+  }
+}
+
+async function getMostLiked(req, res) {
+  //Receive the limitation by req.body, by default 20
+  const { limit = 14 } = req.body;
+  try {
+    const playlists = await Playlists.find({})
+      .sort({ totalLikes: -1 })
+      .limit(limit);
+    return res.status(200).send({
+      playlistsSize: limit,
+      playlists: playlists,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({
+      error: error.message,
+    });
+  }
+}
+
 //exports
 module.exports = {
   createPlaylist: createPlaylist,
   updatePlaylistById: updatePlaylistById,
-  deleteTrackFromPlaylist:deleteTrackFromPlaylist,
+  handlerPlaylistLike: handlerPlaylistLike,
+  deleteTrackFromPlaylist: deleteTrackFromPlaylist,
   deletePlaylistById: deletePlaylistById,
   getAllPlaylists: getAllPlaylists,
   getPlaylistById: getPlaylistById,
+  isLikedByUser: isLikedByUser,
+  getMostLiked: getMostLiked,
 };

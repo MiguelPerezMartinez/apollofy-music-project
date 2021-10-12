@@ -4,11 +4,14 @@ const { playlistController } = require("../controllers");
 const { authMiddleware } = require("../middlewares");
 
 //end point routes:
+//POST
 playlistRouter.post(
   "/create-playlist",
   authMiddleware,
   playlistController.createPlaylist,
 );
+
+//PATCH
 playlistRouter.patch(
   "/update-playlist/:id",
   authMiddleware,
@@ -19,20 +22,35 @@ playlistRouter.patch(
   authMiddleware,
   playlistController.deleteTrackFromPlaylist,
 );
+playlistRouter.patch(
+  "/handler-playlist-like",
+  authMiddleware,
+  playlistController.handlerPlaylistLike,
+);
+
+//DELETE
 playlistRouter.delete(
   "/delete-playlist/:id",
   authMiddleware,
   playlistController.deletePlaylistById,
 );
-playlistRouter.get(
-  "/",
-  authMiddleware,
-  playlistController.getAllPlaylists,
-);
+
+//GET
+playlistRouter.get("/", authMiddleware, playlistController.getAllPlaylists);
 playlistRouter.get(
   "/get-playlist/:id",
   authMiddleware,
   playlistController.getPlaylistById,
+);
+playlistRouter.get(
+  "/get-playlist/:id/liked",
+  authMiddleware,
+  playlistController.isLikedByUser,
+);
+playlistRouter.get(
+  "/get-most-liked",
+  authMiddleware,
+  playlistController.getMostLiked,
 );
 
 //exports

@@ -200,14 +200,14 @@ async function isLikedByUser(req, res) {
     const trackDoc = await Tracks.findById(trackId);
     const userInLikesArray = trackDoc.totalLikes.indexOf(userId);
 
-    if (userInLikesArray == 0) {
+    if (userInLikesArray >= 0) {
       res.status(200).send({
         message: `User: ${userId} likes track: ${trackId}`,
         isLiked: true,
       });
     } else {
       res.status(200).send({
-        message: `User: ${userId} likes track: ${trackId}`,
+        message: `User: ${userId} doesn't like track: ${trackId}`,
         isLiked: false,
       });
     }
