@@ -204,7 +204,7 @@ async function getPlaylistById(req, res) {
 }
 
 async function getPlaylistByTitle(req, res) {
-  const { title } = req.body;
+  const { title } = req.params;
   try {
     //Collect all tracks, turn title to
     //lowercase and initialize tracks to return

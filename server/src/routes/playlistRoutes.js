@@ -43,7 +43,7 @@ playlistRouter.get(
   playlistController.getPlaylistById,
 );
 playlistRouter.get(
-  "/get-playlist-by-title",
+  "/get-playlist-by-title/:title",
   authMiddleware,
   playlistController.getPlaylistByTitle,
 );
