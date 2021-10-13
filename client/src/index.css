@@ -72,7 +72,7 @@ main {
   background-color: var(--main-container-color);
   border-radius: 0.5rem;
 
-  cursor: pointer;
+  /* cursor: pointer; */
   padding: 1rem 0.5rem;
 }
 
