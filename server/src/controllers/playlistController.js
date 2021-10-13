@@ -203,6 +203,36 @@ async function getPlaylistById(req, res) {
   }
 }
 
+async function getPlaylistByTitle(req, res) {
+  const { title } = req.body;
+  try {
+    //Collect all tracks, turn title to
+    //lowercase and initialize tracks to return
+    const playlists = await Playlists.find({});
+    const lwcPlaylistTitle = title.toLowerCase();
+    let playlistsToReturn = [];
+
+    //Check if title is contained inside tracks
+    for (const playlist of playlists) {
+      let playlistDocTitle = playlist.title.toLowerCase();
+      if (playlistDocTitle.includes(lwcPlaylistTitle)) {
+        playlistsToReturn.push(playlist);
+      }
+    }
+
+    //Return tracks found
+    return res.status(200).send({
+      message: "Playlists found",
+      playlists: playlistsToReturn,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      data: title,
+      error: error.message,
+    });
+  }
+}
+
 async function isLikedByUser(req, res) {
   const { id: playlistId } = req.params;
   const { userId } = req.body;
@@ -257,6 +287,7 @@ module.exports = {
   deletePlaylistById: deletePlaylistById,
   getAllPlaylists: getAllPlaylists,
   getPlaylistById: getPlaylistById,
+  getPlaylistByTitle: getPlaylistByTitle,
   isLikedByUser: isLikedByUser,
   getMostLiked: getMostLiked,
 };
