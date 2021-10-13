@@ -1,20 +1,32 @@
 import "./style.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import Button from "../../components/Button";
-import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
+import { getAllMyPlaylist } from "../../services/api/index";
+import { useSelector } from "react-redux";
 
 function PlaylistSelector(params) {
+  const { trackDataDialog } = useSelector((state) => state.dialogueHandler);
   const [selectedOption, setSelectedOption] = useState("...");
+  // const [playlists, setPlaylists] = useState([]);
+  useEffect(() => {
+    //console.log(trackDataDialog.owner);
+    getAllMyPlaylist(trackDataDialog.owner).then((res) => {
+      const { myPlaylists } = res.data;
+      myPlaylists.map((item) => {
+        makeNewOptions(item.title);
+      });
+    });
+  }, []);
   function choseOption(e) {
-    setSelectedOption(e.value);
+    console.log(e.value);
   }
   function send(e) {
     e.preventDefault();
     console.log(selectedOption);
   }
   const customStyles = {
-    option: (provided, state) => ({
+    option: (provided) => ({
       ...provided,
       borderBottom: "1px dotted pink",
       color: "green",
@@ -29,9 +41,7 @@ function PlaylistSelector(params) {
     { value: "xica", label: "xica" },
     { value: "kim", label: "kim" },
   ];
-  //   respos.data.map((item)=>{
-  //     makeNewOptions(item.name)
-  //   })
+
   function makeNewOptions(newPlaylist) {
     options.push({ value: newPlaylist, label: newPlaylist });
   }

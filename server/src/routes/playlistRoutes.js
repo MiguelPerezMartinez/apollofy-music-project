@@ -7,7 +7,7 @@ const { authMiddleware } = require("../middlewares");
 //POST
 playlistRouter.post(
   "/create-playlist",
-  authMiddleware,
+  //authMiddleware,
   playlistController.createPlaylist,
 );
 

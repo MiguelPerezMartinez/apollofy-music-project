@@ -8,6 +8,7 @@ import {
   getAllTracks,
   getMostLikedTracks,
   getMostPlayedTracks,
+  getAllMyPlaylist,
 } from "./apiAuth";
 
 import {
@@ -33,4 +34,5 @@ export {
   addTotalPlay,
   deleteTrack,
   updateTrack,
+  getAllMyPlaylist,
 };

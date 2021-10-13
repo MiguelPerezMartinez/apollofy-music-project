@@ -132,3 +132,14 @@ export async function getMostPlayedTracks() {
     },
   });
 }
+
+export async function getAllMyPlaylist(ownerId) {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "GET",
+    url: `${process.env.REACT_APP_URL}users/get-user/${ownerId}/my-playlists`,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
