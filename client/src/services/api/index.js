@@ -8,7 +8,6 @@ import {
   getAllTracks,
   getMostLikedTracks,
   getMostPlayedTracks,
-  getAllMyPlaylist,
 } from "./apiAuth";
 
 import {
@@ -18,7 +17,7 @@ import {
   updateTrack,
 } from "./trackManager";
 import { changeMyProfilePicture } from "./fileUploader";
-
+import { getAllMyPlaylist, addTrackToPlaylist } from "./apiPlaylist";
 export {
   registerInApi,
   getById,
@@ -35,4 +34,5 @@ export {
   deleteTrack,
   updateTrack,
   getAllMyPlaylist,
+  addTrackToPlaylist,
 };

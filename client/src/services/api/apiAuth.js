@@ -132,14 +132,3 @@ export async function getMostPlayedTracks() {
     },
   });
 }
-
-export async function getAllMyPlaylist(userId) {
-  const userToken = await getCurrentUserToken();
-  return axios({
-    method: "GET",
-    url: `${process.env.REACT_APP_URL}users/get-user/${userId}/my-playlists`,
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  });
-}

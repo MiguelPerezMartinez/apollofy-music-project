@@ -2,11 +2,13 @@ import "./style.css";
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import Button from "../../components/Button";
-import { getAllMyPlaylist } from "../../services/api/index";
+import { getAllMyPlaylist, addTrackToPlaylist } from "../../services/api/index";
 import { useSelector } from "react-redux";
 
-function PlaylistSelector(params) {
+function PlaylistSelector() {
   const { data } = useSelector((state) => state.userReducer);
+  const { trackDataDialog } = useSelector((state) => state.dialogueHandler);
+
   //const [selectedOption, setSelectedOption] = useState("...");
 
   useEffect(() => {
@@ -18,7 +20,9 @@ function PlaylistSelector(params) {
     });
   }, []);
   function choseOption(e) {
-    console.log(e.value);
+    // addTrackToPlaylist(trackDataDialog._id, e.value);
+    console.log("Title", e.value);
+    console.log("trackId", trackDataDialog._id);
   }
 
   const customStyles = {
