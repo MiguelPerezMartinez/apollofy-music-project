@@ -1,6 +1,8 @@
 //Imports
 import React, { useState, useEffect } from "react";
 import "./styles.css";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faBroadcastTower } from "@fortawesome/free-solid-svg-icons";
@@ -20,8 +22,11 @@ import { Container, Row, Col } from "react-bootstrap";
 import ScrollContainer from "react-indiana-drag-scroll";
 import BlockTrack from "../../components/BlockTrack";
 import LinkCards from "../../components/LinkCards";
+import { reloadFetchAction } from "../../redux/trackData/actions";
 
 function Home() {
+  const dispatch = useDispatch();
+  const { reloadFetch } = useSelector((state) => state.trackReducer);
   const [lastUploadedTracks, setlastUploadedTracks] = useState([]);
   const [trashTracks, setTrashTracks] = useState([]);
   const [pachangaTracks, setPachangaTracks] = useState([]);
@@ -30,23 +35,27 @@ function Home() {
   // const [tracksLoaded, setTracksLoaded] = useState(false);
 
   useEffect(() => {
-    // Load last uploaded tracks
-    getAllTracks().then((response) => {
-      setlastUploadedTracks(response.data.tracks.slice(0, 6));
-      setTrashTracks(response.data.tracks.slice(6, 20));
-      setPachangaTracks(response.data.tracks.slice(17, -1));
-    });
+    if (reloadFetch) {
+      // Load last uploaded tracks
 
-    // Load most played tracks
-    getMostPlayedTracks().then((response) => {
-      setMostPlayedTracks(response.data.tracks);
-    });
+      getAllTracks().then((response) => {
+        setlastUploadedTracks(response.data.tracks.slice(0, 6));
+        setTrashTracks(response.data.tracks.slice(6, 20));
+        setPachangaTracks(response.data.tracks.slice(17, -1));
+      });
 
-    // Load most liked tracks
-    getMostLikedTracks().then((response) => {
-      setMostLikedTracks(response.data.tracks);
-    });
-  }, []);
+      // Load most played tracks
+      getMostPlayedTracks().then((response) => {
+        setMostPlayedTracks(response.data.tracks);
+      });
+
+      // Load most liked tracks
+      getMostLikedTracks().then((response) => {
+        setMostLikedTracks(response.data.tracks);
+      });
+      dispatch(reloadFetchAction(false));
+    }
+  }, [reloadFetch]);
 
   // track arrays mocks
   // let topTracks = [];

@@ -3,13 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
 
 //import dialogueHandlerReducer
-import { hideDialogue } from "../../redux/dialogueHandler/actions";
+import {
+  hideDialogue,
+  showUpdateAction,
+  showDeleteAction,
+} from "../../redux/dialogueHandler/actions";
 
 import { setTrackQueueInLocalStorage } from "../../services/localStorage";
 
 function DialogueBox() {
   const dispatch = useDispatch();
-  const dialogueHandler = useSelector((state) => state.dialogueHandler);
+  const { trackDataDialog, position, showDelete, showUpdate } = useSelector(
+    (state) => state.dialogueHandler,
+  );
   const userData = useSelector((state) => state.userReducer.data);
   const dialogueBox = useRef();
 
@@ -22,9 +28,10 @@ function DialogueBox() {
     };
   }, []);
 
-  // Set owner option handler
+  // Set owner option handler ACORDARSE DE CAMBIAR ESTOS BOOLEANOS, ESTAN HACKEADOS
+
   useEffect(() => {
-    if (userData.userId === dialogueHandler.trackDataDialog.owner) {
+    if (userData.userId === trackDataDialog.owner) {
       setIsOwner(true);
     } else {
       setIsOwner(false);
@@ -39,8 +46,8 @@ function DialogueBox() {
     const windowWidth = window.innerWidth;
     const dialogueBoxHeight = dialogueBox.current.offsetHeight + 20;
     const dialogueBoxWidth = dialogueBox.current.offsetWidth + 20;
-    const clickedPosX = dialogueHandler.position.x;
-    const clickedPosY = dialogueHandler.position.y;
+    const clickedPosX = position.x;
+    const clickedPosY = position.y;
 
     if (windowWidth - clickedPosX < dialogueBoxWidth) {
       dialogueBox.current.style.left = windowWidth - dialogueBoxWidth + "px";
@@ -62,16 +69,20 @@ function DialogueBox() {
 
   function handlerAddToQueue() {
     //Code to add the track to queue
-    setTrackQueueInLocalStorage(dialogueHandler.trackDataDialog);
-    alert(`${dialogueHandler.trackDataDialog.title} added to queue.`);
+    setTrackQueueInLocalStorage(trackDataDialog);
+    alert(`${trackDataDialog.title} added to queue.`);
   }
 
   function handlerEdit() {
     //Code to edit the track
+    dispatch(showUpdateAction(true));
+    dispatch(showDeleteAction(false));
   }
 
   function handlerDelete() {
     //Code to delete the track
+    dispatch(showDeleteAction(true));
+    dispatch(showUpdateAction(false));
   }
 
   function handlerShare() {

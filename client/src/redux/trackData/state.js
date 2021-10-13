@@ -27,5 +27,6 @@ const initialTrackState = {
   waveSurfer: null,
   emptyHistoryQueue: true,
   positionInHistory: initialHistoryPosition,
+  reloadFetch: true,
 };
 export default initialTrackState;
