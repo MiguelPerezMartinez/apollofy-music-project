@@ -155,7 +155,7 @@ async function getAllMyPlaylists(req, res) {
 }
 
 async function getUserByUsername(req, res) {
-  const { username } = req.body;
+  const { username } = req.params;
   try {
     //Collect all users, turn username to
     //lowercase and initialize users to return

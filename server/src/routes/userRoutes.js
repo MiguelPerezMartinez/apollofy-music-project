@@ -37,8 +37,8 @@ userRouter.get(
   userController.getAllMyPlaylists,
 );
 userRouter.get(
-  "/get-user-by-username",
-  authMiddleware,
+  "/get-user-by-username/:username",
+  // authMiddleware,
   userController.getUserByUsername,
 );
 
