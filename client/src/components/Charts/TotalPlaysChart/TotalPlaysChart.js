@@ -54,7 +54,6 @@ function TotalPlaysChart(props) {
               fill="#fc2e1c"
             />
           </Group>
-          asdfasdf
         );
       })}
     </svg>
