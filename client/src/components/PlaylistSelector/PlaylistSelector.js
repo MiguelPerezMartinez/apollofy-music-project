@@ -19,10 +19,9 @@ function PlaylistSelector() {
       });
     });
   }, []);
+
   function choseOption(e) {
-    // addTrackToPlaylist(trackDataDialog._id, e.value);
-    console.log("Title", e.value);
-    console.log("trackId", trackDataDialog._id);
+    addTrackToPlaylist(e.value, trackDataDialog._id);
   }
 
   const customStyles = {

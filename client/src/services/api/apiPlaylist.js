@@ -20,7 +20,7 @@ export async function addTrackToPlaylist(playlisTitle, trackId) {
   const userToken = await getCurrentUserToken();
   return axios({
     method: "PATCH",
-    url: `${process.env.REACT_APP_URL}/`,
+    url: `${process.env.REACT_APP_URL}playlists/add-playlist-track`,
     data: { trackId: trackId, title: playlisTitle },
     headers: {
       Authorization: `Bearer ${userToken}`,
