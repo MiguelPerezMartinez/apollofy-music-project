@@ -1,17 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import "./style.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import * as $ from "jquery";
 import validate from "jquery-validation";
 import { Row, Col } from "react-bootstrap";
 import Input from "../Input";
 import { updateTrack } from "../../services/api/index";
+import { hideDialogue } from "../../redux/dialogueHandler/actions";
+import { reloadFetchAction } from "../../redux/trackData/actions";
+
 import axios from "axios";
 
 function UpdateModal() {
   const form = useRef();
+  const dispatch = useDispatch();
   const { trackDataDialog } = useSelector((state) => state.dialogueHandler);
+  const { reloadFetch } = useSelector((state) => state.trackReducer);
 
   const [coverUpload, setCoverUpload] = useState({
     file: "",
@@ -26,10 +31,9 @@ function UpdateModal() {
   function handleChange(e) {
     setTrackData({
       ...trackData,
-      // owner: data.userId,
+      _id: trackDataDialog._id,
       [e.target.name]: e.target.value,
     });
-    console.log(trackData);
   }
 
   function handleCoverUploadChange(e) {
@@ -76,6 +80,8 @@ function UpdateModal() {
             isUploading: false,
             isUploaded: true,
           });
+          const { data } = response;
+          setTrackData({ ...trackData, urlCover: data.url });
         })
         .catch((error) => {
           setCoverUpload({
@@ -103,8 +109,14 @@ function UpdateModal() {
         genre: { required: "Genre field is required" },
       },
       submitHandler: () => {
-        console.log(trackDataDialog);
-        // updateTrack(trackData).then(handleClose());
+        console.log("object to updated", trackData);
+        updateTrack(trackData);
+        if (!reloadFetch) {
+          dispatch(reloadFetchAction(true));
+        } else {
+          dispatch(reloadFetchAction(false));
+        }
+        dispatch(hideDialogue());
       },
     });
   }
@@ -206,7 +218,7 @@ function UpdateModal() {
 
             <div className="login-register-button-centered">
               <Col className="d-flex justify-content-center">
-                <button type="submit" className="button" disabled={!isReady}>
+                <button type="submit" className="button">
                   Update song
                 </button>
               </Col>
