@@ -197,7 +197,7 @@ async function getTrackById(req, res) {
 }
 
 async function getTrackByTitle(req, res) {
-  const { title } = req.body;
+  const { title } = req.params;
   try {
     //Collect all tracks, turn title to
     //lowercase and initialize tracks to return

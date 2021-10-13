@@ -18,7 +18,12 @@ playlistRouter.patch(
   playlistController.updatePlaylistById,
 );
 playlistRouter.patch(
-  "/delete-playlist-track",
+  "/add-playlist-track/",
+  // authMiddleware,
+  playlistController.addTrackToPlaylist,
+);
+playlistRouter.patch(
+  "/delete-playlist-track/:playlistId",
   authMiddleware,
   playlistController.deleteTrackFromPlaylist,
 );
@@ -43,7 +48,7 @@ playlistRouter.get(
   playlistController.getPlaylistById,
 );
 playlistRouter.get(
-  "/get-playlist-by-title",
+  "/get-playlist-by-title/:title",
   authMiddleware,
   playlistController.getPlaylistByTitle,
 );
