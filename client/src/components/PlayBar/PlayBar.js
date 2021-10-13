@@ -24,7 +24,7 @@ import "./styles.css";
 //Components and MUI icons
 import { Row, Col } from "react-bootstrap";
 import TrackImg from "../TrackImg";
-import FavButton from "../FavButton";
+// import FavButton from "../FavButton";
 import {
   CastOutlined,
   CastConnected,
@@ -36,6 +36,7 @@ import {
   FastRewindOutlined,
   VolumeUpOutlined,
   VolumeOffOutlined,
+  Favorite,
 } from "@material-ui/icons";
 
 function PlayBar() {
@@ -272,8 +273,8 @@ function PlayBar() {
             </Col>
             <Col md={2}>
               <Row>
-                <Col md={4} className="d-none d-md-block playbar-fav-button">
-                  <FavButton />
+                <Col md={1} className="d-none d-md-block playbar-fav-button">
+                  <Favorite className="like-disabled" />
                 </Col>
                 <Col md={8} className="d-none d-md-block playbar-fav-button">
                   {/* TEMPORAL BUTTONS */}

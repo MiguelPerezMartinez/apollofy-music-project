@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/MiguelPerezMartinez/apollofy-music-project#readme",
   "dependencies": {
-    "concurrently": "^6.2.1"
+    "concurrently": "^6.2.1",
+    "react-contextmenu": "^2.14.0"
   }
 }

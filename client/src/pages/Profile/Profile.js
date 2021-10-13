@@ -19,6 +19,9 @@ import Input from "../../components/Input";
 import { Container, Row, Col } from "react-bootstrap";
 import ModalTrackUp from "../../components/ModalTrackUp";
 
+//Charts
+import TotalPlaysChart from "../../components/Charts/TotalPlaysChart";
+
 import { fetchUserData } from "../../redux/userData/actions";
 
 function Profile() {
@@ -389,6 +392,28 @@ function Profile() {
             </div>
           </Col>
         </Container>
+
+        <div className="xl-separator" />
+
+        <Container className="general-container">
+          <Row>
+            <Col xl={9}>
+              <TotalPlaysChart />
+            </Col>
+            <Col xl={3}>
+              <Row>
+                <div className="">MIS CANCIONES</div>
+              </Row>
+              <Row>
+                <div>MIS PLAYLISTS</div>
+              </Row>
+              <Row>
+                <div>ENLACE 3</div>
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+
         <div className="xl-separator" />
         <div className="xl-separator" />
         <div className="xl-separator" />
