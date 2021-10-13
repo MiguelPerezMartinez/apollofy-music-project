@@ -111,12 +111,9 @@ function UpdateModal() {
       submitHandler: () => {
         console.log("object to updated", trackData);
         updateTrack(trackData);
-        if (!reloadFetch) {
-          dispatch(reloadFetchAction(true));
-        } else {
-          dispatch(reloadFetchAction(false));
-        }
         dispatch(hideDialogue());
+
+        dispatch(reloadFetchAction(true));
       },
     });
   }
@@ -125,7 +122,7 @@ function UpdateModal() {
       <form ref={form} onSubmit={saveChanges}>
         <Row>
           <Col xs={12} md={6} className="track-update">
-            <h1 className="h3 mb-3 fw-normal">Upload track</h1>
+            <h1 className="h3 mb-3 fw-normal">Update track</h1>
             <Input
               type="text"
               id="title"

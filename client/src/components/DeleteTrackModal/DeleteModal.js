@@ -5,18 +5,15 @@ import { deleteTrack } from "../../services/api";
 import { hideDialogue } from "../../redux/dialogueHandler/actions";
 import { reloadFetchAction } from "../../redux/trackData/actions";
 
-function DeletModal() {
+function DeleteModal() {
   const { trackDataDialog } = useSelector((state) => state.dialogueHandler);
   const { reloadFetch } = useSelector((state) => state.trackReducer);
   const dispatch = useDispatch();
   function deleteTrackSure() {
     deleteTrack(trackDataDialog._id);
-    if (!reloadFetch) {
-      dispatch(reloadFetchAction(true));
-    } else {
-      dispatch(reloadFetchAction(false));
-    }
+
     dispatch(hideDialogue());
+    dispatch(reloadFetchAction(true));
   }
   return (
     <div className="deleteModal">
@@ -25,4 +22,4 @@ function DeletModal() {
     </div>
   );
 }
-export default DeletModal;
+export default DeleteModal;
