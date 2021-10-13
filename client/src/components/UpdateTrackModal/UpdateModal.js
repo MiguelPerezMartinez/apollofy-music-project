@@ -180,7 +180,7 @@ function UpdateModal() {
                   <Col className="uploaded-file">
                     <h3>Cover changed</h3>
                     <img
-                      src="./assets/img/uploaded.svg"
+                      src={trackData.urlCover}
                       alt="uploaded"
                       className="existing-image"
                     />
