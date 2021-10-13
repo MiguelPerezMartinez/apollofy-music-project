@@ -52,13 +52,13 @@ async function updatePlaylistById(req, res) {
         error: "Playlist ID doesn't exist",
       });
     } else {
-      res.status(200).send({
+      return res.status(200).send({
         message: "Playlist updated successfully",
         updatedPlaylist: dbResponse,
       });
     }
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       data: req.params.id,
       error: error.message,
     });
@@ -92,20 +92,45 @@ async function handlerPlaylistLike(req, res) {
     await playListDoc.save();
     await userDoc.save();
 
-    res.status(200).send({
+    return res.status(200).send({
       message: messageResponse,
       playlistId: playlistId,
       userId: userId,
     });
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
+      error: error.message,
+    });
+  }
+}
+
+async function addTrackToPlaylist(req, res) {
+  const { title, trackId } = req.body;
+  try {
+    //Collect playlist document
+    const playlistDoc = await Playlists.findOne({ title: title });
+    const trackContainedIndex = playlistDoc.tracks.indexOf(trackId);
+
+    //Checking if index exists and if not, adding it to
+    //the playlist and updating the playlist document
+    if (trackContainedIndex === -1) {
+      playlistDoc.tracks.push(trackId);
+      playlistDoc.save();
+    }
+    return res.status(200).send({
+      messageResponse: "Track added successfully",
+      tracks: playlistDoc.tracks,
+    });
+  } catch (error) {
+    return res.status(500).send({
       error: error.message,
     });
   }
 }
 
 async function deleteTrackFromPlaylist(req, res) {
-  const { trackId, playlistId } = req.body;
+  const { playlistId } = req.params;
+  const { trackId } = req.body;
   let messageResponse = "Track not found";
   try {
     //Collect playlist document and track to delete index
@@ -118,13 +143,13 @@ async function deleteTrackFromPlaylist(req, res) {
       playlistDoc.tracks.splice(trackIndexToDelete, 1);
       playlistDoc.save();
     }
-    res.status(200).send({
+    return res.status(200).send({
       message: messageResponse,
       trackId: trackId,
       playListId: playlistId,
     });
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       error: error.message,
     });
   }
@@ -242,18 +267,18 @@ async function isLikedByUser(req, res) {
     const userInLikesArray = playlistDoc.totalLikes.indexOf(userId);
 
     if (userInLikesArray >= 0) {
-      res.status(200).send({
+      return res.status(200).send({
         message: `User: ${userId} likes playlist: ${playlistId}`,
         isLiked: true,
       });
     } else {
-      res.status(200).send({
+      return res.status(200).send({
         message: `User: ${userId} doesn't like playlist: ${playlistId}`,
         isLiked: false,
       });
     }
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       error: error.message,
     });
   }
@@ -283,6 +308,7 @@ module.exports = {
   createPlaylist: createPlaylist,
   updatePlaylistById: updatePlaylistById,
   handlerPlaylistLike: handlerPlaylistLike,
+  addTrackToPlaylist: addTrackToPlaylist,
   deleteTrackFromPlaylist: deleteTrackFromPlaylist,
   deletePlaylistById: deletePlaylistById,
   getAllPlaylists: getAllPlaylists,
