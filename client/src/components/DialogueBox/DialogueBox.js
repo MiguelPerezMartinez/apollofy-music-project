@@ -106,14 +106,14 @@ function DialogueBox() {
           <li className="dialogue-item" onClick={handlerAddToQueue}>
             Add to queue
           </li>
+          <li className="dialogue-item" onClick={handlerAddToMyplaylist}>
+            Add to MyPlaylist
+          </li>
           <li className="dialogue-item" onClick={handlerShare}>
             Share
           </li>
           {isOwner ? (
             <>
-              <li className="dialogue-item" onClick={handlerAddToMyplaylist}>
-                Add to MyPlaylist
-              </li>
               <li className="dialogue-item" onClick={handlerEdit}>
                 Edit
               </li>
@@ -123,7 +123,6 @@ function DialogueBox() {
             </>
           ) : (
             <>
-              <li className="dialogue-item-disabled">Add to MyPlaylist</li>
               <li className="dialogue-item-disabled">Edit</li>
               <li className="dialogue-item-disabled">Delete</li>
             </>

@@ -6,12 +6,11 @@ import { getAllMyPlaylist } from "../../services/api/index";
 import { useSelector } from "react-redux";
 
 function PlaylistSelector(params) {
-  const { trackDataDialog } = useSelector((state) => state.dialogueHandler);
-  const [selectedOption, setSelectedOption] = useState("...");
-  // const [playlists, setPlaylists] = useState([]);
+  const { data } = useSelector((state) => state.userReducer);
+  //const [selectedOption, setSelectedOption] = useState("...");
+
   useEffect(() => {
-    //console.log(trackDataDialog.owner);
-    getAllMyPlaylist(trackDataDialog.owner).then((res) => {
+    getAllMyPlaylist(data.userId).then((res) => {
       const { myPlaylists } = res.data;
       myPlaylists.map((item) => {
         makeNewOptions(item.title);
@@ -21,10 +20,7 @@ function PlaylistSelector(params) {
   function choseOption(e) {
     console.log(e.value);
   }
-  function send(e) {
-    e.preventDefault();
-    console.log(selectedOption);
-  }
+
   const customStyles = {
     option: (provided) => ({
       ...provided,
@@ -33,14 +29,7 @@ function PlaylistSelector(params) {
       padding: 20,
     }),
   };
-  const options = [
-    { value: "jon", label: "jon" },
-    { value: "laia", label: "laia" },
-    { value: "carlos", label: "carlos" },
-    { value: "sergio", label: "sergio" },
-    { value: "xica", label: "xica" },
-    { value: "kim", label: "kim" },
-  ];
+  const options = [];
 
   function makeNewOptions(newPlaylist) {
     options.push({ value: newPlaylist, label: newPlaylist });
