@@ -4,20 +4,10 @@ const { trackController } = require("../controllers");
 const { authMiddleware } = require("../middlewares");
 
 //end points routes:
-trackRouter.get("/", authMiddleware, trackController.getAllTracks);
-trackRouter.get(
-  "/get-track/:id",
-  authMiddleware,
-  trackController.getTrackById,
-);
-trackRouter.post("/upload-track", 
-authMiddleware, 
-trackController.uploadTrack);
-trackRouter.delete(
-  "/delete-track/:id",
-  authMiddleware,
-  trackController.deleteTrack,
-);
+//POST
+trackRouter.post("/upload-track", authMiddleware, trackController.uploadTrack);
+
+//PATCH
 trackRouter.patch(
   "/update-track/:id",
   authMiddleware,
@@ -32,6 +22,22 @@ trackRouter.patch(
   "/increment-total-plays/:id",
   authMiddleware,
   trackController.incrementTotalPlays,
+);
+
+//DELETE
+trackRouter.delete(
+  "/delete-track/:id",
+  authMiddleware,
+  trackController.deleteTrack,
+);
+
+//GET
+trackRouter.get("/", authMiddleware, trackController.getAllTracks);
+trackRouter.get("/get-track/:id", authMiddleware, trackController.getTrackById);
+trackRouter.get(
+  "/get-track-by-title",
+  authMiddleware,
+  trackController.getTrackByTitle,
 );
 trackRouter.get(
   "/get-track/:id/liked",

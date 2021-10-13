@@ -43,6 +43,11 @@ playlistRouter.get(
   playlistController.getPlaylistById,
 );
 playlistRouter.get(
+  "/get-playlist-by-title",
+  authMiddleware,
+  playlistController.getPlaylistByTitle,
+);
+playlistRouter.get(
   "/get-playlist/:id/liked",
   authMiddleware,
   playlistController.isLikedByUser,
