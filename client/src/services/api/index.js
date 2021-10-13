@@ -15,6 +15,7 @@ import {
   addTotalPlay,
   deleteTrack,
   updateTrack,
+  getTrackByName,
 } from "./trackManager";
 import { changeMyProfilePicture } from "./fileUploader";
 
@@ -33,4 +34,5 @@ export {
   addTotalPlay,
   deleteTrack,
   updateTrack,
+  getTrackByName,
 };

@@ -8,10 +8,11 @@ import BarsAndModal from "../../hoc/BarsAndModal";
 import { SearchOutlined } from "@material-ui/icons";
 import Input from "../../components/Input";
 
+import { getTrackByName } from "../../services/api/index";
 function Search() {
   const [query, setQuery] = useState("");
 
-  let searchTracks = JSON.parse(localStorage.getItem("trackHistory"));
+  const [searchTracks, setSearchTracks] = useState([]);
 
   function handleChange(e) {
     setQuery(e.target.value);
@@ -19,7 +20,9 @@ function Search() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("form submitted ", query);
+    getTrackByName(query).then((response) => {
+      setSearchTracks(response.data.tracks);
+    });
   }
 
   return (
@@ -42,11 +45,26 @@ function Search() {
             </form>
           </Col>
         </Row>
-        <h1>Tracks</h1>
-        {searchTracks.length > 0 &&
-          searchTracks.map((track, index) => (
-            <Track dataTrack={track} key={index} />
-          ))}
+        <Row>
+          <h1>Tracks</h1>
+          {searchTracks.length > 0 ? (
+            searchTracks.map((track, index) => (
+              <Track dataTrack={track} key={index} />
+            ))
+          ) : (
+            <p>No results</p>
+          )}
+        </Row>
+        <Row>
+          <h1>Tracks</h1>
+          {searchTracks.length > 0 ? (
+            searchTracks.map((track, index) => (
+              <Track dataTrack={track} key={index} />
+            ))
+          ) : (
+            <p>No results</p>
+          )}
+        </Row>
       </Container>
     </main>
   );
