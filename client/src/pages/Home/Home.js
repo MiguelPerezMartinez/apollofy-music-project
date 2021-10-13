@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import "./styles.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faBroadcastTower } from "@fortawesome/free-solid-svg-icons";
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
 import BarsAndModal from "../../hoc/BarsAndModal";
@@ -18,9 +21,7 @@ import Track from "../../components/Track";
 import { Container, Row, Col } from "react-bootstrap";
 import ScrollContainer from "react-indiana-drag-scroll";
 import BlockTrack from "../../components/BlockTrack";
-import FavPlaylist from "../../components/FavPlaylist";
-import LikedSongs from "../../components/LikedSongs";
-import YourRadio from "../../components/YourRadio";
+import LinkCards from "../../components/LinkCards";
 
 function Home() {
   const { reloadFetch } = useSelector((state) => state.trackReducer);
@@ -78,15 +79,15 @@ function Home() {
               <div className="home-top-col-targets">
                 <Row>
                   <Col xs={12}>
-                    <LikedSongs />
+                    <LinkCards name="Like Songs" icon={faHeart} />
                   </Col>
                 </Row>
                 <Row>
                   <Col xs={12} md={12} lg={6}>
-                    <FavPlaylist />
+                    <LinkCards name="Favourite Playlist" icon={faPlayCircle} />
                   </Col>
                   <Col xs={12} md={12} lg={6}>
-                    <YourRadio />
+                    <LinkCards name="Your Radio" icon={faBroadcastTower} />
                   </Col>
                 </Row>
               </div>
