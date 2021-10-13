@@ -2,6 +2,7 @@ import "./style.css";
 import React, { useState } from "react";
 import Select from "react-select";
 import Button from "../../components/Button";
+import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 
 function PlaylistSelector(params) {
   const [selectedOption, setSelectedOption] = useState("...");
@@ -28,6 +29,12 @@ function PlaylistSelector(params) {
     { value: "xica", label: "xica" },
     { value: "kim", label: "kim" },
   ];
+  //   respos.data.map((item)=>{
+  //     makeNewOptions(item.name)
+  //   })
+  function makeNewOptions(newPlaylist) {
+    options.push({ value: newPlaylist, label: newPlaylist });
+  }
   return (
     <div className="selectorModal">
       <h2 className="titleSelect">Select your playlist: </h2>
