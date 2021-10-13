@@ -3,6 +3,7 @@ import {
   HIDE_DIALOGUE,
   SHOW_UPDATE_MODAL,
   SHOW_DELETE_MODAL,
+  SHOW_MY_PLAYLIST,
 } from "./types";
 
 export const showDialogue = (data, position) => ({
@@ -16,5 +17,10 @@ export const showUpdateAction = (value) => ({
 });
 export const showDeleteAction = (value) => ({
   type: SHOW_DELETE_MODAL,
+  playload: value,
+});
+
+export const showMyPlaylistAction = (value) => ({
+  type: SHOW_MY_PLAYLIST,
   playload: value,
 });

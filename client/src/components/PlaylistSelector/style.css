@@ -1,0 +1,17 @@
+.selectorModal {
+  position: fixed;
+  background: linear-gradient(-30deg, var(--blue) 5%, rgb(5, 187, 14));
+  max-width: 50%;
+  left: 25%;
+  top: 30%;
+  z-index: 100;
+  border-radius: 25px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+  align-items: center;
+  padding: 10%;
+}
+.titleSelect {
+  color: rgb(174, 214, 176);
+}

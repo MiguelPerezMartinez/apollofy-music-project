@@ -7,6 +7,7 @@ import {
   hideDialogue,
   showUpdateAction,
   showDeleteAction,
+  showMyPlaylistAction,
 } from "../../redux/dialogueHandler/actions";
 
 import { setTrackQueueInLocalStorage } from "../../services/localStorage";
@@ -72,17 +73,25 @@ function DialogueBox() {
     setTrackQueueInLocalStorage(trackDataDialog);
     alert(`${trackDataDialog.title} added to queue.`);
   }
+  function handlerAddToMyplaylist() {
+    //Code to add the track to queue
+    dispatch(showMyPlaylistAction(true));
+    dispatch(showUpdateAction(false));
+    dispatch(showDeleteAction(false));
+  }
 
   function handlerEdit() {
     //Code to edit the track
     dispatch(showUpdateAction(true));
     dispatch(showDeleteAction(false));
+    dispatch(showMyPlaylistAction(false));
   }
 
   function handlerDelete() {
     //Code to delete the track
     dispatch(showDeleteAction(true));
     dispatch(showUpdateAction(false));
+    dispatch(showMyPlaylistAction(false));
   }
 
   function handlerShare() {
@@ -102,6 +111,9 @@ function DialogueBox() {
           </li>
           {isOwner ? (
             <>
+              <li className="dialogue-item" onClick={handlerAddToMyplaylist}>
+                Add to MyPlaylist
+              </li>
               <li className="dialogue-item" onClick={handlerEdit}>
                 Edit
               </li>
@@ -111,6 +123,7 @@ function DialogueBox() {
             </>
           ) : (
             <>
+              <li className="dialogue-item-disabled">Add to MyPlaylist</li>
               <li className="dialogue-item-disabled">Edit</li>
               <li className="dialogue-item-disabled">Delete</li>
             </>
