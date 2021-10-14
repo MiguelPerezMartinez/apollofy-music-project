@@ -4,6 +4,7 @@ const initialState = {
   trackDataDialog: {},
   showDelete: false,
   showUpdate: false,
+  showMyPlaylist: false,
 };
 
 export default initialState;

@@ -7,7 +7,7 @@ const { authMiddleware } = require("../middlewares");
 //POST
 playlistRouter.post(
   "/create-playlist",
-  authMiddleware,
+  //authMiddleware,
   playlistController.createPlaylist,
 );
 
@@ -18,7 +18,12 @@ playlistRouter.patch(
   playlistController.updatePlaylistById,
 );
 playlistRouter.patch(
-  "/delete-playlist-track",
+  "/add-playlist-track/",
+  // authMiddleware,
+  playlistController.addTrackToPlaylist,
+);
+playlistRouter.patch(
+  "/delete-playlist-track/:playlistId",
   authMiddleware,
   playlistController.deleteTrackFromPlaylist,
 );
@@ -41,6 +46,11 @@ playlistRouter.get(
   "/get-playlist/:id",
   authMiddleware,
   playlistController.getPlaylistById,
+);
+playlistRouter.get(
+  "/get-playlist-by-title/:title",
+  authMiddleware,
+  playlistController.getPlaylistByTitle,
 );
 playlistRouter.get(
   "/get-playlist/:id/liked",

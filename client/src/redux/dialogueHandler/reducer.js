@@ -3,6 +3,7 @@ import {
   HIDE_DIALOGUE,
   SHOW_UPDATE_MODAL,
   SHOW_DELETE_MODAL,
+  SHOW_MY_PLAYLIST,
 } from "./types";
 import initialState from "./state";
 
@@ -24,6 +25,11 @@ const dialogueHandlerReducer = (state = initialState, action) => {
       return {
         ...state,
         showDelete: action.playload,
+      };
+    case SHOW_MY_PLAYLIST:
+      return {
+        ...state,
+        showMyPlaylist: action.playload,
       };
     case HIDE_DIALOGUE:
       return initialState;

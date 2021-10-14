@@ -8,6 +8,7 @@ import PlayBar from "../components/PlayBar";
 import DialogueBox from "../components/DialogueBox";
 import UpdateModal from "../components/UpdateTrackModal";
 import DeleteModal from "../components/DeleteTrackModal";
+import PlaylistSelector from "../components/PlaylistSelector";
 
 function BarsAndModal(WrappedComponent) {
   function WrapperComponent() {
@@ -17,7 +18,7 @@ function BarsAndModal(WrappedComponent) {
     const handleCloseModal = () => setShowModal(false);
     const handleOpenModal = () => setShowModal(true);
 
-    const { active, showDelete, showUpdate } = useSelector(
+    const { active, showDelete, showUpdate, showMyPlaylist } = useSelector(
       (state) => state.dialogueHandler,
     );
 
@@ -34,6 +35,7 @@ function BarsAndModal(WrappedComponent) {
         {active && <DialogueBox />}
         {showDelete && <DeleteModal />}
         {showUpdate && <UpdateModal />}
+        {showMyPlaylist && <PlaylistSelector />}
         {showModal && <ModalTrackUp handleClose={handleCloseModal} />}
         <WrappedComponent />
         {isPlayBarDisplayed && <PlayBar />}
