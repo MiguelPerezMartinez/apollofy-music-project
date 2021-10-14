@@ -11,6 +11,9 @@ import ResetPassword from "./pages/RecoverPassword";
 import ChangePassword from "./pages/ChangePassword";
 import ElementsList from "./pages/ElementsList";
 
+//Components
+import PlayBar from "./components/PlayBar";
+
 //Redux actions
 import { fetchStateIsAuthorized } from "./redux/isAuthorized/actions";
 import { fetchUserData, resetUserData } from "./redux/userData/actions";
@@ -22,6 +25,9 @@ function App() {
   const dispatch = useDispatch();
   const isAuthorized = useSelector((state) => state.isAuthorized);
   const userData = useSelector((state) => state.userReducer);
+
+  // Redux State to show the playbar
+  const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
 
   useEffect(() => {
     if (isAuthorized.loaded && isAuthorized.value) {
@@ -58,6 +64,7 @@ function App() {
       <Switch>
         <Route path="/favourite-playlists" component={ElementsList} />
         <Route path="/favourite-tracks" component={ElementsList} />
+        <Route path="/my-playlists" component={ElementsList} />
         <Route path="/my-tracks" component={ElementsList} />
         <Route path="/history-tracks" component={ElementsList} />
         <Route path="/queue-tracks" component={ElementsList} />
@@ -69,6 +76,7 @@ function App() {
         <Route path="/radio" component={ElementsList} />
         <Route exact path="/" component={Home} />
       </Switch>
+      {isPlayBarDisplayed && <PlayBar />}
     </>
   );
 }

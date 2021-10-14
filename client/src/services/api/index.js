@@ -17,7 +17,11 @@ import {
   updateTrack,
 } from "./trackManager";
 import { changeMyProfilePicture } from "./fileUploader";
-
+import {
+  getAllMyPlaylist,
+  addTrackToPlaylist,
+  createNewPlaylistApi,
+} from "./apiPlaylist";
 export {
   registerInApi,
   getById,
@@ -33,4 +37,7 @@ export {
   addTotalPlay,
   deleteTrack,
   updateTrack,
+  getAllMyPlaylist,
+  addTrackToPlaylist,
+  createNewPlaylistApi,
 };
