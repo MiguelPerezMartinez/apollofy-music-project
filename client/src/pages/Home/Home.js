@@ -3,9 +3,12 @@ import React, { useState, useEffect } from "react";
 import "./styles.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { faBroadcastTower } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlayCircle,
+  faHeart,
+  faBroadcastTower,
+} from "@fortawesome/free-solid-svg-icons";
+
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
 import BarsAndModal from "../../hoc/BarsAndModal";
@@ -85,15 +88,27 @@ function Home() {
               <div className="home-top-col-targets">
                 <Row>
                   <Col xs={12}>
-                    <LinkCards name="Like Songs" icon={faHeart} />
+                    <LinkCards
+                      name="Favourite Songs"
+                      icon={faHeart}
+                      to="/favourite-tracks"
+                    />
                   </Col>
                 </Row>
                 <Row>
                   <Col xs={12} md={12} lg={6}>
-                    <LinkCards name="Favourite Playlist" icon={faPlayCircle} />
+                    <LinkCards
+                      name="Favourite Playlist"
+                      icon={faPlayCircle}
+                      to="/favourite-playlists"
+                    />
                   </Col>
                   <Col xs={12} md={12} lg={6}>
-                    <LinkCards name="Your Radio" icon={faBroadcastTower} />
+                    <LinkCards
+                      name="Your Radio"
+                      icon={faBroadcastTower}
+                      to=""
+                    />
                   </Col>
                 </Row>
               </div>
@@ -128,9 +143,11 @@ function Home() {
               })}
             </Row>
           </ScrollContainer>
+        </Container>
 
-          <div className="xl-separator" />
+        <div className="xl-separator" />
 
+        <Container>
           <h1>Last Uploaded:</h1>
           <Row sm xs={4} md={4} lg={2}>
             {lastUploadedTracks.map((track, index) => {
@@ -141,9 +158,11 @@ function Home() {
               );
             })}
           </Row>
+        </Container>
 
-          <div className="xl-separator" />
+        <div className="xl-separator" />
 
+        <Container>
           <h1>Trash Tracks:</h1>
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
@@ -156,9 +175,11 @@ function Home() {
               })}
             </Row>
           </ScrollContainer>
+        </Container>
 
-          <div className="xl-separator" />
+        <div className="xl-separator" />
 
+        <Container>
           <h1>Pachanga selection for you:</h1>
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
