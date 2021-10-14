@@ -1,5 +1,5 @@
 // imports
-const { Tracks, Users, Playlists } = require("../models");
+const { Users, Playlists } = require("../models");
 
 // functions
 
