@@ -75,3 +75,14 @@ export async function updateTrack(track) {
       console.log(error);
     });
 }
+
+export async function getTrackById(id) {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "GET",
+    url: `${process.env.REACT_APP_URL}tracks/get-track/${id}`,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
