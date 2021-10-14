@@ -1,18 +1,29 @@
 import "./style.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import Button from "../../components/Button";
-import { getAllMyPlaylist, addTrackToPlaylist } from "../../services/api/index";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
+import {
+  getAllMyPlaylist,
+  addTrackToPlaylist,
+  createNewPlaylistApi,
+} from "../../services/api/index";
 import { useDispatch, useSelector } from "react-redux";
 import { setMyPlaylistModal } from "../../redux/modalsHandler/actions";
 
 import "./style.css";
 
+import Input from "../Input";
 function PlaylistSelector() {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.userReducer);
   const trackDataDialog = useSelector((state) => state.modalsHandler.data);
-
+  const [formToCreatePlaylist, setFormToCreatePlaylist] = useState(false);
+  const [newPlaylist, setNewPlaylist] = useState({
+    title: "",
+    owner: data.userId,
+    private: false,
+  });
   //const [selectedOption, setSelectedOption] = useState("...");
 
   useEffect(() => {
@@ -23,6 +34,34 @@ function PlaylistSelector() {
       });
     });
   }, []);
+  async function createNewPlaylist(e) {
+    e.preventDefault();
+    await createNewPlaylistApi(newPlaylist);
+    await addTrackToPlaylist(newPlaylist.title, trackDataDialog._id);
+    dispatch(setMyPlaylistModal(false));
+  }
+  function handleChangeTitle(e) {
+    if (e.target.value === false) {
+      e.target.value = true;
+    }
+    // } else if (e.target.value === true) {
+    //   e.target.value = false;
+    // }
+    setNewPlaylist({
+      ...newPlaylist,
+
+      [e.target.name]: e.target.value,
+    });
+  }
+  function handleChangeCheckBox(e) {
+    // } else if (e.target.value === true) {
+    //   e.target.value = false;
+    // }
+    setNewPlaylist({
+      ...newPlaylist,
+      [e.target.name]: e.target.checked,
+    });
+  }
 
   function choseOption(e) {
     addTrackToPlaylist(e.value, trackDataDialog._id);
@@ -63,12 +102,38 @@ function PlaylistSelector() {
         />
 
         <h2 className="titleSelect">or... </h2>
-        <Button
-          title={"Add new one"}
-          handleEdit={() => {
-            alert("go to create new playlis");
-          }}
-        />
+        {formToCreatePlaylist ? (
+          <form onSubmit={createNewPlaylist}>
+            <Input
+              type="text"
+              id="title"
+              placeholder="new playlist"
+              value={newPlaylist.title}
+              label="new playlist"
+              handleChange={handleChangeTitle}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="private"
+                  checked={newPlaylist.private}
+                  onChange={handleChangeCheckBox}
+                />
+              }
+              label="Private"
+            />
+            <button className="submit-new-playlist-button" type="submit">
+              create
+            </button>
+          </form>
+        ) : (
+          <Button
+            title={"Add new one"}
+            handleEdit={() => {
+              setFormToCreatePlaylist(true);
+            }}
+          />
+        )}
       </div>
     </>
   );

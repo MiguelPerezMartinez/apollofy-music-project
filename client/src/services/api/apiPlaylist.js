@@ -27,3 +27,25 @@ export async function addTrackToPlaylist(playlisTitle, trackId) {
     },
   });
 }
+export async function createNewPlaylistApi(playListData) {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "POST",
+    url: `${process.env.REACT_APP_URL}playlists/create-playlist`,
+    data: playListData,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
+export async function deleteTrackFromPlaylistApi(playlistId, trackId) {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "PATCH",
+    url: `${process.env.REACT_APP_URL}playlists/delete-playlist-track/${playlistId}`,
+    data: { trackId: trackId },
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}

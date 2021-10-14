@@ -1,16 +1,19 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router";
 
 import "./styles.css";
 
 import { logOut } from "../../services/firebase";
+import { setSearchQuery } from "../../redux/searchHandler/actions";
 
 //Icons
 import { HomeOutlined, CloudUpload, SearchOutlined } from "@material-ui/icons";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 import ProfileCircleIcon from "../ProfileCircleIcon";
+import Input from "../../components/Input";
 
 import { isPlayBarDisplayedAction } from "../../redux/trackData/actions";
 import { setUploadTrackModal } from "../../redux/modalsHandler/actions";
@@ -22,13 +25,32 @@ export default function RightMenu() {
   const { username, profileImg } = useSelector(
     (state) => state.userReducer.data,
   );
+  const { query } = useSelector((state) => state.searchHandler);
+
+  let location = useLocation();
+
+  const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
+
+  function handleChange(e) {
+    dispatch(setSearchQuery(e.target.value));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    console.log(query);
+    if (location.pathname !== "/search") {
+      setIsSearchSubmitted(true);
+    }
+  }
 
   function handleLogout() {
     dispatch(isPlayBarDisplayedAction(false));
     logOut();
   }
 
-  return (
+  return isSearchSubmitted ? (
+    <Redirect to="/search" />
+  ) : (
     <aside className="right-menu">
       <div>
         <Link to="/profile" className="right-menu-row">
@@ -54,9 +76,16 @@ export default function RightMenu() {
       <div>
         <div className="right-menu-row no-hover">
           <SearchOutlined fontSize="large" />
-          <div className="right-menu-row-title">
-            <input type="text" placeholder="Search" />
-          </div>
+          <form onSubmit={handleSubmit}>
+            <Input
+              type="text"
+              id="searchQuery"
+              label=""
+              value={query}
+              placeholder="Type your search"
+              handleChange={handleChange}
+            />
+          </form>
         </div>
       </div>
       <div>
