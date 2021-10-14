@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as $ from "jquery";
 import validate from "jquery-validation";
 import axios from "axios";
-
+import Select from "react-select";
 import "./styles.css";
 
 //Import components
@@ -96,6 +96,13 @@ function ModalTrackUp() {
     console.log(trackData);
   }
 
+  function choseGenre(e) {
+    setTrackData({
+      ...trackData,
+
+      genre: e.value,
+    });
+  }
   function handleCoverUploadChange(e) {
     setCoverUpload({
       ...coverUpload,
@@ -199,7 +206,23 @@ function ModalTrackUp() {
       },
     });
   }
-
+  const customStyles = {
+    option: (provided) => ({
+      ...provided,
+      borderBottom: "1px dotted pink",
+      color: "green",
+      padding: 20,
+    }),
+  };
+  const options = [
+    { value: "Pop", label: "Pop" },
+    { value: "Rock", label: "Rock" },
+    { value: "Cumbia", label: "Cumbia" },
+    { value: "Dance", label: "Dance" },
+    { value: "Latino", label: "Latino" },
+    { value: "Rap", label: "Rap" },
+    { value: "Country", label: "Country" },
+  ];
   return (
     <>
       <div className="modal-background" onClick={handleBlur}>
@@ -239,15 +262,21 @@ function ModalTrackUp() {
                 placeholder="Type release year"
                 handleChange={handleChange}
               />
-              <Input
+              {/* <Input
                 type="text"
                 id="genre"
                 label="Genre *"
                 value={trackData.genre}
                 placeholder="Type genre"
                 handleChange={handleChange}
+              /> */}
+              <Select
+                width="500px"
+                menuColor="red"
+                styles={customStyles}
+                onChange={choseGenre}
+                options={options}
               />
-
               <div className="xl-separator" />
 
               <Row className="upload-separator">
