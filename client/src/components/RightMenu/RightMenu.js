@@ -1,24 +1,30 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./styles.css";
 
 import { logOut } from "../../services/firebase";
 
-//Components
-import { Row, Col } from "react-bootstrap";
-
 //Icons
 import { HomeOutlined, CloudUpload, SearchOutlined } from "@material-ui/icons";
-
 import ProfileCircleIcon from "../ProfileCircleIcon";
 
-export default function RightMenu({ handleOpenModal, handleCloseModal }) {
+import { isPlayBarDisplayedAction } from "../../redux/trackData/actions";
+import { setUploadTrackModal } from "../../redux/modalsHandler/actions";
+
+export default function RightMenu() {
+  const dispatch = useDispatch();
+
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const { username, profileImg } = useSelector(
     (state) => state.userReducer.data,
   );
+
+  function handleLogout() {
+    dispatch(isPlayBarDisplayedAction(false));
+    logOut();
+  }
 
   return (
     <aside className="right-menu">
@@ -32,8 +38,9 @@ export default function RightMenu({ handleOpenModal, handleCloseModal }) {
       <div
         onClick={() => {
           isUploadModalOpen
-            ? handleCloseModal() && setIsUploadModalOpen(false)
-            : handleOpenModal() && setIsUploadModalOpen(true);
+            ? dispatch(setUploadTrackModal(false)) &&
+              setIsUploadModalOpen(false)
+            : dispatch(setUploadTrackModal(true)) && setIsUploadModalOpen(true);
         }}
       >
         <div className="right-menu-row">
@@ -56,7 +63,7 @@ export default function RightMenu({ handleOpenModal, handleCloseModal }) {
           <div className="right-menu-row-title">Home</div>
         </Link>
       </div>
-      <div onClick={logOut} className="right-menu-logout">
+      <div onClick={handleLogout} className="right-menu-logout">
         <div className="right-menu-row">
           <img
             src="./assets/img/logout.svg"

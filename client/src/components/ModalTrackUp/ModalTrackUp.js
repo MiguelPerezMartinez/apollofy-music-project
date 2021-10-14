@@ -11,8 +11,9 @@ import { Row, Col } from "react-bootstrap";
 import Input from "../Input";
 
 import { apiTrackUpload } from "../../services/api/index";
+import { setUploadTrackModal } from "../../redux/modalsHandler/actions";
 
-function ModalTrackUp({ handleClose }) {
+function ModalTrackUp() {
   const form = useRef();
   const dispatch = useDispatch();
   const userReducer = useSelector((state) => state.userReducer);
@@ -81,7 +82,7 @@ function ModalTrackUp({ handleClose }) {
 
   const handleBlur = (e) => {
     if (e.target.className === "modal-background") {
-      handleClose();
+      dispatch(setUploadTrackModal(false));
     }
   };
 
@@ -194,7 +195,7 @@ function ModalTrackUp({ handleClose }) {
       },
       submitHandler: () => {
         console.log(trackData);
-        apiTrackUpload(trackData).then(handleClose());
+        apiTrackUpload(trackData).then(dispatch(setUploadTrackModal(false)));
       },
     });
   }

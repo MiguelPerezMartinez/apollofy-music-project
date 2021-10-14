@@ -4,11 +4,7 @@ import { Link } from "react-router-dom";
 
 import { addTotalPlay } from "../../services/api";
 import {
-  isPlay,
-  isPlayBarDisplayed,
-  setWaveSurfer,
   trackObjectAction,
-  setemptyHistoryQueue,
   setPositionInHistory,
 } from "../../redux/trackData/actions";
 import {
@@ -16,8 +12,15 @@ import {
   resetPositionInHistory,
 } from "../../services/localStorage";
 
-import WaveSurfer from "wavesurfer.js";
-// import WaveSound from "../WaveSound";
+import {
+  WSLoadNewTrack,
+  WSTogglePlayPause,
+  WSRewindBackward,
+  WSFastForward,
+  WSToggleMute,
+  WSSetVolume,
+  WSDestroyInstance,
+} from "../../services/waveSurfer";
 
 import "./styles.css";
 
@@ -41,44 +44,72 @@ import {
 
 function PlayBar() {
   //Redux and ref vars
-  const trackReducer = useSelector((state) => state.trackReducer);
-  const { isPlaying, waveSurfer, trackObject, positionInHistory } =
-    trackReducer;
+  const { trackObject, positionInHistory } = useSelector(
+    (state) => state.trackReducer,
+  );
 
   const dispatch = useDispatch();
   const waveformRef = useRef();
 
   //State vars
-  const [isMute, setMute] = useState(false);
+  const [volume, setVolume] = useState(50);
+  const [isMute, setIsMute] = useState(false);
   const [isPlayPause, setPlayPause] = useState(true);
-  const [isChromeCast, setChromecast] = useState(false);
+  const [isChromeCast, setIsChromecast] = useState(false);
   const [trackProgressTime, setTrackProgressTime] = useState(0);
   const [trackDurationTime, setTrackDurationTime] = useState(0);
+  const [isTrackLoaded, setIsTrackLoaded] = useState(false);
 
-  function playPause() {
-    waveSurfer.playPause();
-    if (isPlaying) {
-      dispatch(isPlay(false));
-    } else {
-      dispatch(isPlay(true));
-    }
+  // const [waveSurfer, setWaveSurfer] = useState(null);
+
+  // action when new track is loaded
+  useEffect(() => {
+    setIsTrackLoaded(false);
+    WSLoadNewTrack(
+      trackObject.urlTrack,
+      {
+        isMute: isMute,
+        volume: volume,
+      },
+      (duration) => {
+        setIsTrackLoaded(true);
+        setTrackDurationTime(duration);
+        setPlayPause(true);
+        setTrackHistoryInLocalStorage(trackObject);
+        addTotalPlay(trackObject._id);
+      },
+      (currentTime) => {
+        setTrackProgressTime(currentTime);
+      },
+      () => {
+        skipForward();
+      },
+    );
+    // eslint-disable-next-line
+  }, [trackObject]);
+
+  // action when volume is changed
+  useEffect(() => {
+    if (isMute) handlerMute();
+    WSSetVolume(volume);
+    // eslint-disable-next-line
+  }, [volume]);
+
+  // action when the component is unmounted
+  useEffect(() => {
+    return WSDestroyInstance;
+  }, []);
+
+  function handlerPlayPause() {
+    setPlayPause(WSTogglePlayPause());
   }
 
-  function rewindBackward() {
-    waveSurfer.skipBackward(5);
-  }
-
-  function fastForward() {
-    waveSurfer.skipForward(5);
-  }
   function skipBackward() {
     const historySongs = JSON.parse(localStorage.getItem("trackHistory"));
 
     if (positionInHistory > 0) {
       dispatch(setPositionInHistory(positionInHistory - 1));
     }
-
-    console.log("position ", positionInHistory);
 
     const prevSong = JSON.parse(localStorage.getItem("trackHistory"))[
       positionInHistory
@@ -103,88 +134,16 @@ function PlayBar() {
     dispatch(setPositionInHistory(resetedHistoryPosition));
   }
 
-  function isItMute() {
-    if (isMute) {
-      setMute(false);
-      waveSurfer.setMute(false);
-    } else {
-      setMute(true);
-      waveSurfer.setMute(true);
-    }
+  function handlerMute() {
+    const state = WSToggleMute();
+    if (!state) WSSetVolume(volume);
+    setIsMute(state);
   }
 
-  function handleVolume(e) {
-    waveSurfer.setVolume(e.target.value / 100);
+  function handlerChromeCast() {
+    setIsChromecast(!isChromeCast);
   }
 
-  function isChromeCastOn() {
-    if (isChromeCast) {
-      console.log("Chromecast is off");
-      setChromecast(false);
-    } else {
-      console.log("Chromecast is on");
-      setChromecast(true);
-    }
-  }
-  function incrementPlays() {
-    console.log(trackObject._id);
-    addTotalPlay(trackObject._id);
-  }
-
-  useEffect(() => {
-    if (waveSurfer != null) {
-      waveSurfer.destroy();
-    }
-    const wavesurfer = WaveSurfer.create({
-      container: waveformRef.current,
-      waveColor: "#D9DCFF",
-      progressColor: "#4353FF",
-      cursorColor: "#4353FF",
-      barWidth: 2,
-      barRadius: 3,
-      cursorWidth: 0,
-      height: 48,
-      barGap: 2,
-      hideScrollbar: true,
-      // fillParent: true
-      partialRender: true,
-      fillParent: true,
-      autoCenter: true,
-      responsive: true,
-    });
-    dispatch(setWaveSurfer(wavesurfer));
-
-    wavesurfer.load(trackObject.urlTrack);
-
-    wavesurfer.on("ready", () => {
-      let finalsecond = Math.floor(wavesurfer.getDuration() % 60);
-      let finalminute = Math.floor((wavesurfer.getDuration() / 60) % 60);
-      if (finalsecond < 10) {
-        finalsecond = "0" + finalminute;
-      }
-
-      setTrackDurationTime(finalminute + ":" + finalsecond);
-      wavesurfer.play();
-      setTrackHistoryInLocalStorage(trackObject);
-      dispatch(isPlay(true));
-      incrementPlays();
-    });
-    //set track progress time
-    wavesurfer.on("audioprocess", function (e) {
-      let second = Math.floor(wavesurfer.getCurrentTime() % 60);
-      let minute = Math.floor((wavesurfer.getCurrentTime() / 60) % 60);
-
-      if (second < 10) {
-        second = "0" + second;
-      }
-
-      setTrackProgressTime(minute + ":" + second);
-    });
-    //reset play button
-    wavesurfer.on("finish", function (e) {
-      skipForward();
-    });
-  }, [trackObject]);
   return (
     <>
       <Row>
@@ -215,25 +174,36 @@ function PlayBar() {
                   </div>
                 </Col>
                 <Col lg={1} className="d-none d-lg-block">
-                  <div onClick={rewindBackward}>
-                    <FastRewindOutlined fontSize="large" />
-                  </div>
+                  {isTrackLoaded && (
+                    <div onClick={WSRewindBackward}>
+                      <FastRewindOutlined fontSize="large" />
+                    </div>
+                  )}
                 </Col>
                 <Col lg={1} md={4} xs={4}>
-                  {isPlaying ? (
-                    <div onClick={playPause}>
+                  {!isTrackLoaded && (
+                    <div className="lds-ripple">
+                      <div></div>
+                      <div></div>
+                    </div>
+                  )}
+                  {isTrackLoaded && isPlayPause && (
+                    <div onClick={handlerPlayPause}>
                       <PauseOutlined fontSize="large" />
                     </div>
-                  ) : (
-                    <div onClick={playPause}>
+                  )}
+                  {isTrackLoaded && !isPlayPause && (
+                    <div onClick={handlerPlayPause}>
                       <PlayArrowOutlined fontSize="large" />
                     </div>
                   )}
                 </Col>
                 <Col lg={1} className="d-none d-lg-block">
-                  <div onClick={fastForward}>
-                    <FastForwardOutlined fontSize="large" />
-                  </div>
+                  {isTrackLoaded && (
+                    <div onClick={WSFastForward}>
+                      <FastForwardOutlined fontSize="large" />
+                    </div>
+                  )}
                 </Col>
                 <Col lg={1} md={4} xs={4}>
                   <div onClick={skipForward}>
@@ -248,27 +218,37 @@ function PlayBar() {
               </Row>
             </Col>
             <Col lg={1} className="d-none d-lg-block">
-              <Row className="playbar-timer">
-                {trackProgressTime} / {trackDurationTime}
-              </Row>
+              {isTrackLoaded && (
+                <Row className="playbar-timer">
+                  {trackProgressTime} / {trackDurationTime}
+                </Row>
+              )}
             </Col>
             <Col lg={2} className="d-none d-lg-block">
-              <Row className="playbar-volume-container">
-                <Col lg={2}>
-                  {!isMute ? (
-                    <div onClick={isItMute}>
-                      <VolumeUpOutlined fontSize="medium" />
-                    </div>
-                  ) : (
-                    <div onClick={isItMute}>
-                      <VolumeOffOutlined fontSize="medium" />
-                    </div>
-                  )}
-                </Col>
-                <Col lg={6}>
-                  <input type="range" onChange={handleVolume} />
-                </Col>
-              </Row>
+              {isTrackLoaded && (
+                <Row className="playbar-volume-container">
+                  <Col lg={2}>
+                    {!isMute ? (
+                      <div onClick={handlerMute}>
+                        <VolumeUpOutlined fontSize="medium" />
+                      </div>
+                    ) : (
+                      <div onClick={handlerMute}>
+                        <VolumeOffOutlined fontSize="medium" />
+                      </div>
+                    )}
+                  </Col>
+                  <Col lg={6}>
+                    <input
+                      type="range"
+                      value={volume}
+                      onChange={(e) => {
+                        setVolume(e.target.value);
+                      }}
+                    />
+                  </Col>
+                </Row>
+              )}
             </Col>
             <Col md={2}>
               <Row>
@@ -280,6 +260,7 @@ function PlayBar() {
                   <Link to="/queue-tracks">
                     <div>show queue</div>
                   </Link>
+                  <button onClick={WSDestroyInstance}>Adiós</button>
                 </Col>
               </Row>
             </Col>
@@ -288,11 +269,11 @@ function PlayBar() {
         <Col>
           <Row className="playbar-cast-container d-none d-lg-block d-md-block">
             {!isChromeCast ? (
-              <div onClick={isChromeCastOn} className="cast-block">
+              <div onClick={handlerChromeCast} className="cast-block">
                 <CastOutlined fontSize="medium" />
               </div>
             ) : (
-              <div onClick={isChromeCastOn} className="cast-block">
+              <div onClick={handlerChromeCast} className="cast-block">
                 <CastConnected fontSize="medium" />
               </div>
             )}

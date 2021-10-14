@@ -1,7 +1,6 @@
 //Imports
 import React, { useState, useEffect } from "react";
 import "./styles.css";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
@@ -55,7 +54,15 @@ function Home() {
       });
       dispatch(reloadFetchAction(false));
     }
+    // eslint-disable-next-line
   }, [reloadFetch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(reloadFetchAction(true));
+    };
+    // eslint-disable-next-line
+  }, []);
 
   // track arrays mocks
   // let topTracks = [];

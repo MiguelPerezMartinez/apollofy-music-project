@@ -5,10 +5,12 @@ import "./styles.css";
 import TrackImg from "../TrackImg";
 
 import { useDispatch, useSelector } from "react-redux";
-import { trackObjectAction } from "../../redux/trackData/actions";
+import {
+  reloadFetchAction,
+  trackObjectAction,
+} from "../../redux/trackData/actions";
 import {
   isPlayBarDisplayedAction,
-  isPlay,
   setPositionInHistory,
 } from "../../redux/trackData/actions";
 
@@ -21,8 +23,6 @@ import { likeHandlerRequest } from "../../services/api/apiTrack";
 import { Container, Row, Col } from "react-bootstrap";
 
 function BlockTrack({ dataTrack, size = "small" }) {
-  const track = useSelector((state) => state.trackReducer);
-  const { trackObject } = track;
   const userData = useSelector((state) => state.userReducer.data);
   const dispatch = useDispatch();
 
@@ -37,6 +37,7 @@ function BlockTrack({ dataTrack, size = "small" }) {
       if (userIndex >= 0) setIsLiked({ state: true, loaded: true });
       else setIsLiked({ state: false, loaded: true });
     }
+    // eslint-disable-next-line
   }, []);
 
   function handlerLike() {
@@ -44,6 +45,7 @@ function BlockTrack({ dataTrack, size = "small" }) {
     likeHandlerRequest(userData.userId, dataTrack._id)
       .then(() => {
         setIsLiked({ state: !isLiked.state, loaded: true });
+        dispatch(reloadFetchAction(true));
       })
       .catch((error) => {
         console.log(error);
@@ -53,7 +55,6 @@ function BlockTrack({ dataTrack, size = "small" }) {
   function setReduxTrackData() {
     dispatch(trackObjectAction(dataTrack));
     dispatch(isPlayBarDisplayedAction(true));
-    dispatch(isPlay(true));
 
     const resetedHistoryPosition = resetPositionInHistory();
     dispatch(setPositionInHistory(resetedHistoryPosition));

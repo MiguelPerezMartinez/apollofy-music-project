@@ -1,42 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 
 import RightMenu from "../components/RightMenu";
 import BottomMenu from "../components/BottomMenu";
 import ModalTrackUp from "../components/ModalTrackUp";
-import PlayBar from "../components/PlayBar";
 import DialogueBox from "../components/DialogueBox";
 import UpdateModal from "../components/UpdateTrackModal";
 import DeleteModal from "../components/DeleteTrackModal";
 
 function BarsAndModal(WrappedComponent) {
   function WrapperComponent() {
-    const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
-    const [showModal, setShowModal] = useState(false);
+    const { active } = useSelector((state) => state.dialogueHandler);
 
-    const handleCloseModal = () => setShowModal(false);
-    const handleOpenModal = () => setShowModal(true);
-
-    const { active, showDelete, showUpdate } = useSelector(
-      (state) => state.dialogueHandler,
+    const { uploadModal, updateModal, deleteModal } = useSelector(
+      (state) => state.modalsHandler,
     );
 
     return (
       <>
-        <BottomMenu
-          handleOpenModal={handleOpenModal}
-          handleCloseModal={handleCloseModal}
-        />
-        <RightMenu
-          handleOpenModal={handleOpenModal}
-          handleCloseModal={handleCloseModal}
-        />
+        <BottomMenu />
+        <RightMenu />
         {active && <DialogueBox />}
-        {showDelete && <DeleteModal />}
-        {showUpdate && <UpdateModal />}
-        {showModal && <ModalTrackUp handleClose={handleCloseModal} />}
+        {deleteModal && <DeleteModal />}
+        {updateModal && <UpdateModal />}
+        {uploadModal && <ModalTrackUp />}
         <WrappedComponent />
-        {isPlayBarDisplayed && <PlayBar />}
       </>
     );
   }
