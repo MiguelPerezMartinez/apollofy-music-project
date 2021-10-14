@@ -16,3 +16,15 @@ export async function likeHandlerRequest(userId, trackId) {
     },
   });
 }
+
+export async function getTrackByName(query) {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "GET",
+    url: `${process.env.REACT_APP_URL}tracks/get-track-by-title`,
+    params: { title: query },
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}

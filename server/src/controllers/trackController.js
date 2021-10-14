@@ -78,13 +78,13 @@ async function handlerTrackLike(req, res) {
     await trackDoc.save();
     await userDoc.save();
 
-    res.status(200).send({
+    return res.status(200).send({
       message: messageResponse,
       trackId: trackId,
       userId: userId,
     });
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       error: error.message,
     });
   }
@@ -97,12 +97,12 @@ async function incrementTotalPlays(req, res) {
     const trackDoc = await Tracks.findById(trackId);
     trackDoc.totalPlays += 1;
     trackDoc.save();
-    res.status(200).send({
+    return res.status(200).send({
       message: "Track total plays incremented",
       trackId: trackId,
     });
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       error: error.message,
     });
   }
@@ -196,7 +196,7 @@ async function getTrackById(req, res) {
   }
 }
 
-async function getTrackByTitle(req, res) {
+async function getTracksByTitle(req, res) {
   const { title } = req.params;
   try {
     //Collect all tracks, turn title to
@@ -226,6 +226,97 @@ async function getTrackByTitle(req, res) {
   }
 }
 
+async function getTracksByAuthor(req, res) {
+  const { author } = req.params;
+  try {
+    //Collect all tracks, turn author to
+    //lowercase and initialize tracks to return
+    const tracks = await Tracks.find({});
+    const lwcTrackAuthor = author.toLowerCase();
+    let tracksToReturn = [];
+
+    //Check if author is contained inside tracks
+    for (const track of tracks) {
+      let trackDocAuthor = track.author.toLowerCase();
+      if (trackDocAuthor.includes(lwcTrackAuthor)) {
+        tracksToReturn.push(track);
+      }
+    }
+
+    //Return tracks found
+    return res.status(200).send({
+      message: "Tracks found",
+      tracks: tracksToReturn,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      data: author,
+      error: error.message,
+    });
+  }
+}
+
+async function getTracksByAlbum(req, res) {
+  const { album } = req.params;
+  try {
+    //Collect all tracks, turn album to
+    //lowercase and initialize tracks to return
+    const tracks = await Tracks.find({});
+    const lwcTrackAlbum = album.toLowerCase();
+    let tracksToReturn = [];
+
+    //Check if album is contained inside tracks
+    for (const track of tracks) {
+      let trackDocAlbum = track.album.toLowerCase();
+      if (trackDocAlbum.includes(lwcTrackAlbum)) {
+        tracksToReturn.push(track);
+      }
+    }
+
+    //Return tracks found
+    return res.status(200).send({
+      message: "Tracks found",
+      tracks: tracksToReturn,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      data: album,
+      error: error.message,
+    });
+  }
+}
+async function getTracksByReleaseYear(req, res) {}
+
+async function getTracksByGenre(req, res) {
+  const { genre } = req.params;
+  try {
+    //Collect all tracks, turn genre to
+    //lowercase and initialize tracks to return
+    const tracks = await Tracks.find({});
+    const lwcTrackGenre = genre.toLowerCase();
+    let tracksToReturn = [];
+
+    //Check if genre is contained inside tracks
+    for (const track of tracks) {
+      let trackDocGenre = track.genre.toLowerCase();
+      if (trackDocGenre.includes(lwcTrackGenre)) {
+        tracksToReturn.push(track);
+      }
+    }
+
+    //Return tracks found
+    return res.status(200).send({
+      message: "Tracks found",
+      tracks: tracksToReturn,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      data: genre,
+      error: error.message,
+    });
+  }
+}
+
 async function isLikedByUser(req, res) {
   const { id: trackId } = req.params;
   const { userId } = req.body;
@@ -235,18 +326,18 @@ async function isLikedByUser(req, res) {
     const userInLikesArray = trackDoc.totalLikes.indexOf(userId);
 
     if (userInLikesArray >= 0) {
-      res.status(200).send({
+      return res.status(200).send({
         message: `User: ${userId} likes track: ${trackId}`,
         isLiked: true,
       });
     } else {
-      res.status(200).send({
+      return res.status(200).send({
         message: `User: ${userId} doesn't like track: ${trackId}`,
         isLiked: false,
       });
     }
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       error: error.message,
     });
   }
@@ -256,7 +347,8 @@ async function getMostPlayed(req, res) {
   //Receive the limitation by req.body, by default 20
   const { limit = 5 } = req.body;
   try {
-    const tracks = await Tracks.find({}).sort({ totalPlays: -1 }).limit(limit);
+    // const tracks = await Tracks.find({}).sort({ totalPlays: -1 }).limit(limit);
+    const tracks = await Tracks.find({}).sort({ totalPlays: -1 });
     return res.status(200).send({
       tracksSize: limit,
       tracks: tracks,
@@ -294,7 +386,11 @@ module.exports = {
   deleteTrack: deleteTrack,
   getAllTracks: getAllTracks,
   getTrackById: getTrackById,
-  getTrackByTitle: getTrackByTitle,
+  getTracksByTitle: getTracksByTitle,
+  getTracksByAuthor: getTracksByAuthor,
+  getTracksByAlbum: getTracksByAlbum,
+  getTracksByReleaseYear: getTracksByReleaseYear,
+  getTracksByGenre: getTracksByGenre,
   isLikedByUser: isLikedByUser,
   getMostPlayed: getMostPlayed,
   getMostLiked: getMostLiked,
