@@ -17,6 +17,7 @@ function Search() {
   const dispatch = useDispatch();
   const [searchTracks, setSearchTracks] = useState([]);
   const [timer, setTimer] = useState("");
+  const [searching, setSearching] = useState(false);
   function handleChange(e) {
     dispatch(setSearchQuery(e.target.value));
   }
@@ -24,8 +25,10 @@ function Search() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (query.length > 0) {
+      setSearching(true);
       getTrackByName(query).then((response) => {
         setSearchTracks(response.data.tracks);
+        setSearching(false);
       });
     }
   }
@@ -33,16 +36,16 @@ function Search() {
   useEffect(() => {
     if (timer) {
       clearTimeout(timer);
-      console.log("clear", timer);
+      // console.log("clear", timer);
     }
     if (query.length > 0) {
       const timeoutId = setTimeout(() => {
         getTrackByName(query).then((response) => {
           setSearchTracks(response.data.tracks);
-          console.log("timeout execut", timeoutId);
+          // console.log("timeout execut", timeoutId);
         });
       }, 400);
-      console.log("timeoutID", timeoutId);
+      // console.log("timeoutID", timeoutId);
 
       setTimer(timeoutId);
     } else {
@@ -70,26 +73,32 @@ function Search() {
             </form>
           </Col>
         </Row>
-        <Row>
-          <h1>Tracks</h1>
-          {searchTracks.length > 0 ? (
-            searchTracks.map((track, index) => (
-              <Track dataTrack={track} key={index} />
-            ))
-          ) : (
-            <p>No results</p>
-          )}
-        </Row>
-        <Row>
-          <h1>Tracks</h1>
-          {searchTracks.length > 0 ? (
-            searchTracks.map((track, index) => (
-              <Track dataTrack={track} key={index} />
-            ))
-          ) : (
-            <p>No results</p>
-          )}
-        </Row>
+        {searching ? (
+          <h1>searching...</h1>
+        ) : (
+          <>
+            <Row>
+              <h1>Tracks</h1>
+              {searchTracks.length > 0 ? (
+                searchTracks.map((track, index) => (
+                  <Track dataTrack={track} key={index} />
+                ))
+              ) : (
+                <p>No results</p>
+              )}
+            </Row>
+            <Row>
+              <h1>Tracks</h1>
+              {searchTracks.length > 0 ? (
+                searchTracks.map((track, index) => (
+                  <Track dataTrack={track} key={index} />
+                ))
+              ) : (
+                <p>No results</p>
+              )}
+            </Row>
+          </>
+        )}
       </Container>
     </main>
   );
