@@ -23,6 +23,7 @@ import {
   getAllMyPlaylist,
   addTrackToPlaylist,
   createNewPlaylistApi,
+  deleteTrackFromPlaylistApi,
 } from "./apiPlaylist";
 export {
   getTrackById,
@@ -44,4 +45,5 @@ export {
   getAllMyPlaylist,
   addTrackToPlaylist,
   createNewPlaylistApi,
+  deleteTrackFromPlaylistApi,
 };
