@@ -106,6 +106,7 @@ async function handlerPlaylistLike(req, res) {
 
 async function addTrackToPlaylist(req, res) {
   const { title, trackId } = req.body;
+  let messageResponse = "Track already in playlist";
   try {
     //Collect playlist document
     const playlistDoc = await Playlists.findOne({ title: title });
@@ -114,11 +115,12 @@ async function addTrackToPlaylist(req, res) {
     //Checking if index exists and if not, adding it to
     //the playlist and updating the playlist document
     if (trackContainedIndex === -1) {
+      messageResponse = "Track added successfully";
       playlistDoc.tracks.push(trackId);
       playlistDoc.save();
     }
     return res.status(200).send({
-      messageResponse: "Track added successfully",
+      messageResponse: messageResponse,
       tracks: playlistDoc.tracks,
     });
   } catch (error) {

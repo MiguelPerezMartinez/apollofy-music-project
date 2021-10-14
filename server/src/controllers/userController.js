@@ -46,7 +46,7 @@ async function updateById(req, res) {
     });
 
     if (!dbResponse) {
-      res.status(400).send(
+      return res.status(400).send(
         generateResponse({
           data: null,
           error: "User ID doesn't exist",
@@ -54,11 +54,11 @@ async function updateById(req, res) {
       );
     }
 
-    res.status(200).send({
+    return res.status(200).send({
       data: dbResponse,
     });
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       data: req.params.id,
       error: error.message,
     });
@@ -73,13 +73,13 @@ async function setTrackHistory(req, res) {
     userDoc.trackHistory = history;
     userDoc.save();
     // console.log(userDoc.trackHistory);
-    res.status(200).send({
+    return res.status(200).send({
       message: "History saved correctly",
       userId: userId,
       data: history,
     });
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       userId: userId,
       error: error.message,
     });

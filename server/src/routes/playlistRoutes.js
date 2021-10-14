@@ -19,7 +19,7 @@ playlistRouter.patch(
 );
 playlistRouter.patch(
   "/add-playlist-track/",
-  // authMiddleware,
+  authMiddleware,
   playlistController.addTrackToPlaylist,
 );
 playlistRouter.patch(
