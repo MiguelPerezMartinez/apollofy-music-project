@@ -64,6 +64,7 @@ function App() {
       <Switch>
         <Route path="/favourite-playlists" component={ElementsList} />
         <Route path="/favourite-tracks" component={ElementsList} />
+        <Route path="/my-playlists" component={ElementsList} />
         <Route path="/my-tracks" component={ElementsList} />
         <Route path="/history-tracks" component={ElementsList} />
         <Route path="/queue-tracks" component={ElementsList} />

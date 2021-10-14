@@ -8,6 +8,7 @@ import { hideDialogue } from "../../redux/dialogueHandler/actions";
 import {
   setUpdateTrackModal,
   setDeleteTrackModal,
+  setMyPlaylistModal,
 } from "../../redux/modalsHandler/actions";
 
 import { setTrackQueueInLocalStorage } from "../../services/localStorage";
@@ -74,6 +75,11 @@ function DialogueBox() {
     alert(`${trackDataDialog.title} added to queue.`);
     closeDialogue();
   }
+  function handlerAddToMyplaylist() {
+    //Code to add the track to queue
+    dispatch(setMyPlaylistModal(true, trackDataDialog));
+    closeDialogue();
+  }
 
   function handlerEdit() {
     //Code to edit the track
@@ -99,6 +105,9 @@ function DialogueBox() {
         <ul className="dialogue-list">
           <li className="dialogue-item" onClick={handlerAddToQueue}>
             Add to queue
+          </li>
+          <li className="dialogue-item" onClick={handlerAddToMyplaylist}>
+            Add to MyPlaylist
           </li>
           <li className="dialogue-item" onClick={handlerShare}>
             Share

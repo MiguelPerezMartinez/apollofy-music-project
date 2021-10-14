@@ -123,7 +123,7 @@ function UpdateModal() {
       <form ref={form} onSubmit={saveChanges}>
         <Row>
           <Col xs={12} md={6} className="track-update">
-            <h1 className="h3 mb-3 fw-normal">Update track</h1>
+            <h2 className="titleUpdate">Update track</h2>
             <Input
               type="text"
               id="title"

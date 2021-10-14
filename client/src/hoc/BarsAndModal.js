@@ -7,14 +7,14 @@ import ModalTrackUp from "../components/ModalTrackUp";
 import DialogueBox from "../components/DialogueBox";
 import UpdateModal from "../components/UpdateTrackModal";
 import DeleteModal from "../components/DeleteTrackModal";
+import PlaylistSelector from "../components/PlaylistSelector";
 
 function BarsAndModal(WrappedComponent) {
   function WrapperComponent() {
     const { active } = useSelector((state) => state.dialogueHandler);
 
-    const { uploadModal, updateModal, deleteModal } = useSelector(
-      (state) => state.modalsHandler,
-    );
+    const { uploadModal, updateModal, deleteModal, myPlaylistModal } =
+      useSelector((state) => state.modalsHandler);
 
     return (
       <>
@@ -24,6 +24,7 @@ function BarsAndModal(WrappedComponent) {
         {deleteModal && <DeleteModal />}
         {updateModal && <UpdateModal />}
         {uploadModal && <ModalTrackUp />}
+        {myPlaylistModal && <PlaylistSelector />}
         <WrappedComponent />
       </>
     );

@@ -95,3 +95,21 @@
   color: black !important;
   display: flex;
 }
+
+.profile-link-buttons {
+  display: flex;
+  justify-content: left;
+  width: 80%;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+}
+
+.profile-link-buttons:hover {
+  outline: 1px solid var(--yellow);
+  background-color: rgb(59, 59, 59);
+}
+
+.link-cards-profile-size > * {
+  min-width: 80%;
+  max-width: 80%;
+}

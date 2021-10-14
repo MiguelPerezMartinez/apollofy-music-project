@@ -1,9 +1,15 @@
 //Imports
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import "./styles.css";
 import "./spinner.css";
+import {
+  faPlayCircle,
+  faHeart,
+  faBroadcastTower,
+} from "@fortawesome/free-solid-svg-icons";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
@@ -17,6 +23,10 @@ import BarsAndModal from "../../hoc/BarsAndModal";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 import Input from "../../components/Input";
 import { Container, Row, Col } from "react-bootstrap";
+import LinkCards from "../../components/LinkCards";
+
+//Charts
+import { MyTopTen, TotalLastSevenDays } from "../../components/Charts";
 
 import { fetchUserData } from "../../redux/userData/actions";
 import { isPlayBarDisplayedAction } from "../../redux/trackData/actions";
@@ -33,6 +43,7 @@ function Profile() {
     password: "",
     confirmPassword: "",
   });
+  const [showChart, setShowChart] = useState("top-10-tracks");
 
   const [profilePicture, setProfilePicture] = useState({
     file: "",
@@ -120,6 +131,10 @@ function Profile() {
   function handleLogout() {
     dispatch(isPlayBarDisplayedAction(false));
     logOut();
+  }
+
+  function handleShowChart(chart) {
+    setShowChart(chart);
   }
 
   return (
@@ -372,28 +387,136 @@ function Profile() {
               </>
             ) : (
               <Row className="mt-2">
-                <Col className="d-flex justify-content-center">
+                <Col lg={3} md={6} sx={12} />
+                <Col
+                  lg={3}
+                  md={6}
+                  sx={12}
+                  className="d-flex justify-content-center"
+                >
                   <button className="button" onClick={handleEdit}>
                     Edit profile info
                   </button>
                 </Col>
+                <Col
+                  lg={3}
+                  md={6}
+                  sx={12}
+                  className="d-flex justify-content-center"
+                >
+                  <div
+                    className="button"
+                    onClick={() => {
+                      dispatch(setUploadTrackModal(true));
+                    }}
+                  >
+                    Upload track
+                  </div>
+                </Col>
+                <Col lg={3} md={6} sx={12} />
               </Row>
             )}
           </form>
           <div className="xl-separator" />
         </Container>
-        <Container className="general-container">
-          <Col className="d-flex justify-content-center">
-            <div
-              className="button"
-              onClick={() => {
-                dispatch(setUploadTrackModal(true));
-              }}
+        <Container></Container>
+
+        <div className="xl-separator" />
+
+        <Container>
+          <Row>
+            <Col
+              lg={3}
+              md={6}
+              sx={12}
+              className="d-flex justify-content-center link-cards-profile-size"
             >
-              Upload track
-            </div>
-          </Col>
+              <LinkCards
+                name="My Tracks"
+                icon={faBroadcastTower}
+                to="/my-tracks"
+              />
+            </Col>
+            <Col
+              lg={3}
+              md={6}
+              sx={12}
+              className="d-flex justify-content-center link-cards-profile-size"
+            >
+              <LinkCards
+                name="My Playlists"
+                icon={faBroadcastTower}
+                to="/my-playlists"
+              />
+            </Col>
+            <Col
+              lg={3}
+              md={6}
+              sx={12}
+              className="d-flex justify-content-center link-cards-profile-size"
+            >
+              <LinkCards
+                name="My Favourite Tracks"
+                icon={faBroadcastTower}
+                to="/favourite-tracks"
+              />
+            </Col>
+            <Col
+              lg={3}
+              md={6}
+              sx={12}
+              className="d-flex justify-content-center link-cards-profile-size"
+            >
+              <LinkCards
+                name="My Favourite Playlists"
+                icon={faBroadcastTower}
+                to="/favourite-playlists"
+              />
+            </Col>
+          </Row>
         </Container>
+
+        <div className="xl-separator" />
+        <div className="xl-separator" />
+
+        <Container className="general-container">
+          <h1
+            style={{
+              width: "100%",
+              textAlign: "center",
+              padding: "1rem 0.5rem",
+            }}
+          >
+            MY STATS
+          </h1>
+          <Row>
+            <Col xl={7}>
+              {showChart === "top-10-tracks" && <MyTopTen />}
+              {showChart === "total-last-7-days" && <TotalLastSevenDays />}
+            </Col>
+            <Col xl={5} className="justify-content-center">
+              <ul>
+                <li
+                  onClick={() => {
+                    handleShowChart("top-10-tracks");
+                  }}
+                  className="profile-link-buttons"
+                >
+                  MY TOP 10 TRACKS
+                </li>
+                <li
+                  onClick={() => {
+                    handleShowChart("total-last-7-days");
+                  }}
+                  className="profile-link-buttons"
+                >
+                  MY TOTAL PLAYS (last 7 days)
+                </li>
+              </ul>
+            </Col>
+          </Row>
+        </Container>
+
         <div className="xl-separator" />
         <div className="xl-separator" />
         <div className="xl-separator" />

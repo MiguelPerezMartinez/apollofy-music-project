@@ -4,7 +4,22 @@ const { userController } = require("../controllers");
 const { authMiddleware } = require("../middlewares");
 
 //end points routes:
+//POST
 userRouter.post("/register", userController.register);
+
+//PATCH
+userRouter.patch(
+  "/update-user/:id",
+  authMiddleware,
+  userController.updateProfile,
+);
+userRouter.patch(
+  "/set-track-history/:id",
+  authMiddleware,
+  userController.setTrackHistory,
+);
+
+//GET
 userRouter.get("/get-user/:id", authMiddleware, userController.getById);
 userRouter.get(
   "/get-user/:id/my-tracks",
@@ -16,14 +31,15 @@ userRouter.get(
   authMiddleware,
   userController.getFavouriteTracksById,
 );
-userRouter.patch(
-  "/update-user/:id",
+userRouter.get(
+  "/get-user/:id/my-playlists",
   authMiddleware,
-  userController.updateProfile,
+  userController.getAllMyPlaylists,
 );
-userRouter.patch(
-  "/set-track-history/:id",
-  authMiddleware,
-  userController.setTrackHistory,
+userRouter.get(
+  "/get-user-by-username/:username",
+  // authMiddleware,
+  userController.getUserByUsername,
 );
+
 module.exports = userRouter;
