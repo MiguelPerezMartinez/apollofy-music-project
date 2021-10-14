@@ -42,6 +42,7 @@ function PlaylistSelector() {
   function makeNewOptions(newPlaylist) {
     options.push({ value: newPlaylist, label: newPlaylist });
   }
+
   return (
     <>
       <div
