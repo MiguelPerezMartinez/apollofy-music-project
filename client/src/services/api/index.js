@@ -15,6 +15,8 @@ import {
   addTotalPlay,
   deleteTrack,
   updateTrack,
+  getTrackByName,
+  getTrackById,
 } from "./trackManager";
 import { changeMyProfilePicture } from "./fileUploader";
 import {
@@ -24,6 +26,7 @@ import {
   deleteTrackFromPlaylistApi,
 } from "./apiPlaylist";
 export {
+  getTrackById,
   registerInApi,
   getById,
   getCurrentUser,
@@ -38,6 +41,7 @@ export {
   addTotalPlay,
   deleteTrack,
   updateTrack,
+  getTrackByName,
   getAllMyPlaylist,
   addTrackToPlaylist,
   createNewPlaylistApi,

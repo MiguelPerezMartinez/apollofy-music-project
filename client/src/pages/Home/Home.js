@@ -48,7 +48,7 @@ function Home() {
 
       // Load most played tracks
       getMostPlayedTracks().then((response) => {
-        setMostPlayedTracks(response.data.tracks);
+        setMostPlayedTracks(response.data.tracks.slice(0, 5));
       });
 
       // Load most liked tracks
@@ -66,22 +66,6 @@ function Home() {
     };
     // eslint-disable-next-line
   }, []);
-
-  // track arrays mocks
-  // let topTracks = [];
-  // for (let i = 0; i < 5; i++) {
-  //   topTracks.push(allTracks[i]);
-  // }
-
-  // let RecommendedTracks = [];
-  // for (let i = 0; i < 14; i++) {
-  //   RecommendedTracks.push(allTracks[i + 5]);
-  // }
-
-  // let lastUploadedTracks = [];
-  // for (let i = 0; i < 6; i++) {
-  //   lastUploadedTracks.push(allTracks[i + 19]);
-  // }
 
   function saveInQueue(e) {
     console.log(e.target.key);

@@ -37,7 +37,22 @@ trackRouter.get("/get-track/:id", authMiddleware, trackController.getTrackById);
 trackRouter.get(
   "/get-track-by-title/:title",
   authMiddleware,
-  trackController.getTrackByTitle,
+  trackController.getTracksByTitle,
+);
+trackRouter.get(
+  "/get-track-by-author/:author",
+  authMiddleware,
+  trackController.getTracksByAuthor,
+);
+trackRouter.get(
+  "/get-track-by-album/:album",
+  authMiddleware,
+  trackController.getTracksByAlbum,
+);
+trackRouter.get(
+  "/get-track-by-genre/:genre",
+  authMiddleware,
+  trackController.getTracksByGenre,
 );
 trackRouter.get(
   "/get-track/:id/liked",

@@ -74,7 +74,9 @@ function BlockTrack({ dataTrack, size = "small" }) {
         </Row>
         <Row className="name-TrackBlock">
           <Col xs={8}>
-            <p className="blockTrack-title">{dataTrack.title}</p>
+            <p className="blockTrack-title">
+              <a href={`/track-view/${dataTrack._id}`}> {dataTrack.title} </a>
+            </p>
             <p className="blockTrack-author">{dataTrack.author}</p>
           </Col>
           <Col xs={3}>
