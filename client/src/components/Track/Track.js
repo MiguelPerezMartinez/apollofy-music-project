@@ -7,10 +7,9 @@ import "./styles.css";
 //import TrackReducer
 import {
   isPlayBarDisplayedAction,
-  isPlay,
   trackObjectAction,
-  setemptyHistoryQueue,
   setPositionInHistory,
+  reloadFetchAction,
 } from "../../redux/trackData/actions";
 
 //import dialogueHandlerReducer
@@ -25,7 +24,6 @@ import { likeHandlerRequest } from "../../services/api/apiTrack";
 // import DialogueBox from "../DialogueBox";
 
 function Track({ dataTrack }) {
-  const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
   const userData = useSelector((state) => state.userReducer.data);
   const dispatch = useDispatch();
 
@@ -40,6 +38,7 @@ function Track({ dataTrack }) {
       if (userIndex >= 0) setIsLiked({ state: true, loaded: true });
       else setIsLiked({ state: false, loaded: true });
     }
+    // eslint-disable-next-line
   }, []);
 
   function handlerLike() {
@@ -47,6 +46,7 @@ function Track({ dataTrack }) {
     likeHandlerRequest(userData.userId, dataTrack._id)
       .then(() => {
         setIsLiked({ state: !isLiked.state, loaded: true });
+        dispatch(reloadFetchAction(true));
       })
       .catch((error) => {
         console.log(error);
@@ -56,7 +56,6 @@ function Track({ dataTrack }) {
   function setReduxTrackData() {
     dispatch(trackObjectAction(dataTrack));
     dispatch(isPlayBarDisplayedAction(true));
-    dispatch(isPlay(true));
 
     const resetedHistoryPosition = resetPositionInHistory();
     dispatch(setPositionInHistory(resetedHistoryPosition));
@@ -77,7 +76,9 @@ function Track({ dataTrack }) {
               </div>
             </Col>
             <Col xs={5} md={5} lg={5}>
-              <p className="track-title">{dataTrack.title}</p>
+              <p className="track-title">
+                <a href={`/track-view/${dataTrack._id}`}> {dataTrack.title} </a>
+              </p>
               <p className="track-author">{dataTrack.author}</p>
             </Col>
             <Col

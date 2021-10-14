@@ -32,7 +32,6 @@
 
 html {
   overflow-x: hidden;
-  background-color: black;
 }
 
 body {
@@ -43,8 +42,10 @@ body {
   font-size: larger !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-color: black !important; */
   background: linear-gradient(var(--blue) 30vh, black);
+  background-attachment: fixed;
+  /* background-color: black !important; */
+  background-color: black;
   color: white !important;
   height: 100vh;
 }
@@ -71,7 +72,7 @@ main {
   background-color: var(--main-container-color);
   border-radius: 0.5rem;
 
-  cursor: pointer;
+  /* cursor: pointer; */
   padding: 1rem 0.5rem;
 }
 
@@ -98,7 +99,7 @@ h1 {
   padding-top: 2rem;
   padding-left: 2rem;
   font-size: 3rem !important;
-  font-family: "nightInTokyo", Fallback, sans-serif !important;
+  /* font-family: "nightInTokyo", Fallback, sans-serif !important; */
   /* font-family: "Noto Sans", sans-serif; */
   /* font-family: "IBM Plex Serif", serif; */
   color: white;

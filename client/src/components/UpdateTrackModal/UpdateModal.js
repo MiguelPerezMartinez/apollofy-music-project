@@ -1,22 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 
 import "./style.css";
 import { useSelector, useDispatch } from "react-redux";
 import * as $ from "jquery";
-import validate from "jquery-validation";
 import { Row, Col } from "react-bootstrap";
 import Input from "../Input";
 import { updateTrack } from "../../services/api/index";
-import { hideDialogue } from "../../redux/dialogueHandler/actions";
 import { reloadFetchAction } from "../../redux/trackData/actions";
-
-import axios from "axios";
+import { setUpdateTrackModal } from "../../redux/modalsHandler/actions";
 
 function UpdateModal() {
   const form = useRef();
   const dispatch = useDispatch();
-  const { trackDataDialog } = useSelector((state) => state.dialogueHandler);
-  const { reloadFetch } = useSelector((state) => state.trackReducer);
+  const trackDataDialog = useSelector((state) => state.modalsHandler.data);
 
   const [coverUpload, setCoverUpload] = useState({
     file: "",
@@ -25,8 +22,6 @@ function UpdateModal() {
     isUploaded: false,
     error: "",
   });
-
-  const [isReady, setIsReady] = useState(false);
 
   function handleChange(e) {
     setTrackData({
@@ -111,18 +106,24 @@ function UpdateModal() {
       submitHandler: () => {
         console.log("object to updated", trackData);
         updateTrack(trackData);
-        dispatch(hideDialogue());
 
         dispatch(reloadFetchAction(true));
+        dispatch(setUpdateTrackModal(false));
       },
     });
   }
   return (
     <>
+      <div
+        onClick={() => {
+          dispatch(setUpdateTrackModal(false));
+        }}
+        className="back-context"
+      ></div>
       <form ref={form} onSubmit={saveChanges}>
         <Row>
           <Col xs={12} md={6} className="track-update">
-            <h1 className="h3 mb-3 fw-normal">Update track</h1>
+            <h2 className="titleUpdate">Update track</h2>
             <Input
               type="text"
               id="title"

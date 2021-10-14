@@ -76,11 +76,19 @@ export async function updateTrack(track) {
     });
 }
 
+<<<<<<< HEAD
 export async function getTrackByName(query) {
   const userToken = await getCurrentUserToken();
   return axios({
     method: "GET",
     url: `${process.env.REACT_APP_URL}tracks/get-track-by-title/${query}`,
+=======
+export async function getTrackById(id) {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "GET",
+    url: `${process.env.REACT_APP_URL}tracks/get-track/${id}`,
+>>>>>>> d437fdab99c1ea5036ca57e799c1bc0b6f752738
     headers: {
       Authorization: `Bearer ${userToken}`,
     },

@@ -105,6 +105,8 @@ async function handlerPlaylistLike(req, res) {
 }
 
 async function addTrackToPlaylist(req, res) {
+  console.log(" req.body", req.body);
+
   const { title, trackId } = req.body;
   let messageResponse = "Track already in playlist";
   try {

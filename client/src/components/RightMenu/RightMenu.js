@@ -1,23 +1,30 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
+=======
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+>>>>>>> d437fdab99c1ea5036ca57e799c1bc0b6f752738
 
 import "./styles.css";
 
 import { logOut } from "../../services/firebase";
 import { setSearchQuery } from "../../redux/searchHandler/actions";
 
-//Components
-import { Row, Col } from "react-bootstrap";
-
 //Icons
 import { HomeOutlined, CloudUpload, SearchOutlined } from "@material-ui/icons";
-
 import ProfileCircleIcon from "../ProfileCircleIcon";
 import Input from "../../components/Input";
 
-export default function RightMenu({ handleOpenModal, handleCloseModal }) {
+import { isPlayBarDisplayedAction } from "../../redux/trackData/actions";
+import { setUploadTrackModal } from "../../redux/modalsHandler/actions";
+
+export default function RightMenu() {
+  const dispatch = useDispatch();
+
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const { username, profileImg } = useSelector(
     (state) => state.userReducer.data,
@@ -25,6 +32,7 @@ export default function RightMenu({ handleOpenModal, handleCloseModal }) {
   const { query } = useSelector((state) => state.searchHandler);
   const dispatch = useDispatch();
 
+<<<<<<< HEAD
   let location = useLocation();
 
   const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
@@ -44,6 +52,14 @@ export default function RightMenu({ handleOpenModal, handleCloseModal }) {
   return isSearchSubmitted ? (
     <Redirect to="/search" />
   ) : (
+=======
+  function handleLogout() {
+    dispatch(isPlayBarDisplayedAction(false));
+    logOut();
+  }
+
+  return (
+>>>>>>> d437fdab99c1ea5036ca57e799c1bc0b6f752738
     <aside className="right-menu">
       <div>
         <Link to="/profile" className="right-menu-row">
@@ -55,8 +71,9 @@ export default function RightMenu({ handleOpenModal, handleCloseModal }) {
       <div
         onClick={() => {
           isUploadModalOpen
-            ? handleCloseModal() && setIsUploadModalOpen(false)
-            : handleOpenModal() && setIsUploadModalOpen(true);
+            ? dispatch(setUploadTrackModal(false)) &&
+              setIsUploadModalOpen(false)
+            : dispatch(setUploadTrackModal(true)) && setIsUploadModalOpen(true);
         }}
       >
         <div className="right-menu-row">
@@ -86,7 +103,7 @@ export default function RightMenu({ handleOpenModal, handleCloseModal }) {
           <div className="right-menu-row-title">Home</div>
         </Link>
       </div>
-      <div onClick={logOut} className="right-menu-logout">
+      <div onClick={handleLogout} className="right-menu-logout">
         <div className="right-menu-row">
           <img
             src="./assets/img/logout.svg"

@@ -1,19 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import "./styles.css";
 
 //import dialogueHandlerReducer
+import { hideDialogue } from "../../redux/dialogueHandler/actions";
+
 import {
-  hideDialogue,
-  showUpdateAction,
-  showDeleteAction,
-} from "../../redux/dialogueHandler/actions";
+  setUpdateTrackModal,
+  setDeleteTrackModal,
+  setMyPlaylistModal,
+} from "../../redux/modalsHandler/actions";
 
 import { setTrackQueueInLocalStorage } from "../../services/localStorage";
 
 function DialogueBox() {
   const dispatch = useDispatch();
-  const { trackDataDialog, position, showDelete, showUpdate } = useSelector(
+  const { trackDataDialog, position } = useSelector(
     (state) => state.dialogueHandler,
   );
   const userData = useSelector((state) => state.userReducer.data);
@@ -71,22 +74,31 @@ function DialogueBox() {
     //Code to add the track to queue
     setTrackQueueInLocalStorage(trackDataDialog);
     alert(`${trackDataDialog.title} added to queue.`);
+    closeDialogue();
   }
-
+  function handlerAddToMyplaylist() {
+    //Code to add the track to queue
+    dispatch(setMyPlaylistModal(true, trackDataDialog));
+    closeDialogue();
+  }
+  // function handlerMoreInfo() {
+  //   alert(`${trackDataDialog._id}`);
+  // }
   function handlerEdit() {
     //Code to edit the track
-    dispatch(showUpdateAction(true));
-    dispatch(showDeleteAction(false));
+    dispatch(setUpdateTrackModal(true, trackDataDialog));
+    closeDialogue();
   }
 
   function handlerDelete() {
     //Code to delete the track
-    dispatch(showDeleteAction(true));
-    dispatch(showUpdateAction(false));
+    dispatch(setDeleteTrackModal(true, trackDataDialog));
+    closeDialogue();
   }
 
   function handlerShare() {
     //Code to share the track
+    closeDialogue();
   }
 
   return (
@@ -96,6 +108,12 @@ function DialogueBox() {
         <ul className="dialogue-list">
           <li className="dialogue-item" onClick={handlerAddToQueue}>
             Add to queue
+          </li>
+          <li className="dialogue-item">
+            <a href={`/track-view/${trackDataDialog._id}`}>More Info</a>
+          </li>
+          <li className="dialogue-item" onClick={handlerAddToMyplaylist}>
+            Add to MyPlaylist
           </li>
           <li className="dialogue-item" onClick={handlerShare}>
             Share

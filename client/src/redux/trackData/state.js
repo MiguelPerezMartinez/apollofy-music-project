@@ -10,7 +10,6 @@ if (history) {
 
 const initialTrackState = {
   isPlayBarDisplayed: false,
-  isPlaying: false,
   trackObject: {
     title: "",
     author: "",
@@ -24,7 +23,6 @@ const initialTrackState = {
     totalLikes: 0,
     duration: "time",
   },
-  waveSurfer: null,
   emptyHistoryQueue: true,
   positionInHistory: initialHistoryPosition,
   reloadFetch: true,
