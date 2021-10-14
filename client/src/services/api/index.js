@@ -21,6 +21,7 @@ import {
   getAllMyPlaylist,
   addTrackToPlaylist,
   createNewPlaylistApi,
+  deleteTrackFromPlaylistApi,
 } from "./apiPlaylist";
 export {
   registerInApi,
@@ -40,4 +41,5 @@ export {
   getAllMyPlaylist,
   addTrackToPlaylist,
   createNewPlaylistApi,
+  deleteTrackFromPlaylistApi,
 };
