@@ -6,6 +6,7 @@ import { addTotalPlay } from "../../services/api";
 import {
   trackObjectAction,
   setPositionInHistory,
+  isPlayBarDisplayedAction,
 } from "../../redux/trackData/actions";
 import {
   setTrackHistoryInLocalStorage,
@@ -260,7 +261,13 @@ function PlayBar() {
                   <Link to="/queue-tracks">
                     <div>show queue</div>
                   </Link>
-                  <button onClick={WSDestroyInstance}>Adiós</button>
+                  <button
+                    onClick={() => {
+                      dispatch(isPlayBarDisplayedAction(false));
+                    }}
+                  >
+                    Adiós
+                  </button>
                 </Col>
               </Row>
             </Col>
