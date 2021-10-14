@@ -11,6 +11,7 @@ import { Row, Col } from "react-bootstrap";
 
 //Icons
 import { HomeOutlined, CloudUpload, SearchOutlined } from "@material-ui/icons";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 import ProfileCircleIcon from "../ProfileCircleIcon";
 
@@ -58,11 +59,7 @@ export default function RightMenu({ handleOpenModal, handleCloseModal }) {
       </div>
       <div onClick={logOut} className="right-menu-logout">
         <div className="right-menu-row">
-          <img
-            src="./assets/img/logout.svg"
-            alt="logout"
-            className="right-menu-icon"
-          />
+          <LogoutOutlinedIcon fontSize="large" />
           <div className="right-menu-row-title">Logout</div>
         </div>
       </div>

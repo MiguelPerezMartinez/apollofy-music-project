@@ -42,7 +42,7 @@ body {
   font-size: larger !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(var(--blue) 30vh, black);
+  background: linear-gradient(var(--blue) 1vh, black);
   background-attachment: fixed;
   /* background-color: black !important; */
   background-color: black;

@@ -42,7 +42,7 @@ function Profile() {
     password: "",
     confirmPassword: "",
   });
-  const [showChart, setShowChart] = useState("top-10-tracks");
+  const [showChart, setShowChart] = useState("total-last-7-days");
 
   const [showModal, setShowModal] = useState(false);
 
@@ -493,19 +493,19 @@ function Profile() {
               <ul>
                 <li
                   onClick={() => {
-                    handleShowChart("top-10-tracks");
-                  }}
-                  className="profile-link-buttons"
-                >
-                  MY TOP 10 TRACKS
-                </li>
-                <li
-                  onClick={() => {
                     handleShowChart("total-last-7-days");
                   }}
                   className="profile-link-buttons"
                 >
                   MY TOTAL PLAYS (last 7 days)
+                </li>
+                <li
+                  onClick={() => {
+                    handleShowChart("top-10-tracks");
+                  }}
+                  className="profile-link-buttons"
+                >
+                  MY TOP 10 TRACKS
                 </li>
               </ul>
             </Col>

@@ -1,9 +1,10 @@
-import "./style.css";
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import Button from "../../components/Button";
 import { getAllMyPlaylist, addTrackToPlaylist } from "../../services/api/index";
 import { useSelector } from "react-redux";
+
+import "./style.css";
 
 function PlaylistSelector() {
   const { data } = useSelector((state) => state.userReducer);
