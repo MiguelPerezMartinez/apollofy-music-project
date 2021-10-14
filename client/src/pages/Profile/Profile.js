@@ -23,13 +23,14 @@ import BarsAndModal from "../../hoc/BarsAndModal";
 import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 import Input from "../../components/Input";
 import { Container, Row, Col } from "react-bootstrap";
-import ModalTrackUp from "../../components/ModalTrackUp";
 import LinkCards from "../../components/LinkCards";
 
 //Charts
 import { MyTopTen, TotalLastSevenDays } from "../../components/Charts";
 
 import { fetchUserData } from "../../redux/userData/actions";
+import { isPlayBarDisplayedAction } from "../../redux/trackData/actions";
+import { setUploadTrackModal } from "../../redux/modalsHandler/actions";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -44,17 +45,12 @@ function Profile() {
   });
   const [showChart, setShowChart] = useState("total-last-7-days");
 
-  const [showModal, setShowModal] = useState(false);
-
   const [profilePicture, setProfilePicture] = useState({
     file: "",
     isSelected: false,
     isUploading: false,
     isUploaded: false,
   });
-
-  const handleCloseModal = () => setShowModal(false);
-  const handleOpenModal = () => setShowModal(true);
 
   useEffect(() => {
     uploadProfilePicture();
@@ -132,13 +128,17 @@ function Profile() {
     }
   }
 
+  function handleLogout() {
+    dispatch(isPlayBarDisplayedAction(false));
+    logOut();
+  }
+
   function handleShowChart(chart) {
     setShowChart(chart);
   }
 
   return (
     <>
-      {showModal && <ModalTrackUp handleClose={handleCloseModal} />}
       <main>
         <Container>
           <Row>
@@ -172,7 +172,7 @@ function Profile() {
                 src="./assets/img/logout.svg"
                 alt="logout"
                 className="profile-logout-icon"
-                onClick={logOut}
+                onClick={handleLogout}
               />
             </Col>
           </Row>
@@ -404,7 +404,12 @@ function Profile() {
                   sx={12}
                   className="d-flex justify-content-center"
                 >
-                  <div className="button" onClick={handleOpenModal}>
+                  <div
+                    className="button"
+                    onClick={() => {
+                      dispatch(setUploadTrackModal(true));
+                    }}
+                  >
                     Upload track
                   </div>
                 </Col>

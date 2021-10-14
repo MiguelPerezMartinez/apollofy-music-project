@@ -59,6 +59,7 @@ function ElementsList() {
       fetchTracks();
       setListType(QUEUE_TRACKS);
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
