@@ -73,10 +73,10 @@ export default function RightMenu() {
         </div>
       </div>
       <div className="xl-separator" />
-      <div>
-        <div className="right-menu-row no-hover">
-          <SearchOutlined fontSize="large" />
-          <form onSubmit={handleSubmit}>
+      <div className="right-menu-row no-hover">
+        <SearchOutlined fontSize="large" />
+        <div>
+          <form onSubmit={handleSubmit} className="right-menu-row-title">
             <Input
               type="text"
               id="searchQuery"
