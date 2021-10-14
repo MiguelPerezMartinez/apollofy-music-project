@@ -1,13 +1,7 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
-=======
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
->>>>>>> d437fdab99c1ea5036ca57e799c1bc0b6f752738
 
 import "./styles.css";
 
@@ -30,9 +24,7 @@ export default function RightMenu() {
     (state) => state.userReducer.data,
   );
   const { query } = useSelector((state) => state.searchHandler);
-  const dispatch = useDispatch();
 
-<<<<<<< HEAD
   let location = useLocation();
 
   const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
@@ -49,17 +41,14 @@ export default function RightMenu() {
     }
   }
 
-  return isSearchSubmitted ? (
-    <Redirect to="/search" />
-  ) : (
-=======
   function handleLogout() {
     dispatch(isPlayBarDisplayedAction(false));
     logOut();
   }
 
-  return (
->>>>>>> d437fdab99c1ea5036ca57e799c1bc0b6f752738
+  return isSearchSubmitted ? (
+    <Redirect to="/search" />
+  ) : (
     <aside className="right-menu">
       <div>
         <Link to="/profile" className="right-menu-row">

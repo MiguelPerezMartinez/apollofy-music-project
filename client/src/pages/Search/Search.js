@@ -18,6 +18,7 @@ function Search() {
   const [searchTracks, setSearchTracks] = useState([]);
   const [timer, setTimer] = useState("");
   const [searching, setSearching] = useState(false);
+
   function handleChange(e) {
     dispatch(setSearchQuery(e.target.value));
   }

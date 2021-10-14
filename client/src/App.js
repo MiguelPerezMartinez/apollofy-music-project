@@ -10,14 +10,11 @@ import Register from "./pages/Register";
 import ResetPassword from "./pages/RecoverPassword";
 import ChangePassword from "./pages/ChangePassword";
 import ElementsList from "./pages/ElementsList";
-<<<<<<< HEAD
 import Search from "./pages/Search";
-=======
 import TrackView from "./pages/TrackView";
 
 //Components
 import PlayBar from "./components/PlayBar";
->>>>>>> d437fdab99c1ea5036ca57e799c1bc0b6f752738
 
 //Redux actions
 import { fetchStateIsAuthorized } from "./redux/isAuthorized/actions";
