@@ -27,3 +27,14 @@ export async function addTrackToPlaylist(playlisTitle, trackId) {
     },
   });
 }
+export async function createNewPlaylistApi(playListData) {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "POST",
+    url: `${process.env.REACT_APP_URL}playlists/create-playlist`,
+    data: playListData,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
