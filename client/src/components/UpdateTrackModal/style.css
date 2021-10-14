@@ -24,3 +24,7 @@
   transform: translate(-50%, -50%);
   border-radius: 1rem;
 }
+.titleUpdate {
+  color: rgb(32, 91, 143);
+  margin-bottom: 50px;
+}

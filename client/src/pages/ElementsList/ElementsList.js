@@ -62,7 +62,7 @@ function ElementsList() {
   }, []);
 
   return (
-    <main className="">
+    <main>
       <Container>
         {listType === MY_TRACKS && <h1>My tracks</h1>}
         {listType === FAVOURITE_TRACKS && <h1>Favourite tracks</h1>}
