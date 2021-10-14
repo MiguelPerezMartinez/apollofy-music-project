@@ -31,7 +31,6 @@ export default function RightMenu({ handleOpenModal, handleCloseModal }) {
 
   function handleChange(e) {
     dispatch(setSearchQuery(e.target.value));
-    console.log(query);
   }
 
   async function handleSubmit(e) {

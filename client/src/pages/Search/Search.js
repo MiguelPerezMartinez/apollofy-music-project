@@ -16,7 +16,7 @@ function Search() {
   const { query } = useSelector((state) => state.searchHandler);
   const dispatch = useDispatch();
   const [searchTracks, setSearchTracks] = useState([]);
-
+  const [timer, setTimer] = useState("");
   function handleChange(e) {
     dispatch(setSearchQuery(e.target.value));
   }
@@ -31,10 +31,20 @@ function Search() {
   }
 
   useEffect(() => {
+    if (timer) {
+      clearTimeout(timer);
+      console.log("clear", timer);
+    }
     if (query.length > 0) {
-      getTrackByName(query).then((response) => {
-        setSearchTracks(response.data.tracks);
-      });
+      const timeoutId = setTimeout(() => {
+        getTrackByName(query).then((response) => {
+          setSearchTracks(response.data.tracks);
+          console.log("timeout execut", timeoutId);
+        });
+      }, 400);
+      console.log("timeoutID", timeoutId);
+
+      setTimer(timeoutId);
     } else {
       setSearchTracks([]);
     }
