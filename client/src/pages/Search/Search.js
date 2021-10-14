@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Track from "../../components/Track";
 import { Col, Container, Row } from "react-bootstrap";
@@ -8,22 +9,36 @@ import BarsAndModal from "../../hoc/BarsAndModal";
 import { SearchOutlined } from "@material-ui/icons";
 import Input from "../../components/Input";
 
+import { setSearchQuery } from "../../redux/searchHandler/actions";
+
 import { getTrackByName } from "../../services/api/index";
 function Search() {
-  const [query, setQuery] = useState("");
-
+  const { query } = useSelector((state) => state.searchHandler);
+  const dispatch = useDispatch();
   const [searchTracks, setSearchTracks] = useState([]);
 
   function handleChange(e) {
-    setQuery(e.target.value);
+    dispatch(setSearchQuery(e.target.value));
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    getTrackByName(query).then((response) => {
-      setSearchTracks(response.data.tracks);
-    });
+    if (query.length > 0) {
+      getTrackByName(query).then((response) => {
+        setSearchTracks(response.data.tracks);
+      });
+    }
   }
+
+  useEffect(() => {
+    if (query.length > 0) {
+      getTrackByName(query).then((response) => {
+        setSearchTracks(response.data.tracks);
+      });
+    } else {
+      setSearchTracks([]);
+    }
+  }, [, query]);
 
   return (
     <main>

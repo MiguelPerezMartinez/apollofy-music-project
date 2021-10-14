@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
 
 import "./styles.css";
 
 import { logOut } from "../../services/firebase";
+import { setSearchQuery } from "../../redux/searchHandler/actions";
 
 //Components
 import { Row, Col } from "react-bootstrap";
@@ -21,13 +22,16 @@ export default function RightMenu({ handleOpenModal, handleCloseModal }) {
   const { username, profileImg } = useSelector(
     (state) => state.userReducer.data,
   );
+  const { query } = useSelector((state) => state.searchHandler);
+  const dispatch = useDispatch();
+
   let location = useLocation();
 
-  const [query, setQuery] = useState("");
   const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
 
   function handleChange(e) {
-    setQuery(e.target.value);
+    dispatch(setSearchQuery(e.target.value));
+    console.log(query);
   }
 
   async function handleSubmit(e) {
