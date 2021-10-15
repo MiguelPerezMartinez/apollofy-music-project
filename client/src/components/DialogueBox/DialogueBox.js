@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import "./styles.css";
 
 //import dialogueHandlerReducer
@@ -80,7 +81,9 @@ function DialogueBox() {
     dispatch(setMyPlaylistModal(true, trackDataDialog));
     closeDialogue();
   }
-
+  // function handlerMoreInfo() {
+  //   alert(`${trackDataDialog._id}`);
+  // }
   function handlerEdit() {
     //Code to edit the track
     dispatch(setUpdateTrackModal(true, trackDataDialog));
@@ -105,6 +108,9 @@ function DialogueBox() {
         <ul className="dialogue-list">
           <li className="dialogue-item" onClick={handlerAddToQueue}>
             Add to queue
+          </li>
+          <li className="dialogue-item">
+            <a href={`/track-view/${trackDataDialog._id}`}>More Info</a>
           </li>
           <li className="dialogue-item" onClick={handlerAddToMyplaylist}>
             Add to MyPlaylist

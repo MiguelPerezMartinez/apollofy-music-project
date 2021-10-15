@@ -76,7 +76,9 @@ function Track({ dataTrack }) {
               </div>
             </Col>
             <Col xs={5} md={5} lg={5}>
-              <p className="track-title">{dataTrack.title}</p>
+              <p className="track-title">
+                <a href={`/track-view/${dataTrack._id}`}> {dataTrack.title} </a>
+              </p>
               <p className="track-author">{dataTrack.author}</p>
             </Col>
             <Col

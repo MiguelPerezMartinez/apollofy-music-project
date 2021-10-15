@@ -38,3 +38,14 @@ export async function createNewPlaylistApi(playListData) {
     },
   });
 }
+export async function deleteTrackFromPlaylistApi(playlistId, trackId) {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "PATCH",
+    url: `${process.env.REACT_APP_URL}playlists/delete-playlist-track/${playlistId}`,
+    data: { trackId: trackId },
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
