@@ -41,6 +41,7 @@ import {
   VolumeUpOutlined,
   VolumeOffOutlined,
   Favorite,
+  Cancel, 
 } from "@material-ui/icons";
 
 function PlayBar() {
@@ -169,44 +170,48 @@ function PlayBar() {
             </Col>
             <Col lg={4} md={4} xs={5}>
               <Row className="playbar-buttons-container">
-                <Col lg={2} md={4} xs={4} className="skip-backward">
+                <Col lg={1} md={4} xs={4} className="skip-backward">
                   <div onClick={skipBackward}>
                     <SkipPreviousOutlined fontSize="large" />
                   </div>
                 </Col>
-                <Col lg={1} className="d-none d-lg-block">
-                  {isTrackLoaded && (
-                    <div onClick={WSRewindBackward}>
-                      <FastRewindOutlined fontSize="large" />
-                    </div>
-                  )}
-                </Col>
-                <Col lg={1} md={4} xs={4}>
-                  {!isTrackLoaded && (
+                {isTrackLoaded && (
+                  <>
+                    <Col lg={1} className="d-none d-lg-block">
+                      <div onClick={WSRewindBackward}>
+                        <FastRewindOutlined fontSize="large" />
+                      </div>
+                    </Col>
+                    <Col lg={1} md={4} xs={4}>
+                      {isTrackLoaded && isPlayPause && (
+                        <div onClick={handlerPlayPause}>
+                          <PauseOutlined fontSize="large" />
+                        </div>
+                      )}
+                      {isTrackLoaded && !isPlayPause && (
+                        <div onClick={handlerPlayPause}>
+                          <PlayArrowOutlined fontSize="large" />
+                        </div>
+                      )}
+                    </Col>
+                    <Col lg={1} md={4} xs={4}>
+                      {isTrackLoaded && (
+                        <div onClick={WSFastForward}>
+                          <FastForwardOutlined fontSize="large" />
+                        </div>
+                      )}
+                    </Col>
+                  </>
+                )}
+                {!isTrackLoaded && (
+                  <Col lg={2} className="d-none d-lg-block playbar-isloading">
                     <div className="lds-ripple">
                       <div></div>
                       <div></div>
                     </div>
-                  )}
-                  {isTrackLoaded && isPlayPause && (
-                    <div onClick={handlerPlayPause}>
-                      <PauseOutlined fontSize="large" />
-                    </div>
-                  )}
-                  {isTrackLoaded && !isPlayPause && (
-                    <div onClick={handlerPlayPause}>
-                      <PlayArrowOutlined fontSize="large" />
-                    </div>
-                  )}
-                </Col>
-                <Col lg={1} className="d-none d-lg-block">
-                  {isTrackLoaded && (
-                    <div onClick={WSFastForward}>
-                      <FastForwardOutlined fontSize="large" />
-                    </div>
-                  )}
-                </Col>
-                <Col lg={2} md={4} xs={4}>
+                  </Col>
+                )}
+                <Col lg={1} md={4} xs={4}>
                   <div onClick={skipForward}>
                     <SkipNextOutlined fontSize="large" />
                   </div>
@@ -251,22 +256,24 @@ function PlayBar() {
                 </Row>
               )}
             </Col>
-            <Col md={2}>
+            <Col lg={2} md={2} xs={2}>
               <Row>
-                <Col md={1} className="d-none d-md-block playbar-fav-button">
+                <Col md={2} className="d-none d-md-block playbar-fav-button">
                   <Favorite className="like-disabled" />
                 </Col>
-                <Col md={8} className="d-none d-md-block playbar-fav-button">
+                <Col md={2} className="d-none d-md-block playbar-fav-button">
                   {/* TEMPORAL BUTTONS */}
                   <Link to="/queue-tracks">
                     <div>show queue</div>
                   </Link>
+                </Col>
+                <Col lg={2} md={2} xs={2}>
                   <button
                     onClick={() => {
                       dispatch(isPlayBarDisplayedAction(false));
                     }}
                   >
-                    Adiós
+                    <Cancel />
                   </button>
                 </Col>
               </Row>

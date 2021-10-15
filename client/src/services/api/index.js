@@ -25,6 +25,9 @@ import {
   createNewPlaylistApi,
   deleteTrackFromPlaylistApi,
 } from "./apiPlaylist";
+
+import { getTotalPlays, getTotalTracks } from "./apiUser";
+
 export {
   getTrackById,
   registerInApi,
@@ -46,4 +49,6 @@ export {
   addTrackToPlaylist,
   createNewPlaylistApi,
   deleteTrackFromPlaylistApi,
+  getTotalPlays,
+  getTotalTracks,
 };

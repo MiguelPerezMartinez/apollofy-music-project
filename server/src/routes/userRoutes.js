@@ -41,5 +41,15 @@ userRouter.get(
   authMiddleware,
   userController.getUserByUsername,
 );
+userRouter.get(
+  "/get-user/:id/total-plays",
+  authMiddleware,
+  userController.getTotalPlays,
+);
+userRouter.get(
+  "/get-user/:id/total-tracks",
+  authMiddleware,
+  userController.getTotalTracks,
+);
 
 module.exports = userRouter;

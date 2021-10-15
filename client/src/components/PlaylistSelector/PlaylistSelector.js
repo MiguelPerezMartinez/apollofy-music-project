@@ -1,4 +1,3 @@
-import "./style.css";
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import Button from "../../components/Button";
@@ -10,6 +9,9 @@ import {
 } from "../../services/api/index";
 import { useDispatch, useSelector } from "react-redux";
 import { setMyPlaylistModal } from "../../redux/modalsHandler/actions";
+
+import "./style.css";
+
 import Input from "../Input";
 function PlaylistSelector() {
   const dispatch = useDispatch();
@@ -78,6 +80,7 @@ function PlaylistSelector() {
   function makeNewOptions(newPlaylist) {
     options.push({ value: newPlaylist, label: newPlaylist });
   }
+
   return (
     <>
       <div
