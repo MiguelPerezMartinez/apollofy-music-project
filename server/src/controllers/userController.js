@@ -100,6 +100,7 @@ async function getById(req, res) {
   } catch (error) {
     console.log(error.message);
     return res.status(500).send({
+      data: req.params.id,
       error: error.message,
     });
   }
@@ -117,6 +118,7 @@ async function getMyTracksById(req, res) {
   } catch (error) {
     console.log(error.message);
     return res.status(500).send({
+      data: req.params.id,
       error: error.message,
     });
   }
@@ -129,11 +131,12 @@ async function getFavouriteTracksById(req, res) {
 
     return res.status(200).send({
       message: `User ${id} favTracks`,
-      favTracks: userDoc.favTracks,
+      data: userDoc.favTracks,
     });
   } catch (error) {
     console.log(error.message);
     return res.status(500).send({
+      data: req.params.id,
       error: error.message,
     });
   }
