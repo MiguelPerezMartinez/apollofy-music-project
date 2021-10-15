@@ -32,6 +32,11 @@ playlistRouter.patch(
   authMiddleware,
   playlistController.handlerPlaylistLike,
 );
+playlistRouter.patch(
+  "/set-playlist-genres/:id",
+  authMiddleware,
+  playlistController.setPlaylistGenres,
+);
 
 //DELETE
 playlistRouter.delete(
@@ -51,6 +56,21 @@ playlistRouter.get(
   "/get-playlist-by-title/:title",
   authMiddleware,
   playlistController.getPlaylistByTitle,
+);
+playlistRouter.get(
+  "/get-playlist-genres/:id",
+  authMiddleware,
+  playlistController.getPlaylistGenres,
+);
+playlistRouter.get(
+  "/get-playlist-by-track/:title",
+  authMiddleware,
+  playlistController.getPlayListsByTrackTitle,
+);
+playlistRouter.get(
+  "/get-playlist-by-genre/:genre",
+  authMiddleware,
+  playlistController.getPlayListsByGenre,
 );
 playlistRouter.get(
   "/get-playlist/:id/liked",

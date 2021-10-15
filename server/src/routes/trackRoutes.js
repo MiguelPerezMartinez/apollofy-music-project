@@ -33,7 +33,9 @@ trackRouter.delete(
 
 //GET
 trackRouter.get("/", authMiddleware, trackController.getAllTracks);
-trackRouter.get("/get-track/:id", authMiddleware, trackController.getTrackById);
+trackRouter.get("/get-track/:id", 
+authMiddleware, 
+trackController.getTrackById);
 trackRouter.get(
   "/get-track-by-title/:title",
   authMiddleware,

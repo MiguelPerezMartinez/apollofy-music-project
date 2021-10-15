@@ -38,7 +38,7 @@ userRouter.get(
 );
 userRouter.get(
   "/get-user-by-username/:username",
-  // authMiddleware,
+  authMiddleware,
   userController.getUserByUsername,
 );
 
