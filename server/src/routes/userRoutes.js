@@ -46,5 +46,10 @@ userRouter.get(
   authMiddleware,
   userController.getTotalPlays,
 );
+userRouter.get(
+  "/get-user/:id/total-tracks",
+  authMiddleware,
+  userController.getTotalTracks,
+);
 
 module.exports = userRouter;

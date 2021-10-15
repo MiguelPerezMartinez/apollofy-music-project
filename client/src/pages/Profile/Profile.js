@@ -5,11 +5,6 @@ import { Link } from "react-router-dom";
 
 import "./styles.css";
 import "./spinner.css";
-import {
-  faPlayCircle,
-  faHeart,
-  faBroadcastTower,
-} from "@fortawesome/free-solid-svg-icons";
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
@@ -17,6 +12,7 @@ import {
   updateCurrentUser,
   changeMyProfilePicture,
   getTotalPlays,
+  getTotalTracks,
 } from "../../services/api/index";
 import { updateUserPass } from "../../services/firebase";
 import { logOut } from "../../services/firebase";
@@ -27,9 +23,18 @@ import ProfileCircleIcon from "../../components/ProfileCircleIcon";
 import Input from "../../components/Input";
 import { Container, Row, Col } from "react-bootstrap";
 import LinkCards from "../../components/LinkCards";
+import {
+  faPlayCircle,
+  faHeart,
+  faBroadcastTower,
+} from "@fortawesome/free-solid-svg-icons";
 
 //Charts
-import { MyTopTen, TotalLastSevenDays } from "../../components/Charts";
+import {
+  MyTopNine,
+  MyTopTen,
+  TotalLastSevenDays,
+} from "../../components/Charts";
 
 import { fetchUserData } from "../../redux/userData/actions";
 import { isPlayBarDisplayedAction } from "../../redux/trackData/actions";
@@ -48,6 +53,7 @@ function Profile() {
   });
   const [showChart, setShowChart] = useState("total-last-7-days");
   const [myTotalPlays, setMyTotalPlays] = useState("");
+  const [myTotalTracks, setMyTotalTracks] = useState("");
 
   const [profilePicture, setProfilePicture] = useState({
     file: "",
@@ -55,6 +61,12 @@ function Profile() {
     isUploading: false,
     isUploaded: false,
   });
+
+  useEffect(() => {
+    totalPlaysData();
+    totalTracksData();
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     uploadProfilePicture();
@@ -141,14 +153,18 @@ function Profile() {
     setShowChart(chart);
   }
 
-  async function test() {
-    console.log(state.userId);
+  async function totalPlaysData() {
     await getTotalPlays(state.userId).then((response) => {
       let total = response.data.message;
-      console.log(total);
       setMyTotalPlays(total);
     });
-    console.log(myTotalPlays);
+  }
+
+  async function totalTracksData() {
+    await getTotalTracks(state.userId).then((response) => {
+      let total = response.data.message;
+      setMyTotalTracks(total);
+    });
   }
 
   return (
@@ -445,11 +461,10 @@ function Profile() {
               sx={12}
               className="d-flex justify-content-center link-cards-profile-size"
             >
-              <LinkCards
-                name="My Tracks"
-                icon={faBroadcastTower}
-                to="/my-tracks"
-              />
+              <div className="profile-stats-container">
+                <h5>Plays (all time)</h5>
+                <span>{myTotalPlays !== "" ? myTotalPlays : "-"}</span>
+              </div>
             </Col>
             <Col
               lg={3}
@@ -457,11 +472,11 @@ function Profile() {
               sx={12}
               className="d-flex justify-content-center link-cards-profile-size"
             >
-              <LinkCards
-                name="My Playlists"
-                icon={faBroadcastTower}
-                to="/my-playlists"
-              />
+              <div className="profile-stats-container">
+                <h5>Plays (today)</h5>
+                {/* Sacado de laravel, query(where fecha = hoy & user = currentUser) */}
+                <span>-</span>
+              </div>
             </Col>
             <Col
               lg={3}
@@ -469,11 +484,11 @@ function Profile() {
               sx={12}
               className="d-flex justify-content-center link-cards-profile-size"
             >
-              <LinkCards
-                name="My Favourite Tracks"
-                icon={faBroadcastTower}
-                to="/favourite-tracks"
-              />
+              <div className="profile-stats-container">
+                <h5>Today's best</h5>
+                {/* Sacado de laravel, query(where fecha = hoy & user = currentUser) */}
+                <span>-</span>
+              </div>
             </Col>
             <Col
               lg={3}
@@ -481,11 +496,10 @@ function Profile() {
               sx={12}
               className="d-flex justify-content-center link-cards-profile-size"
             >
-              <LinkCards
-                name="My Favourite Playlists"
-                icon={faBroadcastTower}
-                to="/favourite-playlists"
-              />
+              <div className="profile-stats-container">
+                <h5>Total tracks</h5>
+                <span>{myTotalTracks !== "" ? myTotalTracks : "-"}</span>
+              </div>
             </Col>
           </Row>
         </Container>
@@ -507,6 +521,7 @@ function Profile() {
             <Col xl={7}>
               {showChart === "top-10-tracks" && <MyTopTen />}
               {showChart === "total-last-7-days" && <TotalLastSevenDays />}
+              {showChart === "total-9-tracks" && <MyTopNine />}
             </Col>
             <Col xl={5} className="justify-content-center">
               <ul>
@@ -526,16 +541,17 @@ function Profile() {
                 >
                   MY TOP 10 TRACKS
                 </li>
+                <li
+                  onClick={() => {
+                    handleShowChart("top-9-tracks");
+                  }}
+                  className="profile-link-buttons"
+                >
+                  MY TOP 9 TRACKS
+                </li>
               </ul>
             </Col>
           </Row>
-        </Container>
-
-        <div className="xl-separator" />
-
-        <Container className="general-container">
-          <button onClick={test}>Show total plays</button>
-          <h1>{myTotalPlays !== "" && myTotalPlays}</h1>
         </Container>
 
         <div className="xl-separator" />

@@ -12,3 +12,14 @@ export async function getTotalPlays(userId) {
     },
   });
 }
+
+export async function getTotalTracks(userId) {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "GET",
+    url: `${process.env.REACT_APP_URL}users/get-user/${userId}/total-tracks`,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}

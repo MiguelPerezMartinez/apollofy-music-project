@@ -204,6 +204,23 @@ async function getTotalPlays(req, res) {
   }
 }
 
+async function getTotalTracks(req, res) {
+  const { id } = req.params;
+  try {
+    const userDoc = await Users.findById(id).populate("myTracks");
+    const myTracks = userDoc.myTracks;
+    const totalTracks = myTracks.length;
+    return res.status(200).send({
+      message: totalTracks,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   register: register,
   updateProfile: updateById,
@@ -214,4 +231,5 @@ module.exports = {
   getAllMyPlaylists: getAllMyPlaylists,
   getUserByUsername: getUserByUsername,
   getTotalPlays: getTotalPlays,
+  getTotalTracks: getTotalTracks,
 };
