@@ -13,10 +13,13 @@ import {
 
 //Hoc Authorization
 import withAuth from "../../hoc/withAuth";
-import { updateCurrentUser } from "../../services/api/index";
+import {
+  updateCurrentUser,
+  changeMyProfilePicture,
+  getTotalPlays,
+} from "../../services/api/index";
 import { updateUserPass } from "../../services/firebase";
 import { logOut } from "../../services/firebase";
-import { changeMyProfilePicture } from "../../services/api/index";
 
 //Import components
 import BarsAndModal from "../../hoc/BarsAndModal";
@@ -44,6 +47,7 @@ function Profile() {
     confirmPassword: "",
   });
   const [showChart, setShowChart] = useState("total-last-7-days");
+  const [myTotalPlays, setMyTotalPlays] = useState("");
 
   const [profilePicture, setProfilePicture] = useState({
     file: "",
@@ -135,6 +139,16 @@ function Profile() {
 
   function handleShowChart(chart) {
     setShowChart(chart);
+  }
+
+  async function test() {
+    console.log(state.userId);
+    await getTotalPlays(state.userId).then((response) => {
+      let total = response.data.message;
+      console.log(total);
+      setMyTotalPlays(total);
+    });
+    console.log(myTotalPlays);
   }
 
   return (
@@ -515,6 +529,13 @@ function Profile() {
               </ul>
             </Col>
           </Row>
+        </Container>
+
+        <div className="xl-separator" />
+
+        <Container className="general-container">
+          <button onClick={test}>Show total plays</button>
+          <h1>{myTotalPlays !== "" && myTotalPlays}</h1>
         </Container>
 
         <div className="xl-separator" />

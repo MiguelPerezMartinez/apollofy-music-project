@@ -1,4 +1,4 @@
-const { Users } = require("../models");
+const { Users, Tracks } = require("../models");
 
 //POST
 async function register(req, res) {
@@ -183,6 +183,27 @@ async function getUserByUsername(req, res) {
     });
   }
 }
+
+async function getTotalPlays(req, res) {
+  const { id } = req.params;
+  try {
+    const userDoc = await Users.findById(id).populate("myTracks");
+    const myTracks = userDoc.myTracks;
+    let totalPlays = 0;
+    myTracks.forEach((track) => {
+      totalPlays += track.totalPlays;
+    });
+    return res.status(200).send({
+      message: totalPlays,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   register: register,
   updateProfile: updateById,
@@ -192,4 +213,5 @@ module.exports = {
   getFavouriteTracksById: getFavouriteTracksById,
   getAllMyPlaylists: getAllMyPlaylists,
   getUserByUsername: getUserByUsername,
+  getTotalPlays: getTotalPlays,
 };

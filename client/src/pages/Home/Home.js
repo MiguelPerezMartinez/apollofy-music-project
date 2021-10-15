@@ -39,7 +39,6 @@ function Home() {
   useEffect(() => {
     if (reloadFetch) {
       // Load last uploaded tracks
-
       getAllTracks().then((response) => {
         setlastUploadedTracks(response.data.tracks.slice(0, 6));
         setTrashTracks(response.data.tracks.slice(6, 20));
