@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { addTotalPlay } from "../../services/api";
+import { addTotalPlay, postGlobalPlay } from "../../services/api";
 import {
   trackObjectAction,
   setPositionInHistory,
@@ -41,7 +41,7 @@ import {
   VolumeUpOutlined,
   VolumeOffOutlined,
   Favorite,
-  Cancel, 
+  Cancel,
 } from "@material-ui/icons";
 
 function PlayBar() {
@@ -79,6 +79,7 @@ function PlayBar() {
         setPlayPause(true);
         setTrackHistoryInLocalStorage(trackObject);
         addTotalPlay(trackObject._id);
+        postGlobalPlay(trackObject);
       },
       (currentTime) => {
         setTrackProgressTime(currentTime);
