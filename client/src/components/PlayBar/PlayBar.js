@@ -2,7 +2,11 @@ import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { addTotalPlay, postGlobalPlay } from "../../services/api";
+import {
+  addTotalPlay,
+  postGlobalPlay,
+  postRelatedPlay,
+} from "../../services/api";
 import {
   trackObjectAction,
   setPositionInHistory,
@@ -80,6 +84,7 @@ function PlayBar() {
         setTrackHistoryInLocalStorage(trackObject);
         addTotalPlay(trackObject._id);
         postGlobalPlay(trackObject);
+        postRelatedPlay(trackObject._id);
       },
       (currentTime) => {
         setTrackProgressTime(currentTime);

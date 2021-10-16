@@ -27,7 +27,7 @@ import {
 } from "./apiPlaylist";
 
 import { getTotalPlays, getTotalTracks } from "./apiUser";
-import { postGlobalPlay } from "./laravelApi";
+import { postGlobalPlay, postRelatedPlay } from "./laravelApi";
 
 export {
   getTrackById,
@@ -53,4 +53,5 @@ export {
   getTotalPlays,
   getTotalTracks,
   postGlobalPlay,
+  postRelatedPlay,
 };

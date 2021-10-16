@@ -18,3 +18,26 @@ export async function postGlobalPlay(trackData) {
     // },
   });
 }
+
+export async function postRelatedPlay(currentTrackId) {
+  const historyTracks = JSON.parse(localStorage.getItem("trackHistory"));
+  if (historyTracks && historyTracks.length > 1) {
+    const prevTrackId = historyTracks[historyTracks.length - 2]._id;
+    if (currentTrackId != prevTrackId) {
+      //   console.log("current ", currentTrackId);
+      //   console.log("prev ", prevTrackId);
+      return axios({
+        method: "POST",
+        url: `http://127.0.0.1:8000/api/related-plays`,
+        // url: `${process.env.LARAVEL_API_URL}api/related-plays`,
+        data: {
+          prevTrackId: prevTrackId,
+          nextTrackId: currentTrackId,
+        },
+        // headers: {
+        //   Authorization: `Bearer ${userToken}`,
+        // },
+      });
+    }
+  }
+}
