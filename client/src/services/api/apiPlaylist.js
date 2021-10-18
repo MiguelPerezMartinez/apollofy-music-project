@@ -27,6 +27,7 @@ export async function addTrackToPlaylist(playlisTitle, trackId) {
     },
   });
 }
+
 export async function createNewPlaylistApi(playListData) {
   const userToken = await getCurrentUserToken();
   return axios({
