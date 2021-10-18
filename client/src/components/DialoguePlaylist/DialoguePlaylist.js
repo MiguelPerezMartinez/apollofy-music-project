@@ -1,10 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { hideDialogue } from "../../redux/dialogueHandler/actions";
+import { setTrackQueueInLocalStorage } from "../../services/localStorage";
+import {
+  trackObjectAction,
+  isPlayBarDisplayedAction,
+  setPositionInHistory,
+} from "../../redux/trackData/actions";
+import { resetPositionInHistory } from "../../services/localStorage";
 import "./styles.css";
 function DialoguePlaylist() {
   const dispatch = useDispatch();
-  const { trackDataDialog, position } = useSelector(
+  const { trackDataDialogPlaylist, position } = useSelector(
     (state) => state.dialogueHandler,
   );
   function closeDialoguePlaylist() {
@@ -36,7 +43,15 @@ function DialoguePlaylist() {
     }
   }, []);
   const dialoguePlaylist = useRef();
-  function handlerAddToQueuePlaylist() {}
+  function handlerAddToQueuePlaylist() {
+    const { tracks } = trackDataDialogPlaylist;
+    tracks.map((track) => setTrackQueueInLocalStorage(track));
+    dispatch(trackObjectAction(tracks[0]));
+    dispatch(isPlayBarDisplayedAction(true));
+
+    const resetedHistoryPosition = resetPositionInHistory();
+    dispatch(setPositionInHistory(resetedHistoryPosition));
+  }
   function handlerMoreInfoPlaylist() {}
   function handlerSharePlaylist() {}
   return (
