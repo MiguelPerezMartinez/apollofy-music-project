@@ -22,6 +22,7 @@ import { changeMyProfilePicture } from "./fileUploader";
 import {
   getAllMyPlaylist,
   getMostLikedPlaylists,
+  getLastUploadedPlaylists,
   addTrackToPlaylist,
   createNewPlaylistApi,
   deleteTrackFromPlaylistApi,
@@ -48,6 +49,7 @@ export {
   getTrackByName,
   getAllMyPlaylist,
   getMostLikedPlaylists,
+  getLastUploadedPlaylists,
   addTrackToPlaylist,
   createNewPlaylistApi,
   deleteTrackFromPlaylistApi,

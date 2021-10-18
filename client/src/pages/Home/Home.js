@@ -18,6 +18,7 @@ import {
   getMostLikedTracks,
   getMostPlayedTracks,
   getMostLikedPlaylists,
+  getLastUploadedPlaylists,
 } from "../../services/api/index";
 
 //Hoc Authorization
@@ -38,14 +39,14 @@ function Home() {
   const { reloadFetch } = useSelector((state) => state.trackReducer);
   const { reloadPlaylistFetch } = useSelector((state) => state.playlistReducer);
 
-  //State vars
+  //State vars for Tracks
   const [lastUploadedTracks, setlastUploadedTracks] = useState([]);
-  const [trashTracks, setTrashTracks] = useState([]);
-  const [pachangaTracks, setPachangaTracks] = useState([]);
   const [mostPlayedTracks, setMostPlayedTracks] = useState([]);
   const [mostLikedTracks, setMostLikedTracks] = useState([]);
 
+  //State vars for Playlists
   const [mostLikedPlaylists, setMostLikedPlaylists] = useState([]);
+  const [lastUploadedPlaylists, setlastUploadedPlaylists] = useState([]);
 
   // const [tracksLoaded, setTracksLoaded] = useState(false);
 
@@ -53,18 +54,19 @@ function Home() {
     if (reloadFetch) {
       // Load last uploaded tracks
       getAllTracks().then((response) => {
+        setlastUploadedTracks([]);
         setlastUploadedTracks(response.data.tracks.slice(0, 6));
-        setTrashTracks(response.data.tracks.slice(6, 20));
-        setPachangaTracks(response.data.tracks.slice(17, -1));
       });
 
       // Load most played tracks
       getMostPlayedTracks().then((response) => {
+        setMostPlayedTracks([]);
         setMostPlayedTracks(response.data.tracks.slice(0, 5));
       });
 
       // Load most liked tracks
       getMostLikedTracks().then((response) => {
+        setMostLikedTracks([]);
         setMostLikedTracks(response.data.tracks);
       });
       dispatch(reloadFetchAction(false));
@@ -76,8 +78,16 @@ function Home() {
     if (reloadPlaylistFetch) {
       //Load most liked playlists
       getMostLikedPlaylists().then((response) => {
+        setMostLikedPlaylists([]);
         setMostLikedPlaylists(response.data.playlists);
       });
+
+      //Load last uploaded playlists
+      getLastUploadedPlaylists().then((response) => {
+        setlastUploadedPlaylists([]);
+        setlastUploadedPlaylists(response.data.playlists);
+      });
+      dispatch(reloadPlaylistFetchAction(false));
     }
   }, [reloadPlaylistFetch]);
 
@@ -192,13 +202,13 @@ function Home() {
         <div className="xl-separator" />
 
         <Container>
-          <h1>Pachanga selection for you:</h1>
+          <h1>Last Uploaded Playlists:</h1>
           <ScrollContainer className="scroll-container">
             <Row className="scroll-wrapper-tracks">
-              {pachangaTracks.map((track, index) => {
+              {lastUploadedPlaylists.map((playlist, index) => {
                 return (
-                  <Col key={track ? track._id : index}>
-                    <BlockTrack playlistData={track} size="small" />
+                  <Col key={playlist ? playlist._id : index}>
+                    <BlockPlaylist playlistData={playlist} size="small" />
                   </Col>
                 );
               })}

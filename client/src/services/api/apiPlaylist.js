@@ -81,3 +81,17 @@ export async function getMostLikedPlaylists() {
     },
   });
 }
+
+export async function getLastUploadedPlaylists(){
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "GET",
+    url: `${process.env.REACT_APP_URL}playlists/`,
+    data: {
+      limit: 14,
+    },
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}

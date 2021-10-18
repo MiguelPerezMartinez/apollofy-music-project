@@ -91,7 +91,6 @@ function BlockPlaylist({ playlistData, size = "small" }) {
         return (
           <>
             <PlaylistAddCheckOutlined
-              onClick={handleLike}
               className="like-disabled"
             />
           </>
@@ -100,7 +99,6 @@ function BlockPlaylist({ playlistData, size = "small" }) {
         return (
           <>
             <PlaylistAddOutlined
-              onClick={handleLike}
               className="like-disabled"
             />
           </>
