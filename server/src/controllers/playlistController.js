@@ -65,7 +65,7 @@ async function updatePlaylistById(req, res) {
   }
 }
 
-async function handlerPlaylistLike(req, res) {
+async function handlePlaylistLike(req, res) {
   const { playlistId, userId } = req.body;
   let messageResponse = "";
   try {
@@ -239,6 +239,8 @@ async function getAllPlaylists(req, res) {
   const { limit = 20 } = req.body;
   try {
     const playlists = await Playlists.find({})
+      .populate("tracks")
+      .populate("owner")
       .sort({ createdAt: -1 })
       .limit(limit);
     return res.status(200).send({
@@ -396,10 +398,11 @@ async function isLikedByUser(req, res) {
 
 async function getMostLiked(req, res) {
   //Receive the limitation by req.body, by default 20
-  const { limit = 14 } = req.body;
+  const { limit = 6 } = req.body;
   try {
     const playlists = await Playlists.find({})
       .populate("tracks")
+      .populate("owner")
       .sort({ totalLikes: -1 })
       .limit(limit);
     return res.status(200).send({
@@ -438,7 +441,7 @@ async function getPlaylistGenres(req, res) {
 module.exports = {
   createPlaylist: createPlaylist,
   updatePlaylistById: updatePlaylistById,
-  handlerPlaylistLike: handlerPlaylistLike,
+  handlePlaylistLike: handlePlaylistLike,
   addTrackToPlaylist: addTrackToPlaylist,
   deleteTrackFromPlaylist: deleteTrackFromPlaylist,
   setPlaylistGenres: setPlaylistGenres,

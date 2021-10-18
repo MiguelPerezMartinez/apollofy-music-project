@@ -28,9 +28,9 @@ playlistRouter.patch(
   playlistController.deleteTrackFromPlaylist,
 );
 playlistRouter.patch(
-  "/handler-playlist-like",
+  "/handle-playlist-like",
   authMiddleware,
-  playlistController.handlerPlaylistLike,
+  playlistController.handlePlaylistLike,
 );
 playlistRouter.patch(
   "/set-playlist-genres/:id",

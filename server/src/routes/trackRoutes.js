@@ -14,9 +14,9 @@ trackRouter.patch(
   trackController.updateTrack,
 );
 trackRouter.patch(
-  "/handler-track-like/",
+  "/handle-track-like/",
   authMiddleware,
-  trackController.handlerTrackLike,
+  trackController.handleTrackLike,
 );
 trackRouter.patch(
   "/increment-total-plays/:id",
