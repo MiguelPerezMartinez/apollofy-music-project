@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { hideDialogue } from "../../redux/dialogueHandler/actions";
 import { setTrackQueueInLocalStorage } from "../../services/localStorage";
+import { Link } from "react-router-dom";
 import {
   trackObjectAction,
   isPlayBarDisplayedAction,
@@ -45,14 +46,19 @@ function DialoguePlaylist() {
   const dialoguePlaylist = useRef();
   function handlerAddToQueuePlaylist() {
     const { tracks } = trackDataDialogPlaylist;
-    tracks.map((track) => setTrackQueueInLocalStorage(track));
     dispatch(trackObjectAction(tracks[0]));
+    if (tracks.lenght < 1) {
+      tracks.shift();
+    }
+    tracks.map((track) => setTrackQueueInLocalStorage(track));
     dispatch(isPlayBarDisplayedAction(true));
 
     const resetedHistoryPosition = resetPositionInHistory();
     dispatch(setPositionInHistory(resetedHistoryPosition));
   }
-  function handlerMoreInfoPlaylist() {}
+  function handlerMoreInfoPlaylist() {
+    dispatch(hideDialogue());
+  }
   function handlerSharePlaylist() {}
   return (
     <>
@@ -62,9 +68,11 @@ function DialoguePlaylist() {
           <li className="dialogue-item" onClick={handlerAddToQueuePlaylist}>
             Add to queue
           </li>
-          <li className="dialogue-item" onClick={handlerMoreInfoPlaylist}>
-            More Info
-          </li>
+          <Link to={`/playlist/${trackDataDialogPlaylist._id}`}>
+            <li className="dialogue-item" onClick={handlerMoreInfoPlaylist}>
+              More Info
+            </li>
+          </Link>
           <li className="dialogue-item" onClick={handlerSharePlaylist}>
             Share
           </li>
