@@ -1,4 +1,4 @@
-import { SHOW_DIALOGUE, HIDE_DIALOGUE } from "./types";
+import { SHOW_DIALOGUE, HIDE_DIALOGUE, SHOW_DIALOGUE_PLAYLIST } from "./types";
 import initialState from "./state";
 
 const dialogueHandlerReducer = (state = initialState, action) => {
@@ -8,6 +8,13 @@ const dialogueHandlerReducer = (state = initialState, action) => {
         ...state,
         active: true,
         trackDataDialog: action.payload.data,
+        position: action.payload.position,
+      };
+    case SHOW_DIALOGUE_PLAYLIST:
+      return {
+        ...state,
+        activePlaylist: true,
+        trackDataDialogPlaylist: action.payload.data,
         position: action.payload.position,
       };
     case HIDE_DIALOGUE:

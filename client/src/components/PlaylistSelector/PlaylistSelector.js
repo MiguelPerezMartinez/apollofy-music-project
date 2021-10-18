@@ -9,6 +9,7 @@ import {
 } from "../../services/api/index";
 import { useDispatch, useSelector } from "react-redux";
 import { setMyPlaylistModal } from "../../redux/modalsHandler/actions";
+import { reloadPlaylistFetchAction } from "../../redux/playlistData/actions";
 
 import "./style.css";
 
@@ -37,6 +38,7 @@ function PlaylistSelector() {
     e.preventDefault();
     await createNewPlaylistApi(newPlaylist);
     await addTrackToPlaylist(newPlaylist.title, trackDataDialog._id);
+    dispatch(reloadPlaylistFetchAction(true));
     dispatch(setMyPlaylistModal(false));
   }
   function handleChangeTitle(e) {

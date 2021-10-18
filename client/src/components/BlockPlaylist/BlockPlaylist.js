@@ -20,7 +20,7 @@ import {
 // import { resetPositionInHistory } from "../../services/localStorage";
 
 //import dialogueHandlerReducer
-// import { showDialogue } from "../../redux/dialogueHandler/actions";
+import { showDialoguePlaylist } from "../../redux/dialogueHandler/actions";
 
 import { likeHandleRequest } from "../../services/api/apiPlaylist";
 
@@ -64,9 +64,12 @@ function BlockPlaylist({ playlistData, size = "small" }) {
     // dispatch(setPositionInHistory(resetedHistoryPosition));
   }
 
-  // function openDialogue(e) {
-  //   dispatch(showDialogue(playlistData, { x: e.clientX, y: e.clientY }));
-  // }
+  function openDialoguePlaylist(e) {
+    //dispatch(playlistObjectAction(playlistData));
+    dispatch(
+      showDialoguePlaylist(playlistData, { x: e.clientX, y: e.clientY }),
+    );
+  }
 
   function renderPlaylistLiked() {
     if (isPlaylistLiked.loaded) {
@@ -116,7 +119,11 @@ function BlockPlaylist({ playlistData, size = "small" }) {
           className="block-playlist-img-container"
           onClick={setReduxPlaylistData}
         >
-          <TrackImg urlCover={playlistData.tracks[0].urlCover} />
+          {playlistData.tracks.length === 0 ? (
+            <TrackImg urlCover={""} />
+          ) : (
+            <TrackImg urlCover={playlistData.tracks[0].urlCover} />
+          )}
         </Row>
         <Row className="name-TrackBlock">
           <Col xs={8}>
@@ -132,8 +139,7 @@ function BlockPlaylist({ playlistData, size = "small" }) {
           </Col>
           <Col xs={3}>
             {renderPlaylistLiked()}
-            {/* <MoreVert onClick={openDialogue} /> */}
-            <MoreVert />
+            <MoreVert onClick={openDialoguePlaylist} />
           </Col>
         </Row>
       </Container>

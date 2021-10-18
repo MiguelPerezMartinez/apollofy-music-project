@@ -89,6 +89,7 @@ function Home() {
       });
       dispatch(reloadPlaylistFetchAction(false));
     }
+    // eslint-disable-next-line
   }, [reloadPlaylistFetch]);
 
   useEffect(() => {

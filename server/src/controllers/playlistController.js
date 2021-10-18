@@ -399,6 +399,7 @@ async function getMostLiked(req, res) {
   const { limit = 14 } = req.body;
   try {
     const playlists = await Playlists.find({})
+      .populate("tracks")
       .sort({ totalLikes: -1 })
       .limit(limit);
     return res.status(200).send({
