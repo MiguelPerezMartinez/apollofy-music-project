@@ -10,6 +10,8 @@ import { setSearchQuery } from "../../redux/searchHandler/actions";
 
 //Icons
 import { HomeOutlined, CloudUpload, SearchOutlined } from "@material-ui/icons";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+
 import ProfileCircleIcon from "../ProfileCircleIcon";
 import Input from "../../components/Input";
 
@@ -71,10 +73,10 @@ export default function RightMenu() {
         </div>
       </div>
       <div className="xl-separator" />
-      <div>
-        <div className="right-menu-row no-hover">
-          <SearchOutlined fontSize="large" />
-          <form onSubmit={handleSubmit}>
+      <div className="right-menu-row no-hover">
+        <SearchOutlined fontSize="large" />
+        <div>
+          <form onSubmit={handleSubmit} className="right-menu-row-title">
             <Input
               type="text"
               id="searchQuery"
@@ -94,11 +96,7 @@ export default function RightMenu() {
       </div>
       <div onClick={handleLogout} className="right-menu-logout">
         <div className="right-menu-row">
-          <img
-            src="./assets/img/logout.svg"
-            alt="logout"
-            className="right-menu-icon"
-          />
+          <LogoutOutlinedIcon fontSize="large" />
           <div className="right-menu-row-title">Logout</div>
         </div>
       </div>

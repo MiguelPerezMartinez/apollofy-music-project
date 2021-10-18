@@ -198,3 +198,8 @@
     white-space: nowrap;
   }
 }
+
+.playbar-isloading {
+  display: flex;
+  justify-content: center;
+}

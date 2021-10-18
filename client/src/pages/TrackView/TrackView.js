@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import "./style.css";
 import { useParams } from "react-router-dom";
+
+import "./style.css";
+
+//Hoc Authorization
+import withAuth from "../../hoc/withAuth";
+import BarsAndModal from "../../hoc/BarsAndModal";
 import { getTrackById } from "../../services/api/index";
 
-//Title, author, album, releseYear, genre, urlImage
 function TrackView() {
   const { id } = useParams();
-  const { trackDataDialog } = useSelector((state) => state.dialogueHandler);
 
   const [trackData, setTrackData] = useState({});
 
-  function handleMoreInfo() {
-    console.log(id);
-  }
   useEffect(() => {
     getTrackById(id).then((response) => {
       setTrackData(response.data.currentTrack);
-      console.log(response.data.currentTrack);
     });
   }, []);
+
   return (
     <div className="page">
       <Container className="track-view">
@@ -42,10 +41,7 @@ function TrackView() {
               </h4>
               <h4 className="track-genre">Genre: {trackData.genre}</h4>
 
-              <button
-                onClick={handleMoreInfo}
-                className="form-control btn btn-primary mt-5 mb-5"
-              >
+              <button className="form-control btn btn-primary mt-5 mb-5">
                 Go to PlayBar
               </button>
             </div>
@@ -56,4 +52,4 @@ function TrackView() {
   );
 }
 
-export default TrackView;
+export default withAuth(BarsAndModal(TrackView));

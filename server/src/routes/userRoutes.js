@@ -38,8 +38,18 @@ userRouter.get(
 );
 userRouter.get(
   "/get-user-by-username/:username",
-  // authMiddleware,
+  authMiddleware,
   userController.getUserByUsername,
+);
+userRouter.get(
+  "/get-user/:id/total-plays",
+  authMiddleware,
+  userController.getTotalPlays,
+);
+userRouter.get(
+  "/get-user/:id/total-tracks",
+  authMiddleware,
+  userController.getTotalTracks,
 );
 
 module.exports = userRouter;

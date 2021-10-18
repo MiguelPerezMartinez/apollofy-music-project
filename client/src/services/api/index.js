@@ -25,6 +25,10 @@ import {
   createNewPlaylistApi,
   deleteTrackFromPlaylistApi,
 } from "./apiPlaylist";
+
+import { getTotalPlays, getTotalTracks } from "./apiUser";
+import { postGlobalPlay, postRelatedPlay } from "./laravelApi";
+
 export {
   getTrackById,
   registerInApi,
@@ -46,4 +50,8 @@ export {
   addTrackToPlaylist,
   createNewPlaylistApi,
   deleteTrackFromPlaylistApi,
+  getTotalPlays,
+  getTotalTracks,
+  postGlobalPlay,
+  postRelatedPlay,
 };
