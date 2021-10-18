@@ -47,7 +47,7 @@ function DialoguePlaylist() {
   function handlerAddToQueuePlaylist() {
     const { tracks } = trackDataDialogPlaylist;
     dispatch(trackObjectAction(tracks[0]));
-    if (tracks.lenght < 1) {
+    if (tracks.length > 1) {
       tracks.shift();
     }
     tracks.map((track) => setTrackQueueInLocalStorage(track));
@@ -55,6 +55,7 @@ function DialoguePlaylist() {
 
     const resetedHistoryPosition = resetPositionInHistory();
     dispatch(setPositionInHistory(resetedHistoryPosition));
+    dispatch(hideDialogue());
   }
   function handlerMoreInfoPlaylist() {
     dispatch(hideDialogue());
