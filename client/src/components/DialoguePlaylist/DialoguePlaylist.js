@@ -42,8 +42,11 @@ function DialoguePlaylist() {
     } else {
       dialoguePlaylist.current.style.top = clickedPosY + "px";
     }
+    // eslint-disable-next-line
   }, []);
+
   const dialoguePlaylist = useRef();
+
   function handlerAddToQueuePlaylist() {
     const { tracks } = trackDataDialogPlaylist;
     dispatch(trackObjectAction(tracks[0]));
@@ -60,7 +63,9 @@ function DialoguePlaylist() {
   function handlerMoreInfoPlaylist() {
     dispatch(hideDialogue());
   }
+
   function handlerSharePlaylist() {}
+
   return (
     <>
       <div onMouseDown={closeDialoguePlaylist} className="back-context"></div>

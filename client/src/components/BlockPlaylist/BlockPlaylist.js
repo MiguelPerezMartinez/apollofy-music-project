@@ -1,30 +1,29 @@
+//React  imports
 import React, { useState, useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+//Styles
+import "./styles.css";
+
+//Components
+import TrackImg from "../TrackImg";
 import {
   MoreVert,
   PlaylistAddCheckOutlined,
   PlaylistAddOutlined,
 } from "@material-ui/icons";
-import "./styles.css";
 
-import TrackImg from "../TrackImg";
-
-import { useDispatch, useSelector } from "react-redux";
+//Reducer actions
+import { showDialoguePlaylist } from "../../redux/dialogueHandler/actions";
 import {
-  // isPlayBarDisplayedAction,
-  // setPositionInHistory,
   reloadPlaylistFetchAction,
   playlistObjectAction,
 } from "../../redux/playlistData/actions";
 
-// import { resetPositionInHistory } from "../../services/localStorage";
-
-//import dialogueHandlerReducer
-import { showDialoguePlaylist } from "../../redux/dialogueHandler/actions";
-
+//Requests
 import { likeHandleRequest } from "../../services/api/apiPlaylist";
-
-import { Container, Row, Col } from "react-bootstrap";
 
 function BlockPlaylist({ playlistData, size = "small" }) {
   const userData = useSelector((state) => state.userReducer.data);
@@ -58,14 +57,9 @@ function BlockPlaylist({ playlistData, size = "small" }) {
 
   function setReduxPlaylistData() {
     dispatch(playlistObjectAction(playlistData));
-    // dispatch(isPlayBarDisplayedAction(true));
-
-    // const resetedHistoryPosition = resetPositionInHistory();
-    // dispatch(setPositionInHistory(resetedHistoryPosition));
   }
 
   function openDialoguePlaylist(e) {
-    //dispatch(playlistObjectAction(playlistData));
     dispatch(
       showDialoguePlaylist(playlistData, { x: e.clientX, y: e.clientY }),
     );
@@ -93,17 +87,13 @@ function BlockPlaylist({ playlistData, size = "small" }) {
       if (isPlaylistLiked.state) {
         return (
           <>
-            <PlaylistAddCheckOutlined
-              className="like-disabled"
-            />
+            <PlaylistAddCheckOutlined className="like-disabled" />
           </>
         );
       } else {
         return (
           <>
-            <PlaylistAddOutlined
-              className="like-disabled"
-            />
+            <PlaylistAddOutlined className="like-disabled" />
           </>
         );
       }
