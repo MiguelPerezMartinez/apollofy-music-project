@@ -8,8 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   reloadFetchAction,
   trackObjectAction,
-} from "../../redux/trackData/actions";
-import {
   isPlayBarDisplayedAction,
   setPositionInHistory,
 } from "../../redux/trackData/actions";
@@ -18,7 +16,7 @@ import { resetPositionInHistory } from "../../services/localStorage";
 //import dialogueHandlerReducer
 import { showDialogue } from "../../redux/dialogueHandler/actions";
 
-import { likeHandlerRequest } from "../../services/api/apiTrack";
+import { likeHandleRequest } from "../../services/api/apiTrack";
 
 import { Container, Row, Col } from "react-bootstrap";
 
@@ -42,7 +40,7 @@ function BlockTrack({ dataTrack, size = "small" }) {
 
   function handlerLike() {
     setIsLiked({ ...isLiked, loaded: false });
-    likeHandlerRequest(userData.userId, dataTrack._id)
+    likeHandleRequest(userData.userId, dataTrack._id)
       .then(() => {
         setIsLiked({ state: !isLiked.state, loaded: true });
         dispatch(reloadFetchAction(true));

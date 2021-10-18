@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { MoreVert, Favorite } from "@material-ui/icons";
+import {
+  MoreVert,
+  PlaylistAddCheckOutlined,
+  PlaylistAddOutlined,
+} from "@material-ui/icons";
 import "./styles.css";
 
 import TrackImg from "../TrackImg";
@@ -18,7 +22,7 @@ import {
 //import dialogueHandlerReducer
 import { showDialogue } from "../../redux/dialogueHandler/actions";
 
-// import { likeHandlerRequest } from "../../services/api/apiTrack";
+import { likeHandleRequest } from "../../services/api/apiTrack";
 
 import { Container, Row, Col } from "react-bootstrap";
 
@@ -26,7 +30,7 @@ function BlockPlaylist({ playlistData, size = "small" }) {
   const userData = useSelector((state) => state.userReducer.data);
   const dispatch = useDispatch();
 
-  const [isLiked, setIsLiked] = useState({
+  const [isPlaylistLiked, setIsPlaylistLiked] = useState({
     state: false,
     loaded: false,
   });
@@ -34,23 +38,23 @@ function BlockPlaylist({ playlistData, size = "small" }) {
   useEffect(() => {
     if (playlistData !== undefined) {
       const userIndex = playlistData.totalLikes.indexOf(userData.userId);
-      if (userIndex >= 0) setIsLiked({ state: true, loaded: true });
-      else setIsLiked({ state: false, loaded: true });
+      if (userIndex >= 0) setIsPlaylistLiked({ state: true, loaded: true });
+      else setIsPlaylistLiked({ state: false, loaded: true });
     }
     // eslint-disable-next-line
   }, []);
 
-  // function handlerLike() {
-  //   setIsLiked({ ...isLiked, loaded: false });
-  //   likeHandlerRequest(userData.userId, playlistData._id)
-  //     .then(() => {
-  //       setIsLiked({ state: !isLiked.state, loaded: true });
-  //       dispatch(reloadPlaylistFetchAction(true));
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
+  function handlerLike() {
+    setIsPlaylistLiked({ ...isPlaylistLiked, loaded: false });
+    likeHandleRequest(userData.userId, playlistData._id)
+      .then(() => {
+        setIsPlaylistLiked({ state: !isPlaylistLiked.state, loaded: true });
+        dispatch(reloadPlaylistFetchAction(true));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   function setReduxPlaylistData() {
     dispatch(playlistObjectAction(playlistData));
@@ -83,12 +87,14 @@ function BlockPlaylist({ playlistData, size = "small" }) {
                 {playlistData.title}{" "}
               </Link>
             </p>
-            <p className="block-playlist-description">{playlistData.description}</p>
+            <p className="block-playlist-owner">
+              {playlistData.owner.username}
+            </p>
           </Col>
           <Col xs={3}>
-            {/* {isLiked.loaded ? (
+            {/* {isPlaylistLiked.loaded ? (
               <Favorite
-                className={isLiked.state ? "liked" : ""}
+                className={isPlaylistLiked.state ? "liked" : ""}
                 // onClick={handlerLike}
               />
             ) : (
@@ -104,7 +110,9 @@ function BlockPlaylist({ playlistData, size = "small" }) {
     return (
       <>
         <Container
-          className={"block-playlist-container-" + size + " is-loading-component"}
+          className={
+            "block-playlist-container-" + size + " is-loading-component"
+          }
         />
       </>
     );

@@ -44,6 +44,21 @@ export async function deleteTrackFromPlaylistApi(playlistId, trackId) {
   });
 }
 
+export async function likeHandleRequest(userId, playlistId) {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "PATCH",
+    url: `${process.env.REACT_APP_URL}playlists/handle-playlist-like/`,
+    data: {
+      userId: userId,
+      playlistId: playlistId,
+    },
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}
+
 //GET
 export async function getAllMyPlaylist(userId) {
   const userToken = await getCurrentUserToken();
