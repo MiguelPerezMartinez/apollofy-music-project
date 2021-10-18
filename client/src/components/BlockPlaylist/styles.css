@@ -50,8 +50,8 @@
   text-overflow: ellipsis;
 }
 
-.liked {
-  color: red;
+.liked-playlist {
+  color: rgb(60, 255, 0);
 }
 
 .like-disabled {

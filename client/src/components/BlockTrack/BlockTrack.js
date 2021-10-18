@@ -38,7 +38,7 @@ function BlockTrack({ dataTrack, size = "small" }) {
     // eslint-disable-next-line
   }, []);
 
-  function handlerLike() {
+  function handleLike() {
     setIsLiked({ ...isLiked, loaded: false });
     likeHandleRequest(userData.userId, dataTrack._id)
       .then(() => {
@@ -81,7 +81,7 @@ function BlockTrack({ dataTrack, size = "small" }) {
             {isLiked.loaded ? (
               <Favorite
                 className={isLiked.state ? "liked" : ""}
-                onClick={handlerLike}
+                onClick={handleLike}
               />
             ) : (
               <Favorite className="like-disabled" />
@@ -100,23 +100,6 @@ function BlockTrack({ dataTrack, size = "small" }) {
       </>
     );
   }
-
-  // return (
-  //   <Container className={"blockTrack-background blockTrack-Container-" + size}>
-  //     <Row className="blockTrack-img-container" onClick={setReduxTrackData}>
-  //       <TrackImg urlCover={dataTrack.urlCover} />
-  //     </Row>
-  //     <Row className="name-TrackBlock">
-  //       <Col xs={8}>
-  //         <p className="blockTrack-title">{dataTrack.title}</p>
-  //         <p className="blockTrack-author">{dataTrack.author}</p>
-  //       </Col>
-  //       <Col xs={3}>
-  //         <FavButton />
-  //       </Col>
-  //     </Row>
-  //   </Container>
-  // );
 }
 
 export default BlockTrack;

@@ -20,9 +20,9 @@ import {
 // import { resetPositionInHistory } from "../../services/localStorage";
 
 //import dialogueHandlerReducer
-import { showDialogue } from "../../redux/dialogueHandler/actions";
+// import { showDialogue } from "../../redux/dialogueHandler/actions";
 
-import { likeHandleRequest } from "../../services/api/apiTrack";
+import { likeHandleRequest } from "../../services/api/apiPlaylist";
 
 import { Container, Row, Col } from "react-bootstrap";
 
@@ -44,7 +44,7 @@ function BlockPlaylist({ playlistData, size = "small" }) {
     // eslint-disable-next-line
   }, []);
 
-  function handlerLike() {
+  function handleLike() {
     setIsPlaylistLiked({ ...isPlaylistLiked, loaded: false });
     likeHandleRequest(userData.userId, playlistData._id)
       .then(() => {
@@ -67,6 +67,47 @@ function BlockPlaylist({ playlistData, size = "small" }) {
   // function openDialogue(e) {
   //   dispatch(showDialogue(playlistData, { x: e.clientX, y: e.clientY }));
   // }
+
+  function renderPlaylistLiked() {
+    if (isPlaylistLiked.loaded) {
+      if (isPlaylistLiked.state) {
+        return (
+          <>
+            <PlaylistAddCheckOutlined
+              onClick={handleLike}
+              className="liked-playlist"
+            />
+          </>
+        );
+      } else {
+        return (
+          <>
+            <PlaylistAddOutlined onClick={handleLike} />
+          </>
+        );
+      }
+    } else {
+      if (isPlaylistLiked.state) {
+        return (
+          <>
+            <PlaylistAddCheckOutlined
+              onClick={handleLike}
+              className="like-disabled"
+            />
+          </>
+        );
+      } else {
+        return (
+          <>
+            <PlaylistAddOutlined
+              onClick={handleLike}
+              className="like-disabled"
+            />
+          </>
+        );
+      }
+    }
+  }
 
   if (playlistData !== undefined) {
     return (
@@ -92,16 +133,9 @@ function BlockPlaylist({ playlistData, size = "small" }) {
             </p>
           </Col>
           <Col xs={3}>
-            {/* {isPlaylistLiked.loaded ? (
-              <Favorite
-                className={isPlaylistLiked.state ? "liked" : ""}
-                // onClick={handlerLike}
-              />
-            ) : (
-              <Favorite className="like-disabled" />
-            )} */}
-            <MoreVert />
+            {renderPlaylistLiked()}
             {/* <MoreVert onClick={openDialogue} /> */}
+            <MoreVert />
           </Col>
         </Row>
       </Container>

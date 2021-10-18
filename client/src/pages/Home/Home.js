@@ -76,7 +76,6 @@ function Home() {
     if (reloadPlaylistFetch) {
       //Load most liked playlists
       getMostLikedPlaylists().then((response) => {
-        console.log(response.data.playlists);
         setMostLikedPlaylists(response.data.playlists);
       });
     }
