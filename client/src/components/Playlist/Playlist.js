@@ -101,12 +101,20 @@ function Playlist({ playlistData }) {
 
   if (playlistData !== undefined) {
     return (
-      <Row key={playlistData._id} id={playlistData._id} className="playlist-row">
+      <Row
+        key={playlistData._id}
+        id={playlistData._id}
+        className="playlist-row"
+      >
         <Col xs={12}>
           <Row>
             <Col xs={2} md={2} lg={2} onClick={setReduxPlaylistData}>
               <div className="playlist-row-img-container">
-                <TrackImg urlCover={playlistData.tracks[0].urlCover} />
+                {playlistData.tracks.length === 0 ? (
+                  <TrackImg urlCover={""} />
+                ) : (
+                  <TrackImg urlCover={playlistData.tracks[0].urlCover} />
+                )}
               </div>
             </Col>
             <Col xs={5} md={5} lg={5}>
@@ -116,7 +124,7 @@ function Playlist({ playlistData }) {
                   {playlistData.title}{" "}
                 </a>
               </p>
-              <p className="playlist-owner">{playlistData.owner}</p>
+              <p className="playlist-owner">{playlistData.owner.username}</p>
             </Col>
             <Col
               md={2}
@@ -124,13 +132,14 @@ function Playlist({ playlistData }) {
               className="d-none d-md-block d-lg-block playlist-field-centered playlist-album"
             >
               <p>
-                {playlistData.genres.length > 0 ? playlistData.genres[0] : playlistData.title}
+                {playlistData.genres.length > 0
+                  ? playlistData.genres[0]
+                  : playlistData.title}
               </p>
             </Col>
             <Col xs={4} md={3} lg={3} className=" playlist-field-centered">
               <Row>
-                <Col xs={4} md={4} lg={4}>
-                </Col>
+                <Col xs={4} md={4} lg={4}></Col>
                 <Col xs={4} md={4} lg={4}>
                   {renderPlaylistLiked()}
                   <MoreHoriz onClick={openDialogue} />

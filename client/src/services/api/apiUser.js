@@ -23,3 +23,14 @@ export async function getTotalTracks(userId) {
     },
   });
 }
+
+export async function getAllMyFavPlaylists(userId) {
+  const userToken = await getCurrentUserToken();
+  return axios({
+    method: "GET",
+    url: `${process.env.REACT_APP_URL}users/get-user/${userId}/my-fav-playlists`,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+}

@@ -141,6 +141,7 @@ async function getFavouriteTracksById(req, res) {
     });
   }
 }
+
 async function getAllMyPlaylists(req, res) {
   const { id } = req.params;
   try {
@@ -148,6 +149,22 @@ async function getAllMyPlaylists(req, res) {
     return res.status(200).send({
       message: `User ${id} myPlaylists`,
       myPlaylists: userDoc.myPlaylists,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      data: req.params.id,
+      error: error.message,
+    });
+  }
+}
+
+async function getAllMyFavPlaylists(req, res) {
+  const { id } = req.params;
+  try {
+    const userDoc = await Users.findById(id).populate("favPlaylists");
+    return res.status(200).send({
+      message: `User ${id} favPlaylists`,
+      favPlaylists: userDoc.favPlaylists,
     });
   } catch (error) {
     return res.status(500).send({
@@ -232,6 +249,7 @@ module.exports = {
   getMyTracksById: getMyTracksById,
   getFavouriteTracksById: getFavouriteTracksById,
   getAllMyPlaylists: getAllMyPlaylists,
+  getAllMyFavPlaylists: getAllMyFavPlaylists,
   getUserByUsername: getUserByUsername,
   getTotalPlays: getTotalPlays,
   getTotalTracks: getTotalTracks,
