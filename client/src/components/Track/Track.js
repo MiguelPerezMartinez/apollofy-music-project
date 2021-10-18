@@ -19,7 +19,7 @@ import { showDialogue } from "../../redux/dialogueHandler/actions";
 import TrackImg from "../../components/TrackImg";
 import { resetPositionInHistory } from "../../services/localStorage";
 
-import { likeHandlerRequest } from "../../services/api/apiTrack";
+import { likeHandleRequest } from "../../services/api/apiTrack";
 
 // import DialogueBox from "../DialogueBox";
 
@@ -43,7 +43,7 @@ function Track({ dataTrack }) {
 
   function handlerLike() {
     setIsLiked({ ...isLiked, loaded: false });
-    likeHandlerRequest(userData.userId, dataTrack._id)
+    likeHandleRequest(userData.userId, dataTrack._id)
       .then(() => {
         setIsLiked({ state: !isLiked.state, loaded: true });
         dispatch(reloadFetchAction(true));

@@ -1,19 +1,48 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { hideDialoguePlaylist } from "../../redux/dialogueHandler/actions";
-
+import { hideDialogue } from "../../redux/dialogueHandler/actions";
+import "./styles.css";
 function DialoguePlaylist() {
+  const dispatch = useDispatch();
+  const { trackDataDialog, position } = useSelector(
+    (state) => state.dialogueHandler,
+  );
   function closeDialoguePlaylist() {
     window.onscroll = () => {};
-    dispatch(hideDialoguePlaylist());
+    dispatch(hideDialogue());
   }
+  useEffect(() => {
+    dialoguePlaylist.current.style.display = "block";
+
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+    const dialoguePlaylistHeight = dialoguePlaylist.current.offsetHeight + 20;
+    const dialoguePlaylistWidth = dialoguePlaylist.current.offsetWidth + 20;
+    const clickedPosX = position.x;
+    const clickedPosY = position.y;
+
+    if (windowWidth - clickedPosX < dialoguePlaylistWidth) {
+      dialoguePlaylist.current.style.left =
+        windowWidth - dialoguePlaylistWidth + "px";
+    } else {
+      dialoguePlaylist.current.style.left = clickedPosX + "px";
+    }
+
+    if (windowHeight - clickedPosY < dialoguePlaylistHeight) {
+      dialoguePlaylist.current.style.top =
+        windowHeight - dialoguePlaylistHeight + "px";
+    } else {
+      dialoguePlaylist.current.style.top = clickedPosY + "px";
+    }
+  }, []);
+  const dialoguePlaylist = useRef();
   function handlerAddToQueuePlaylist() {}
   function handlerMoreInfoPlaylist() {}
   function handlerSharePlaylist() {}
   return (
     <>
       <div onMouseDown={closeDialoguePlaylist} className="back-context"></div>
-      <div ref={dialogueBox} className="dialogue-box">
+      <div ref={dialoguePlaylist} className="dialogue-box">
         <ul className="dialogue-list">
           <li className="dialogue-item" onClick={handlerAddToQueuePlaylist}>
             Add to queue
@@ -29,3 +58,5 @@ function DialoguePlaylist() {
     </>
   );
 }
+
+export default DialoguePlaylist;

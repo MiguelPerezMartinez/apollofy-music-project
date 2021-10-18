@@ -2,11 +2,12 @@ import axios from "axios";
 
 import { getCurrentUserToken } from "../firebase";
 
-export async function likeHandlerRequest(userId, trackId) {
+//PATCH
+export async function likeHandleRequest(userId, trackId) {
   const userToken = await getCurrentUserToken();
   return axios({
     method: "PATCH",
-    url: `${process.env.REACT_APP_URL}tracks/handler-track-like/`,
+    url: `${process.env.REACT_APP_URL}tracks/handle-track-like/`,
     data: {
       userId: userId,
       trackId: trackId,
@@ -17,6 +18,7 @@ export async function likeHandlerRequest(userId, trackId) {
   });
 }
 
+//GET
 export async function getTrackByName(query) {
   const userToken = await getCurrentUserToken();
   return axios({
