@@ -28,6 +28,7 @@ import {
   deleteTrackFromPlaylistApi,
 } from "./apiPlaylist";
 
+import { postGlobalPlay, postRelatedPlay } from "./laravelApi";
 import {
   getAllMyPlaylists,
   getAllMyFavPlaylists,
@@ -62,4 +63,6 @@ export {
   getAllMyFavPlaylists,
   getTotalPlays,
   getTotalTracks,
+  postGlobalPlay,
+  postRelatedPlay,
 };
