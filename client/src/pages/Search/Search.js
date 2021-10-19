@@ -1,33 +1,45 @@
+// React imports
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import Track from "../../components/Track";
 import { Col, Container, Row } from "react-bootstrap";
 
+// HOC
 import withAuth from "../../hoc/withAuth";
 import BarsAndModal from "../../hoc/BarsAndModal";
-import { SearchOutlined } from "@material-ui/icons";
-import Input from "../../components/Input";
 
+// Components
+import Track from "../../components/Track";
+import Input from "../../components/Input";
+import { SearchOutlined } from "@material-ui/icons";
+
+// Reducer actions
 import { setSearchQuery } from "../../redux/searchHandler/actions";
 
+// Fetch Requests
 import { getTrackByName } from "../../services/api/index";
+
 function Search() {
+  // Redux vars
   const { query } = useSelector((state) => state.searchHandler);
   const dispatch = useDispatch();
+
+  // State vars
   const [searchTracks, setSearchTracks] = useState([]);
   const [timer, setTimer] = useState("");
   const [searching, setSearching] = useState(false);
 
+  // Input handler
   function handleChange(e) {
     dispatch(setSearchQuery(e.target.value));
   }
 
+  // Submit handler
   async function handleSubmit(e) {
     e.preventDefault();
     if (query.length > 0) {
       setSearching(true);
       getTrackByName(query).then((response) => {
+        console.log(response.data.tracks);
         setSearchTracks(response.data.tracks);
         setSearching(false);
       });
@@ -52,6 +64,7 @@ function Search() {
     } else {
       setSearchTracks([]);
     }
+    // eslint-disable-next-line
   }, [, query]);
 
   return (
