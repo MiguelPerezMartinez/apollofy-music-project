@@ -7,7 +7,7 @@ export async function postGlobalPlay(trackData) {
   return axios({
     method: "POST",
     url: `https://ancient-atoll-88751.herokuapp.com/api/global-plays`,
-    // url: `${process.env.LARAVEL_API_URL}api/global-plays`,
+    url: `${process.env.LARAVEL_API_URL}global-plays`,
     data: {
       trackId: trackData._id,
       trackOwnerId: trackData.owner,
@@ -31,7 +31,7 @@ export async function postRelatedPlay(currentTrackId) {
       return axios({
         method: "POST",
         url: `https://ancient-atoll-88751.herokuapp.com/api/related-plays`,
-        // url: `${process.env.LARAVEL_API_URL}api/related-plays`,
+        // url: `${process.env.LARAVEL_API_URL}related-plays`,
         data: {
           prevTrackId: prevTrackId,
           nextTrackId: currentTrackId,
