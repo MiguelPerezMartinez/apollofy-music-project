@@ -12,8 +12,6 @@ function DeleteModal() {
   const { data, isTrack } = useSelector((state) => state.modalsHandler.data);
   const dispatch = useDispatch();
 
-  console.log(data);
-
   function deleteTrackSure() {
     deleteTrack(data._id)
       .then(() => {

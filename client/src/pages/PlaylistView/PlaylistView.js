@@ -21,7 +21,7 @@ import BarsAndModal from "../../hoc/BarsAndModal";
 // Playlist API
 import {
   getPlaylistById,
-  handlerPlaylistLike,
+  likeHandleRequest,
   getIsPlaylistLiked,
   updatePlaylistById,
 } from "../../services/api/apiPlaylist";
@@ -102,8 +102,8 @@ function PlaylistView() {
 
   function followPlaylistHandler() {
     setIsFollowed({ ...isFollowed, loaded: false });
-    handlerPlaylistLike(id, userData.userId)
-      .then((resp) => {
+    likeHandleRequest(userData.userId, id)
+      .then(() => {
         setIsFollowed({ state: !isFollowed.state, loaded: true });
       })
       .catch((error) => {
@@ -180,7 +180,7 @@ function PlaylistView() {
   if (!playlistData.loaded)
     return (
       <main>
-        <h1>Loading...</h1>
+        <h1>Loading Playlist Data...</h1>
       </main>
     );
 
@@ -247,7 +247,7 @@ function PlaylistView() {
                   )}
                   {isFollowed.loaded && isFollowed.state && (
                     <PlaylistAddCheckOutlined
-                      className="option-element-playlist"
+                      className="option-element-playlist liked-playlist"
                       onClick={followPlaylistHandler}
                     />
                   )}

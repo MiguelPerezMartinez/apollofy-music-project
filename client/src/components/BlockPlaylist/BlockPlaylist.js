@@ -1,7 +1,7 @@
 //React  imports
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 //Styles
@@ -26,6 +26,7 @@ import {
 import { likeHandleRequest } from "../../services/api/apiPlaylist";
 
 function BlockPlaylist({ playlistData, size = "small" }) {
+  const history = useHistory();
   const userData = useSelector((state) => state.userReducer.data);
   const dispatch = useDispatch();
 
@@ -63,6 +64,10 @@ function BlockPlaylist({ playlistData, size = "small" }) {
     dispatch(
       showDialoguePlaylist(playlistData, { x: e.clientX, y: e.clientY }),
     );
+  }
+
+  function goToMoreInfo() {
+    history.push(`/playlist/${playlistData._id}`);
   }
 
   function renderPlaylistLiked() {
@@ -117,11 +122,8 @@ function BlockPlaylist({ playlistData, size = "small" }) {
         </Row>
         <Row className="name-TrackBlock">
           <Col xs={8}>
-            <p className="block-playlist-title">
-              <Link to={`/playlist-view/${playlistData._id}`}>
-                {" "}
-                {playlistData.title}{" "}
-              </Link>
+            <p className="block-playlist-title pointer" onClick={goToMoreInfo}>
+              {playlistData.title}
             </p>
             <p className="block-playlist-owner">
               {playlistData.owner.username}

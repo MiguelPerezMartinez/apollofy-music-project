@@ -59,18 +59,6 @@ export async function likeHandleRequest(userId, playlistId) {
   });
 }
 
-//GET
-export async function getPlaylistById(playlistId) {
-  const userToken = await getCurrentUserToken();
-  return axios({
-    method: "GET",
-    url: `${process.env.REACT_APP_URL}playlists/${playlistId}`,
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  });
-}
-
 export async function getMostLikedPlaylists() {
   const userToken = await getCurrentUserToken();
   return axios({
@@ -82,7 +70,7 @@ export async function getMostLikedPlaylists() {
   });
 }
 
-export async function getLastUploadedPlaylists(){
+export async function getLastUploadedPlaylists() {
   const userToken = await getCurrentUserToken();
   return axios({
     method: "GET",
@@ -101,21 +89,6 @@ export async function getPlaylistById(playlistId) {
   return axios({
     method: "GET",
     url: `${process.env.REACT_APP_URL}playlists/get-playlist/${playlistId}`,
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  });
-}
-
-export async function handlerPlaylistLike(playlistId, userId) {
-  const userToken = await getCurrentUserToken();
-  return axios({
-    method: "PATCH",
-    url: `${process.env.REACT_APP_URL}playlists/handler-playlist-like`,
-    data: {
-      playlistId: playlistId,
-      userId: userId,
-    },
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
