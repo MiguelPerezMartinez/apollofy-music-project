@@ -13,7 +13,7 @@ import "./styles.css";
 import { setShareModal } from "../../redux/modalsHandler/actions";
 
 function DialoguePlaylist() {
-  const history = useHistory;
+  const history = useHistory();
   const dispatch = useDispatch();
   const { trackDataDialogPlaylist, position } = useSelector(
     (state) => state.dialogueHandler,
