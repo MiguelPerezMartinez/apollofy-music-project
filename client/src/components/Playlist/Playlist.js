@@ -1,7 +1,6 @@
-//React  imports
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+//React imports
+import React, { useEffect, useState } from "react";
+import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 //Styles
@@ -10,7 +9,7 @@ import "./styles.css";
 //Components
 import TrackImg from "../TrackImg";
 import {
-  MoreVert,
+  MoreHoriz,
   PlaylistAddCheckOutlined,
   PlaylistAddOutlined,
 } from "@material-ui/icons";
@@ -25,7 +24,7 @@ import {
 //Requests
 import { likeHandleRequest } from "../../services/api/apiPlaylist";
 
-function BlockPlaylist({ playlistData, size = "small" }) {
+function Playlist({ playlistData }) {
   const userData = useSelector((state) => state.userReducer.data);
   const dispatch = useDispatch();
 
@@ -59,7 +58,7 @@ function BlockPlaylist({ playlistData, size = "small" }) {
     dispatch(playlistObjectAction(playlistData));
   }
 
-  function openDialoguePlaylist(e) {
+  function openDialogue(e) {
     dispatch(
       showDialoguePlaylist(playlistData, { x: e.clientX, y: e.clientY }),
     );
@@ -102,49 +101,63 @@ function BlockPlaylist({ playlistData, size = "small" }) {
 
   if (playlistData !== undefined) {
     return (
-      <Container
-        className={"block-playlist-background block-playlist-container-" + size}
+      <Row
+        key={playlistData._id}
+        id={playlistData._id}
+        className="playlist-row"
       >
-        <Row
-          className="block-playlist-img-container"
-          onClick={setReduxPlaylistData}
-        >
-          {playlistData.tracks.length === 0 ? (
-            <TrackImg urlCover={""} />
-          ) : (
-            <TrackImg urlCover={playlistData.tracks[0].urlCover} />
-          )}
-        </Row>
-        <Row className="name-TrackBlock">
-          <Col xs={8}>
-            <p className="block-playlist-title">
-              <Link to={`/playlist-view/${playlistData._id}`}>
-                {" "}
-                {playlistData.title}{" "}
-              </Link>
-            </p>
-            <p className="block-playlist-owner">
-              {playlistData.owner.username}
-            </p>
-          </Col>
-          <Col xs={3}>
-            {renderPlaylistLiked()}
-            <MoreVert onClick={openDialoguePlaylist} />
-          </Col>
-        </Row>
-      </Container>
+        <Col xs={12}>
+          <Row>
+            <Col xs={2} md={2} lg={2} onClick={setReduxPlaylistData}>
+              <div className="playlist-row-img-container">
+                {playlistData.tracks.length === 0 ? (
+                  <TrackImg urlCover={""} />
+                ) : (
+                  <TrackImg urlCover={playlistData.tracks[0].urlCover} />
+                )}
+              </div>
+            </Col>
+            <Col xs={5} md={5} lg={5}>
+              <p className="playlist-title">
+                <a href={`/playlist-view/${playlistData._id}`}>
+                  {" "}
+                  {playlistData.title}{" "}
+                </a>
+              </p>
+              <p className="playlist-owner">{playlistData.owner.username}</p>
+            </Col>
+            <Col
+              md={2}
+              lg={2}
+              className="d-none d-md-block d-lg-block playlist-field-centered playlist-album"
+            >
+              <p>
+                {playlistData.genres.length > 0
+                  ? playlistData.genres[0]
+                  : playlistData.title}
+              </p>
+            </Col>
+            <Col xs={4} md={3} lg={3} className=" playlist-field-centered">
+              <Row>
+                <Col xs={4} md={4} lg={4}>
+                {renderPlaylistLiked()}
+                </Col>
+                <Col xs={4} md={4} lg={4}>
+                  <MoreHoriz onClick={openDialogue} />
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
     );
   } else {
     return (
       <>
-        <Container
-          className={
-            "block-playlist-container-" + size + " is-loading-component"
-          }
-        />
+        <Row className="playlist-row is-loading-component" />
       </>
     );
   }
 }
 
-export default BlockPlaylist;
+export default Playlist;

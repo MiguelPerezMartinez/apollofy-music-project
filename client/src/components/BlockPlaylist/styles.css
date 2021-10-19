@@ -41,7 +41,6 @@
 
 .block-playlist-owner {
   margin-bottom: 0rem;
-  height: 2.5rem;
   line-break: auto;
   font-size: 0.8rem;
   font-weight: lighter;
@@ -50,8 +49,8 @@
   text-overflow: ellipsis;
 }
 
-.liked {
-  color: red;
+.liked-playlist {
+  color: rgb(60, 255, 0);
 }
 
 .like-disabled {
