@@ -7,7 +7,7 @@ export async function postGlobalPlay(trackData) {
   return axios({
     method: "POST",
     url: `https://ancient-atoll-88751.herokuapp.com/api/global-plays`,
-    url: `${process.env.LARAVEL_API_URL}global-plays`,
+    // url: `${process.env.LARAVEL_API_URL}global-plays`,
     data: {
       trackId: trackData._id,
       trackOwnerId: trackData.owner,
