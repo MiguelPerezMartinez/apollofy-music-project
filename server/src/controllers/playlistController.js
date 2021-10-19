@@ -214,10 +214,13 @@ async function getAllPlaylists(req, res) {
 
 async function getPlaylistById(req, res) {
   const { id } = req.params;
+
   try {
     const foundPlaylist = await Playlists.findOne({
       _id: id,
-    });
+    })
+      .populate("owner")
+      .populate("tracks");
     return res.status(200).send({
       message: "Playlist found",
       currentPlaylist: foundPlaylist,
@@ -261,8 +264,7 @@ async function getPlaylistByTitle(req, res) {
 }
 
 async function isLikedByUser(req, res) {
-  const { id: playlistId } = req.params;
-  const { userId } = req.body;
+  const { id: playlistId, userId } = req.params;
 
   try {
     const playlistDoc = await Playlists.findById(playlistId);

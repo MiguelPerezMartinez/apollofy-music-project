@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -44,13 +44,12 @@ import {
 } from "@material-ui/icons";
 
 function PlayBar() {
-  //Redux and ref vars
+  //Redux
   const { trackObject, positionInHistory } = useSelector(
     (state) => state.trackReducer,
   );
 
   const dispatch = useDispatch();
-  const waveformRef = useRef();
 
   //State vars
   const [volume, setVolume] = useState(50);
@@ -214,7 +213,7 @@ function PlayBar() {
               </Row>
               <Row className="playbar-wave-container d-none d-lg-block">
                 <Col>
-                  <div className="playbar-wave" ref={waveformRef} />
+                  <div className="playbar-wave" />
                 </Col>
               </Row>
             </Col>

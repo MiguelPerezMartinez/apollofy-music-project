@@ -89,7 +89,9 @@ function DialogueBox() {
 
   function handlerDelete() {
     //Code to delete the track
-    dispatch(setDeleteTrackModal(true, trackDataDialog));
+    dispatch(
+      setDeleteTrackModal(true, { data: trackDataDialog, isTrack: true }),
+    );
     closeDialogue();
   }
 

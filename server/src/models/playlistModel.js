@@ -14,6 +14,7 @@ const PlaylistSchema = new Schema(
       type: String,
       trim: true,
       maxLength: [30, "Playlist description cannot exceed 30 characters"],
+      default: "",
     },
     tracks: {
       type: [{ type: Schema.Types.ObjectId, ref: "tracks" }],
