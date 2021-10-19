@@ -60,11 +60,11 @@ export async function likeHandleRequest(userId, playlistId) {
 }
 
 //GET
-export async function getAllMyPlaylist(userId) {
+export async function getPlaylistById(playlistId) {
   const userToken = await getCurrentUserToken();
   return axios({
     method: "GET",
-    url: `${process.env.REACT_APP_URL}users/get-user/${userId}/my-playlists`,
+    url: `${process.env.REACT_APP_URL}playlists/${playlistId}`,
     headers: {
       Authorization: `Bearer ${userToken}`,
     },

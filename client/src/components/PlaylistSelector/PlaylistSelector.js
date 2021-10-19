@@ -3,7 +3,7 @@ import Select from "react-select";
 import Button from "../../components/Button";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import {
-  getAllMyPlaylist,
+  getAllMyPlaylists,
   addTrackToPlaylist,
   createNewPlaylistApi,
 } from "../../services/api/index";
@@ -27,7 +27,7 @@ function PlaylistSelector() {
   //const [selectedOption, setSelectedOption] = useState("...");
 
   useEffect(() => {
-    getAllMyPlaylist(data.userId).then((res) => {
+    getAllMyPlaylists(data.userId).then((res) => {
       const { myPlaylists } = res.data;
       myPlaylists.map((item) => {
         makeNewOptions(item.title);

@@ -259,7 +259,9 @@ async function getPlaylistById(req, res) {
   try {
     const foundPlaylist = await Playlists.findOne({
       _id: id,
-    });
+    })
+      .populate("tracks")
+      .populate("owner");
     return res.status(200).send({
       message: "Playlist found",
       currentPlaylist: foundPlaylist,

@@ -1,4 +1,4 @@
-const { Users, Tracks } = require("../models");
+const { Users, Tracks, Playlists } = require("../models");
 
 //POST
 async function register(req, res) {
@@ -145,7 +145,20 @@ async function getFavouriteTracksById(req, res) {
 async function getAllMyPlaylists(req, res) {
   const { id } = req.params;
   try {
-    const userDoc = await Users.findById(id).populate("myPlaylists");
+    const userDoc = await Users.findById(id).populate({
+      path: "myPlaylists",
+      model: Playlists,
+      populate: [
+        {
+          path: "tracks",
+          model: Tracks,
+        },
+        {
+          path: "owner",
+          model: Users,
+        },
+      ],
+    });
     return res.status(200).send({
       message: `User ${id} myPlaylists`,
       myPlaylists: userDoc.myPlaylists,
@@ -161,7 +174,20 @@ async function getAllMyPlaylists(req, res) {
 async function getAllMyFavPlaylists(req, res) {
   const { id } = req.params;
   try {
-    const userDoc = await Users.findById(id).populate("favPlaylists");
+    const userDoc = await Users.findById(id).populate({
+      path: "favPlaylists",
+      model: Playlists,
+      populate: [
+        {
+          path: "tracks",
+          model: Tracks,
+        },
+        {
+          path: "owner",
+          model: Users,
+        },
+      ],
+    });
     return res.status(200).send({
       message: `User ${id} favPlaylists`,
       favPlaylists: userDoc.favPlaylists,
