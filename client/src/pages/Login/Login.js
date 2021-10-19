@@ -1,7 +1,7 @@
 //Imports
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { logIn } from "../../services/firebase";
+import { disable, logIn } from "../../services/firebase";
 
 import "./login.css";
 
@@ -33,6 +33,9 @@ function Login() {
     e.preventDefault();
     logIn(state.email, state.password);
   };
+  function disableUser () {
+    disable()
+  }
 
   return (
     <main className="login-main gradient-background">
@@ -60,7 +63,7 @@ function Login() {
               placeholder="Type password"
               handleChange={handleChange}
             />
-            <Link to="/recover-password">
+            <Link to="/recover-password" onClick={disableUser}>
               <p className="mb-3 fw-normal">I have forgotten my password</p>
             </Link>
             <div className="login-register-button-centered">

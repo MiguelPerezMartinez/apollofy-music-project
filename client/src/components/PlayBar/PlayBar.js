@@ -84,7 +84,7 @@ function PlayBar() {
         setTrackHistoryInLocalStorage(trackObject);
         addTotalPlay(trackObject._id);
         postGlobalPlay(trackObject);
-        postRelatedPlay(trackObject._id);
+        postRelatedPlay(trackObject._id); 
       },
       (currentTime) => {
         setTrackProgressTime(currentTime);
