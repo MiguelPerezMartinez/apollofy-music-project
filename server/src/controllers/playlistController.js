@@ -65,7 +65,7 @@ async function updatePlaylistById(req, res) {
   }
 }
 
-async function handlerPlaylistLike(req, res) {
+async function handlePlaylistLike(req, res) {
   const { playlistId, userId } = req.body;
   let messageResponse = "";
   try {
@@ -239,6 +239,8 @@ async function getAllPlaylists(req, res) {
   const { limit = 20 } = req.body;
   try {
     const playlists = await Playlists.find({})
+      .populate("tracks")
+      .populate("owner")
       .sort({ createdAt: -1 })
       .limit(limit);
     return res.status(200).send({
@@ -254,10 +256,13 @@ async function getAllPlaylists(req, res) {
 
 async function getPlaylistById(req, res) {
   const { id } = req.params;
+
   try {
     const foundPlaylist = await Playlists.findOne({
       _id: id,
-    });
+    })
+      .populate("owner")
+      .populate("tracks");
     return res.status(200).send({
       message: "Playlist found",
       currentPlaylist: foundPlaylist,
@@ -369,8 +374,7 @@ async function getPlayListsByGenre(req, res) {
 }
 
 async function isLikedByUser(req, res) {
-  const { id: playlistId } = req.params;
-  const { userId } = req.body;
+  const { id: playlistId, userId } = req.params;
 
   try {
     const playlistDoc = await Playlists.findById(playlistId);
@@ -396,9 +400,11 @@ async function isLikedByUser(req, res) {
 
 async function getMostLiked(req, res) {
   //Receive the limitation by req.body, by default 20
-  const { limit = 14 } = req.body;
+  const { limit = 6 } = req.body;
   try {
     const playlists = await Playlists.find({})
+      .populate("tracks")
+      .populate("owner")
       .sort({ totalLikes: -1 })
       .limit(limit);
     return res.status(200).send({
@@ -437,7 +443,7 @@ async function getPlaylistGenres(req, res) {
 module.exports = {
   createPlaylist: createPlaylist,
   updatePlaylistById: updatePlaylistById,
-  handlerPlaylistLike: handlerPlaylistLike,
+  handlePlaylistLike: handlePlaylistLike,
   addTrackToPlaylist: addTrackToPlaylist,
   deleteTrackFromPlaylist: deleteTrackFromPlaylist,
   setPlaylistGenres: setPlaylistGenres,

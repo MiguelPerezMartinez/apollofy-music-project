@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./styles.css";
 
 //import dialogueHandlerReducer
@@ -10,6 +10,7 @@ import {
   setUpdateTrackModal,
   setDeleteTrackModal,
   setMyPlaylistModal,
+  setShareModal,
 } from "../../redux/modalsHandler/actions";
 
 import { setTrackQueueInLocalStorage } from "../../services/localStorage";
@@ -94,12 +95,19 @@ function DialogueBox() {
 
   function handlerDelete() {
     //Code to delete the track
-    dispatch(setDeleteTrackModal(true, trackDataDialog));
+    dispatch(
+      setDeleteTrackModal(true, { data: trackDataDialog, isTrack: true }),
+    );
     closeDialogue();
   }
 
   function handlerShare() {
     //Code to share the track
+    dispatch(
+      setShareModal(true, {
+        url: `http://localhost:3000/track-view/${trackDataDialog._id}`,
+      }),
+    );
     closeDialogue();
   }
 

@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import ResetPassword from "./pages/RecoverPassword";
 import ChangePassword from "./pages/ChangePassword";
 import ElementsList from "./pages/ElementsList";
+import PlaylistView from "./pages/PlaylistView";
 import Search from "./pages/Search";
 import TrackView from "./pages/TrackView";
 
@@ -64,6 +65,7 @@ function App() {
   return (
     <>
       <Switch>
+        <Route path="/playlist/:id" component={PlaylistView} />
         <Route path="/search" component={Search} />
         <Route path="/favourite-playlists" component={ElementsList} />
         <Route path="/favourite-tracks" component={ElementsList} />

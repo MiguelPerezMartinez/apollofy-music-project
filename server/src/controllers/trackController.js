@@ -51,7 +51,7 @@ async function updateTrack(req, res) {
   }
 }
 
-async function handlerTrackLike(req, res) {
+async function handleTrackLike(req, res) {
   const { trackId, userId } = req.body;
   let messageResponse = "";
   try {
@@ -198,12 +198,12 @@ async function getTrackById(req, res) {
 
 // Filter function for string type filters
 function filterTracks(allTracks, stringFilter, filter) {
-  //Turn stringFilter criteria to lowercase 
+  //Turn stringFilter criteria to lowercase
   //and initialize filtered tracks
   const lwcStringFilter = stringFilter.toLowerCase();
   let filteredTracks = [];
 
-  //Check if filter is contained inside allTracks 
+  //Check if filter is contained inside allTracks
   //and adding it to filtered tracks
   for (const track of allTracks) {
     let trackDocFilter = track[filter].toLowerCase();
@@ -361,7 +361,7 @@ async function getMostLiked(req, res) {
 module.exports = {
   uploadTrack: uploadTrack,
   updateTrack: updateTrack,
-  handlerTrackLike: handlerTrackLike,
+  handleTrackLike: handleTrackLike,
   incrementTotalPlays: incrementTotalPlays,
   deleteTrack: deleteTrack,
   getAllTracks: getAllTracks,
