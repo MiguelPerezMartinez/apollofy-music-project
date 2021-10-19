@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { MoreHoriz, Favorite } from "@material-ui/icons";
 import "./styles.css";
 
@@ -19,11 +20,12 @@ import { showDialogue } from "../../redux/dialogueHandler/actions";
 import TrackImg from "../../components/TrackImg";
 import { resetPositionInHistory } from "../../services/localStorage";
 
-import { likeHandlerRequest } from "../../services/api/apiTrack";
+import { likeHandleRequest } from "../../services/api/apiTrack";
 
 // import DialogueBox from "../DialogueBox";
 
 function Track({ dataTrack }) {
+  const history = useHistory();
   const userData = useSelector((state) => state.userReducer.data);
   const dispatch = useDispatch();
 
@@ -43,7 +45,7 @@ function Track({ dataTrack }) {
 
   function handlerLike() {
     setIsLiked({ ...isLiked, loaded: false });
-    likeHandlerRequest(userData.userId, dataTrack._id)
+    likeHandleRequest(userData.userId, dataTrack._id)
       .then(() => {
         setIsLiked({ state: !isLiked.state, loaded: true });
         dispatch(reloadFetchAction(true));
@@ -65,6 +67,10 @@ function Track({ dataTrack }) {
     dispatch(showDialogue(dataTrack, { x: e.clientX, y: e.clientY }));
   }
 
+  function goToMoreInfo() {
+    history.push(`/track-view/${dataTrack._id}`);
+  }
+
   if (dataTrack !== undefined) {
     return (
       <Row key={dataTrack._id} id={dataTrack._id} className="track-row">
@@ -76,8 +82,8 @@ function Track({ dataTrack }) {
               </div>
             </Col>
             <Col xs={5} md={5} lg={5}>
-              <p className="track-title">
-                <a href={`/track-view/${dataTrack._id}`}> {dataTrack.title} </a>
+              <p className="track-title pointer" onClick={goToMoreInfo}>
+                {dataTrack.title}
               </p>
               <p className="track-author">{dataTrack.author}</p>
             </Col>

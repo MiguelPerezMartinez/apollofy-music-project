@@ -20,14 +20,21 @@ import {
 } from "./trackManager";
 import { changeMyProfilePicture } from "./fileUploader";
 import {
-  getAllMyPlaylist,
+  getPlaylistById,
+  getMostLikedPlaylists,
+  getLastUploadedPlaylists,
   addTrackToPlaylist,
   createNewPlaylistApi,
   deleteTrackFromPlaylistApi,
 } from "./apiPlaylist";
 
-import { getTotalPlays, getTotalTracks } from "./apiUser";
 import { postGlobalPlay, postRelatedPlay } from "./laravelApi";
+import {
+  getAllMyPlaylists,
+  getAllMyFavPlaylists,
+  getTotalPlays,
+  getTotalTracks,
+} from "./apiUser";
 
 export {
   getTrackById,
@@ -46,10 +53,14 @@ export {
   deleteTrack,
   updateTrack,
   getTrackByName,
-  getAllMyPlaylist,
+  getAllMyPlaylists,
+  getPlaylistById,
+  getMostLikedPlaylists,
+  getLastUploadedPlaylists,
   addTrackToPlaylist,
   createNewPlaylistApi,
   deleteTrackFromPlaylistApi,
+  getAllMyFavPlaylists,
   getTotalPlays,
   getTotalTracks,
   postGlobalPlay,
