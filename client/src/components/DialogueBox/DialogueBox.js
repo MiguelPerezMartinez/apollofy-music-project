@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import "./styles.css";
 
 //import dialogueHandlerReducer
@@ -22,6 +23,8 @@ function DialogueBox() {
   const dialogueBox = useRef();
 
   const [isOwner, setIsOwner] = useState(false);
+
+  const history = useHistory();
 
   // Set the method to close the dialog when scrolling
   useEffect(() => {
@@ -80,7 +83,9 @@ function DialogueBox() {
     dispatch(setMyPlaylistModal(true, trackDataDialog));
     closeDialogue();
   }
-
+  // function handlerMoreInfo() {
+  //   alert(`${trackDataDialog._id}`);
+  // }
   function handlerEdit() {
     //Code to edit the track
     dispatch(setUpdateTrackModal(true, trackDataDialog));
@@ -100,6 +105,11 @@ function DialogueBox() {
     closeDialogue();
   }
 
+  function handlerMoreInfo() {
+    history.push(`/track-view/${trackDataDialog._id}`);
+    closeDialogue();
+  }
+
   return (
     <>
       <div onMouseDown={closeDialogue} className="back-context"></div>
@@ -107,6 +117,9 @@ function DialogueBox() {
         <ul className="dialogue-list">
           <li className="dialogue-item" onClick={handlerAddToQueue}>
             Add to queue
+          </li>
+          <li className="dialogue-item" onClick={handlerMoreInfo}>
+            More Info
           </li>
           <li className="dialogue-item" onClick={handlerAddToMyplaylist}>
             Add to MyPlaylist

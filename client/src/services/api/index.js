@@ -15,14 +15,28 @@ import {
   addTotalPlay,
   deleteTrack,
   updateTrack,
+  getTrackByName,
+  getTrackById,
 } from "./trackManager";
 import { changeMyProfilePicture } from "./fileUploader";
 import {
-  getAllMyPlaylist,
+  getPlaylistById,
+  getMostLikedPlaylists,
+  getLastUploadedPlaylists,
   addTrackToPlaylist,
   createNewPlaylistApi,
+  deleteTrackFromPlaylistApi,
 } from "./apiPlaylist";
+
+import {
+  getAllMyPlaylists,
+  getAllMyFavPlaylists,
+  getTotalPlays,
+  getTotalTracks,
+} from "./apiUser";
+
 export {
+  getTrackById,
   registerInApi,
   getById,
   getCurrentUser,
@@ -37,7 +51,15 @@ export {
   addTotalPlay,
   deleteTrack,
   updateTrack,
-  getAllMyPlaylist,
+  getTrackByName,
+  getAllMyPlaylists,
+  getPlaylistById,
+  getMostLikedPlaylists,
+  getLastUploadedPlaylists,
   addTrackToPlaylist,
   createNewPlaylistApi,
+  deleteTrackFromPlaylistApi,
+  getAllMyFavPlaylists,
+  getTotalPlays,
+  getTotalTracks,
 };

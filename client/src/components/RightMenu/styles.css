@@ -97,3 +97,8 @@
     display: none;
   }
 }
+
+.right-menu-logout {
+  position: absolute;
+  bottom: 0;
+}

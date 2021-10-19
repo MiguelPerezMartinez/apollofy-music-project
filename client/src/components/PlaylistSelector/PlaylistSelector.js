@@ -1,15 +1,18 @@
-import "./style.css";
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import Button from "../../components/Button";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import {
-  getAllMyPlaylist,
+  getAllMyPlaylists,
   addTrackToPlaylist,
   createNewPlaylistApi,
 } from "../../services/api/index";
 import { useDispatch, useSelector } from "react-redux";
 import { setMyPlaylistModal } from "../../redux/modalsHandler/actions";
+import { reloadPlaylistFetchAction } from "../../redux/playlistData/actions";
+
+import "./style.css";
+
 import Input from "../Input";
 function PlaylistSelector() {
   const dispatch = useDispatch();
@@ -24,7 +27,7 @@ function PlaylistSelector() {
   //const [selectedOption, setSelectedOption] = useState("...");
 
   useEffect(() => {
-    getAllMyPlaylist(data.userId).then((res) => {
+    getAllMyPlaylists(data.userId).then((res) => {
       const { myPlaylists } = res.data;
       myPlaylists.map((item) => {
         makeNewOptions(item.title);
@@ -35,6 +38,7 @@ function PlaylistSelector() {
     e.preventDefault();
     await createNewPlaylistApi(newPlaylist);
     await addTrackToPlaylist(newPlaylist.title, trackDataDialog._id);
+    dispatch(reloadPlaylistFetchAction(true));
     dispatch(setMyPlaylistModal(false));
   }
   function handleChangeTitle(e) {
@@ -78,6 +82,7 @@ function PlaylistSelector() {
   function makeNewOptions(newPlaylist) {
     options.push({ value: newPlaylist, label: newPlaylist });
   }
+
   return (
     <>
       <div

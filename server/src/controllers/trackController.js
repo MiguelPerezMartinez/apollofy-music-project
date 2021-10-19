@@ -51,7 +51,7 @@ async function updateTrack(req, res) {
   }
 }
 
-async function handlerTrackLike(req, res) {
+async function handleTrackLike(req, res) {
   const { trackId, userId } = req.body;
   let messageResponse = "";
   try {
@@ -78,13 +78,13 @@ async function handlerTrackLike(req, res) {
     await trackDoc.save();
     await userDoc.save();
 
-    res.status(200).send({
+    return res.status(200).send({
       message: messageResponse,
       trackId: trackId,
       userId: userId,
     });
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       error: error.message,
     });
   }
@@ -97,12 +97,12 @@ async function incrementTotalPlays(req, res) {
     const trackDoc = await Tracks.findById(trackId);
     trackDoc.totalPlays += 1;
     trackDoc.save();
-    res.status(200).send({
+    return res.status(200).send({
       message: "Track total plays incremented",
       trackId: trackId,
     });
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       error: error.message,
     });
   }
@@ -196,22 +196,31 @@ async function getTrackById(req, res) {
   }
 }
 
-async function getTrackByTitle(req, res) {
+// Filter function for string type filters
+function filterTracks(allTracks, stringFilter, filter) {
+  //Turn stringFilter criteria to lowercase
+  //and initialize filtered tracks
+  const lwcStringFilter = stringFilter.toLowerCase();
+  let filteredTracks = [];
+
+  //Check if filter is contained inside allTracks
+  //and adding it to filtered tracks
+  for (const track of allTracks) {
+    let trackDocFilter = track[filter].toLowerCase();
+    if (trackDocFilter.includes(lwcStringFilter)) {
+      filteredTracks.push(track);
+    }
+  }
+  //Return filtered tracks
+  return filteredTracks;
+}
+
+async function getTracksByTitle(req, res) {
   const { title } = req.params;
   try {
-    //Collect all tracks, turn title to
-    //lowercase and initialize tracks to return
-    const tracks = await Tracks.find({});
-    const lwcTrackTitle = title.toLowerCase();
-    let tracksToReturn = [];
-
-    //Check if title is contained inside tracks
-    for (const track of tracks) {
-      let trackDocTitle = track.title.toLowerCase();
-      if (trackDocTitle.includes(lwcTrackTitle)) {
-        tracksToReturn.push(track);
-      }
-    }
+    //Collect all tracks and filter them by title
+    const allTracks = await Tracks.find({});
+    let tracksToReturn = filterTracks(allTracks, title, "title");
 
     //Return tracks found
     return res.status(200).send({
@@ -226,6 +235,68 @@ async function getTrackByTitle(req, res) {
   }
 }
 
+async function getTracksByAuthor(req, res) {
+  const { author } = req.params;
+  console.log(author);
+  try {
+    //Collect all tracks and filter them by author
+    const allTracks = await Tracks.find({});
+    let tracksToReturn = filterTracks(allTracks, author, "author");
+
+    //Return tracks found
+    return res.status(200).send({
+      message: "Tracks found",
+      tracks: tracksToReturn,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      data: author,
+      error: error.message,
+    });
+  }
+}
+
+async function getTracksByAlbum(req, res) {
+  const { album } = req.params;
+  try {
+    //Collect all tracks and filter them by album
+    const allTracks = await Tracks.find({});
+    let tracksToReturn = filterTracks(allTracks, album, "album");
+
+    //Return tracks found
+    return res.status(200).send({
+      message: "Tracks found",
+      tracks: tracksToReturn,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      data: album,
+      error: error.message,
+    });
+  }
+}
+async function getTracksByReleaseYear(req, res) {}
+
+async function getTracksByGenre(req, res) {
+  const { genre } = req.params;
+  try {
+    //Collect all tracks and filter them by genre
+    const allTracks = await Tracks.find({});
+    let tracksToReturn = filterTracks(allTracks, genre, "genre");
+
+    //Return tracks found
+    return res.status(200).send({
+      message: "Tracks found",
+      tracks: tracksToReturn,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      data: genre,
+      error: error.message,
+    });
+  }
+}
+
 async function isLikedByUser(req, res) {
   const { id: trackId } = req.params;
   const { userId } = req.body;
@@ -235,18 +306,18 @@ async function isLikedByUser(req, res) {
     const userInLikesArray = trackDoc.totalLikes.indexOf(userId);
 
     if (userInLikesArray >= 0) {
-      res.status(200).send({
+      return res.status(200).send({
         message: `User: ${userId} likes track: ${trackId}`,
         isLiked: true,
       });
     } else {
-      res.status(200).send({
+      return res.status(200).send({
         message: `User: ${userId} doesn't like track: ${trackId}`,
         isLiked: false,
       });
     }
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       error: error.message,
     });
   }
@@ -256,7 +327,8 @@ async function getMostPlayed(req, res) {
   //Receive the limitation by req.body, by default 20
   const { limit = 5 } = req.body;
   try {
-    const tracks = await Tracks.find({}).sort({ totalPlays: -1 }).limit(limit);
+    // const tracks = await Tracks.find({}).sort({ totalPlays: -1 }).limit(limit);
+    const tracks = await Tracks.find({}).sort({ totalPlays: -1 });
     return res.status(200).send({
       tracksSize: limit,
       tracks: tracks,
@@ -289,12 +361,16 @@ async function getMostLiked(req, res) {
 module.exports = {
   uploadTrack: uploadTrack,
   updateTrack: updateTrack,
-  handlerTrackLike: handlerTrackLike,
+  handleTrackLike: handleTrackLike,
   incrementTotalPlays: incrementTotalPlays,
   deleteTrack: deleteTrack,
   getAllTracks: getAllTracks,
   getTrackById: getTrackById,
-  getTrackByTitle: getTrackByTitle,
+  getTracksByTitle: getTracksByTitle,
+  getTracksByAuthor: getTracksByAuthor,
+  getTracksByAlbum: getTracksByAlbum,
+  getTracksByReleaseYear: getTracksByReleaseYear,
+  getTracksByGenre: getTracksByGenre,
   isLikedByUser: isLikedByUser,
   getMostPlayed: getMostPlayed,
   getMostLiked: getMostLiked,

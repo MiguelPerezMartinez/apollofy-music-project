@@ -9,6 +9,7 @@ import Input from "../Input";
 import { updateTrack } from "../../services/api/index";
 import { reloadFetchAction } from "../../redux/trackData/actions";
 import { setUpdateTrackModal } from "../../redux/modalsHandler/actions";
+import Select from "react-select";
 
 function UpdateModal() {
   const form = useRef();
@@ -40,6 +41,7 @@ function UpdateModal() {
   }
 
   const [trackData, setTrackData] = useState({
+    _id: trackDataDialog._id,
     title: trackDataDialog.title,
     author: trackDataDialog.author,
     album: trackDataDialog.album,
@@ -112,6 +114,30 @@ function UpdateModal() {
       },
     });
   }
+  function choseGenre(e) {
+    setTrackData({
+      ...trackData,
+
+      genre: e.value,
+    });
+  }
+  const customStyles = {
+    option: (provided) => ({
+      ...provided,
+      borderBottom: "1px dotted pink",
+      color: "green",
+      padding: 20,
+    }),
+  };
+  const options = [
+    { value: "Pop", label: "Pop" },
+    { value: "Rock", label: "Rock" },
+    { value: "Cumbia", label: "Cumbia" },
+    { value: "Dance", label: "Dance" },
+    { value: "Latino", label: "Latino" },
+    { value: "Rap", label: "Rap" },
+    { value: "Country", label: "Country" },
+  ];
   return (
     <>
       <div
@@ -156,13 +182,21 @@ function UpdateModal() {
               placeholder="Type release year"
               handleChange={handleChange}
             />
-            <Input
+            {/* <Input
               type="text"
               id="genre"
               label="Genre *"
               value={trackData.genre}
               placeholder="Type genre"
               handleChange={handleChange}
+            /> */}
+            <Select
+              width="500px"
+              menuColor="red"
+              styles={customStyles}
+              onChange={choseGenre}
+              options={options}
+              value={{ label: trackData.genre, value: trackData.genre }}
             />
 
             <div className="xl-separator" />
