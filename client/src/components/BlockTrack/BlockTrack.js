@@ -4,6 +4,7 @@ import "./styles.css";
 
 import TrackImg from "../TrackImg";
 
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   reloadFetchAction,
@@ -21,6 +22,7 @@ import { likeHandleRequest } from "../../services/api/apiTrack";
 import { Container, Row, Col } from "react-bootstrap";
 
 function BlockTrack({ dataTrack, size = "small" }) {
+  const history = useHistory();
   const userData = useSelector((state) => state.userReducer.data);
   const dispatch = useDispatch();
 
@@ -62,6 +64,10 @@ function BlockTrack({ dataTrack, size = "small" }) {
     dispatch(showDialogue(dataTrack, { x: e.clientX, y: e.clientY }));
   }
 
+  function goToMoreInfo() {
+    history.push(`/track-view/${dataTrack._id}`);
+  }
+
   if (dataTrack !== undefined) {
     return (
       <Container
@@ -72,8 +78,8 @@ function BlockTrack({ dataTrack, size = "small" }) {
         </Row>
         <Row className="name-TrackBlock">
           <Col xs={8}>
-            <p className="blockTrack-title">
-              <a href={`/track-view/${dataTrack._id}`}> {dataTrack.title} </a>
+            <p className="blockTrack-title pointer" onClick={goToMoreInfo}>
+              {dataTrack.title}
             </p>
             <p className="blockTrack-author">{dataTrack.author}</p>
           </Col>

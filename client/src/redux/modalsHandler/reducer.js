@@ -3,6 +3,8 @@ import {
   SET_UPDATE_TRACK_MODAL,
   SET_DELETE_TRACK_MODAL,
   SET_MY_PLAYLIST_MODAL,
+  SET_INFORMATION_MODAL,
+  SET_SHARE_MODAL,
 } from "./types";
 import initialState from "./state";
 
@@ -29,6 +31,18 @@ const modalsHandlerReducer = (state = initialState, action) => {
       return {
         ...state,
         myPlaylistModal: action.payload.value,
+        data: action.payload.data,
+      };
+    case SET_INFORMATION_MODAL:
+      return {
+        ...state,
+        informationModal: action.payload.value,
+        data: action.payload.data,
+      };
+    case SET_SHARE_MODAL:
+      return {
+        ...state,
+        shareModal: action.payload.value,
         data: action.payload.data,
       };
     default:

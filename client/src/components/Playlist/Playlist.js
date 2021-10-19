@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 //Styles
 import "./styles.css";
@@ -25,6 +26,7 @@ import {
 import { likeHandleRequest } from "../../services/api/apiPlaylist";
 
 function Playlist({ playlistData }) {
+  const history = useHistory();
   const userData = useSelector((state) => state.userReducer.data);
   const dispatch = useDispatch();
 
@@ -62,6 +64,10 @@ function Playlist({ playlistData }) {
     dispatch(
       showDialoguePlaylist(playlistData, { x: e.clientX, y: e.clientY }),
     );
+  }
+
+  function goToMoreInfo() {
+    history.push(`/playlist/${playlistData._id}`);
   }
 
   function renderPlaylistLiked() {
@@ -118,11 +124,8 @@ function Playlist({ playlistData }) {
               </div>
             </Col>
             <Col xs={5} md={5} lg={5}>
-              <p className="playlist-title">
-                <a href={`/playlist-view/${playlistData._id}`}>
-                  {" "}
-                  {playlistData.title}{" "}
-                </a>
+              <p className="playlist-title pointer" onClick={goToMoreInfo}>
+                {playlistData.title}
               </p>
               <p className="playlist-owner">{playlistData.owner.username}</p>
             </Col>
@@ -140,7 +143,7 @@ function Playlist({ playlistData }) {
             <Col xs={4} md={3} lg={3} className=" playlist-field-centered">
               <Row>
                 <Col xs={4} md={4} lg={4}>
-                {renderPlaylistLiked()}
+                  {renderPlaylistLiked()}
                 </Col>
                 <Col xs={4} md={4} lg={4}>
                   <MoreHoriz onClick={openDialogue} />
