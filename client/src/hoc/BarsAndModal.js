@@ -8,7 +8,9 @@ import DialogueBox from "../components/DialogueBox";
 import DialoguePlaylist from "../components/DialoguePlaylist";
 import UpdateModal from "../components/UpdateTrackModal";
 import DeleteModal from "../components/DeleteTrackModal";
+import InformationModal from "../components/InformationModal";
 import PlaylistSelector from "../components/PlaylistSelector";
+import ShareModal from "../components/ShareModal";
 
 function BarsAndModal(WrappedComponent) {
   function WrapperComponent() {
@@ -16,8 +18,14 @@ function BarsAndModal(WrappedComponent) {
       (state) => state.dialogueHandler,
     );
 
-    const { uploadModal, updateModal, deleteModal, myPlaylistModal } =
-      useSelector((state) => state.modalsHandler);
+    const {
+      uploadModal,
+      updateModal,
+      deleteModal,
+      myPlaylistModal,
+      informationModal,
+      shareModal,
+    } = useSelector((state) => state.modalsHandler);
 
     return (
       <>
@@ -28,7 +36,9 @@ function BarsAndModal(WrappedComponent) {
         {deleteModal && <DeleteModal />}
         {updateModal && <UpdateModal />}
         {uploadModal && <ModalTrackUp />}
+        {informationModal && <InformationModal />}
         {myPlaylistModal && <PlaylistSelector />}
+        {shareModal && <ShareModal />}
         <WrappedComponent />
       </>
     );

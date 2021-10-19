@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { hideDialogue } from "../../redux/dialogueHandler/actions";
 import { setTrackQueueInLocalStorage } from "../../services/localStorage";
-import { Link } from "react-router-dom";
 import {
   trackObjectAction,
   isPlayBarDisplayedAction,
@@ -10,15 +10,15 @@ import {
 } from "../../redux/trackData/actions";
 import { resetPositionInHistory } from "../../services/localStorage";
 import "./styles.css";
+import { setShareModal } from "../../redux/modalsHandler/actions";
+
 function DialoguePlaylist() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { trackDataDialogPlaylist, position } = useSelector(
     (state) => state.dialogueHandler,
   );
-  function closeDialoguePlaylist() {
-    window.onscroll = () => {};
-    dispatch(hideDialogue());
-  }
+
   useEffect(() => {
     dialoguePlaylist.current.style.display = "block";
 
@@ -58,13 +58,27 @@ function DialoguePlaylist() {
 
     const resetedHistoryPosition = resetPositionInHistory();
     dispatch(setPositionInHistory(resetedHistoryPosition));
-    dispatch(hideDialogue());
-  }
-  function handlerMoreInfoPlaylist() {
-    dispatch(hideDialogue());
+    closeDialoguePlaylist();
   }
 
-  function handlerSharePlaylist() {}
+  function handlerMoreInfoPlaylist() {
+    history.push(`/playlist/${trackDataDialogPlaylist._id}`);
+    closeDialoguePlaylist();
+  }
+
+  function handlerSharePlaylist() {
+    dispatch(
+      setShareModal(true, {
+        url: `http://localhost:3000/playlist/${trackDataDialogPlaylist._id}`,
+      }),
+    );
+    closeDialoguePlaylist();
+  }
+
+  function closeDialoguePlaylist() {
+    window.onscroll = () => {};
+    dispatch(hideDialogue());
+  }
 
   return (
     <>
@@ -74,11 +88,9 @@ function DialoguePlaylist() {
           <li className="dialogue-item" onClick={handlerAddToQueuePlaylist}>
             Add to queue
           </li>
-          <Link to={`/playlist/${trackDataDialogPlaylist._id}`}>
-            <li className="dialogue-item" onClick={handlerMoreInfoPlaylist}>
-              More Info
-            </li>
-          </Link>
+          <li className="dialogue-item" onClick={handlerMoreInfoPlaylist}>
+            More Info
+          </li>
           <li className="dialogue-item" onClick={handlerSharePlaylist}>
             Share
           </li>
