@@ -60,7 +60,7 @@ function Login() {
               placeholder="Type password"
               handleChange={handleChange}
             />
-            <Link to="/recover-password" onClick={disableUser}>
+            <Link to="/recover-password">
               <p className="mb-3 fw-normal">I have forgotten my password</p>
             </Link>
             <div className="login-register-button-centered">
