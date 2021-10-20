@@ -15,14 +15,7 @@ console.log(config.url.client);
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(json());
-app.use(
-  cors({
-    origin: config.url.client,
-    methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    optionsSuccessStatus: 200,
-  }),
-);
+app.use(cors());
 
 // app used routes
 app.use("/tracks", trackRouter);
