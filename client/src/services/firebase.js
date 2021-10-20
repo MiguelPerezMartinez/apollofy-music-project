@@ -7,6 +7,8 @@ import {
   sendPasswordResetEmail,
   updateEmail,
   updatePassword,
+  confirmPasswordReset,
+  verifyPasswordResetCode,
 } from "firebase/auth";
 
 import { setIsActive } from "./api";
@@ -91,4 +93,14 @@ export async function updateUserPass(newPassword) {
     .catch((error) => {
       console.log(error);
     });
+}
+
+export function verifyCode(actionCode) {
+  const auth = getAuth();
+  return verifyPasswordResetCode(auth, actionCode);
+}
+
+export function sendNewPass(actionCode, confirmPassword) {
+  const auth = getAuth();
+  return confirmPasswordReset(auth, actionCode, confirmPassword);
 }
