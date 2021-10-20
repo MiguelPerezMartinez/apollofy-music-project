@@ -32,7 +32,12 @@ import {
   getPlayListsByGenre,
 } from "./apiPlaylist";
 
-import { postGlobalPlay, postRelatedPlay } from "./laravelApi";
+import {
+  postGlobalPlay,
+  postRelatedPlay,
+  lastSevenHoursPlaysByUser,
+} from "./laravelApi";
+
 import {
   getTrackById,
   getTracksByTitle,
@@ -83,4 +88,5 @@ export {
   getTotalTracks,
   postGlobalPlay,
   postRelatedPlay,
+  lastSevenHoursPlaysByUser,
 };

@@ -23,6 +23,7 @@ const {
   TOKEN_URI,
   AUTH_PROVIDER_X509_CERT_URL,
   CLIENT_X509_CERT_URL,
+  CLIENT_URL,
 } = process.env;
 
 const CONFIG = {
@@ -33,6 +34,9 @@ const CONFIG = {
     db: {
       url: MONGO_DB_URL_PRODUCTION,
     },
+    url: {
+      client: CLIENT_URL,
+    },
     encrypt: {
       salt: ENCRYPTION_SALT_PRODUCTION,
     },
@@ -41,7 +45,7 @@ const CONFIG = {
         type: TYPE,
         project_id: PROJECT_ID,
         private_key_id: PRIVATE_KEY_ID,
-        private_key: PRIVATE_KEY,
+        private_key: PRIVATE_KEY.replace(/\\n/g, "\n"),
         client_email: CLIENT_EMAIL,
         client_id: CLIENT_ID,
         auth_uri: AUTH_URI,
@@ -57,6 +61,9 @@ const CONFIG = {
     },
     db: {
       url: MONGO_DB_URL_DEVELOPMENT,
+    },
+    url: {
+      client: CLIENT_URL,
     },
     encrypt: {
       salt: ENCRYPTION_SALT_DEVELOPMENT,
