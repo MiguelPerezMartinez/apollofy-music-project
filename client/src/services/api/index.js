@@ -8,6 +8,7 @@ import {
   getAllTracks,
   getMostLikedTracks,
   getMostPlayedTracks,
+  getByEmail,
 } from "./apiAuth";
 
 import {
@@ -88,5 +89,6 @@ export {
   getTotalTracks,
   postGlobalPlay,
   postRelatedPlay,
+  getByEmail,
   lastSevenHoursPlaysByUser,
 };
