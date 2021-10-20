@@ -15,20 +15,31 @@ import {
   addTotalPlay,
   deleteTrack,
   updateTrack,
-  getTrackByName,
-  getTrackById,
 } from "./trackManager";
+
 import { changeMyProfilePicture } from "./fileUploader";
+
 import {
+  createNewPlaylistApi,
+  addTrackToPlaylist,
+  deleteTrackFromPlaylistApi,
   getPlaylistById,
   getMostLikedPlaylists,
   getLastUploadedPlaylists,
-  addTrackToPlaylist,
-  createNewPlaylistApi,
-  deleteTrackFromPlaylistApi,
+  getPlaylistByTitle,
+  getPlaylistsByUsername,
+  getPlaylistByTrackTitle,
+  getPlayListsByGenre,
 } from "./apiPlaylist";
 
 import { postGlobalPlay, postRelatedPlay } from "./laravelApi";
+import {
+  getTrackById,
+  getTracksByTitle,
+  getTracksByAuthor,
+  getTracksByAlbum,
+  getTracksByGenre,
+} from "./apiTrack";
 import {
   getAllMyPlaylists,
   getAllMyFavPlaylists,
@@ -37,7 +48,6 @@ import {
 } from "./apiUser";
 
 export {
-  getTrackById,
   registerInApi,
   getById,
   getCurrentUser,
@@ -52,7 +62,11 @@ export {
   addTotalPlay,
   deleteTrack,
   updateTrack,
-  getTrackByName,
+  getTrackById,
+  getTracksByTitle,
+  getTracksByAuthor,
+  getTracksByAlbum,
+  getTracksByGenre,
   getAllMyPlaylists,
   getPlaylistById,
   getMostLikedPlaylists,
@@ -61,6 +75,10 @@ export {
   createNewPlaylistApi,
   deleteTrackFromPlaylistApi,
   getAllMyFavPlaylists,
+  getPlaylistByTitle,
+  getPlaylistsByUsername,
+  getPlaylistByTrackTitle,
+  getPlayListsByGenre,
   getTotalPlays,
   getTotalTracks,
   postGlobalPlay,
