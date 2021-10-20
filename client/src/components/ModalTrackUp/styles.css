@@ -11,7 +11,7 @@
 }
 
 .track-upload {
-  background-color: var(--main-container-color-opacity);
+  background-color: var(--main-modal-background);
   padding: 2% 5% 2%;
   position: absolute;
   left: 50%;

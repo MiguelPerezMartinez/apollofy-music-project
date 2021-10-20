@@ -20,9 +20,8 @@ userRouter.patch(
 );
 
 //GET
-userRouter.get("/get-user/:id", 
-authMiddleware, 
-userController.getById);
+userRouter.get("/get-user/:id", authMiddleware, userController.getById);
+userRouter.get("/get-email/:email", userController.getByEmail);
 userRouter.get(
   "/get-user/:id/my-tracks",
   authMiddleware,
@@ -35,7 +34,7 @@ userRouter.get(
 );
 userRouter.get(
   "/get-user/:id/my-playlists",
-  // authMiddleware,
+  authMiddleware,
   userController.getAllMyPlaylists,
 );
 userRouter.get(

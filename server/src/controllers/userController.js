@@ -106,6 +106,24 @@ async function getById(req, res) {
   }
 }
 
+async function getByEmail(req, res) {
+  const { email } = req.params;
+  try {
+    const foundUser = await Users.findOne({
+      email: email,
+    });
+    return res.status(200).send({
+      message: "User found",
+      currentUser: foundUser,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).send({
+      data: req.params.email,
+      error: error.message,
+    });
+  }
+}
 async function getMyTracksById(req, res) {
   const { id } = req.params;
   try {
@@ -279,4 +297,5 @@ module.exports = {
   getUserByUsername: getUserByUsername,
   getTotalPlays: getTotalPlays,
   getTotalTracks: getTotalTracks,
+  getByEmail: getByEmail,
 };
