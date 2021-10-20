@@ -104,5 +104,3 @@ export function sendNewPass(actionCode, confirmPassword) {
   const auth = getAuth();
   return confirmPasswordReset(auth, actionCode, confirmPassword);
 }
-
-export async function disable() {}

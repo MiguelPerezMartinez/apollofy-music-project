@@ -1,7 +1,7 @@
 //Imports
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { disable, logIn } from "../../services/firebase";
+import { logIn } from "../../services/firebase";
 
 import "./login.css";
 
@@ -33,9 +33,6 @@ function Login() {
     e.preventDefault();
     logIn(state.email, state.password);
   };
-  function disableUser () {
-    disable()
-  }
 
   return (
     <main className="login-main gradient-background">
