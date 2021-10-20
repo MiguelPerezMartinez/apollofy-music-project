@@ -40,7 +40,6 @@ import {
   getTracksByAlbum,
   getTracksByGenre,
 } from "./apiTrack";
-
 import {
   getAllMyPlaylists,
   getAllMyFavPlaylists,
