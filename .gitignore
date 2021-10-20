@@ -1,4 +1,7 @@
 node_modules
 package-lock
-.env
+/client/package-lock
+/server/package-lock
+/client/.env
 /server/.env
+.gitignore
