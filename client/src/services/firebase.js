@@ -8,6 +8,7 @@ import {
   updateEmail,
   updatePassword,
   confirmPasswordReset,
+  verifyPasswordResetCode,
 } from "firebase/auth";
 
 import { setIsActive } from "./api";
@@ -58,7 +59,6 @@ export function resetPassword(email) {
     });
 }
 
-
 export async function getCurrentUserToken() {
   const auth = getAuth();
   // console.log("await", auth);
@@ -95,16 +95,14 @@ export async function updateUserPass(newPassword) {
     });
 }
 
-export async function sendNewPass( urlCode, confirmPassword ){
-  confirmPasswordReset(urlCode, confirmPassword)
-  .then(
-    console.log('Cambiaste la pass correctamente')
-  )
-  .catch(function(error) {
-    console.log(error)
-  })
-  
+export function verifyCode(actionCode) {
+  const auth = getAuth();
+  return verifyPasswordResetCode(auth, actionCode);
 }
 
-export async function disable() {
+export function sendNewPass(actionCode, confirmPassword) {
+  const auth = getAuth();
+  return confirmPasswordReset(auth, actionCode, confirmPassword);
 }
+
+export async function disable() {}

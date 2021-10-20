@@ -1,55 +1,55 @@
 import React, { useState, useEffect } from "react";
-import {sendNewPass} from "../../services/firebase";
+import { useHistory } from "react-router-dom";
+import { sendNewPass, verifyCode } from "../../services/firebase";
 //Components
 import { Row, Col } from "react-bootstrap";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
 export default function ChangePassword() {
-  
-function extraerParametros(url) {
-    return(url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce((a,p) => ((a[p.slice(0, p.indexOf('='))] = p.slice(p.indexOf('=') + 1)), a), {});
-}
- 
+  const history = useHistory();
+  const query = new URLSearchParams(history.location.search);
 
-const [state, setState] = useState({
-  password: "",
-  confirmPassword: "",
-  urlCode: ""
-});
-const handleChange = (e) => {
-  setState({
-    ...state,
-    [e.target.name]: e.target.value,
+  const [state, setState] = useState({
+    password: "",
+    confirmPassword: "",
+    urlCode: "",
   });
-  console.log(state.confirmPassword)
-};
-
-useEffect(()=>{
-  try {
-    const url = extraerParametros(window.location.href);
-    console.log(url.oobCode);
-    setState({...state, urlCode: url.oobCode});
-  }catch(e){
-    console.log(e)
-  }
-},[])
-
-  async function handleSubmit (e, urlCode, pass){
-    e.preventDefault();
-    const password = state.password;
-    const confirmPassword = state.confirmPassword;
-    if (password === confirmPassword) {
-      console.log("Password Changed Succesfuly");
-      setState({...state, confirmPassword: confirmPassword})
-   await sendNewPass(state.urlCode, state.confirmPassword)
-    } else {
-      console.log("Something went wrong when you changed your password");
-    }
-    console.log(state)
+  const handleChange = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+    console.log(state.confirmPassword);
   };
 
+  useEffect(() => {
+    const code = query.get("oobCode");
+    setState({ ...state, urlCode: code });
+    console.log(code);
+  }, []);
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (state.password === state.confirmPassword) {
+      verifyCode(state.urlCode)
+        .then(() => {
+          sendNewPass(state.urlCode, state.confirmPassword)
+            .then(() => {
+              console.log("Password Changed Succesfuly");
+              history.push("/login");
+            })
+            .catch((err) => {
+              alert(err);
+            });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    } else {
+      alert("Las contraseñas deben ser iguales");
+    }
+  }
 
   return (
     <main className="login-main gradient-background">
