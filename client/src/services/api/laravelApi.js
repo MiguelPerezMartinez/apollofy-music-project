@@ -44,3 +44,11 @@ export async function postRelatedPlay(currentTrackId) {
     }
   }
 }
+
+export async function lastSevenHoursPlaysByUser(userId) {
+  const trackPlayerId = await getCurrentUserId();
+  return axios({
+    method: "GET",
+    url: `https://ancient-atoll-88751.herokuapp.com/api/global-plays`,
+  });
+}

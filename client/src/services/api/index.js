@@ -18,7 +18,9 @@ import {
   getTrackByName,
   getTrackById,
 } from "./trackManager";
+
 import { changeMyProfilePicture } from "./fileUploader";
+
 import {
   getPlaylistById,
   getMostLikedPlaylists,
@@ -28,7 +30,12 @@ import {
   deleteTrackFromPlaylistApi,
 } from "./apiPlaylist";
 
-import { postGlobalPlay, postRelatedPlay } from "./laravelApi";
+import {
+  postGlobalPlay,
+  postRelatedPlay,
+  lastSevenHoursPlaysByUser,
+} from "./laravelApi";
+
 import {
   getAllMyPlaylists,
   getAllMyFavPlaylists,
@@ -65,4 +72,5 @@ export {
   getTotalTracks,
   postGlobalPlay,
   postRelatedPlay,
+  lastSevenHoursPlaysByUser,
 };
