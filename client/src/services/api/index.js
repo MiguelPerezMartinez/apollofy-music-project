@@ -20,12 +20,16 @@ import {
 import { changeMyProfilePicture } from "./fileUploader";
 
 import {
+  createNewPlaylistApi,
+  addTrackToPlaylist,
+  deleteTrackFromPlaylistApi,
   getPlaylistById,
   getMostLikedPlaylists,
   getLastUploadedPlaylists,
-  addTrackToPlaylist,
-  createNewPlaylistApi,
-  deleteTrackFromPlaylistApi,
+  getPlaylistByTitle,
+  getPlaylistsByUsername,
+  getPlaylistByTrackTitle,
+  getPlayListsByGenre,
 } from "./apiPlaylist";
 
 import {
@@ -71,6 +75,10 @@ export {
   createNewPlaylistApi,
   deleteTrackFromPlaylistApi,
   getAllMyFavPlaylists,
+  getPlaylistByTitle,
+  getPlaylistsByUsername,
+  getPlaylistByTrackTitle,
+  getPlayListsByGenre,
   getTotalPlays,
   getTotalTracks,
 };

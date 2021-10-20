@@ -58,6 +58,11 @@ playlistRouter.get(
   playlistController.getPlaylistByTitle,
 );
 playlistRouter.get(
+  "/get-playlist-by-owner/:username",
+  authMiddleware,
+  playlistController.getPlaylistsByUsername,
+);
+playlistRouter.get(
   "/get-playlist-genres/:id",
   authMiddleware,
   playlistController.getPlaylistGenres,
