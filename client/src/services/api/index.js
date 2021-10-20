@@ -36,6 +36,7 @@ import {
 import {
   postGlobalPlay,
   postRelatedPlay,
+  playNextRandomRelated,
   lastSevenHoursPlaysByUser,
 } from "./laravelApi";
 
@@ -46,6 +47,7 @@ import {
   getTracksByAlbum,
   getTracksByGenre,
 } from "./apiTrack";
+
 import {
   getAllMyPlaylists,
   getAllMyFavPlaylists,
@@ -89,6 +91,7 @@ export {
   getTotalTracks,
   postGlobalPlay,
   postRelatedPlay,
+  playNextRandomRelated,
   getByEmail,
   lastSevenHoursPlaysByUser,
 };
