@@ -206,6 +206,7 @@ function ModalTrackUp() {
       },
     });
   }
+
   const customStyles = {
     option: (provided) => ({
       ...provided,
@@ -214,6 +215,7 @@ function ModalTrackUp() {
       padding: 20,
     }),
   };
+
   const options = [
     { value: "Pop", label: "Pop" },
     { value: "Rock", label: "Rock" },

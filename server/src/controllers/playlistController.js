@@ -299,8 +299,46 @@ async function getPlaylistByTitle(req, res) {
   const { title } = req.params;
   try {
     //Collect all playlists and filter them by title
-    const allPlaylists = await Playlists.find({});
+    const allPlaylists = await Playlists.find({})
+      .populate("tracks")
+      .populate("owner");
     const playlistsToReturn = filterPlaylists(allPlaylists, title, "title");
+
+    //Return found playlists
+    return res.status(200).send({
+      message: "Playlists found",
+      playlists: playlistsToReturn,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      data: title,
+      error: error.message,
+    });
+  }
+}
+
+async function getPlaylistsByUsername(req, res) {
+  const { username } = req.params;
+  try {
+    //Collect all playlists
+    const allPlaylists = await Playlists.find({})
+      .populate("tracks")
+      .populate("owner");
+
+    //Turn username to lowercase
+    //and initialize playlists to return 
+    const lwcUsername = username.toLowerCase();
+    let playlistsToReturn = [];
+
+    //Check if lwcUsername is contained inside allPlaylists and
+    //adding it to playlistsToReturn
+    for (const playlist of allPlaylists) {
+      let playlistDocFilter = playlist["owner"]["username"].toLowerCase();
+      console.log(playlistDocFilter);
+      if (playlistDocFilter.includes(lwcUsername)) {
+        playlistsToReturn.push(playlist);
+      }
+    }
 
     //Return found playlists
     return res.status(200).send({
@@ -320,7 +358,9 @@ async function getPlayListsByTrackTitle(req, res) {
   try {
     //Collect all playlists and populate tracks.
     //Initialize playlists to return
-    const allPlaylists = await Playlists.find({}).populate("tracks");
+    const allPlaylists = await Playlists.find({})
+      .populate("tracks")
+      .populate("owner");
     let playlistsToReturn = [];
 
     //Add playlists that contain the specific track
@@ -350,7 +390,9 @@ async function getPlayListsByGenre(req, res) {
   const { genre } = req.params;
   try {
     //Collect all playlists and initialize playlists to return
-    const allPlaylists = await Playlists.find({});
+    const allPlaylists = await Playlists.find({})
+      .populate("tracks")
+      .populate("owner");
     let playlistsToReturn = [];
 
     //Add playlists that contain the specific track
@@ -451,6 +493,7 @@ module.exports = {
   getAllPlaylists: getAllPlaylists,
   getPlaylistById: getPlaylistById,
   getPlaylistByTitle: getPlaylistByTitle,
+  getPlaylistsByUsername: getPlaylistsByUsername,
   getPlaylistGenres: getPlaylistGenres,
   getPlayListsByTrackTitle: getPlayListsByTrackTitle,
   getPlayListsByGenre: getPlayListsByGenre,
