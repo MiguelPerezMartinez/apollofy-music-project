@@ -15,10 +15,10 @@ import {
   addTotalPlay,
   deleteTrack,
   updateTrack,
-  getTrackByName,
-  getTrackById,
 } from "./trackManager";
+
 import { changeMyProfilePicture } from "./fileUploader";
+
 import {
   getPlaylistById,
   getMostLikedPlaylists,
@@ -29,6 +29,14 @@ import {
 } from "./apiPlaylist";
 
 import {
+  getTrackById,
+  getTracksByTitle,
+  getTracksByAuthor,
+  getTracksByAlbum,
+  getTracksByGenre,
+} from "./apiTrack";
+
+import {
   getAllMyPlaylists,
   getAllMyFavPlaylists,
   getTotalPlays,
@@ -36,7 +44,6 @@ import {
 } from "./apiUser";
 
 export {
-  getTrackById,
   registerInApi,
   getById,
   getCurrentUser,
@@ -51,7 +58,11 @@ export {
   addTotalPlay,
   deleteTrack,
   updateTrack,
-  getTrackByName,
+  getTrackById,
+  getTracksByTitle,
+  getTracksByAuthor,
+  getTracksByAlbum,
+  getTracksByGenre,
   getAllMyPlaylists,
   getPlaylistById,
   getMostLikedPlaylists,
