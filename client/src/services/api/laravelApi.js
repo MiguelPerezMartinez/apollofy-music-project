@@ -42,3 +42,24 @@ export async function postRelatedPlay(currentTrackId) {
     }
   }
 }
+
+export async function playNextRandomRelated(currentTrackId) {
+  // console.log("proces env ", process.env);
+
+  const response = await axios({
+    method: "GET",
+    url: `${process.env.REACT_APP_LARAVEL_API_URL}most-related-tracks/${currentTrackId}`,
+    // data: {
+    //   prevTrackId: prevTrackId,
+    //   nextTrackId: currentTrackId,
+    //   userPlayerId: trackPlayerId,
+    // },
+    // headers: {
+    //   Authorization: `Bearer ${userToken}`,
+    // },
+  });
+
+  console.log("next random: ", response);
+
+  return response;
+}
