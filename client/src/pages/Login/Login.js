@@ -1,7 +1,8 @@
 //Imports
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { logIn } from "../../services/firebase";
+import * as $ from "jquery";
 
 import "./login.css";
 
@@ -10,11 +11,12 @@ import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
 import Button from "../../components/Button";
 import { Row, Col } from "react-bootstrap";
-
+import validate from "jquery-validation";
 //Hoc No Authorization
 import withoutAuth from "../../hoc/withoutAuth.js";
 
 function Login() {
+  const formLogin = useRef();
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -31,7 +33,19 @@ function Login() {
   //Sign in with user email and password
   const handleSubmit = (e) => {
     e.preventDefault();
-    logIn(state.email, state.password);
+    $(formLogin.current).validate({
+      rules: {
+        email: { required: true },
+        password: { required: true },
+      },
+      messages: {
+        email: { required: "Email is required" },
+        password: { required: "Password is required" },
+      },
+      submitHandler: () => {
+        logIn(state.email, state.password);
+      },
+    });
   };
 
   return (
@@ -40,7 +54,7 @@ function Login() {
         <Col xs={12} md={6} className="login-register">
           <SignNav />
           <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
-          <form onSubmit={handleSubmit}>
+          <form ref={formLogin} onSubmit={handleSubmit}>
             <Input
               type="email"
               name="email"

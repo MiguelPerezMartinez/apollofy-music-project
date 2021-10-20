@@ -1,8 +1,8 @@
 //Imports
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import "./register.css";
-
+import * as $ from "jquery";
 import { registerNewUser } from "../../services/firebase";
 import { registerInApi } from "../../services/api/index";
 
@@ -11,11 +11,12 @@ import { Row, Col } from "react-bootstrap";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import SignNav from "../../components/SignNav";
-
+import validate from "jquery-validation";
 //Hoc No Authorization
 import withoutAuth from "../../hoc/withoutAuth.js";
 
 function Register() {
+  const formRegister = useRef();
   const [registerData, setRegisterData] = useState({
     firstname: "",
     lastname: "",
@@ -36,17 +37,37 @@ function Register() {
   //Register user on firebase and apiserver
   async function handleSubmit(e) {
     e.preventDefault();
-    const { email, password, confirmPassword } = registerData;
-    if (confirmPassword === password) {
-      console.log("submit ", registerData);
-      const { user } = await registerNewUser(email, password);
+    $(formRegister.current).validate({
+      rules: {
+        email: { required: true },
+        password: { required: true },
+        firstname: { required: true },
+        lastname: { required: true },
+        username: { required: true },
+        confirmPassword: { required: true },
+      },
+      messages: {
+        email: { required: "Email is required" },
+        password: { required: "Password is required" },
+        firstname: { required: "Firstname is required" },
+        lastname: { required: "Lastname is required" },
+        username: { required: "Username is required" },
+        confirmPassword: { required: "ConfirmPassword is required" },
+      },
+      submitHandler: async () => {
+        const { email, password, confirmPassword } = registerData;
+        if (confirmPassword === password) {
+          console.log("submit ", registerData);
+          const { user } = await registerNewUser(email, password);
 
-      console.log("the userFirebase: ", user.uid);
-      const userApi = await registerInApi(registerData, user.uid);
-      console.log("the userApi: ", userApi);
-    } else {
-      // Código de error
-    }
+          console.log("the userFirebase: ", user.uid);
+          const userApi = await registerInApi(registerData, user.uid);
+          console.log("the userApi: ", userApi);
+        } else {
+          // Código de error
+        }
+      },
+    });
   }
 
   return (
@@ -55,7 +76,7 @@ function Register() {
         <Col xs={12} md={6} className="login-register">
           <SignNav />
           <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
-          <form onSubmit={handleSubmit}>
+          <form ref={formRegister} onSubmit={handleSubmit}>
             <Row>
               <Col xs={12} md={6}>
                 <Input
