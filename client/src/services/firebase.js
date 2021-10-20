@@ -23,15 +23,15 @@ export function authenticationObserver(callback) {
 
 export function logIn(email, password) {
   const auth = getAuth();
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      setIsActive(true);
-      console.log(user);
-    })
-    .catch((error) => {
-      console.error("Log in failed: ", error.message);
-    });
+  return signInWithEmailAndPassword(auth, email, password);
+  // .then((userCredential) => {
+  //   const user = userCredential.user;
+  //   setIsActive(true);
+  //   console.log(user);
+  // })
+  // .catch((error) => {
+  //   alert("data not match");
+  // });
 }
 
 export function logOut() {

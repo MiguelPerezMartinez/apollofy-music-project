@@ -4,7 +4,7 @@ import React, { useState, useRef } from "react";
 import "./register.css";
 import * as $ from "jquery";
 import { registerNewUser } from "../../services/firebase";
-import { registerInApi } from "../../services/api/index";
+import { registerInApi, getByEmail } from "../../services/api/index";
 
 //Import components
 import { Row, Col } from "react-bootstrap";
@@ -17,6 +17,7 @@ import withoutAuth from "../../hoc/withoutAuth.js";
 
 function Register() {
   const formRegister = useRef();
+  const [userExist, setUserExist] = useState();
   const [registerData, setRegisterData] = useState({
     firstname: "",
     lastname: "",
@@ -58,20 +59,33 @@ function Register() {
         const { email, password, confirmPassword } = registerData;
         if (confirmPassword === password) {
           console.log("submit ", registerData);
-          const { user } = await registerNewUser(email, password);
-
-          console.log("the userFirebase: ", user.uid);
-          const userApi = await registerInApi(registerData, user.uid);
-          console.log("the userApi: ", userApi);
+          const userEmailExist = await getByEmail(email);
+          const userExist = userEmailExist.data.currentUser;
+          if (userExist != null) {
+            setUserExist(
+              "We detected that the user with that email already exist",
+            );
+          } else {
+            const { user } = await registerNewUser(email, password);
+            console.log("the userFirebase: ", user);
+            const userApi = await registerInApi(registerData, user.uid);
+            console.log("the userApi: ", userApi);
+          }
         } else {
-          // Código de error
+          console.log("los datos no coinciden");
         }
       },
     });
   }
 
   return (
-    <main className="gradient-background">
+    <main className="login-main gradient-background">
+      {userExist ? (
+        <div className="errorModalREACT">{userExist}</div>
+      ) : (
+        <div></div>
+      )}
+
       <Row>
         <Col xs={12} md={6} className="login-register">
           <SignNav />
