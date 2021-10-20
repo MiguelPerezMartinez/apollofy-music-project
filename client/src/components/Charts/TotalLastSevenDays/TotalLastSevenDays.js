@@ -31,7 +31,6 @@ export default function TotalLastSevenDays({ data }) {
 
   useEffect(() => {
     if (data) {
-      console.log("test");
       let labels = [];
       let totalPlays = [];
       data.forEach((element, i) => {
@@ -44,8 +43,6 @@ export default function TotalLastSevenDays({ data }) {
   }, [data]);
 
   function setData(labels, totalPlays) {
-    console.log(labels, totalPlays);
-    console.log(data);
     setDataToShow({
       ...dataToShow,
       labels: labels.reverse(),
