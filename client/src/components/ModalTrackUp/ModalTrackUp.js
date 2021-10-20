@@ -201,8 +201,19 @@ function ModalTrackUp() {
         track: { required: "Track file is required" },
       },
       submitHandler: () => {
-        console.log(trackData);
-        apiTrackUpload(trackData).then(dispatch(setUploadTrackModal(false)));
+        let trackDataParsed = trackData;
+        if (trackDataParsed.urlCover[4] !== "s") {
+          trackDataParsed.urlCover =
+            "https" + trackDataParsed.urlCover.slice(4);
+        }
+        if (trackDataParsed.urlTrack[4] !== "s") {
+          trackDataParsed.urlTrack =
+            "https" + trackDataParsed.urlTrack.slice(4);
+        }
+        
+        apiTrackUpload(trackDataParsed).then(
+          dispatch(setUploadTrackModal(false)),
+        );
       },
     });
   }
@@ -230,7 +241,7 @@ function ModalTrackUp() {
       <div className="modal-background" onClick={handleBlur}>
         <form ref={form} onSubmit={onSubmit}>
           <Row>
-            <Col xs={12} md={6} className="track-upload">
+            <Col xs={12} md={6} lg={6} className="track-upload">
               <h1 className="h3 mb-3 fw-normal">Upload track</h1>
               <Input
                 type="text"
