@@ -5,7 +5,7 @@ import "./register.css";
 import * as $ from "jquery";
 import { registerNewUser } from "../../services/firebase";
 import { registerInApi, getByEmail } from "../../services/api/index";
-
+import { useSelector, useDispatch } from "react-redux";
 //Import components
 import { Row, Col } from "react-bootstrap";
 import Button from "../../components/Button";
@@ -14,8 +14,10 @@ import SignNav from "../../components/SignNav";
 import validate from "jquery-validation";
 //Hoc No Authorization
 import withoutAuth from "../../hoc/withoutAuth.js";
+import { fetchUserData } from "../../redux/userData/actions";
 
 function Register() {
+  const dispatch = useDispatch();
   const formRegister = useRef();
   const [userExist, setUserExist] = useState();
   const [validedRegister, setValidedRegister] = useState(false);
@@ -41,7 +43,11 @@ function Register() {
             );
           } else {
             registerNewUser(email, password).then((res) => {
-              const userApi = registerInApi(registerData, res.user.uid);
+              registerInApi(registerData, res.user.uid).then((res) => {
+                console.log("fetch", res);
+                const { data } = res;
+                dispatch(fetchUserData(data.data));
+              });
             });
             // console.log("the userFirebase: ", user);
             // console.log("the userApi: ", userApi);

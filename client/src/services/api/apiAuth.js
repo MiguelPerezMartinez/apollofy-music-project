@@ -22,6 +22,7 @@ export async function registerInApi(userData, uid) {
 }
 
 export async function getById(uid, userToken) {
+  console.log("firebase id", uid);
   return axios({
     method: "GET",
     url: `${process.env.REACT_APP_URL}users/get-user/${uid}`,
@@ -40,9 +41,11 @@ export async function getByEmail(email) {
 export async function getCurrentUser() {
   const userToken = await getCurrentUserToken();
   const userId = await getCurrentUserId();
-  const { data } = await getById(userId, userToken);
-  const { currentUser } = data;
-  return currentUser;
+  const user = await getById(userId, userToken);
+  console.log("data in get current user", user);
+  const { data } = user;
+  console.log("thats current user in getCurrentUser", data);
+  return data.currentUser;
 }
 
 export async function getMyTracksByUserId(userId) {

@@ -5,6 +5,8 @@ import { logIn } from "../../services/firebase";
 import * as $ from "jquery";
 import { setIsActive } from "../../services/api";
 import "./login.css";
+import { fetchUserData } from "../../redux/userData/actions";
+import { useDispatch } from "react-redux";
 
 //Import components
 import Input from "../../components/Input";
@@ -14,8 +16,10 @@ import { Row, Col } from "react-bootstrap";
 import validate from "jquery-validation";
 //Hoc No Authorization
 import withoutAuth from "../../hoc/withoutAuth.js";
+import { getCurrentUser } from "../../services/api/index";
 
 function Login() {
+  const dispatch = useDispatch();
   const [passAndEmailNotMatch, setPassAndEmailNotMatch] = useState();
   const formLogin = useRef();
   const [validedLogin, setValidedLogin] = useState(false);
@@ -35,10 +39,13 @@ function Login() {
     if (validedLogin) {
       console.log(state);
       logIn(state.email, state.password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          setIsActive(true);
-          console.log(user);
+        .then((res) => {
+          console.log("uid de usuario fairebase", res.user.uid);
+          getCurrentUser().then((res) => console.log("current user", res));
+          dispatch(fetchUserData(res));
+          // const user = userCredential.user;
+          // setIsActive(true);
+          // console.log(user);
         })
         .catch((error) => {
           setPassAndEmailNotMatch("Password and email doesn't match");

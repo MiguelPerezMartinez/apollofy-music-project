@@ -68,7 +68,7 @@ export async function getCurrentUserToken() {
 }
 
 export async function getCurrentUserId() {
-  const auth = getAuth();
+  const auth = await getAuth();
   console.log(auth);
   return auth.currentUser.uid;
 }
