@@ -41,8 +41,8 @@ function Login() {
       logIn(state.email, state.password)
         .then((res) => {
           console.log("uid de usuario fairebase", res.user.uid);
-          getCurrentUser().then((res) => console.log("current user", res));
-          dispatch(fetchUserData(res));
+          getCurrentUser().then((res) => dispatch(fetchUserData(res)));
+
           // const user = userCredential.user;
           // setIsActive(true);
           // console.log(user);
