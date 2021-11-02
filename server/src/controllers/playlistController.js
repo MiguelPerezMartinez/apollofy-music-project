@@ -32,7 +32,7 @@ async function createPlaylist(req, res) {
       });
     }
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     return res.status(500).send({
       error: error.message,
     });
@@ -105,7 +105,7 @@ async function handlePlaylistLike(req, res) {
 }
 
 async function addTrackToPlaylist(req, res) {
-  console.log(" req.body", req.body);
+  // console.log(" req.body", req.body);
 
   const { title, trackId } = req.body;
   let messageResponse = "Track already in playlist";
@@ -326,7 +326,7 @@ async function getPlaylistsByUsername(req, res) {
       .populate("owner");
 
     //Turn username to lowercase
-    //and initialize playlists to return 
+    //and initialize playlists to return
     const lwcUsername = username.toLowerCase();
     let playlistsToReturn = [];
 
@@ -334,7 +334,7 @@ async function getPlaylistsByUsername(req, res) {
     //adding it to playlistsToReturn
     for (const playlist of allPlaylists) {
       let playlistDocFilter = playlist["owner"]["username"].toLowerCase();
-      console.log(playlistDocFilter);
+      // console.log(playlistDocFilter);
       if (playlistDocFilter.includes(lwcUsername)) {
         playlistsToReturn.push(playlist);
       }
@@ -454,7 +454,7 @@ async function getMostLiked(req, res) {
       playlists: playlists,
     });
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     return res.status(500).send({
       error: error.message,
     });

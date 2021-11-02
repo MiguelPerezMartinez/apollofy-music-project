@@ -6,10 +6,9 @@ import { Redirect } from "react-router-dom";
 function withoutAuth(WrappedComponent) {
   function WrapperComponent() {
     const isAuthorized = useSelector((state) => state.isAuthorized);
+    const { data } = useSelector((state) => state.userReducer);
 
-    return (
-      <>{!isAuthorized.value ? <WrappedComponent /> : <Redirect to="/" />}</>
-    );
+    return <>{data === null ? <WrappedComponent /> : <Redirect to="/" />}</>;
   }
 
   return WrapperComponent;
