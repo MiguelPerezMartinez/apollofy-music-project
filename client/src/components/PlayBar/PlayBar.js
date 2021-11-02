@@ -85,7 +85,7 @@ function PlayBar() {
         setTrackHistoryInLocalStorage(trackObject);
         addTotalPlay(trackObject._id);
         postGlobalPlay(trackObject);
-        postRelatedPlay(trackObject._id); 
+        postRelatedPlay(trackObject._id);
       },
       (currentTime) => {
         setTrackProgressTime(currentTime);
@@ -141,10 +141,11 @@ function PlayBar() {
           const nextTrackId = relatedTracks[index]?.next_track_id;
           // console.log("playbar next random", nextTrackId);
           if (nextTrackId) {
+            console.log("next Random Laravel", nextTrackId);
             getTrackById(nextTrackId).then((response) => {
-              if (response) {
+              if (response.data.currentTrack) {
                 const nextTrack = response.data.currentTrack;
-                console.log(response.data.currentTrack);
+                console.log("next Random Track", response.data.currentTrack);
                 dispatch(trackObjectAction(nextTrack));
               }
             });
