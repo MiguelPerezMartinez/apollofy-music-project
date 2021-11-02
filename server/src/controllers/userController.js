@@ -11,15 +11,13 @@ async function register(req, res) {
       email: email,
     });
     if (!foundUser) {
-      const { _id } = await Users.create({
+      const user = await Users.create({
         email: email,
         ...reqBody,
       });
       return res.status(200).send({
         message: "User created very successfully",
-        data: {
-          userId: _id,
-        },
+        data: user,
       });
     } else {
       return res.status(201).send({
@@ -88,14 +86,16 @@ async function setTrackHistory(req, res) {
 
 //GET
 async function getById(req, res) {
-  const { id: firebase_id } = req.params;
+  const { id } = req.params;
+  console.log(id);
   try {
-    const foundUser = await Users.findOne({
-      firebase_id: firebase_id,
+    const foundUser = await Users.find({
+      firebase_id: id,
     });
+    console.log("foundUser", foundUser);
     return res.status(200).send({
       message: "User found",
-      currentUser: foundUser,
+      currentUser: foundUser[0],
     });
   } catch (error) {
     console.log(error.message);

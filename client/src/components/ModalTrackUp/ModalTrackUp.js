@@ -210,6 +210,7 @@ function ModalTrackUp() {
           trackDataParsed.urlTrack =
             "https" + trackDataParsed.urlTrack.slice(4);
         }
+        
         apiTrackUpload(trackDataParsed).then(
           dispatch(setUploadTrackModal(false)),
         );

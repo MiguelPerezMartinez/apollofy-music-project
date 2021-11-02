@@ -31,13 +31,14 @@ function App() {
 
   // Redux State to show the playbar
   const { isPlayBarDisplayed } = useSelector((state) => state.trackReducer);
-
+  ///_________________-ESTO REQUIERE EXPLICACION_________________
   useEffect(() => {
     if (isAuthorized.loaded && isAuthorized.value) {
       if (userData.loaded) {
         setIsReadyToRender(true);
       } else {
-        dispatch(fetchUserData());
+        console.log("entro en fetchUser");
+        // dispatch(fetchUserData());
       }
     } else if (isAuthorized.loaded && !isAuthorized.value) {
       dispatch(resetUserData());
@@ -47,11 +48,11 @@ function App() {
     }
   }, [dispatch, isAuthorized, userData]);
 
-  if (isReadyToRender) {
-    if (isAuthorized.value)
-      console.log("¡Estás autenticado! Welcome", userData.data.username);
-    else console.log("¡No estás autenticado!");
-  }
+  // if (isReadyToRender) {
+  //   if (isAuthorized.value)
+  //     // console.log("¡Estás autenticado! Welcome", userData.data.username);
+  //   else console.log("¡No estás autenticado!");
+  // }
 
   // Render a loading page while auth state and user data is loading
   if (!isReadyToRender) {
@@ -80,7 +81,11 @@ function App() {
         <Route path="/profile" component={Profile} />
         <Route path="/login" component={Login} />
         <Route path="/radio" component={ElementsList} />
+        {/* {userData.data !== null ? ( */}
         <Route exact path="/" component={Home} />
+        {/* ) : (
+          <h1>data is rendering...</h1>
+        )} */}
       </Switch>
       {isPlayBarDisplayed && <PlayBar />}
     </>
