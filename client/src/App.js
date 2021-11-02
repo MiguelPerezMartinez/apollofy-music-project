@@ -20,6 +20,8 @@ import PlayBar from "./components/PlayBar";
 //Redux actions
 import { fetchStateIsAuthorized } from "./redux/isAuthorized/actions";
 import { fetchUserData, resetUserData } from "./redux/userData/actions";
+import { getCurrentUser } from "./services/api/apiAuth";
+
 
 function App() {
   const [isReadyToRender, setIsReadyToRender] = useState(false);
@@ -38,7 +40,7 @@ function App() {
         setIsReadyToRender(true);
       } else {
         console.log("entro en fetchUser");
-        // dispatch(fetchUserData());
+        getCurrentUser().then((res) => dispatch(fetchUserData(res)));
       }
     } else if (isAuthorized.loaded && !isAuthorized.value) {
       dispatch(resetUserData());
